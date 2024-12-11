@@ -12,7 +12,7 @@ class CreateDiscountCodesTable extends Migration
     public function up(): void
     {
         Schema::create('discount_codes', function (Blueprint $table) {
-            $table->id(); // Primary Key
+            $table->id(); 
             $table->string('code', 50)->unique(); // Unique discount code
             $table->enum('type', ['fixed', 'percentage']); // Type of discount
             $table->decimal('amount', 8, 2); // Discount amount
@@ -20,7 +20,7 @@ class CreateDiscountCodesTable extends Migration
             $table->integer('times_used')->default(0); // Times used
             $table->date('expiry_date')->nullable(); // Expiry date
             $table->boolean('is_active')->default(true); // Active status
-            $table->timestamps(); // created_at and updated_at
+            $table->timestamps(); 
         });
     }
 

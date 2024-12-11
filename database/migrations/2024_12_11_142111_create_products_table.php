@@ -9,7 +9,7 @@ class CreateProductsTable extends Migration
     public function up()
     {
         Schema::create('products', function (Blueprint $table) {
-            $table->id(); // Primary Key
+            $table->id();
             $table->foreignId('category_id')->constrained()->onDelete('cascade');
             $table->foreignId('brand_id')->nullable()->constrained()->onDelete('set null');
             $table->string('sku', 100)->unique();
@@ -22,7 +22,7 @@ class CreateProductsTable extends Migration
             $table->text('description_ar')->nullable();
             $table->text('description_he')->nullable();
             $table->boolean('is_active')->default(true);
-            $table->timestamps(); // created_at and updated_at
+            $table->timestamps(); 
         });
     }
 
