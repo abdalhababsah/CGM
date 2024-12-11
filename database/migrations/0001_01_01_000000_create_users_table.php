@@ -14,9 +14,13 @@ return new class extends Migration
         Schema::create('users', function (Blueprint $table) {
             $table->id();
             $table->string('name');
-            $table->string('email')->unique();
+            $table->string('first_name', 255)->nullable();
+            $table->string('last_name', 255)->nullable();
+            $table->string('email', 255)->unique();
+            $table->string('password', 255)->nullable(); // Nullable for guest users
+            $table->integer('role'); // 'Admin 1, User 0' // 2 guest
+            $table->integer('preferred_language')->default(0)->comment('0=en, 1=ar, 2=he');
             $table->timestamp('email_verified_at')->nullable();
-            $table->string('password');
             $table->rememberToken();
             $table->timestamps();
         });
