@@ -17,6 +17,7 @@ class Category extends Model
         'description_en',
         'description_ar',
         'description_he',
+        'logo_url', 
         'is_active',
     ];
 
