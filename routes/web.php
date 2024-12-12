@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Admin\AdminOrdersController;
+use App\Http\Controllers\Admin\AdminProductsController;
 use App\Http\Controllers\Admin\BrandController;
 use App\Http\Controllers\Admin\CategoryController;
 use App\Http\Controllers\ProfileController;
@@ -29,6 +30,13 @@ Route::middleware(['auth', 'admin'])->prefix('admin')->name('admin.')->group(fun
     Route::get('orders', [AdminOrdersController::class, 'index'])->name('orders.index');
     Route::get('orders/{order}', [AdminOrdersController::class, 'show'])->name('orders.show');
     Route::get('admin/orders/{order}/invoice', [AdminOrdersController::class, 'downloadInvoice'])->name('orders.invoice.download');
+    // products
+    Route::get('products', [AdminProductsController::class, 'index'])->name('products.index');
+    Route::get('products/create', [AdminProductsController::class, 'create'])->name('products.create');
+    Route::post('products', [AdminProductsController::class, 'store'])->name('products.store');
+    Route::get('products/{product}/edit', [AdminProductsController::class, 'edit'])->name('products.edit');
+    Route::put('products/{product}', [AdminProductsController::class, 'update'])->name('products.update');
+    Route::delete('products/{product}', [AdminProductsController::class, 'destroy'])->name('products.destroy');
 });
 
 // Profile Routes
