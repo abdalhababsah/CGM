@@ -1,0 +1,68 @@
+/* RTL Styles */
+
+/* General Body Styles */
+body {
+    direction: rtl;
+    text-align: right;
+}
+
+/* Main Container */
+.invoice-container,
+.main-block__content,
+.trending-content,
+.discount-info,
+.advantages-items,
+.top-categories__items,
+.info-blocks__item-text,
+.products-items {
+    text-align: right;
+}
+
+/* Header Section */
+.invoice-header {
+    text-align: center;
+}
+
+
+/* Button Alignment */
+.btn {
+    float: right;
+}
+
+/* Hover Options */
+.products-item__hover-options {
+    float: right;
+}
+
+/* Additional Adjustments */
+.main-block__content h1,
+
+.discount-info h2,
+
+.info-blocks__item-text h2,
+.arrivals h2 {
+    text-align: right;
+}
+
+/* Reversing Margins and Paddings if necessary */
+.wrapper {
+    direction: rtl;
+}
+
+.info-blocks__item-reverse .wrapper {
+    flex-direction: row-reverse;
+}
+
+.top-categories__item-hover {
+    text-align: right;
+}
+
+.info-blocks__item-link {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+}
+
+.info-blocks__item-link i {
+    margin-left: 5px;
+}

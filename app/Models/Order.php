@@ -33,6 +33,10 @@ class Order extends Model
         return $this->belongsTo(DeliveryCompany::class);
     }
 
+    public function orderLocation()
+{
+    return $this->hasOne(OrderLocation::class);
+}
     // An order can have many order items
     public function orderItems()
     {

@@ -4,14 +4,18 @@ use App\Http\Controllers\Admin\AdminOrdersController;
 use App\Http\Controllers\Admin\AdminProductsController;
 use App\Http\Controllers\Admin\BrandController;
 use App\Http\Controllers\Admin\CategoryController;
+use App\Http\Controllers\CartController;
+use App\Http\Controllers\LocalizationController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\ShopController;
+use App\Http\Controllers\WishListController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Admin\AdminDashboardController;
 
 // Public Routes
 Route::get('/', function () {
     return view('welcome');
-});
+})->name('home');
 
 // Dashboard Route for Authenticated and Verified Users
 Route::get('/dashboard', function () {
@@ -39,12 +43,28 @@ Route::middleware(['auth', 'admin'])->prefix('admin')->name('admin.')->group(fun
     Route::delete('products/{product}', [AdminProductsController::class, 'destroy'])->name('products.destroy');
 });
 
-// Profile Routes
+Route::get('/lang/{locale}', [LocalizationController::class, 'switchLang'])->name('lang.switch');// Profile Routes
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
+
+Route::get('/wishlist', [WishListController::class,'index'])->name('wishlist.index');
+
+// Cart Routes
+Route::get('/cart', [CartController::class, 'index'])->name('cart.index');
+Route::post('/cart/add', [CartController::class, 'add'])->name('cart.add');
+Route::post('/cart/remove', [CartController::class, 'remove'])->name('cart.remove');
+Route::post('/cart/update-quantity', [CartController::class, 'updateQuantity'])->name('cart.updateQuantity');
+// Route to display the shop page
+
+
+
+Route::get('/shop', [ShopController::class, 'index'])->name('shop.index');
+
+// Route to handle AJAX requests for fetching products, categories, and brands
+Route::get('/shop/fetch-products', [ShopController::class, 'fetchProducts'])->name('shop.fetchProducts');
 
 // Include Auth Routes
 require __DIR__.'/auth.php';

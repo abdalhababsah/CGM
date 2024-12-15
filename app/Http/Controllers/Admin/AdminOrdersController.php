@@ -32,12 +32,13 @@ class AdminOrdersController extends Controller
      */
     public function downloadInvoice(Request $request, Order $order)
     {
-        $order->load(['user', 'orderItems.product']); // Load related user and products
+        $order->load(['user', 'orderItems.product', 'orderLocation']); // Load related user, products, and location
 
         $language = $request->input('language', 'en'); // Default to English if no language is selected
-
+        $language = 'en';
+        // dd($order);
         // Pass the language to the view
-        $pdf = Pdf::loadView("admin.orders.invoice-pdf-{$language}", compact('order'));
+        $pdf = Pdf::loadView("admin.orders.invoice.invoice-pdf-{$language}", compact('order'));
 
         return $pdf->download("invoice-{$order->id}.pdf");
     }
