@@ -107,4 +107,18 @@ class CartController extends Controller
      
          return response()->json($result);
      }
+
+             /**
+     * Get the current cart count.
+     *
+     * @return \Illuminate\Http\JsonResponse
+     */
+
+    public function getCartCount()
+    {
+        $cartDetails = $this->cartService->getCartDetails();
+        $cartCount = count($cartDetails['items']);
+
+        return response()->json(['cart_count' => $cartCount]);
+    }
 }

@@ -66,7 +66,40 @@
     <script src="{{ asset('user/js/custom.js') }}"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
 
-
+    <script>
+        $(document).ready(function() {
+            // Setup CSRF token for all AJAX requests
+            $.ajaxSetup({
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                }
+            });
+    
+            /**
+             * Function to fetch and update the cart count.
+             */
+            function updateGlopalCartCount() {
+                $.ajax({
+                    url: "{{ route('cart.count') }}",
+                    method: "GET",
+                    dataType: "json",
+                    success: function(response) {
+                        $('#cart-count').text(response.cart_count);
+                    },
+                    error: function(xhr, status, error) {
+                        console.error('Error fetching cart count:', error);
+                        // Optionally, handle the error (e.g., display a notification)
+                    }
+                });
+            }
+    
+            // Make updateCartCount globally accessible
+            window.updateGlopalCartCount = updateGlopalCartCount;
+    
+            // Initial cart count fetch on page load
+            updateGlopalCartCount();
+        });
+    </script>
     @yield('scripts')
 </body>
 

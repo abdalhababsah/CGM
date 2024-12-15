@@ -6,12 +6,21 @@ use Illuminate\Http\Request;
 use App\Models\Product;
 use App\Models\Category;
 use App\Models\Brand;
+use App\Services\WishListService;
 
 class ShopController extends Controller
 {
     /**
      * Display the shop page.
      */
+
+     protected $wishListService;
+
+     public function __construct(WishListService $wishListService)
+     {
+         $this->wishListService = $wishListService;
+     }
+
     public function index()
     {
         return view("user.shop");
@@ -79,6 +88,15 @@ class ShopController extends Controller
         // Fetch all active categories and brands
         $categories = Category::where('is_active', 1)->get();
         $brands = Brand::where('is_active', 1)->get();
+
+        // Retrieve current wishlist IDs
+        $wishlistIds = $this->wishListService->getWishListIds();
+
+        // Add 'is_in_wishlist' flag to each product
+        $products->getCollection()->transform(function($product) use ($wishlistIds) {
+            $product->is_in_wishlist = in_array($product->id, $wishlistIds);
+            return $product;
+        });
 
         // Return JSON response
         return response()->json([

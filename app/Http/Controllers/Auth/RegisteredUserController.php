@@ -10,16 +10,15 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Validation\Rules;
-use Illuminate\View\View;
 
 class RegisteredUserController extends Controller
 {
     /**
      * Display the registration view.
      */
-    public function create(): View
+    public function create()
     {
-        return view('auth.register');
+        return view('user.register');
     }
 
     /**
@@ -30,21 +29,28 @@ class RegisteredUserController extends Controller
     public function store(Request $request): RedirectResponse
     {
         $request->validate([
-            'name' => ['required', 'string', 'max:255'],
-            'email' => ['required', 'string', 'lowercase', 'email', 'max:255', 'unique:'.User::class],
-            'password' => ['required', 'confirmed', Rules\Password::defaults()],
+            'first_name' => ['required', 'string', 'max:255'],
+            'last_name'  => ['required', 'string', 'max:255'],
+            'phone'      => ['required', 'string', 'max:20'],
+            'email'      => ['required', 'string', 'email', 'max:255', 'unique:users'],
+            'password'   => ['required', 'confirmed', Rules\Password::defaults()],
+            'terms'      => ['required', 'accepted'],
         ]);
 
         $user = User::create([
-            'name' => $request->name,
-            'email' => $request->email,
-            'password' => Hash::make($request->password),
+            'first_name' => $request->first_name,
+            'last_name'  => $request->last_name,
+            'phone'      => $request->phone,
+            'email'      => $request->email,
+            'password'   => Hash::make($request->password),
+            'role'       => 0, // Assuming 'User' role by default
+            'preferred_language' => 0, // Default language (e.g., English)
         ]);
 
         event(new Registered($user));
 
         Auth::login($user);
 
-        return redirect(route('dashboard', absolute: false));
+        return redirect(route('home'))->with('status', __('register.success_registration'));
     }
 }

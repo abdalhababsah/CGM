@@ -26,7 +26,7 @@ Route::get('/dashboard', function () {
 Route::middleware(['auth', 'admin'])->prefix('admin')->name('admin.')->group(function () {
     // Admin Dashboard
     Route::get('/dashboard', [AdminDashboardController::class, 'index'])->name('dashboard');
-     // Brand Routes
+    // Brand Routes
     Route::resource('brands', BrandController::class);
     // Category Routes
     Route::resource('categories', CategoryController::class);
@@ -50,21 +50,28 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 
-Route::get('/wishlist', [WishListController::class,'index'])->name('wishlist.index');
+Route::get('/wishlist', [WishListController::class, 'index'])->name('wishlist.index');
 
 // Cart Routes
 Route::get('/cart', [CartController::class, 'index'])->name('cart.index');
 Route::post('/cart/add', [CartController::class, 'add'])->name('cart.add');
 Route::post('/cart/remove', [CartController::class, 'remove'])->name('cart.remove');
 Route::post('/cart/update-quantity', [CartController::class, 'updateQuantity'])->name('cart.updateQuantity');
-// Route to display the shop page
+// for the count in the header
+Route::get('/cart/count', [CartController::class, 'getCartCount'])->name('cart.count');
 
+// Wishlist Routes
+Route::get('/wishlist', [App\Http\Controllers\WishListController::class, 'index'])->name('wishlist.index');
+Route::post('/wishlist/add', [App\Http\Controllers\WishListController::class, 'add'])->name('wishlist.add');
+Route::post('/wishlist/remove', [App\Http\Controllers\WishListController::class, 'remove'])->name('wishlist.remove');
 
-
+// toglle to remove or add to wish list
+Route::post('/wishlist/toggle', [WishListController::class, 'toggle'])->name('wishlist.toggle');
+// Shop route
 Route::get('/shop', [ShopController::class, 'index'])->name('shop.index');
 
 // Route to handle AJAX requests for fetching products, categories, and brands
 Route::get('/shop/fetch-products', [ShopController::class, 'fetchProducts'])->name('shop.fetchProducts');
 
 // Include Auth Routes
-require __DIR__.'/auth.php';
+require __DIR__ . '/auth.php';

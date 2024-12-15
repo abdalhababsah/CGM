@@ -36,13 +36,10 @@ class AuthenticatedSessionController extends Controller
             return redirect()->intended(route('admin.dashboard'));
         } elseif ($user->role === 0) {
             // Regular User
-            return redirect()->intended(route('dashboard'));
-        } elseif ($user->role === 2) {
-            // Guest
-            return redirect()->intended('/');
+            return redirect()->intended(route('home'));
         } else {
             // Default redirect
-            return redirect()->intended(route('dashboard'));
+            return redirect()->intended(route('home'));
         }
     }
 

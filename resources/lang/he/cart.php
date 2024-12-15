@@ -15,4 +15,12 @@ return [
     'error_loading' => 'אירעה שגיאה בעת טעינת עגלת הקניות.',
     'continue_shopping' => 'המשך בקניות',
     'product_added' => 'המוצר נוסף לעגלה',
+    'not_enough_stock' => 'נותרו רק :count פריטים במלאי!',
+    'quantity_updated' => 'הכמות עודכנה בהצלחה.',
+    'confirm_remove_title' => 'האם אתה בטוח?',
+    'confirm_remove_text' => 'האם אתה באמת רוצה להסיר את המוצר הזה מהעגלה שלך?',
+    'cancel' => 'ביטול',
+    'reached_max_quantity' => 'אינך יכול להוסיף יותר מהכמות הזמינה.',
+    'product_removed_success' => 'המוצר הוסר בהצלחה.',
+
 ];

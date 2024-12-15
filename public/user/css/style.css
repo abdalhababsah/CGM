@@ -6366,6 +6366,7 @@ blockquote:after,
 .counter-link:hover {
 	background: #222222;
 	border: 1px solid #222222;
+	color: white;
 }
 
 .counter-link:hover i:before {
@@ -6726,7 +6727,7 @@ blockquote:after,
 }
 
 .wishlist {
-	padding-top: 185px;
+	padding-top: 85px;
 }
 
 .wishlist .promo-video__decor {
@@ -7394,6 +7395,7 @@ blockquote:after,
 	margin-top: 20px;
 	font-size: 16px;
 	line-height: 170%;
+	flex-direction: column;
 }
 
 .login-form__bottom span {

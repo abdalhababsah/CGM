@@ -27,6 +27,8 @@ class CartService
     /**
      * Add a product to the cart.
      *
+     * If requested quantity exceeds available stock, it is automatically adjusted to the maximum available quantity.
+     *
      * @param int $productId
      * @param int $quantity
      * @return array
@@ -34,42 +36,49 @@ class CartService
     public function addToCart($productId, $quantity = 1)
     {
         $product = Product::find($productId);
-
+    
         if (!$product || !$product->is_active) {
             return ['status' => 'error', 'message' => __('cart.product_not_found')];
         }
-
+    
         if ($quantity < 1) {
             return ['status' => 'error', 'message' => __('cart.invalid_quantity')];
         }
-
+    
         if (Auth::check()) {
-            // User is authenticated, save to database
             $cartItem = $this->cart->cartItems()->where('product_id', $productId)->first();
-
+            $existingQty = $cartItem ? $cartItem->quantity : 0;
+            $newQuantity = $existingQty + $quantity;
+    
+            // If requested quantity exceeds available stock, return error
+            if ($newQuantity > $product->quantity) {
+                return ['status' => 'error', 'message' => __('cart.reached_max_quantity')];
+            }
+    
             if ($cartItem) {
-                $cartItem->quantity += $quantity;
+                $cartItem->quantity = $newQuantity;
                 $cartItem->save();
             } else {
                 $this->cart->cartItems()->create([
                     'product_id' => $productId,
-                    'quantity' => $quantity,
+                    'quantity' => $newQuantity,
                 ]);
             }
-
+    
             return ['status' => 'success', 'message' => __('cart.product_added')];
         } else {
-            // Guest user, save to cookies
             $cart = $this->getGuestCart();
-
-            if (isset($cart[$productId])) {
-                $cart[$productId] += $quantity;
-            } else {
-                $cart[$productId] = $quantity;
+            $existingQty = isset($cart[$productId]) ? $cart[$productId] : 0;
+            $newQuantity = $existingQty + $quantity;
+    
+            // If requested quantity exceeds available stock, return error
+            if ($newQuantity > $product->quantity) {
+                return ['status' => 'error', 'message' => __('cart.reached_max_quantity')];
             }
-
+    
+            $cart[$productId] = $newQuantity;
             $this->saveGuestCart($cart);
-
+    
             return ['status' => 'success', 'message' => __('cart.product_added')];
         }
     }
@@ -107,6 +116,8 @@ class CartService
     /**
      * Update the quantity of a product in the cart.
      *
+     * If requested quantity exceeds available stock, it is automatically adjusted to the maximum available quantity.
+     *
      * @param int $productId
      * @param int $quantity
      * @return array
@@ -123,8 +134,12 @@ class CartService
             return ['status' => 'error', 'message' => __('cart.product_not_found')];
         }
     
+        // If requested quantity exceeds available stock, return error
+        if ($quantity > $product->quantity) {
+            return ['status' => 'error', 'message' => __('cart.reached_max_quantity')];
+        }
+    
         if (Auth::check()) {
-            // Update the cart for authenticated users
             $cartItem = $this->cart->cartItems()->where('product_id', $productId)->first();
     
             if ($cartItem) {
@@ -134,7 +149,6 @@ class CartService
                 return ['status' => 'error', 'message' => __('cart.product_not_in_cart')];
             }
         } else {
-            // Update the cart for guest users
             $cart = $this->getGuestCart();
     
             if (isset($cart[$productId])) {
@@ -159,6 +173,7 @@ class CartService
             $cartItems = $this->cart->cartItems()->with('product')->get();
 
             $items = $cartItems->map(function ($item) {
+                $inStock = $item->product->quantity > 0;
                 return [
                     'product_id' => $item->product->id,
                     'name' => $this->getLocalizedName($item->product),
@@ -166,6 +181,8 @@ class CartService
                     'quantity' => $item->quantity,
                     'total' => $item->quantity * $item->product->price,
                     'image_url' => $item->product->primaryImage ? asset('storage/' . $item->product->primaryImage->url) : 'https://via.placeholder.com/262x370',
+                    'available_quantity' => $item->product->quantity,
+                    'in_stock' => $inStock
                 ];
             });
 
@@ -177,6 +194,7 @@ class CartService
             foreach ($cart as $productId => $quantity) {
                 $product = Product::find($productId);
                 if ($product && $product->is_active) {
+                    $inStock = $product->quantity > 0;
                     $items[] = [
                         'product_id' => $product->id,
                         'name' => $this->getLocalizedName($product),
@@ -184,6 +202,8 @@ class CartService
                         'quantity' => $quantity,
                         'total' => $quantity * $product->price,
                         'image_url' => $product->primaryImage ? asset('storage/' . $product->primaryImage->url) : 'https://via.placeholder.com/262x370',
+                        'available_quantity' => $product->quantity,
+                        'in_stock' => $inStock
                     ];
                 }
             }
@@ -201,12 +221,12 @@ class CartService
     {
         $items = $this->getCartItems(); // Get the most up-to-date items
         $total = 0;
-    
+
         foreach ($items as $item) {
             $productTotal = $item['price'] * $item['quantity'];
             $total += $productTotal;
         }
-    
+
         return round($total, 2); // Ensure consistent rounding
     }
 
@@ -292,15 +312,15 @@ class CartService
         }
     }
 
-
     public function getCartDetails()
-{
-    $items = $this->getCartItems(); // Fetch cart items
-    $totalPrice = $this->getTotalPrice(); // Calculate total price
+    {
+        $items = $this->getCartItems(); // Fetch cart items
+        $totalPrice = $this->getTotalPrice(); // Calculate total price
 
-    return [
-        'items' => $items,
-        'totalPrice' => $totalPrice,
-    ];
-}
+        return [
+            'items' => $items,
+            'totalPrice' => $totalPrice,
+        ];
+    }
+
 }

@@ -1,0 +1,36 @@
+<?php
+
+return [
+    'product_not_found' => 'המוצר המבוקש לא נמצא.',
+    'product_added' => 'המוצר נוסף לרשימת המשאלות שלך.',
+    'product_removed' => 'המוצר הוסר מרשימת המשאלות שלך.',
+    'product_not_in_wishlist' => 'המוצר לא נמצא ברשימת המשאלות.',
+    'add_to_wishlist_error' => 'אירעה שגיאה בעת הוספת המוצר לרשימת המשאלות.',
+    'remove_from_wishlist_error' => 'אירעה שגיאה בעת הסרת המוצר מרשימת המשאלות.',
+    'no_items_in_wishlist' => 'אין פריטים ברשימת המשאלות',
+    'go_shopping' => 'לעבור לקניות',
+    'wishlist' => 'רשימת משאלות',
+    'in_stock' => 'במלאי',
+    'not_available' => 'לא זמין',
+    'home' => 'דף הבית',
+    'product' => 'מוצר',
+    'price' => 'מחיר',
+    'status' => 'מצב',
+    'action' => 'פעולה',
+    'remove' => 'הסר',
+    'add_to_cart' => 'הוסף לסל',
+
+
+    'confirm_remove_title' => 'האם אתה בטוח?',
+    'confirm_remove_text' => 'האם ברצונך להסיר את המוצר הזה מרשימת המשאלות שלך?',
+    'cancel' => 'ביטול',
+    'adding_to_cart' => 'מוסיף לעגלה...',
+    'added_to_cart' => 'המוצר נוסף לעגלה.',
+    'add_to_cart_failed' => 'הוספת המוצר לעגלה נכשלה.',
+    'add_to_cart_error' => 'אירעה שגיאה בעת הוספת המוצר לעגלה.',
+    'error_fetching' => 'אירעה שגיאה בעת שליפת פריטי רשימת המשאלות.',
+    'try_again_later' => 'אנא נסה שוב מאוחר יותר.',
+    'updating' => 'מעדכן...',
+    'action_failed' => 'הפעולה נכשלה. אנא נסה שוב.',
+    'toggle_error' => 'אירעה שגיאה בעת עדכון רשימת המשאלות שלך.',
+];

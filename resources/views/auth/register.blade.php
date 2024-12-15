@@ -1,52 +1,102 @@
-<x-guest-layout>
-    <form method="POST" action="{{ route('register') }}">
-        @csrf
+{{-- resources/views/user/register.blade.php --}}
+@extends('user.layouts.app')
 
-        <!-- Name -->
-        <div>
-            <x-input-label for="name" :value="__('Name')" />
-            <x-text-input id="name" class="block mt-1 w-full" type="text" name="name" :value="old('name')" required autofocus autocomplete="name" />
-            <x-input-error :messages="$errors->get('name')" class="mt-2" />
+@section('content')
+    <!-- BEGIN DETAIL MAIN BLOCK -->
+    <div class="detail-block detail-block_margin">
+        <div class="wrapper">
+            <div class="detail-block__content">
+                <h1>@lang('register.registration')</h1>
+                <ul class="bread-crumbs">
+                    <li class="bread-crumbs__item">
+                        <a href="{{ url('/') }}" class="bread-crumbs__link">@lang('register.home')</a>
+                    </li>
+                    <li class="bread-crumbs__item">@lang('register.registration')</li>
+                </ul>
+            </div>
         </div>
+    </div>
+    <!-- DETAIL MAIN BLOCK EOF -->
 
-        <!-- Email Address -->
-        <div class="mt-4">
-            <x-input-label for="email" :value="__('Email')" />
-            <x-text-input id="email" class="block mt-1 w-full" type="email" name="email" :value="old('email')" required autocomplete="username" />
-            <x-input-error :messages="$errors->get('email')" class="mt-2" />
+    <!-- BEGIN REGISTRATION -->
+    <div class="login registration">
+        <div class="wrapper">
+            <div class="login-form js-img" data-src="{{ asset('user/img/login-form__bg.png') }}">
+                <!-- Session Status -->
+                <x-auth-session-status class="mb-4" :status="session('status')" />
+
+                <form method="POST" action="{{ route('register') }}">
+                    @csrf
+
+                    <!-- Social Registration Options -->
+                    <h3>{{__('register.register_with')}}</h3>
+                    <ul class="login-form__social">
+                        <li><a ><i class="icon-facebook"></i></a></li>
+                        <li><a ><i class="icon-google"></i></a></li>
+                    </ul>
+
+                    <!-- Name Fields -->
+                    <div class="box-field__row">
+                        <div class="box-field">
+                            <x-input-label for="first_name" :value="__('register.first_name')" />
+                            <x-text-input id="first_name" class="form-control" type="text" name="first_name" :value="old('first_name')" required autofocus placeholder="{{__('register.enter_first_name')}}" />
+                            <x-input-error :messages="$errors->get('first_name')" class="mt-2" />
+                        </div>
+                        <div class="box-field">
+                            <x-input-label for="last_name" :value="__('register.last_name')" />
+                            <x-text-input id="last_name" class="form-control" type="text" name="last_name" :value="old('last_name')" required placeholder="{{__('register.enter_last_name')}}" />
+                            <x-input-error :messages="$errors->get('last_name')" class="mt-2" />
+                        </div>
+                    </div>
+
+                    <!-- Contact Fields -->
+                    <div class="box-field__row">
+                        <div class="box-field">
+                            <x-input-label for="phone" :value="__('register.phone')" />
+                            <x-text-input id="phone" class="form-control" name="phone" :value="old('phone')" required placeholder="{{__('register.enter_phone')}}" />
+                            <x-input-error :messages="$errors->get('phone')" class="mt-2" />
+                        </div>
+                        <div class="box-field">
+                            <x-input-label for="email" :value="__('register.email')" />
+                            <x-text-input id="email" class="form-control" type="email" name="email" :value="old('email')" required placeholder="{{__('register.enter_email')}}" />
+                            <x-input-error :messages="$errors->get('email')" class="mt-2" />
+                        </div>
+                    </div>
+
+                    <!-- Password Fields -->
+                    <div class="box-field__row">
+                        <div class="box-field">
+                            <x-input-label for="password" :value="__('register.password')" />
+                            <x-text-input id="password" class="form-control" type="password" name="password" required placeholder="{{__('register.enter_password')}}" autocomplete="new-password" />
+                            <x-input-error :messages="$errors->get('password')" class="mt-2" />
+                        </div>
+                        <div class="box-field">
+                            <x-input-label for="password_confirmation" :value="__('register.confirm_password')" />
+                            <x-text-input id="password_confirmation" class="form-control" type="password" name="password_confirmation" required placeholder="{{__('register.confirm_password_placeholder')}}" autocomplete="new-password" />
+                            <x-input-error :messages="$errors->get('password_confirmation')" class="mt-2" />
+                        </div>
+                    </div>
+
+                    <!-- Terms and Conditions (Optional) -->
+                    <label class="checkbox-box checkbox-box__sm">
+                        <input type="checkbox" name="terms" required>
+                        <span class="checkmark"></span>
+                        @lang('register.accept_terms')
+                    </label>
+                    <x-input-error :messages="$errors->get('terms')" class="mt-2" />
+
+                    <!-- Submit Button and Links -->
+                    <button class="btn" type="submit">@lang('register.registration')</button>
+                    <div class="login-form__bottom">
+                        @if (Route::has('login'))
+                            <span>@lang('register.already_account') <a href="{{ route('login') }}">@lang('register.log_in')</a></span>
+                        @endif
+                    </div>
+                </form>
+            </div>
         </div>
-
-        <!-- Password -->
-        <div class="mt-4">
-            <x-input-label for="password" :value="__('Password')" />
-
-            <x-text-input id="password" class="block mt-1 w-full"
-                            type="password"
-                            name="password"
-                            required autocomplete="new-password" />
-
-            <x-input-error :messages="$errors->get('password')" class="mt-2" />
-        </div>
-
-        <!-- Confirm Password -->
-        <div class="mt-4">
-            <x-input-label for="password_confirmation" :value="__('Confirm Password')" />
-
-            <x-text-input id="password_confirmation" class="block mt-1 w-full"
-                            type="password"
-                            name="password_confirmation" required autocomplete="new-password" />
-
-            <x-input-error :messages="$errors->get('password_confirmation')" class="mt-2" />
-        </div>
-
-        <div class="flex items-center justify-end mt-4">
-            <a class="underline text-sm text-gray-600 hover:text-gray-900 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500" href="{{ route('login') }}">
-                {{ __('Already registered?') }}
-            </a>
-
-            <x-primary-button class="ms-4">
-                {{ __('Register') }}
-            </x-primary-button>
-        </div>
-    </form>
-</x-guest-layout>
+        <img class="promo-video__decor js-img" data-src="{{ asset('https://via.placeholder.com/1197x1371/FFFFFF') }}"
+            src="data:image/gif;base64,R0lGODlhAQABAAAAACw=" alt="">
+    </div>
+    <!-- LOGIN EOF -->
+@endsection

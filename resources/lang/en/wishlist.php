@@ -1,0 +1,36 @@
+<?php
+
+return [
+    'product_not_found' => 'The requested product was not found.',
+    'product_added' => 'Product added to your wishlist.',
+    'product_removed' => 'Product removed from your wishlist.',
+    'product_not_in_wishlist' => 'The product is not in your wishlist.',
+    'add_to_wishlist_error' => 'An error occurred while adding the product to your wishlist.',
+    'remove_from_wishlist_error' => 'An error occurred while removing the product from your wishlist.',
+    'no_items_in_wishlist' => 'No items in wishlist',
+    'go_shopping' => 'Go Shopping',
+    'wishlist' => 'Wishlist',
+    'in_stock' => 'in stock',
+    'not_available' => 'not available',
+    'home' => 'Home',
+    'product' => 'Product',
+    'price' => 'Price',
+    'status' => 'Status',
+    'action' => 'Action',
+    'remove' => 'Remove',
+    'add_to_cart' => 'Add to Cart',
+
+
+    'confirm_remove_title' => 'Are you sure?',
+    'confirm_remove_text' => 'Do you want to remove this product from your wishlist?',
+    'cancel' => 'Cancel',
+    'adding_to_cart' => 'Adding to cart...',
+    'added_to_cart' => 'Product added to cart.',
+    'add_to_cart_failed' => 'Failed to add product to cart.',
+    'add_to_cart_error' => 'An error occurred while adding the product to cart.',
+    'error_fetching' => 'Error fetching wishlist items.',
+    'try_again_later' => 'Please try again later.',
+    'updating' => 'Updating...',
+    'action_failed' => 'Action failed. Please try again.',
+    'toggle_error' => 'An error occurred while updating your wishlist.',
+];

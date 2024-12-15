@@ -15,4 +15,12 @@ return [
     'error_loading' => 'حدث خطأ أثناء تحميل عربة التسوق.',
     'continue_shopping' => 'متابعة التسوق',
     'product_added' => 'تم إضافة المنتج إلى السلة',
+    'not_enough_stock' => 'لم يتبق سوى :count قطعة في المخزون!',
+    'quantity_updated' => 'تم تحديث الكمية بنجاح.',
+    'confirm_remove_title' => 'هل أنت متأكد؟',
+    'confirm_remove_text' => 'هل تريد حقًا إزالة هذا المنتج من سلة التسوق الخاصة بك؟',
+    'cancel' => 'إلغاء',
+    'reached_max_quantity' => 'لا يمكنك إضافة أكثر من الكمية المتوفرة.',
+    'product_removed_success' => 'تمت إزالة المنتج بنجاح.',
+
 ];
