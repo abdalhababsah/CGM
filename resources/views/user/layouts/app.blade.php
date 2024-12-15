@@ -16,7 +16,7 @@
 
     <!-- Load Default CSS -->
     <link rel="stylesheet" href="{{ asset('user/css/style.css') }}">
-
+    <link rel="stylesheet" href="{{ asset('user/sweetalert/sweetalert2.min.css') }}">
     <!-- Conditionally Load RTL CSS -->
     @if (in_array(app()->getLocale(), ['ar', 'he']))
         <link rel="stylesheet" href="{{ asset('user/css/rtl.css') }}">
@@ -60,7 +60,7 @@
     <script src="{{asset('user/js/ion.rangeSlider.min.js')}}"></script>
     <script src="{{ asset('user/js/jquery.maskedinput.js') }}"></script>
     <script src="{{ asset('user/js/jquery.formstyler.js') }}"></script>
-
+    <script src="{{ asset('user/sweetalert/sweetalert2.min.js') }}"></script>
     <script src="{{ asset('user/js/lazyload.min.js') }}"></script>
     <script src="{{ asset('user/js/slick.min.js') }}"></script>
     <script src="{{ asset('user/js/custom.js') }}"></script>

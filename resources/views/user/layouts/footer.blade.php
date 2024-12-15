@@ -11,22 +11,10 @@
                 </ul>
             </div>
             <div class="footer-top__logo">
-                <img data-src="img/footer-logo.svg" src="data:image/gif;base64,R0lGODlhAQABAAAAACw="
+                <img data-src="" src="data:image/gif;base64,R0lGODlhAQABAAAAACw="
                     class="js-img" alt="">
             </div>
-            <div class="footer-top__payments">
-                <span>Payment methods:</span>
-                <ul>
-                    <li><img data-src="img/payment1.png" src="data:image/gif;base64,R0lGODlhAQABAAAAACw="
-                            class="js-img" alt=""></li>
-                    <li><img data-src="img/payment2.png" src="data:image/gif;base64,R0lGODlhAQABAAAAACw="
-                            class="js-img" alt=""></li>
-                    <li><img data-src="img/payment3.png" src="data:image/gif;base64,R0lGODlhAQABAAAAACw="
-                            class="js-img" alt=""></li>
-                    <li><img data-src="img/payment4.png" src="data:image/gif;base64,R0lGODlhAQABAAAAACw="
-                            class="js-img" alt=""></li>
-                </ul>
-            </div>
+
         </div>
         <div class="footer-nav">
             <div class="footer-nav__col">

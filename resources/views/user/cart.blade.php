@@ -35,6 +35,7 @@
 
         .continue-shopping:hover {
             background-color: #7b1620;
+            color: #fff;
         }
 
         .text-remove {
@@ -131,7 +132,7 @@
                     cartHtml += `
                 <div class="cart-table__row" data-product-id="${item.product_id}">
                     <div class="cart-table__col">
-                        <a href="#" class="cart-table__img">
+                      <a href="#" class="cart-table__img">
                             <img src="${item.image_url}" alt="${item.name}">
                         </a>
                         <div class="cart-table__info">
@@ -162,8 +163,8 @@
                             $${(item.price * item.quantity).toFixed(2)}
                         </span>
                         <button class="remove-btn text-remove" data-product-id="${item.product_id}">
-    {{ __('cart.remove') }}
-</button>
+                            {{ __('cart.remove') }}
+                        </button>
                     </div>
                 </div>`;
                 });

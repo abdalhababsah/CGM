@@ -31,7 +31,7 @@
                             <div class="cart-table__row">
                                 <div class="cart-table__col">
                                     <a href="#" class="cart-table__img">
-                                        <img data-src="https://via.placeholder.com/110" src="data:image/gif;base64,R0lGODlhAQABAAAAACw=" class="js-img" alt="">
+                                        <img data-src="{{asset('user/img/promo-video__decor.jpg')}}" src="data:image/gif;base64,R0lGODlhAQABAAAAACw=" class="js-img" alt="">
                                     </a>
                                     <div class="cart-table__info">
                                         <a href="#" class="title5">Foundation Beshop</a>
@@ -75,7 +75,7 @@
                         <a href="#" class="btn">go shopping</a>
                     </div>
                 </div>
-                <img class="promo-video__decor js-img" data-src="https://via.placeholder.com/1197x1371/FFFFFF"
+                <img class="promo-video__decor js-img" data-src="{{asset('user/img/promo-video__decor.jpg')}}"
                     src="data:image/gif;base64,R0lGODlhAQABAAAAACw=" alt="">
             </div>
             <!-- WISHLIST EOF   -->

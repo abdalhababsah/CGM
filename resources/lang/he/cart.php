@@ -14,5 +14,5 @@ return [
     'empty' => 'עגלת הקניות שלך ריקה.',
     'error_loading' => 'אירעה שגיאה בעת טעינת עגלת הקניות.',
     'continue_shopping' => 'המשך בקניות',
-'product_added' => 'המוצר נוסף לעגלה',
+    'product_added' => 'המוצר נוסף לעגלה',
 ];

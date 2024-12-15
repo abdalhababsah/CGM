@@ -5,7 +5,7 @@
     </div>
     <div class="header-content">
         <div class="header-logo">
-            <img src="{{ asset('img/header-logo.svg') }}" alt="@lang('home.header_logo_alt')">
+            <img src="" alt="@lang('home.header_logo_alt')">
         </div>
         <div class="header-box">
             <ul class="header-nav">

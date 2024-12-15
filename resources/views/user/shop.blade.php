@@ -2,32 +2,41 @@
 @extends('user.layouts.app')
 
 @section('content')
-<style>
-    /* Remove default button styles */
-.add-to-cart-btn {
-    background: none;
-    border: none;
-    padding: 0;
-    cursor: pointer;
-    outline: none; /* Remove focus outline if desired, but consider accessibility */
-}
+    <style>
+        /* Remove default button styles */
+        .add-to-cart-btn {
+            background: none;
+            border: none;
+            padding: 0;
+            cursor: pointer;
+            outline: none;
+            /* Remove focus outline if desired, but consider accessibility */
+        }
 
-/* Optional: Change cursor to pointer on hover */
-.add-to-cart-btn:hover {
-    opacity: 0.8; /* Example hover effect */
-}
+        /* Optional: Change cursor to pointer on hover */
+        .add-to-cart-btn:hover {
+            opacity: 0.8;
+            /* Example hover effect */
+        }
 
-/* Optional: Add focus styles for accessibility */
-.add-to-cart-btn:focus {
-    outline: 2px solid #007BFF; /* Visible focus indicator */
-}
+        /* Optional: Add focus styles for accessibility */
+        .add-to-cart-btn:focus {
+            outline: 2px solid #007BFF;
+            /* Visible focus indicator */
+        }
 
-/* Optional: Adjust the icon size and color */
-.add-to-cart-btn .icon-cart {
-    font-size: 1.5rem; /* Adjust size as needed */
-    color: #333; /* Adjust color as needed */
-}
-</style>
+        /* Optional: Adjust the icon size and color */
+        .add-to-cart-btn .icon-cart {
+            font-size: 1.5rem;
+            /* Adjust size as needed */
+            color: #333;
+            /* Adjust color as needed */
+        }
+
+        .active {
+            color: rgb(128, 0, 0) !important;
+        }
+    </style>
     <!-- BEGIN DETAIL MAIN BLOCK -->
     <div class="detail-block detail-block_margin">
         <div class="wrapper">
@@ -84,7 +93,7 @@
                 <div class="shop-main">
                     <div class="shop-main__filter">
                         <div class="shop-main__checkboxes">
-                            <label class="checkbox-box">
+                            {{-- <label class="checkbox-box">
                                 <input type="checkbox" id="filter-sale">
                                 <span class="checkmark"></span>
                                 @lang('shop.sale')
@@ -93,7 +102,7 @@
                                 <input type="checkbox" id="filter-new">
                                 <span class="checkmark"></span>
                                 @lang('shop.new')
-                            </label>
+                            </label> --}}
                         </div>
                         <div class="shop-main__select">
                             <select id="sort" class="styled">
@@ -115,11 +124,10 @@
                 </div>
             </div>
         </div>
-        <img class="promo-video__decor js-img" data-src="https://via.placeholder.com/1197x1371/FFFFFF"
-            src="data:image/gif;base64,R0lGODlhAQABAAAAACw=" alt="">
+        <img class="promo-video__decor js-img" data-src="{{asset('user/img/promo-video__decor.jpg')}}"
+            src="{{asset('user/img/promo-video__decor.jpg')}}" alt="">
     </div>
     <!-- SHOP EOF -->
-
 @endsection
 
 @section('scripts')
@@ -201,20 +209,19 @@
 
                 categories.forEach(function(categoryItem) {
                     categoriesList.append(`
-                    <li>
-                        <a href="#" class="category-filter ${category === categoryItem.id ? 'active' : ''}" data-id="${categoryItem.id}">
-                            ${getLocalizedName(categoryItem)}
-                            <span>(${categoryItem.products_count || 0})</span>
-                        </a>
-                    </li>
-                `);
+            <li>
+                <a href="#" class=" category-filter ${category == categoryItem.id ? 'active' : ''}" data-id="${categoryItem.id}">
+                    ${getLocalizedName(categoryItem)}
+                </a>
+            </li>
+        `);
                 });
 
                 // Attach click event to category filters
                 $('.category-filter').off('click').on('click', function(e) {
                     e.preventDefault();
                     let selectedCategory = $(this).data('id');
-                    if (category === selectedCategory) {
+                    if (category == selectedCategory) {
                         // If the same category is clicked, deselect it
                         category = '';
                         $(this).removeClass('active');
@@ -379,9 +386,22 @@
 
             // Function to show toast notifications (optional)
             function showToast(message, type) {
-                // You can use a library like Toastr for better UI
-                // For simplicity, using alert
-                alert(message);
+                Swal.fire({
+                    toast: true,
+                    position: 'top-end',
+                    icon: type,
+                    title: message,
+                    showConfirmButton: false,
+                    timer: 3000, // Auto-dismiss in 3 seconds
+                    timerProgressBar: true,
+                    customClass: {
+                        popup: 'colored-toast' // Add a custom class for custom styles (optional)
+                    },
+                    didOpen: (toast) => {
+                        toast.addEventListener('mouseenter', Swal.stopTimer);
+                        toast.addEventListener('mouseleave', Swal.resumeTimer);
+                    }
+                });
             }
 
             // Function to render pagination
