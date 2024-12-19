@@ -20,6 +20,7 @@ class CreateDiscountCodesTable extends Migration
             $table->integer('times_used')->default(0); // Times used
             $table->date('expiry_date')->nullable(); // Expiry date
             $table->boolean('is_active')->default(true); // Active status
+            $table->softDeletes();
             $table->timestamps(); 
         });
     }

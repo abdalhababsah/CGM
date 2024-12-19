@@ -50,7 +50,7 @@
                 <h1>@lang('shop.shop')</h1>
                 <ul class="bread-crumbs">
                     <li class="bread-crumbs__item">
-                        <a href="{{ url('/') }}" class="bread-crumbs__link">@lang('shop.home')</a>
+                        <a href="{{ route('home') }}" class="bread-crumbs__link">@lang('shop.home')</a>
                     </li>
                     <li class="bread-crumbs__item">@lang('shop.shop')</li>
                 </ul>

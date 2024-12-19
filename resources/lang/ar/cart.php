@@ -22,5 +22,7 @@ return [
     'cancel' => 'إلغاء',
     'reached_max_quantity' => 'لا يمكنك إضافة أكثر من الكمية المتوفرة.',
     'product_removed_success' => 'تمت إزالة المنتج بنجاح.',
+    'checkout_disabled_message' => 'بعض المنتجات تتجاوز الكمية المتاحة. يرجى تعديل الكميات.',
+    'quantity_exceeds_stock' => 'الكمية تتجاوز الكمية المتاحة',
 
 ];

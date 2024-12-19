@@ -4,7 +4,10 @@ use App\Http\Controllers\Admin\AdminOrdersController;
 use App\Http\Controllers\Admin\AdminProductsController;
 use App\Http\Controllers\Admin\BrandController;
 use App\Http\Controllers\Admin\CategoryController;
+use App\Http\Controllers\Admin\DeliveryController;
+use App\Http\Controllers\Admin\DiscountCodeController;
 use App\Http\Controllers\CartController;
+use App\Http\Controllers\CheckoutController;
 use App\Http\Controllers\LocalizationController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\ShopController;
@@ -30,18 +33,38 @@ Route::middleware(['auth', 'admin'])->prefix('admin')->name('admin.')->group(fun
     Route::resource('brands', BrandController::class);
     // Category Routes
     Route::resource('categories', CategoryController::class);
+    
+    // Delivery Locations and Prices Routes
+    Route::resource('deliveries', DeliveryController::class);
     // orders
     Route::get('orders', [AdminOrdersController::class, 'index'])->name('orders.index');
     Route::get('orders/{order}', [AdminOrdersController::class, 'show'])->name('orders.show');
     Route::get('admin/orders/{order}/invoice', [AdminOrdersController::class, 'downloadInvoice'])->name('orders.invoice.download');
-    // products
+    // discounts
+    Route::resource('discount', DiscountCodeController::class);
+    // Products
     Route::get('products', [AdminProductsController::class, 'index'])->name('products.index');
     Route::get('products/create', [AdminProductsController::class, 'create'])->name('products.create');
     Route::post('products', [AdminProductsController::class, 'store'])->name('products.store');
     Route::get('products/{product}/edit', [AdminProductsController::class, 'edit'])->name('products.edit');
     Route::put('products/{product}', [AdminProductsController::class, 'update'])->name('products.update');
     Route::delete('products/{product}', [AdminProductsController::class, 'destroy'])->name('products.destroy');
+    
+    // Partial Updates for Products
+    Route::put('products/{product}/general-info', [AdminProductsController::class, 'updateGeneralInfo'])->name('products.updateGeneralInfo');
+    Route::put('products/{product}/options', [AdminProductsController::class, 'updateOptions'])->name('products.updateOptions');
+    
+    // Image Management Routes
+    Route::post('products/{product}/additional-images', [AdminProductsController::class, 'uploadAdditionalImages'])->name('products.uploadAdditionalImages');
+    Route::post('products/{product}/primary-image', [AdminProductsController::class, 'updatePrimaryImage'])->name('products.updatePrimaryImage');
+    Route::delete('products/images/{image}', [AdminProductsController::class, 'deleteImage'])->name('products.deleteImage');
+    Route::delete('products/{product}/primary-image', [AdminProductsController::class, 'deletePrimaryImage'])->name('products.deletePrimaryImage');
 });
+
+
+
+
+
 
 Route::get('/lang/{locale}', [LocalizationController::class, 'switchLang'])->name('lang.switch');// Profile Routes
 Route::middleware('auth')->group(function () {
@@ -73,5 +96,28 @@ Route::get('/shop', [ShopController::class, 'index'])->name('shop.index');
 // Route to handle AJAX requests for fetching products, categories, and brands
 Route::get('/shop/fetch-products', [ShopController::class, 'fetchProducts'])->name('shop.fetchProducts');
 
+
+
+Route::middleware(['auth'])->prefix('checkout')->name('checkout.')->group(function () {
+    // Display the checkout page
+    Route::get('/', [CheckoutController::class, 'index'])->name('index');
+    Route::get('/fetch-checkout', [CheckoutController::class, 'fetchCheckout'])->name('checkout.fetch');
+    // Fetch delivery locations via AJAX
+    Route::get('/fetch-delivery-locations', [CheckoutController::class, 'fetchDeliveryLocations'])->name('fetchDeliveryLocations');
+
+    // Get delivery price based on selected location via AJAX
+    Route::post('/get-delivery-price', [CheckoutController::class, 'getDeliveryPrice'])->name('getDeliveryPrice');
+
+    // Apply a discount code via AJAX
+    Route::post('/apply-discount-code', [CheckoutController::class, 'applyDiscountCode'])->name('applyDiscountCode');
+
+    // Remove an applied discount code via AJAX
+    Route::post('/remove-discount-code', [CheckoutController::class, 'removeDiscountCode'])->name('removeDiscountCode');
+
+    // Submit the checkout form via AJAX
+    Route::post('/submit', [CheckoutController::class, 'submit'])->name('submit');
+
+    Route::get('/success/{order}', [CheckoutController::class, 'success'])->name('success');
+});
 // Include Auth Routes
 require __DIR__ . '/auth.php';

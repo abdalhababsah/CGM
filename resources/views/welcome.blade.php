@@ -1,16 +1,105 @@
 @extends('user.layouts.app')
 
-@section('content')
+@section('styles')
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" />
+<style>
+    /* Keyframes for fade-in animations */
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(50px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
 
+@keyframes fadeInLeft {
+    from {
+        opacity: 0;
+        transform: translateX(-50px);
+    }
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+@keyframes fadeInRight {
+    from {
+        opacity: 0;
+        transform: translateX(50px);
+    }
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+@keyframes zoomIn {
+    from {
+        opacity: 0;
+        transform: scale(0.8);
+    }
+    to {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+
+/* Default hidden state */
+#block__content, 
+#professional, 
+#beauty_and_care, 
+#nourish_description, 
+#shop_now {
+    opacity: 0;
+}
+
+/* Animation triggers */
+#block__content {
+    animation: fadeInUp 3s ease-out forwards;
+}
+
+#professional {
+    animation: fadeInLeft 3s ease-out 0.3s forwards; /* Delayed by 0.3s */
+}
+
+#beauty_and_care {
+    animation: fadeInUp 3s ease-out 0.6s forwards; /* Delayed by 0.6s */
+}
+
+#nourish_description {
+    animation: fadeInRight 3s ease-out 0.9s forwards; /* Delayed by 0.9s */
+}
+
+#shop_now {
+    animation: zoomIn 3s ease-out 1.2s forwards; /* Delayed by 1.2s */
+}
+.top-categories__item {
+    animation-delay: 0.3s; /* Default delay */
+}
+
+.top-categories__item:nth-child(2) {
+    animation-delay: 0.6s; /* Delay for the second item */
+}
+
+.top-categories__item:nth-child(3) {
+    animation-delay: 0.9s; /* Delay for the third item */
+}
+</style>
+@endsection
+@section('content')
     <div class="main-block load-bg">
         <div class="wrapper">
-            <div class="main-block__content">
-                <span class="saint-text">@lang('home.professional')</span>
-                <h1 class="main-text">@lang('home.beauty_and_care')</h1>
-                <p>@lang('home.nourish_description')</p>
-                <a href="#" class="btn">@lang('home.shop_now')</a>
+            <div id="block__content" class="main-block__content">
+                <span id="professional" class="saint-text">@lang('home.professional')</span>
+                <h1 id="beauty_and_care" class="main-text">@lang('home.beauty_and_care')</h1>
+                <p id="nourish_description">@lang('home.nourish_description')</p>
+                <a id="shop_now" href="#" class="btn">@lang('home.shop_now')</a>
             </div>
-        </div><img class="main-block__decor" src="{{asset('user/img/main-block-decor.png')}}" alt="">
+        </div>
     </div>
     <!-- BEGIN TRENDING -->
     <section class="trending">
@@ -216,33 +305,6 @@
                 </div>
             </div>
     </section>
-    <!-- TRENDING EOF   -->
-    <!-- BEGIN LOGOS -->
-    <div class="main-logos">
-        <img data-src="img/main-logo1.svg" src="data:image/gif;base64,R0lGODlhAQABAAAAACw=" class="js-img"
-            alt="">
-        <img data-src="img/main-logo2.svg" src="data:image/gif;base64,R0lGODlhAQABAAAAACw=" class="js-img"
-            alt="">
-        <img data-src="img/main-logo3.svg" src="data:image/gif;base64,R0lGODlhAQABAAAAACw=" class="js-img"
-            alt="">
-        <img data-src="img/main-logo4.svg" src="data:image/gif;base64,R0lGODlhAQABAAAAACw=" class="js-img"
-            alt="">
-        <img data-src="img/main-logo5.svg" src="data:image/gif;base64,R0lGODlhAQABAAAAACw=" class="js-img"
-            alt="">
-    </div>
-    <!-- LOGOS EOF   -->
-    <!-- BEGIN DISCOUNT -->
-    <div class="discount js-img" data-src="https://via.placeholder.com/1920x900">
-        <div class="wrapper">
-            <div class="discount-info">
-                <span class="saint-text">@lang('home.discount')</span>
-                <span class="main-text">@lang('home.get_your_off', ['percentage' => '50%'])</span>
-                <p>@lang('home.nourish_description')</p>
-                <a href="#" class="btn">@lang('home.get_now')</a>
-            </div>
-        </div>
-    </div>
-    <!-- DISCOUNT EOF   -->
     <!-- BEGIN ADVANTAGES -->
     <div class="advantages">
         <div class="wrapper">
@@ -272,135 +334,103 @@
         </div>
     </div>
     <!-- ADVANTAGES EOF   -->
-    <!-- BEGIN TOP CATEGORIES -->
-    <section class="top-categories">
-        <div class="top-categories__text">
-            <span class="saint-text">@lang('home.popular_collections')</span>
-            <h2>@lang('home.top_categories')</h2>
-            <p>@lang('home.nourish_description')</p>
+    <section id="call-to-action" class="call-to-action section dark-background">
+
+        <img src="{{ asset('user/img/scroll-image.png') }}" alt="">
+
+        <div class="container">
+            <div class="row justify-content-center" data-aos="zoom-in" data-aos-delay="100">
+                <div class="col-xl-10">
+
+                </div>
+            </div>
         </div>
-        <div class="top-categories__items">
-            <a href="#" class="top-categories__item">
-                <img data-src="https://via.placeholder.com/620x700" src="data:image/gif;base64,R0lGODlhAQABAAAAACw="
-                    class="js-img" alt="@lang('home.spa')">
-                <div class="top-categories__item-hover">
-                    <h5>@lang('home.spa')</h5>
-                    <span>@lang('home.browse_products') -</span>
-                    <i class="icon-arrow-lg"></i>
-                </div>
-            </a>
-            <a href="#" class="top-categories__item">
-                <img data-src="https://via.placeholder.com/620x700" src="data:image/gif;base64,R0lGODlhAQABAAAAACw="
-                    class="js-img" alt="@lang('home.nails')">
-                <div class="top-categories__item-hover">
-                    <h5>@lang('home.nails')</h5>
-                    <span>@lang('home.browse_products') -</span>
-                    <i class="icon-arrow-lg"></i>
-                </div>
-            </a>
-            <a href="#" class="top-categories__item">
-                <img data-src="https://via.placeholder.com/620x700" src="data:image/gif;base64,R0lGODlhAQABAAAAACw="
-                    class="js-img" alt="@lang('home.perfume')">
-                <div class="top-categories__item-hover">
-                    <h5>@lang('home.perfume')</h5>
-                    <span>@lang('home.browse_products') -</span>
-                    <i class="icon-arrow-lg"></i>
-                </div>
-            </a>
-        </div>
+
     </section>
+<!-- BEGIN TOP CATEGORIES -->
+<section class="top-categories">
+    <div class="top-categories__text text-center">
+        <span class="saint-text">@lang('home.popular_collections')</span>
+        <h2 class="animate__animated animate__fadeIn">@lang('home.top_categories')</h2>
+        <p class="animate__animated animate__fadeIn">@lang('home.nourish_description')</p>
+    </div>
+    <div class="top-categories__items d-flex justify-content-around">
+        <a href="#" class="top-categories__item animate__animated animate__fadeInRight">
+            <img data-src="{{ 'user/img/image-1.png' }}" src="data:image/gif;base64,R0lGODlhAQABAAAAACw="
+                class="js-img img-fluid" alt="@lang('home.spa')">
+            <div class="top-categories__item-hover">
+                <h5>@lang('home.spa')</h5>
+                <span>@lang('home.browse_products') -</span>
+                <i class="icon-arrow-lg"></i>
+            </div>
+        </a>
+        <a href="#" class="top-categories__item animate__animated animate__fadeInDown">
+            <img data-src="{{ asset('user/img/image-2.png') }}" src="data:image/gif;base64,R0lGODlhAQABAAAAACw="
+                class="js-img img-fluid" alt="@lang('home.nails')">
+            <div class="top-categories__item-hover">
+                <h5>@lang('home.nails')</h5>
+                <span>@lang('home.browse_products') -</span>
+                <i class="icon-arrow-lg"></i>
+            </div>
+        </a>
+        <a href="#" class="top-categories__item animate__animated animate__fadeInLeft">
+            <img data-src="{{ 'user/img/image-3.png' }}" src="data:image/gif;base64,R0lGODlhAQABAAAAACw="
+                class="js-img img-fluid" alt="@lang('home.perfume')">
+            <div class="top-categories__item-hover">
+                <h5>@lang('home.perfume')</h5>
+                <span>@lang('home.browse_products') -</span>
+                <i class="icon-arrow-lg"></i>
+            </div>
+        </a>
+    </div>
+</section>
     <!-- TOP CATEGORIES EOF   -->
     <!-- BEGIN INFO BLOCKS -->
     <div class="info-blocks">
-        <div class="info-blocks__item js-img" data-src="https://via.placeholder.com/960x900">
+        <div class="info-blocks__item js-img" data-src="">
             <div class="wrapper">
                 <div class="info-blocks__item-img">
-                    <img data-src="https://via.placeholder.com/960x900" src="data:image/gif;base64,R0lGODlhAQABAAAAACw="
+                    <img data-src="{{ asset('user/img/image-6.png') }}" src="data:image/gif;base64,R0lGODlhAQABAAAAACw="
                         class="js-img" alt="@lang('home.check_this_out')">
                 </div>
                 <div class="info-blocks__item-text">
                     <span class="saint-text">@lang('home.check_this_out')</span>
                     <h2>@lang('home.new_collection')</h2>
                     <span class="info-blocks__item-descr">@lang('home.nourish_description')</span>
-                    <p>@lang('home.full_description')</p>
                     <a href="#" class="btn">@lang('home.shop_now')</a>
                 </div>
             </div>
         </div>
-        <div class="info-blocks__item info-blocks__item-reverse js-img" data-src="https://via.placeholder.com/960x900">
+        <div class="info-blocks__item info-blocks__item-reverse js-img" data-src="">
             <div class="wrapper">
                 <div class="info-blocks__item-img">
-                    <img data-src="https://via.placeholder.com/960x900" src="data:image/gif;base64,R0lGODlhAQABAAAAACw="
+                    <img data-src="{{ asset('user/img/image-5.png') }}" src="data:image/gif;base64,R0lGODlhAQABAAAAACw="
                         class="js-img" alt="@lang('home.promotion_video')">
-                    <iframe allowfullscreen></iframe>
-                    <div class="info-blocks__item-img-overlay">
-                        <span>@lang('home.promotion_video')</span>
-                        <div class="info-blocks__item-img-play">
-                            <img data-src="img/play-btn.png" src="data:image/gif;base64,R0lGODlhAQABAAAAACw="
-                                class="js-img" alt="">
-                        </div>
-                    </div>
+
                 </div>
                 <div class="info-blocks__item-text">
                     <span class="saint-text">@lang('home.about_us')</span>
                     <h2>@lang('home.who_we_are')</h2>
                     <span class="info-blocks__item-descr">@lang('home.nourish_description')</span>
-                    <p>@lang('home.full_description')</p>
-                    <a href="#" class="info-blocks__item-link">
-                        <i class="icon-video"></i>
-                        @lang('home.watch_video')
-                        <i class="icon-arrow-lg"></i>
-                    </a>
+
                 </div>
             </div>
         </div>
     </div>
-
-
-    <!-- BEGIN INSTA PHOTOS -->
-    <div class="insta-photos">
-        <a href="#" class="insta-photo">
-            <img data-src="https://via.placeholder.com/320" src="data:image/gif;base64,R0lGODlhAQABAAAAACw="
-                class="js-img" alt="">
-            <div class="insta-photo__hover">
-                <i class="icon-insta"></i>
-            </div>
-        </a>
-        <a href="#" class="insta-photo">
-            <img data-src="https://via.placeholder.com/320" src="data:image/gif;base64,R0lGODlhAQABAAAAACw="
-                class="js-img" alt="">
-            <div class="insta-photo__hover">
-                <i class="icon-insta"></i>
-            </div>
-        </a>
-        <a href="#" class="insta-photo">
-            <img data-src="https://via.placeholder.com/320" src="data:image/gif;base64,R0lGODlhAQABAAAAACw="
-                class="js-img" alt="">
-            <div class="insta-photo__hover">
-                <i class="icon-insta"></i>
-            </div>
-        </a>
-        <a href="#" class="insta-photo">
-            <img data-src="https://via.placeholder.com/320" src="data:image/gif;base64,R0lGODlhAQABAAAAACw="
-                class="js-img" alt="">
-            <div class="insta-photo__hover">
-                <i class="icon-insta"></i>
-            </div>
-        </a>
-        <a href="#" class="insta-photo">
-            <img data-src="https://via.placeholder.com/320" src="data:image/gif;base64,R0lGODlhAQABAAAAACw="
-                class="js-img" alt="">
-            <div class="insta-photo__hover">
-                <i class="icon-insta"></i>
-            </div>
-        </a>
-        <a href="#" class="insta-photo">
-            <img data-src="https://via.placeholder.com/320" src="data:image/gif;base64,R0lGODlhAQABAAAAACw="
-                class="js-img" alt="">
-            <div class="insta-photo__hover">
-                <i class="icon-insta"></i>
-            </div>
-        </a>
-    </div>
-    <!-- INSTA PHOTOS EOF   -->
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const items = document.querySelectorAll('.top-categories__item');
+    
+            const observer = new IntersectionObserver(entries => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('animate__animated', 'animate__fadeInRight');
+                    }
+                });
+            });
+    
+            items.forEach(item => observer.observe(item));
+        });
+    </script>
+    
 @endsection

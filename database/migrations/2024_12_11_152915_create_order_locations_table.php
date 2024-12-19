@@ -18,7 +18,7 @@ class CreateOrderLocationsTable extends Migration
             $table->string('latitude')->nullable(); // Latitude coordinate
             $table->string('longitude')->nullable(); // Longitude coordinate
             $table->string('city')->nullable(); // City name
-            $table->string('state')->nullable(); // State or region
+            $table->string('address')->nullable(); // State or region
             $table->string('country')->nullable(); // Country
             $table->timestamps();
         });

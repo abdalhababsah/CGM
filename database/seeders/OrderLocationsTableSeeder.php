@@ -23,7 +23,7 @@ class OrderLocationsTableSeeder extends Seeder
                 'latitude' => '31.963158', // Example latitude (e.g., Amman, Jordan)
                 'longitude' => '35.930359', // Example longitude
                 'city' => 'Amman',
-                'state' => 'Amman Governorate',
+                'address' => 'Amman Governorate',
                 'country' => 'Jordan',
             ]);
 
@@ -34,7 +34,7 @@ class OrderLocationsTableSeeder extends Seeder
                 'latitude' => '31.985410', // Example latitude (e.g., final destination)
                 'longitude' => '35.905230',
                 'city' => 'Zarqa',
-                'state' => 'Zarqa Governorate',
+                'address' => 'Zarqa Governorate',
                 'country' => 'Jordan',
             ]);
         }

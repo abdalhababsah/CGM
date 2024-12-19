@@ -15,6 +15,8 @@ class CreateOrdersTable extends Migration
             $table->foreignId('delivery_company_id')->nullable()->constrained()->onDelete('set null');
             $table->decimal('total_amount', 10, 2);
             $table->string('payment_method', 50)->default('Cash on Delivery');
+            $table->string('note')->nullable();
+            $table->string('phone2')->nullable();
             $table->string('status', 50)->default('Pending');
             $table->string('preferred_language', 5)->default('en')->comment('e.g., en, ar, he'); // Language for order communications
             $table->timestamps(); 

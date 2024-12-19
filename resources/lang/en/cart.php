@@ -22,5 +22,6 @@ return [
     'cancel' => 'Cancel',
     'reached_max_quantity' => 'You cannot add more than the available quantity.',
     'product_removed_success' => 'Product removed successfully.',
-
+    'checkout_disabled_message' => 'Some products exceed available stock. Please adjust quantities.',
+    'quantity_exceeds_stock' => 'Quantity exceeds available stock',
 ];

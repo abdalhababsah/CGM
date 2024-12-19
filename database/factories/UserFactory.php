@@ -19,6 +19,7 @@ class UserFactory extends Factory
             'email' => $this->faker->unique()->safeEmail(),
             'password' => bcrypt('password'), // password
             'role' => 0, // Default to regular user
+            'phone' => '009809809809', // Default to regular user
             'preferred_language' => $this->faker->numberBetween(0, 2), // Random language (0, 1, or 2)
             'email_verified_at' => now(),
             'remember_token' => Str::random(10),

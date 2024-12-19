@@ -15,6 +15,7 @@
     <title>
         @yield('title', 'Soft UI Dashboard 3 by Creative Tim')
     </title>
+    <meta name="csrf-token" content="{{ csrf_token() }}">
 
     <!-- Fonts and Icons -->
     <link href="https://fonts.googleapis.com/css?family=Inter:300,400,500,600,700,800" rel="stylesheet" />
@@ -27,7 +28,7 @@
     <script src="https://kit.fontawesome.com/42d5adcbca.js" crossorigin="anonymous"></script>
 
     <!-- Soft UI Dashboard CSS -->
-    <link rel="stylesheet" href="{{ asset('sweetalert/sweetalert2.min.css') }}">
+    <link rel="stylesheet" href="{{ asset('user/sweetalert/sweetalert2.min.css') }}">
     <link id="pagestyle" href="{{ asset('admin/assets/css/soft-ui-dashboard.css') }}" rel="stylesheet" />
     <link href="{{ asset('admin/assets/js/quill.snow.css') }}" rel="stylesheet">
     <script src="{{ asset('admin/assets/js/quill.js.map') }}"></script>
@@ -337,7 +338,7 @@
     </script>
 
     <script src="{{ asset('admin/assets/js/soft-ui-dashboard.min.js?v=1.1.0') }}"></script>
-    <script src="{{ asset('sweetalert/sweetalert2.min.js') }}"></script>
+    <script src="{{ asset('user/sweetalert/sweetalert2.min.js') }}"></script>
 
     <!-- Additional Scripts (Page-Specific) -->
     @stack('scripts')

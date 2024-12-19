@@ -22,5 +22,6 @@ return [
     'cancel' => 'ביטול',
     'reached_max_quantity' => 'אינך יכול להוסיף יותר מהכמות הזמינה.',
     'product_removed_success' => 'המוצר הוסר בהצלחה.',
-
+    'checkout_disabled_message' => 'חלק מהמוצרים חורגים מהמלאי הזמין. אנא עדכן כמויות.',
+    'quantity_exceeds_stock' => 'הכמות חורגת מהמלאי הזמין',
 ];

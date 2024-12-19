@@ -66,3 +66,30 @@ body {
 .info-blocks__item-link i {
     margin-left: 5px;
 }
+
+.info-blocks__item .wrapper {
+    position: initial;
+    display: -webkit-box;
+    display: -webkit-flex;
+    display: -ms-flexbox;
+    display: flex
+;
+    -webkit-box-pack: start;
+    -webkit-justify-content: flex-start;
+    -ms-flex-pack: end;
+    justify-content: flex-start;
+    width: 100%;
+    -webkit-box-align: start;
+    -webkit-align-items: flex-start;
+    -ms-flex-align: start;
+    align-items: flex-start;
+}
+.info-blocks__item-reverse .info-blocks__item-text{
+    padding: 237px 81px 223px 0 !important;
+}
+
+html[dir="rtl"] .btn-menu {
+    right: auto; /* Remove the right positioning */
+    left: 15px; /* Position on the left */
+    transform: translateY(-50%);
+}

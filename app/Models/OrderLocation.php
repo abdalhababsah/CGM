@@ -15,7 +15,7 @@ class OrderLocation extends Model
         'latitude',
         'longitude',
         'city',
-        'state',
+        'address',
         'country',
     ];
 

@@ -21752,11 +21752,7 @@ fieldset:disabled .btn {
   transform: translateX(-5px);
 }
 
-.btn-primary:hover,
-.btn.bg-gradient-primary:hover {
-  background-color: #f97316;
-  border-color: #f97316;
-}
+
 
 .btn-primary .btn.bg-outline-primary,
 .btn.bg-gradient-primary .btn.bg-outline-primary {
@@ -21769,8 +21765,8 @@ fieldset:disabled .btn {
 .btn.bg-gradient-primary:not(:disabled):not(.disabled).active,
 .btn.bg-gradient-primary:not(:disabled):not(.disabled):active,
 .show>.btn.bg-gradient-primary.dropdown-toggle {
-  color: color-yiq(#f97316);
-  background-color: #f97316;
+  color: color-yiq(black);
+  background-color: rgb(153, 29, 37);
 }
 
 .btn-primary.focus,

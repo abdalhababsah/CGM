@@ -17,7 +17,7 @@
                 <h1>@lang('login.login')</h1>
                 <ul class="bread-crumbs">
                     <li class="bread-crumbs__item">
-                        <a href="{{ url('/') }}" class="bread-crumbs__link">@lang('login.home')</a>
+                        <a href="{{ route('home') }}" class="bread-crumbs__link">@lang('login.home')</a>
                     </li>
                     <li class="bread-crumbs__item">@lang('login.login')</li>
                 </ul>

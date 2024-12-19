@@ -19,6 +19,7 @@ class UsersTableSeeder extends Seeder
             'first_name' => 'Admin',
             'last_name' => 'User',
             'email' => 'admin@cgm.com',
+            'phone' => '0782445888',
             'password' => Hash::make('password'), // Ensure to hash passwords
             'role' => 1, // Admin role
             'preferred_language' => 0, // English
@@ -31,6 +32,7 @@ class UsersTableSeeder extends Seeder
             'first_name' => 'Regular',
             'last_name' => 'User',
             'email' => 'user@cgm.com',
+            'phone' => '0782445888',
             'password' => Hash::make('password'),
             'role' => 0, // User role
             'preferred_language' => 1, // Arabic

@@ -63,5 +63,4 @@ return [
     'new_arrivals' => 'الوافدين الجدد',
     'full_description' => 'وصف كامل',
 
-    // Additional Keys (if needed)
 ];

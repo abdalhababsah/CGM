@@ -6,10 +6,12 @@
         <div class="row">
             <div class="col-12">
                 <div class="card mb-4">
-                    <div class="card-header pb-0">
+                    <div class="card-header pb-0 d-flex justify-content-between align-items-center">
                         <h6>Brands Table</h6>
+                        <a href="{{ route('admin.brands.create') }}" class="btn btn-primary">Add Brand</a>
                     </div>
                     <div class="card-body px-0 pt-0 pb-2">
+                        
                         <div class="table-responsive p-0">
                             <table class="table align-items-center table-striped mb-0">
                                 <thead>

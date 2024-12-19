@@ -141,7 +141,7 @@
                 <h1>{{ __('wishlist.wishlist') }}</h1>
                 <ul class="bread-crumbs">
                     <li class="bread-crumbs__item">
-                        <a href="{{ url('/') }}" class="bread-crumbs__link">{{ __('wishlist.home') }}</a>
+                        <a href="{{ route('home') }}" class="bread-crumbs__link">{{ __('wishlist.home') }}</a>
                     </li>
                     <li class="bread-crumbs__item">{{ __('wishlist.wishlist') }}</li>
                 </ul>
@@ -317,13 +317,7 @@
 
             // Function to remove item from wishlist via AJAX
             function removeFromWishlist(productId) {
-                Swal.fire({
-                    title: '{{ __('wishlist.removing') }}',
-                    allowOutsideClick: false,
-                    didOpen: () => {
-                        Swal.showLoading()
-                    }
-                });
+                
 
                 $.ajax({
                     url: "{{ route('wishlist.remove') }}",
@@ -362,13 +356,6 @@
 
             // Function to add item to cart from wishlist via AJAX
             function addToCartFromWishlist(productId) {
-                Swal.fire({
-                    title: '{{ __('wishlist.adding_to_cart') }}',
-                    allowOutsideClick: false,
-                    didOpen: () => {
-                        Swal.showLoading()
-                    }
-                });
 
                 $.ajax({
                     url: "{{ route('cart.add') }}",

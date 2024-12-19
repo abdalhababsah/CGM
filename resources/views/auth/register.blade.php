@@ -9,7 +9,7 @@
                 <h1>@lang('register.registration')</h1>
                 <ul class="bread-crumbs">
                     <li class="bread-crumbs__item">
-                        <a href="{{ url('/') }}" class="bread-crumbs__link">@lang('register.home')</a>
+                        <a href="{{ route('home') }}" class="bread-crumbs__link">@lang('register.home')</a>
                     </li>
                     <li class="bread-crumbs__item">@lang('register.registration')</li>
                 </ul>

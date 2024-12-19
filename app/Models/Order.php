@@ -17,6 +17,9 @@ class Order extends Model
         'payment_method',
         'status',
         'preferred_language',
+        'delivery_location_id',
+        'discount_code_id',
+        'note',
     ];
 
     // Relationships
@@ -34,9 +37,9 @@ class Order extends Model
     }
 
     public function orderLocation()
-{
-    return $this->hasOne(OrderLocation::class);
-}
+    {
+        return $this->hasOne(OrderLocation::class);
+    }
     // An order can have many order items
     public function orderItems()
     {
@@ -47,5 +50,21 @@ class Order extends Model
     public function orderHistories()
     {
         return $this->hasMany(OrderHistory::class);
+    }
+    public function deliveryLocation()
+    {
+        return $this->belongsTo(DeliveryLocationAndPrice::class, 'delivery_location_id');
+    }
+    /**
+     * An order belongs to a discount code.
+     */
+    public function discountCode()
+    {
+        return $this->belongsTo(DiscountCode::class, 'discount_code_id');
+    }
+    public function getAdjustedTotalAttribute()
+    {
+        $deliveryPrice = $this->orderLocation->price ?? 0;
+        return $this->total_amount + $deliveryPrice;
     }
 }

@@ -15,5 +15,5 @@ return [
     'promo_message' => 'Nourish your skin with toxin-free cosmetic products.',
     'enter_email' => 'Enter your email',
     'no_products_found' => 'No products found.',
-
+    'price' => 'Price',
 ];
