@@ -37,7 +37,7 @@ class OrderHistoryTableSeeder extends Seeder
         // Example Order History for Order 2
         OrderHistory::create([
             'order_id' => $order2->id,
-            'status' => 'Pending',
+            'status' => 'Shipped',
         ]);
 
         OrderHistory::create([

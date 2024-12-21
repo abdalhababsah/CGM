@@ -15,7 +15,6 @@ class UsersTableSeeder extends Seeder
     {
         // Create an Admin User
         User::create([
-            'name' => 'Admin User',
             'first_name' => 'Admin',
             'last_name' => 'User',
             'email' => 'admin@cgm.com',
@@ -28,7 +27,6 @@ class UsersTableSeeder extends Seeder
 
         // Create a Regular User
         User::create([
-            'name' => 'Regular User',
             'first_name' => 'Regular',
             'last_name' => 'User',
             'email' => 'user@cgm.com',

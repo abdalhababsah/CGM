@@ -17,7 +17,7 @@ class CreateOrdersTable extends Migration
             $table->string('payment_method', 50)->default('Cash on Delivery');
             $table->string('note')->nullable();
             $table->string('phone2')->nullable();
-            $table->string('status', 50)->default('Pending');
+            $table->enum('status', ['Pending', 'Processing', 'Shipped'])->default('Pending');
             $table->string('preferred_language', 5)->default('en')->comment('e.g., en, ar, he'); // Language for order communications
             $table->timestamps(); 
         });

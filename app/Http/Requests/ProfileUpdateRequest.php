@@ -26,7 +26,6 @@ class ProfileUpdateRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'name' => ['required', 'string', 'max:255'],
             'email' => [
                 'required',
                 'string',
@@ -46,9 +45,7 @@ class ProfileUpdateRequest extends FormRequest
     public function messages(): array
     {
         return [
-            'name.required' => __('profile.name_required'),
-            'name.string' => __('profile.name_must_be_string'),
-            'name.max' => __('profile.name_max_length'),
+
 
             'email.required' => __('profile.email_required'),
             'email.string' => __('profile.email_must_be_string'),
