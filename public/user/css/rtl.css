@@ -88,8 +88,60 @@ body {
     padding: 237px 81px 223px 0 !important;
 }
 
-html[dir="rtl"] .btn-menu {
-    right: auto; /* Remove the right positioning */
-    left: 15px; /* Position on the left */
-    transform: translateY(-50%);
+
+
+
+.btn-menu {
+	margin-top: 23px;
+    color: #222222;
+    cursor: pointer;
+    display: none; /* Ensure it's visible in responsive layouts */
+    height: 45px;
+    width: 40px; /* Adjust width for better alignment */
+    position: absolute;
+    top: 50%; /* Center vertically */
+    left: 15px; /* Align to the left edge */
+    transform: translateY(-50%); /* Center vertically within the header */
+    z-index: 111;
+}
+
+.btn-menu span {
+    background-color: white;
+    display: block;
+    height: 2px;
+    width: 100%; /* Full width of the parent .btn-menu */
+    position: relative;
+    margin: 5px 0; /* Space between spans for visual clarity */
+    transition: background-color 86ms ease-out, transform 86ms ease-out;
+}
+
+/* When the menu is active */
+.btn-menu.active span:nth-child(1) {
+    transform: translateY(7px) rotate(45deg);
+}
+
+.btn-menu.active span:nth-child(2) {
+    opacity: 0;
+}
+
+.btn-menu.active span:nth-child(3) {
+    transform: translateY(-7px) rotate(-45deg);
+}
+@media screen and (min-width: 1200px) {
+    #block__content .saint-text,
+    #block__content .main-text,
+    #block__content p{
+        color: #fff !important;
+    }
+
+    /* For the button specifically */
+    #block__content .btn {
+        background-color: transparent; /* Optional if button background needs adjustment */
+        border: 1px solid #fff !important; /* Optional for a border effect */
+    }
+
+    #block__content .btn:hover {
+        color: #fff;
+        background-color: #fff !important;
+    }
 }

@@ -1,72 +1,51 @@
-<footer class="footer">
-    <div class="wrapper">
-        <div class="footer-top">
-            <div class="footer-top__social">
-                <span>Find us here:</span>
-                <ul>
-                    <li><a href="#"><i class="icon-facebook"></i></a></li>
-                    <li><a href="#"><i class="icon-twitter"></i></a></li>
-                    <li><a href="#"><i class="icon-insta"></i></a></li>
-                    <li><a href="#"><i class="icon-in"></i></a></li>
-                </ul>
-            </div>
-            <div class="footer-top__logo">
-                <img data-src="" src="data:image/gif;base64,R0lGODlhAQABAAAAACw="
-                    class="js-img" alt="">
+<footer class="text-center" style="background-color: #971d25 !important;">
+    <!-- Top Section: Logo -->
+    <div class="container py-4">
+        <div class="d-flex justify-content-between align-items-center">
+            <!-- Footer Logo -->
+            <div class="d-flex align-items-center">
+                <img src="{{ asset('user/img/logo-white-01.svg') }}" alt="@lang('home.header_logo_alt')" width="120">
             </div>
 
+            <!-- Navigation Links -->
+            <ul class="nav">
+                <li class="nav-item">
+                    <a href="{{ route('home') }}" class="nav-link text-white fw-bold">
+                        <i class="fas fa-home me-2"></i>{{ __('home.nav_home') }}
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="{{ route('shop.index') }}" class="nav-link text-white fw-bold">
+                        <i class="fas fa-store me-2"></i>{{ __('home.nav_shop') }}
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="{{ route('contact') }}" class="nav-link text-white fw-bold">
+                        <i class="fas fa-envelope me-2"></i>{{ __('home.nav_contact') }}
+                    </a>
+                </li>
+            </ul>
         </div>
-        <div class="footer-nav">
-            <div class="footer-nav__col">
-                <span class="footer-nav__col-title">About</span>
-                <ul>
-                    <li><a href="about.html">About us</a></li>
-                    <li><a href="categories.html">Categories</a></li>
-                    <li><a href="shop.html">Shop</a></li>
-                    <li><a href="blog.html">Blog</a></li>
-                    <li><a href="faq.html">FAQ</a></li>
-                    <li><a href="contacts.html">Contacts</a></li>
-                </ul>
-            </div>
-            <div class="footer-nav__col">
-                <span class="footer-nav__col-title">Categories</span>
-                <ul>
-                    <li><a href="#">Make up</a></li>
-                    <li><a href="#">SPA</a></li>
-                    <li><a href="#">Perfume</a></li>
-                    <li><a href="#">Nails</a></li>
-                    <li><a href="#">Skin care</a></li>
-                    <li><a href="#">Hair care</a></li>
-                </ul>
-            </div>
-            <div class="footer-nav__col">
-                <span class="footer-nav__col-title">Useful links</span>
-                <ul>
-                    <li><a href="#">Careers</a></li>
-                    <li><a href="#">Privacy policy</a></li>
-                    <li><a href="#">Terms of use</a></li>
-                    <li><a href="#">Support</a></li>
-                    <li><a href="#">Shipping details</a></li>
-                    <li><a href="#">Information</a></li>
-                </ul>
-            </div>
-            <div class="footer-nav__col">
-                <span class="footer-nav__col-title">Contact</span>
-                <ul>
-                    <li><i class="icon-map-pin"></i> 27 Division St, New York, NY 10002, USA</li>
-                    <li>
-                        <i class="icon-smartphone"></i>
-                        <div class="footer-nav__col-phones">
-                            <a href="tel:+13459971345">+1 345 99 71 345</a>
-                            <a href="tel:+13457464975">+1 345 74 64 975</a>
-                        </div>
-                    </li>
-                    <li><i class="icon-mail"></i><a href="mailto:info@beshop.com">info@beshop.com</a></li>
-                </ul>
+    </div>
+
+    <!-- Bottom Section: Wishlist, Cart, Social Media -->
+    <div class="container mt-4">
+        <div class="d-flex justify-content-end align-items-center">
+            <!-- Social Media Icons -->
+            <div class="d-flex align-items-center">
+                <a href="https://www.facebook.com" class="text-white me-3" target="_blank">
+                    <i class="fab fa-facebook-f"></i> Facebook
+                </a>
+                <a href="https://www.instagram.com" class="text-white" target="_blank">
+                    <i class="fab fa-instagram"></i> Instagram
+                </a>
             </div>
         </div>
-        <div class="footer-copy">
-            <span>&copy; All rights reserved. BeShop 2020</span>
-        </div>
+    </div>
+
+    <!-- Copyright -->
+    <div class="text-center p-3 mt-4" style="background-color: rgba(0, 0, 0, 0.05);">
+        <span class="text-white">© 2020 Copyright:</span>
+        <a class="text-white text-decoration-none" href="https://mdbootstrap.com/">MDBootstrap.com</a>
     </div>
 </footer>

@@ -34,10 +34,14 @@
             color: red;
         }
 
+        .active-li {
+            color: white !important;
+            background: rgb(128, 0, 0) !important;
+        }
+
         .active {
             color: rgb(128, 0, 0) !important;
         }
-
         /* Additional styling for product listing or any other UI elements if needed */
     </style>
 @endsection
@@ -143,7 +147,6 @@
             // Array of product IDs currently in the wishlist
             // Ensure your controller passes this array
             // Example: $currentWishlistIds = [1, 2, 5]; 
-            // Make sure to define $currentWishlistIds in your controller and pass it to the view
             let currentWishlistIds = @json($currentWishlistIds ?? []);
 
             $.ajaxSetup({
@@ -189,7 +192,7 @@
                 categories.forEach(function(categoryItem) {
                     categoriesList.append(`
                         <li>
-                            <a href="#" class="category-filter ${category == categoryItem.id ? 'active' : ''}" data-id="${categoryItem.id}">
+                            <a href="#" class="category-filter ${category == categoryItem.id ? 'active-li' : ''}" data-id="${categoryItem.id}">
                                 ${getLocalizedName(categoryItem)}
                             </a>
                         </li>
@@ -201,11 +204,11 @@
                     let selectedCategory = $(this).data('id');
                     if (category == selectedCategory) {
                         category = '';
-                        $(this).removeClass('active');
+                        $(this).removeClass('active-li');
                     } else {
                         category = selectedCategory;
-                        $('.category-filter').removeClass('active');
-                        $(this).addClass('active');
+                        $('.category-filter').removeClass('active-li');
+                        $(this).addClass('active-li');
                     }
                     page = 1;
                     fetchData();
@@ -219,7 +222,7 @@
                 brands.forEach(function(brandItem) {
                     brandsList.append(`
                         <li>
-                            <a href="#" class="brand-filter ${brand === brandItem.id ? 'active' : ''}" data-id="${brandItem.id}">
+                            <a href="#" class="brand-filter ${brand === brandItem.id ? 'active-li' : ''}" data-id="${brandItem.id}">
                                 ${getLocalizedName(brandItem)}
                             </a>
                         </li>
@@ -231,11 +234,11 @@
                     let selectedBrand = $(this).data('id');
                     if (brand === selectedBrand) {
                         brand = '';
-                        $(this).removeClass('active');
+                        $(this).removeClass('active-li');
                     } else {
                         brand = selectedBrand;
-                        $('.brand-filter').removeClass('active');
-                        $(this).addClass('active');
+                        $('.brand-filter').removeClass('active-li');
+                        $(this).addClass('active-li');
                     }
                     page = 1;
                     fetchData();

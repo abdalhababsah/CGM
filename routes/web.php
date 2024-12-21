@@ -8,22 +8,24 @@ use App\Http\Controllers\Admin\DeliveryController;
 use App\Http\Controllers\Admin\DiscountCodeController;
 use App\Http\Controllers\CartController;
 use App\Http\Controllers\CheckoutController;
+use App\Http\Controllers\ContactUsController;
 use App\Http\Controllers\LocalizationController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\ShopController;
+use App\Http\Controllers\UserDashboardController;
 use App\Http\Controllers\WishListController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Admin\AdminDashboardController;
 
+
+
+// change language
+Route::get('/lang/{locale}', [LocalizationController::class, 'switchLang'])->name('lang.switch');// Profile Routes
 // Public Routes
 Route::get('/', function () {
     return view('welcome');
 })->name('home');
 
-// Dashboard Route for Authenticated and Verified Users
-Route::get('/dashboard', function () {
-    return view('dashboard');
-})->middleware(['auth', 'verified'])->name('dashboard');
 
 // Admin Routes Group
 Route::middleware(['auth', 'admin'])->prefix('admin')->name('admin.')->group(function () {
@@ -33,7 +35,6 @@ Route::middleware(['auth', 'admin'])->prefix('admin')->name('admin.')->group(fun
     Route::resource('brands', BrandController::class);
     // Category Routes
     Route::resource('categories', CategoryController::class);
-    
     // Delivery Locations and Prices Routes
     Route::resource('deliveries', DeliveryController::class);
     // orders
@@ -49,11 +50,9 @@ Route::middleware(['auth', 'admin'])->prefix('admin')->name('admin.')->group(fun
     Route::get('products/{product}/edit', [AdminProductsController::class, 'edit'])->name('products.edit');
     Route::put('products/{product}', [AdminProductsController::class, 'update'])->name('products.update');
     Route::delete('products/{product}', [AdminProductsController::class, 'destroy'])->name('products.destroy');
-    
     // Partial Updates for Products
     Route::put('products/{product}/general-info', [AdminProductsController::class, 'updateGeneralInfo'])->name('products.updateGeneralInfo');
     Route::put('products/{product}/options', [AdminProductsController::class, 'updateOptions'])->name('products.updateOptions');
-    
     // Image Management Routes
     Route::post('products/{product}/additional-images', [AdminProductsController::class, 'uploadAdditionalImages'])->name('products.uploadAdditionalImages');
     Route::post('products/{product}/primary-image', [AdminProductsController::class, 'updatePrimaryImage'])->name('products.updatePrimaryImage');
@@ -62,16 +61,13 @@ Route::middleware(['auth', 'admin'])->prefix('admin')->name('admin.')->group(fun
 });
 
 
-
-
-
-
-Route::get('/lang/{locale}', [LocalizationController::class, 'switchLang'])->name('lang.switch');// Profile Routes
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
+
+
 
 Route::get('/wishlist', [WishListController::class, 'index'])->name('wishlist.index');
 
@@ -98,6 +94,10 @@ Route::get('/shop/fetch-products', [ShopController::class, 'fetchProducts'])->na
 
 
 
+Route::middleware(['auth', 'user'])->name('user.')->group(function () {
+    Route::get('/dashboard', [UserDashboardController::class, 'index'])->name('dashboard');
+});
+
 Route::middleware(['auth'])->prefix('checkout')->name('checkout.')->group(function () {
     // Display the checkout page
     Route::get('/', [CheckoutController::class, 'index'])->name('index');
@@ -119,5 +119,8 @@ Route::middleware(['auth'])->prefix('checkout')->name('checkout.')->group(functi
 
     Route::get('/success/{order}', [CheckoutController::class, 'success'])->name('success');
 });
-// Include Auth Routes
+
+Route::get('/contact', [ContactUsController::class, 'index'])->name('contact');
+
+
 require __DIR__ . '/auth.php';

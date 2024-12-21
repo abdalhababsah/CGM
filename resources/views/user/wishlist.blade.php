@@ -259,7 +259,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class="wishlist-buttons" style="margin-top:20px;">
+                    <div class="wishlist-buttons" style="margin-top:20px; margin-bottom:20px;">
                         <a href="{{ url('/shop') }}" class="btn continue-shopping">{{ __('wishlist.go_shopping') }}</a>
                     </div>
                 `;

@@ -1,28 +1,37 @@
 <header class="header">
-    <div class="header-top">
-        <span>@lang('home.header_offer')</span>
-        <i class="header-top-close js-header-top-close icon-close"></i>
-    </div>
     <div class="header-content">
+        <div class="header-top" style="margin-bottom: 10px">
+            <span>@lang('home.header_offer')</span>
+        </div>
         <div class="header-logo">
             <img src="{{ asset('user/img/logo-white-01.svg') }}" alt="@lang('home.header_logo_alt')">
         </div>
         <div class="header-box">
             <ul class="header-nav">
-                <li><a href="{{ route('home') }}" class="{{ Request::is('/') ? 'active' : '' }}">{{__('home.nav_home')}}</a></li>
-                <li><a href="{{ route('shop.index') }}">{{__('home.nav_shop')}}</a></li>
-                <li><a href="{{ asset('contacts') }}">{{__('home.nav_contact')}}</a></li>
-                @if(!Auth::check())
-                    <li><a href="{{ asset('login') }}">{{__('home.nav_login')}}</a></li>
+                <li><a href="{{ route('home') }}"
+                        class="{{ Request::is('/') ? 'active' : '' }}">{{ __('home.nav_home') }}</a></li>
+                <li><a href="{{ route('shop.index') }}">{{ __('home.nav_shop') }}</a></li>
+                <li><a href="{{ route('contact') }}">{{ __('home.nav_contact') }}</a></li>
+                @if (!Auth::check())
+                    <li><a href="{{ asset('login') }}">{{ __('home.nav_login') }}</a></li>
                 @elseif(Auth::user()->role == 1)
-                    <li><a href="{{ route('admin.dashboard') }}">{{__('home.nav_dashboard')}}</a></li>
+                    <li><a href="{{ route('admin.dashboard') }}">{{ __('home.nav_dashboard') }}</a></li>
                 @elseif(Auth::user()->role == 0)
-                    <li><a href="{{ route('home') }}">{{__('home.nav_dashboard')}}</a></li>
+                    <li><a href="{{ route('user.dashboard') }}">{{ __('home.nav_dashboard') }}</a></li>
+                @endif
+                @if (Auth::check())
+                    <li>
+                        <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+                            @csrf
+                            {{ __('home.logout') }}
+                        </form>
+                    </li>
                 @endif
             </ul>
             <ul class="header-options">
-                <li><a href="#"><i style="	color: white ;" class="icon-user"></i></a></li>
-                <li><a  href="{{ route('wishlist.index') }}"><i style="	color: white ;" class="icon-heart"></i></a></li>
+
+
+                <li><a href="{{ route('wishlist.index') }}"><i style="	color: white ;" class="icon-heart"></i></a></li>
                 <li>
                     <a href="{{ route('cart.index') }}">
                         <i style="color: white ;" class="icon-cart"></i>
@@ -37,6 +46,8 @@
                 </li>
             </ul>
         </div>
-        <div class="btn-menu js-btn-menu" style="color: white"><span style="color: white">&nbsp;</span style="color: white"><span style="color: white">&nbsp;</span><span style="color: white">&nbsp;</span></div>
+        <div class="btn-menu js-btn-menu" style="color: white"><span style="color: white">&nbsp;</span
+                style="color: white"><span style="color: white">&nbsp;</span><span style="color: white">&nbsp;</span>
+        </div>
     </div>
 </header>
