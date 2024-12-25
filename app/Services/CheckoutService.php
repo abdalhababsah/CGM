@@ -11,14 +11,16 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Log;
+use App\Events\OrderPlaced;
 
 class CheckoutService
 {
     protected $cartService;
 
-    public function __construct(CartService $cartService)
+    public function __construct(CartService $cartService, OrderService $orderService)
     {
         $this->cartService = $cartService;
+        $this->orderService = $orderService;
     }
 
     /**
@@ -79,6 +81,7 @@ class CheckoutService
      */
     public function processCheckout(array $data)
     {
+        // dd($data);
         // Log incoming data for debugging
         Log::info('Processing checkout with data:', $data);
 
@@ -87,7 +90,7 @@ class CheckoutService
         $deliveryLocation = $data['delivery_location_id'];
         $deliveryPrice = $data['delivery_price'] ?? 0;
         $grandTotal = $totalPrice + $deliveryPrice;
-
+        $area_id =$data['area_id'];
         // Apply discount if any
         $discountData = $data['discount'] ?? null;
         if ($discountData) {
@@ -117,6 +120,7 @@ class CheckoutService
                 'user_id' => Auth::id(),
                 'delivery_location_id' => $deliveryLocation,
                 'discount_code_id' => $discountCode ? $discountCode->id : null,
+                'area_id' => $area_id,
                 'total_amount' => $grandTotal,
                 'payment_method' => 'Cash on Delivery',
                 'status' => 'Pending',
@@ -153,7 +157,9 @@ class CheckoutService
 
             // Clear the cart
             $this->cartService->clearCart();
+            $this->orderService->postCheckout($order); 
 
+            event(new OrderPlaced($order));
             DB::commit();
 
             return $order;

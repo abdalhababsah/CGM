@@ -81,4 +81,7 @@ return [
     'discount_code_not_found' => 'لم يتم العثور على رمز الخصم.',
     'select_delivery_location_first' => 'يرجى اختيار موقع التسليم أولاً.',
 
+    'select_area' => 'اختر المنطقة',
+    'no_areas_found' => 'لا توجد مناطق لهذه المدينة.',
+    'error_fetching_areas' => 'حدث خطأ أثناء جلب المناطق.',
 ];

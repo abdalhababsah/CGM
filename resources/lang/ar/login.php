@@ -9,7 +9,7 @@ return [
     'login_with' => 'تسجيل الدخول باستخدام',
     'email' => 'البريد الإلكتروني',
     'password' => 'كلمة المرور',
-    'enter_email_or_nickname' => 'أدخل بريدك الإلكتروني أو اسم المستخدم',
+    'enter_email_or_nickname' => 'أدخل بريدك الإلكتروني',
     'enter_password' => 'أدخل كلمة المرور',
     'remember_me' => 'تذكرني',
     'log_in' => 'تسجيل الدخول',

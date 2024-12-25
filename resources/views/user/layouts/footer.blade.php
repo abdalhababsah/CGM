@@ -32,12 +32,12 @@
     <div class="container mt-4">
         <div class="d-flex justify-content-end align-items-center">
             <!-- Social Media Icons -->
-            <div class="d-flex align-items-center">
+            <div class="d-flex gap-2 align-items-center">
                 <a href="https://www.facebook.com" class="text-white me-3" target="_blank">
-                    <i class="fab fa-facebook-f"></i> Facebook
+                    <i class="icon-facebook"></i>
                 </a>
                 <a href="https://www.instagram.com" class="text-white" target="_blank">
-                    <i class="fab fa-instagram"></i> Instagram
+                    <i class="icon-insta"></i>
                 </a>
             </div>
         </div>

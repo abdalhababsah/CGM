@@ -2,8 +2,10 @@
 
 namespace App\Services;
 
+use App\Mail\InvoiceMail;
 use App\Models\Order;
 use Illuminate\Pagination\LengthAwarePaginator;
+use Illuminate\Support\Facades\Mail;
 
 class OrderService
 {
@@ -65,7 +67,19 @@ class OrderService
     {
         $order->load(['user', 'orderItems.product', 'orderLocation']);
         $pdf = \Barryvdh\DomPDF\Facade\Pdf::loadView("admin.orders.invoice.invoice-pdf-{$language}", compact('order'));
-        return $pdf;
+
+        // Define the storage path for invoices
+        $invoiceDirectory = storage_path('app/invoices');
+        if (!file_exists($invoiceDirectory)) {
+            mkdir($invoiceDirectory, 0755, true);
+        }
+
+        $invoicePath = "{$invoiceDirectory}/invoice-{$order->id}.pdf";
+
+        // Save the PDF to the defined path
+        $pdf->save($invoicePath);
+
+        return $invoicePath;
     }
 
     /**
@@ -88,7 +102,8 @@ class OrderService
         $discount = min($discount, $originalPrice);
         $order->finalPrice = $originalPrice - $discount + $deliveryPrice;
     }
-        /**
+
+    /**
      * Get paginated orders for a specific user with optional filters.
      *
      * @param int $userId
@@ -132,4 +147,30 @@ class OrderService
         return $orders;
     }
 
+    /**
+     * Send the invoice email to the user.
+     *
+     * @param Order $order
+     * @param string $invoicePath
+     * @return void
+     */
+    public function sendInvoiceEmail(Order $order, string $invoicePath)
+    {
+        Mail::to($order->user->email)->send(new InvoiceMail($order, $invoicePath));
+    }
+
+    /**
+     * Process post-checkout actions, such as sending the invoice email.
+     *
+     * @param Order $order
+     * @return void
+     */
+    public function postCheckout(Order $order)
+    {
+        // Generate the invoice PDF
+        $invoicePath = $this->generateInvoice($order);
+
+        // Send the invoice email to the user
+        $this->sendInvoiceEmail($order, $invoicePath);
+    }
 }

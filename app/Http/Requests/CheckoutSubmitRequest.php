@@ -33,6 +33,7 @@ class CheckoutSubmitRequest extends FormRequest
             'city' => 'required|string|max:255',
             'address' => 'required|string|max:255',
             'delivery_location_id' => 'required|integer|exists:delivery_location_and_prices,id',
+            'area' => 'required|integer',
             'note' => 'nullable|string|max:1000',
         ];
     }

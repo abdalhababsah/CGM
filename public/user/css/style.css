@@ -349,7 +349,7 @@ li {
 
 .icon-facebook:before {
 	content: "\e906";
-	color: #999;
+	color: #fff;
 }
 
 .icon-heart:before {
@@ -2299,6 +2299,7 @@ header {
 
 	.header-content {
 		padding: 46px 20px 0;
+		direction:ltr;
 	}
 }
 
@@ -2789,7 +2790,7 @@ h6,
 	/* Center vertically */
 	justify-content: space-between;
 	/* Space between header and image carousel */
-	background-position: left;
+	background-position: right;
 	background-repeat: no-repeat;
 	-webkit-background-size: cover;
 	background-size: cover;

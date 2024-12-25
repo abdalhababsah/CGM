@@ -20,7 +20,6 @@ class UserDashboardController extends Controller
 
         // Fetch orders using the OrderService
         $orders = $this->orderService->getUserOrders($user->id);
-// dd($orders);
-        return view("user.dashboard.index", compact('user', 'orders'));
+        return view("user.dashboard.dashboard", compact('user', 'orders'));
     }
 }

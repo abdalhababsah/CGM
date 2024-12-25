@@ -2,7 +2,247 @@
 
 @section('content')
     <style>
- 
+        .section {
+            min-height: 85vh;
+        }
+
+        .section-padding {
+            padding: 60px 0;
+        }
+
+        /* Sidebar Navigation */
+        .my-account-tab-list {
+            background-color: #fff;
+            margin-top: 14px;
+            padding: 20px;
+        }
+
+        .my-account-tab-list .nav {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .my-account-tab-list .nav li {
+            margin-bottom: 15px;
+        }
+
+        .my-account-tab-list .nav li a {
+            color: #555;
+            font-size: 16px;
+            padding: 10px 15px;
+            border-radius: 4px;
+            transition: background-color 0.3s, color 0.3s;
+            display: flex;
+            align-items: center;
+            text-decoration: none;
+        }
+
+        .my-account-tab-list .nav li a i {
+            margin-right: 8px;
+            font-size: 18px;
+        }
+
+        .my-account-tab-list .nav li a:hover,
+        .my-account-tab-list .nav li a.active {
+            background-color: #007bff;
+            color: #fff;
+        }
+
+        /* Tab Content */
+        .tab-content {
+            background-color: #fff;
+            padding: 30px;
+        }
+
+        /* Dashboard */
+        .myaccount-content.dashboad .alert {
+            background-color: #f1f1f1;
+            padding: 15px;
+            border-radius: 4px;
+            margin-bottom: 20px;
+        }
+
+        .myaccount-content.dashboad p {
+            font-size: 16px;
+            color: #333;
+        }
+
+        /* Statistics Cards */
+        .stats-cards {
+            margin-bottom: 30px;
+        }
+
+        .stats-card {
+            background-color: #f7f7f7;
+            border-radius: 8px;
+            padding: 20px;
+            display: flex;
+            align-items: center;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s;
+        }
+
+        .stats-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .stats-card i {
+            font-size: 30px;
+            margin-right: 15px;
+            color: #007bff;
+        }
+
+        .stats-card .stats-info {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .stats-card .stats-info .stats-title {
+            font-size: 14px;
+            color: #777;
+            margin-bottom: 5px;
+        }
+
+        .stats-card .stats-info .stats-value {
+            font-size: 20px;
+            font-weight: bold;
+            color: #333;
+        }
+
+        /* Tables */
+        .myaccount-content table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        .myaccount-content table th,
+        .myaccount-content table td {
+            padding: 12px 15px;
+            text-align: left;
+            border-bottom: 1px solid #e0e0e0;
+        }
+
+        .myaccount-content table th {
+            background-color: #f7f7f7;
+            color: #333;
+        }
+
+        .myaccount-content table tr:hover {
+            background-color: #f1f1f1;
+        }
+
+        .myaccount-content table a {
+            color: #007bff;
+            text-decoration: none;
+            font-weight: bold;
+        }
+
+        .myaccount-content table a:hover {
+            text-decoration: underline;
+        }
+
+        /* Addresses */
+        .myaccount-content.address .alert {
+            background-color: #f1f1f1;
+            padding: 15px;
+            border-radius: 4px;
+            margin-bottom: 20px;
+        }
+
+        .myaccount-content.address .title {
+            font-size: 18px;
+            margin-bottom: 10px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .myaccount-content.address address {
+            font-style: normal;
+            line-height: 1.6;
+            color: #555;
+        }
+
+        .myaccount-content.address .edit-link {
+            font-size: 14px;
+            color: #007bff;
+            text-decoration: none;
+        }
+
+        .myaccount-content.address .edit-link:hover {
+            text-decoration: underline;
+        }
+
+        /* Account Details Form */
+        .myaccount-content.account-details .account-details-form form {
+            width: 100%;
+        }
+
+        .myaccount-content.account-details .account-details-form .single-input-item {
+            margin-bottom: 20px;
+        }
+
+        .myaccount-content.account-details .account-details-form label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: bold;
+            color: #333;
+        }
+
+        .myaccount-content.account-details .account-details-form input[type="text"],
+        .myaccount-content.account-details .account-details-form input[type="email"],
+        .myaccount-content.account-details .account-details-form input[type="password"] {
+            width: 100%;
+            padding: 10px 15px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            transition: border-color 0.3s;
+        }
+
+        .myaccount-content.account-details .account-details-form input[type="text"]:focus,
+        .myaccount-content.account-details .account-details-form input[type="email"]:focus,
+        .myaccount-content.account-details .account-details-form input[type="password"]:focus {
+            border-color: #007bff;
+            outline: none;
+        }
+
+        .myaccount-content.account-details .account-details-form fieldset {
+            border: 1px solid #e0e0e0;
+            padding: 20px;
+            border-radius: 4px;
+            margin-bottom: 20px;
+        }
+
+        .myaccount-content.account-details .account-details-form fieldset legend {
+            font-weight: bold;
+            padding: 0 10px;
+            color: #333;
+        }
+
+        .myaccount-content.account-details .account-details-form .small {
+            color: #777;
+        }
+
+        .btn {
+            padding: 0px 12px !important;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 992px) {
+            .my-account-tab-list {
+                margin-bottom: 30px;
+            }
+        }
+
+        .li-dash {
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            background-color: #f7f7f7;
+            border-radius: 8px;
+            padding: 11px;
+            margin-bottom: 10px;
+            list-style: none;
+            border-radius: 6px;
+        }
     </style>
     <div class="detail-block detail-block_margin">
         <div class="wrapper">
@@ -38,10 +278,17 @@
                                 <i class="sli-user"></i> Account Details
                             </a>
                         </li>
+                        <!-- resources/views/layouts/app.blade.php -->
+
                         <li class="li-dash">
-                            <a href="login.html">
-                                <i class="sli-logout"></i> Logout
+                            <a href="{{ route('logout') }}"
+                                onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
+                                <i class="sli-logout"></i> {{ __('Logout') }}
                             </a>
+
+                            <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+                                @csrf
+                            </form>
                         </li>
                     </ul>
                 </div>
@@ -167,8 +414,8 @@
                                             <div class="col-md-6 col-12">
                                                 <div class="single-input-item">
                                                     <label for="last-name">Last Name <abbr class="required">*</abbr></label>
-                                                    <input class="form-field" type="text" id="last-name" name="last_name"
-                                                        value="{{ $user->last_name }}" required>
+                                                    <input class="form-field" type="text" id="last-name"
+                                                        name="last_name" value="{{ $user->last_name }}" required>
                                                 </div>
                                             </div>
                                             <div class="col-12">

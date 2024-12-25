@@ -9,7 +9,7 @@ return [
     'login_with' => 'התחבר עם',
     'email' => 'אימייל',
     'password' => 'סיסמה',
-    'enter_email_or_nickname' => 'הזן את האימייל או שם המשתמש שלך',
+    'enter_email_or_nickname' => 'הזן את האימייל או',
     'enter_password' => 'הזן את הסיסמה',
     'remember_me' => 'זכור אותי',
     'log_in' => 'התחבר',

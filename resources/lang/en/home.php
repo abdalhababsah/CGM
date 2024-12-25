@@ -21,7 +21,7 @@ return [
 
     // Trending Section
     'cosmetics' => 'Cosmetics',
-    'trending_products' => 'Trending products',
+    'trending_products' => 'Comming Soon',
     'make_up' => 'Make up',
     'perfume' => 'Perfume',
     'skin_care' => 'Skin care',

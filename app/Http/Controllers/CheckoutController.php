@@ -6,6 +6,7 @@ use App\Http\Requests\ApplyDiscountCodeRequest;
 use App\Http\Requests\CheckoutSubmitRequest;
 use App\Http\Requests\GetDeliveryPriceRequest;
 use App\Http\Requests\UpdateUserInfoRequest;
+use App\Models\Area;
 use App\Models\DeliveryLocationAndPrice;
 use App\Models\DiscountCode;
 use App\Models\Order;
@@ -23,6 +24,7 @@ class CheckoutController extends Controller
     {
         $this->checkoutService = $checkoutService;
         $this->cartService = $cartService;
+
     }
 
     /**
@@ -36,14 +38,20 @@ class CheckoutController extends Controller
     {
         // Fetch cart details
         $cartDetails = $this->cartService->getCartDetails();
-
+    
         if (empty($cartDetails['items'])) {
             // If cart is empty, redirect back with an error message
-            return redirect()->route('cart.index')->with('error', 'Your cart is empty. Add items before proceeding to checkout.');
+            return redirect()->route('cart.index')
+                             ->with('error', 'Your cart is empty. Add items before proceeding to checkout.');
         }
-
-        // If cart has items, show checkout page
-        return view('user.checkout');
+    
+        // Return the view but add headers to prevent caching
+        $view = view('user.checkout'); // This is your Blade view
+    
+        return response($view)
+            ->header('Cache-Control', 'no-cache, no-store, must-revalidate') // HTTP 1.1
+            ->header('Pragma', 'no-cache') // HTTP 1.0
+            ->header('Expires', '0');      // Proxies
     }
 
     // fetchCheckout: Fetch cart details and user information
@@ -82,7 +90,6 @@ class CheckoutController extends Controller
             return [
                 'id' => $delivery->id,
                 'city' => $delivery->{'city_' . $locale},
-                'country' => $delivery->{'country_' . $locale},
                 'price' => $delivery->price,
             ];
         });
@@ -217,6 +224,7 @@ class CheckoutController extends Controller
             'city' => $validated['city'],
             'address' => $validated['address'],
             'note' => $validated['note'] ?? null,
+            'area' => $validated['area'] ?? null,
             'delivery_location_id' => $validated['delivery_location_id'],
             'discount' => session('applied_discount_code'),
             'delivery_price' => $this->calculateDeliveryPrice($validated['delivery_location_id']),
@@ -249,5 +257,39 @@ class CheckoutController extends Controller
         $order = Order::findOrFail($orderId);
 
         return view('user.checkout-success', ['order' => $order]);
+    }
+
+    public function fetchAreas(Request $request)
+    {
+        $cityId = $request->city_id;
+    
+        // Fetch all areas linked to this city/delivery_location
+        $areas = Area::where('delivery_location_id', $cityId)->get();
+    
+        if ($areas->isEmpty()) {
+            return response()->json([
+                'status' => 'error',
+                'message' => 'No areas found for this city.'
+            ]);
+        }
+    
+        // Get the current app locale
+        $locale = app()->getLocale();
+        // Construct the column name dynamically, e.g. 'area_en', 'area_ar', or 'area_he'
+        $localeColumn = 'area_' . $locale;
+    
+        $mappedAreas = $areas->map(function ($area) use ($localeColumn) {
+            $localizedName = $area->$localeColumn ?: $area->area_en;
+    
+            return [
+                'id' => $area->id,
+                'name' => $localizedName,
+            ];
+        });
+    
+        return response()->json([
+            'status' => 'success',
+            'areas' => $mappedAreas,
+        ]);
     }
 }

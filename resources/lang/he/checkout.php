@@ -79,5 +79,8 @@ return [
     'discount_code_not_found' => 'קוד ההנחה לא נמצא.',
     'select_delivery_location_first' => 'אנא בחר תחילה מיקום משלוח.',
     'invalid_phone_number' => 'מספר טלפון לא חוקי.',
+    'select_area' => 'בחר אזור',
+    'no_areas_found' => 'לא נמצאו אזורים לעיר זו.',
+    'error_fetching_areas' => 'אירעה שגיאה בעת טעינת האזורים.',
 
 ];

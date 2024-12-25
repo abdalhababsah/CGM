@@ -1,4 +1,4 @@
-@extends('admin.layouts.app')
+@extends('dashboard-layouts.app')
 
 @section('content')
     <div class="container-fluid py-4">
@@ -87,6 +87,11 @@
                             </table>
                         </div>
                     </div>
+                </div>
+
+                <!-- Pagination -->
+                <div class="mt-3">
+                    {{ $categories->links('vendor.pagination.bootstrap-5') }}
                 </div>
             </div>
         </div>

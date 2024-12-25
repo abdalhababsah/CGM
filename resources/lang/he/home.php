@@ -21,7 +21,7 @@ return [
 
     // Trending Section
     'cosmetics' => 'קוסמטיקה',
-    'trending_products' => 'מוצרים פופולריים',
+    'trending_products' => 'בקרוב',
     'make_up' => 'איפור',
     'perfume' => 'בושם',
     'skin_care' => 'טיפוח עור',

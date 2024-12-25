@@ -68,10 +68,8 @@
             <div class="contacts-info__social">
                 <span>Find us here:</span>
                 <ul>
-                    <li><a href="#"><i class="icon-facebook"></i></a></li>
-                    <li><a href="#"><i class="icon-twitter"></i></a></li>
-                    <li><a href="#"><i class="icon-insta"></i></a></li>
-                    <li><a href="#"><i class="icon-in"></i></a></li>
+                    <li class="m-1"><a href="#"><i class="icon-facebook"></i></a></li>
+                    <li class="m-1"><a href="#"><i class="icon-insta"></i></a></li>
                 </ul>
             </div>
         </div>

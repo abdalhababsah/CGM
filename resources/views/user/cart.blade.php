@@ -133,10 +133,11 @@
 
             function loadCartItems() {
                 $.ajax({
-                    url: "{{ route('cart.index') }}",
+                    url: "{{ route('fetchCart') }}",
                     method: "GET",
                     dataType: "json",
                     success: function(response) {
+                        console.log(response);
                         renderCartItems(response.cartItems, response.totalPrice);
                     },
                     error: function() {

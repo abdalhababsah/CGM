@@ -56,8 +56,11 @@
                         </div>
 
                         <!-- Delivery Information -->
+                        <!-- Delivery Information -->
                         <div class="checkout-form__item">
                             <h6>{{ __('checkout.delivery_info') }}</h6>
+
+                            <!-- Delivery Location -->
                             <div class="box-field">
                                 <select name="delivery_location_id" id="delivery-location" class="form-select" required>
                                     <option value="" disabled selected>{{ __('checkout.select_delivery_location') }}
@@ -66,17 +69,26 @@
                                 </select>
                                 <span class="invalid-feedback" id="error_delivery_location_id"></span>
                             </div>
-                            <div class="box-field__row">
-                                <div class="box-field">
-                                    <input type="text" id="city" name="city" class="form-control"
-                                        placeholder="{{ __('checkout.enter_city') }}" required>
-                                    <span class="invalid-feedback" id="error_city"></span>
-                                </div>
-                                <div class="box-field">
-                                    <input type="text" id="address" name="address" class="form-control"
-                                        placeholder="{{ __('checkout.enter_address') }}" required>
-                                    <span class="invalid-feedback" id="error_address"></span>
-                                </div>
+
+                            <div class="box-field">
+                                <select id="area" name="area" class="form-select" required>
+                                    <option value="" disabled selected>{{ __('checkout.select_area') }}
+                                    </option>
+                                    <!-- Options will be populated via AJAX -->
+                                </select>
+                            </div>
+                            <!-- City -->
+                            <div class="box-field">
+                                <input type="text" id="city" name="city" class="form-control"
+                                    placeholder="{{ __('checkout.enter_city') }}" required>
+                                <span class="invalid-feedback" id="error_city"></span>
+                            </div>
+
+                            <!-- Address -->
+                            <div class="box-field">
+                                <input type="text" id="address" name="address" class="form-control"
+                                    placeholder="{{ __('checkout.enter_address') }}" required>
+                                <span class="invalid-feedback" id="error_address"></span>
                             </div>
                         </div>
 
@@ -106,7 +118,7 @@
                         </div>
 
                         <!-- Submit Buttons -->
-                        <div class="checkout-buttons">
+                        <div class="checkout-buttons" style="margin-bottom: 30px;">
                             <a href="{{ route('cart.index') }}" class="btn btn-grey btn-icon">
                                 <i class="icon-arrow"></i> {{ __('checkout.back') }}
                             </a>
@@ -239,7 +251,7 @@
                                 '<option value="" disabled selected>{{ __('checkout.select_delivery_location') }}</option>';
                             response.deliveryLocations.forEach(function(location) {
                                 options +=
-                                    `<option value="${location.id}" data-price="${parseFloat(location.price).toFixed(2)}">${location.city}, ${location.country} - $${parseFloat(location.price).toFixed(2)}</option>`;
+                                    `<option value="${location.id}" data-price="${parseFloat(location.price).toFixed(2)}">${location.city}, - $${parseFloat(location.price).toFixed(2)}</option>`;
                             });
                             $('#delivery-location').html(options);
 
@@ -473,22 +485,59 @@
                 });
             });
 
-            // Handle checkout form submission via AJAX
+            $('#delivery-location').change(function() {
+                const cityId = $(this).val(); // This is the ID from your JSON
+                if (cityId) {
+                    $.ajax({
+                        url: "{{ route('checkout.checkout.fetchAreas') }}",
+                        type: 'GET',
+                        data: {
+                            city_id: cityId
+                        },
+                        success: function(response) {
+                            if (response.status === 'success') {
+                                let areaOptions =
+                                    '<option value="" disabled selected>Select area</option>';
+                                response.areas.forEach(area => {
+                                    areaOptions +=
+                                        `<option value="${area.id}">${area.name}</option>`;
+                                });
+                                $('#area').html(areaOptions);
+                            } else {
+                                alert('No areas found');
+                            }
+                        },
+                        error: function() {
+                            alert('Error fetching areas');
+                        }
+                    });
+                }
+            });
+
             $('#checkout-form').submit(function(e) {
-                e.preventDefault();
+                e.preventDefault(); // We'll handle the AJAX submission manually
+
+                // ======================================
+                // SHOW LOADING on "Place Order" button
+                // ======================================
+                const $placeOrderBtn = $(this).find('button[type="submit"]');
+                $placeOrderBtn.prop('disabled', true);
+                // You could also change the button text to indicate a loading state:
+                $placeOrderBtn.html(
+                    '<i class="fa fa-spinner fa-spin"></i> {{ __('checkout.place_order') }}');
 
                 // Gather form data
                 let formData = {
                     first_name: $('#first_name').val().trim(),
                     last_name: $('#last_name').val().trim(),
                     email: $('#email').val().trim(),
-                    phone: iti.getNumber(), // Get the full international number
+                    phone: iti.getNumber(), 
                     country: iti.getSelectedCountryData().name || '', // Get country name
                     city: $('#city').val().trim(),
+                    area: $('#area').val().trim(),
                     address: $('#address').val().trim(),
                     note: $('#note').val().trim(),
-                    delivery_location_id: $('#delivery-location')
-                .val(), // Ensure this is correctly captured
+                    delivery_location_id: $('#delivery-location').val(),
                     discount_code: discountAmount > 0 ? $('#discount-code-input').val().trim() : null,
                 };
 
@@ -502,9 +551,10 @@
                             // Optionally, redirect the user or display a success message
                             window.location.href = "/checkout/success/" + response.order_id;
                         } else {
-                            $('#checkout-message').html(`
-                                <span class="error">${response.message || '{{ __('checkout.unexpected_error') }}'}</span>
-                            `);
+                            // Show error
+                            $('#checkout-message').html(
+                                `<span class="error">${response.message || '{{ __('checkout.unexpected_error') }}'}</span>`
+                            );
                             console.error(response.message ||
                                 '{{ __('checkout.unexpected_error') }}');
                         }
@@ -523,19 +573,26 @@
                             console.error(
                                 '{{ __('checkout.correct_errors') }}: {{ __('checkout.correct_errors_text') }}'
                                 );
-                            $('#checkout-message').html(`
-                                <span class="error">{{ __('checkout.correct_errors') }}: {{ __('checkout.correct_errors_text') }}</span>
-                            `);
+                            $('#checkout-message').html(
+                                `<span class="error">{{ __('checkout.correct_errors') }}: {{ __('checkout.correct_errors_text') }}</span>`
+                            );
                         } else {
-                            $('#checkout-message').html(`
-                                <span class="error">{{ __('checkout.unexpected_error') }}</span>
-                            `);
+                            $('#checkout-message').html(
+                                `<span class="error">{{ __('checkout.unexpected_error') }}</span>`
+                            );
                             console.error('{{ __('checkout.unexpected_error') }}');
                         }
+                    },
+                    complete: function() {
+                        // ======================================
+                        // HIDE LOADING or revert "Place Order" button
+                        // ======================================
+                        $placeOrderBtn.prop('disabled', false);
+                        $placeOrderBtn.html(
+                            '{{ __('checkout.place_order') }} <i class="icon-arrow"></i>');
                     }
                 });
             });
-
             // Initial load
             loadDeliveryLocations();
             loadUserAndCartData();

@@ -80,4 +80,7 @@ return [
     'select_delivery_location_first' => 'Please select a delivery location first.',
     'invalid_phone_number' => 'Invalid phone number.',
 
+    'select_area' => 'Select Area',
+    'no_areas_found' => 'No areas found for this city.',
+    'error_fetching_areas' => 'There was an error fetching areas.',
 ];

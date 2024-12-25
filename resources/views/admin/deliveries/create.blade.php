@@ -1,9 +1,12 @@
-@extends('admin.layouts.app')
+@extends('dashboard-layouts.app')
 
 @section('title', isset($isEdit) && $isEdit ? 'Edit Delivery Location' : 'Create Delivery Location')
 
 @section('content')
     <div class="container-fluid py-4">
+        <!-- Display Flash Messages -->
+        @include('components._messages')
+
         <!-- Display Validation Errors -->
         @if ($errors->any())
             <div class="alert alert-danger">
@@ -25,7 +28,7 @@
             @endif
 
             <div class="row">
-                <!-- Left Column: City and Country Fields -->
+                <!-- Left Column: City Fields -->
                 <div class="col-lg-6 col-md-12 col-sm-12 mb-4">
                     <div class="card">
                         <div class="card-header pb-0">
@@ -65,35 +68,14 @@
                                 @enderror
                             </div>
 
-                            <!-- Country Fields -->
+                            <!-- Company City ID -->
                             <div class="form-group mb-3">
-                                <label for="country_en" class="form-label">Country (English) <span
-                                        class="text-danger">*</span></label>
-                                <input type="text" id="country_en" name="country_en"
-                                    class="form-control @error('country_en') is-invalid @enderror"
-                                    placeholder="Enter country in English"
-                                    value="{{ old('country_en', $delivery->country_en ?? '') }}" required>
-                                @error('country_en')
-                                    <span class="invalid-feedback">{{ $message }}</span>
-                                @enderror
-                            </div>
-                            <div class="form-group mb-3">
-                                <label for="country_ar" class="form-label">Country (Arabic)</label>
-                                <input type="text" id="country_ar" name="country_ar"
-                                    class="form-control @error('country_ar') is-invalid @enderror"
-                                    placeholder="Enter country in Arabic"
-                                    value="{{ old('country_ar', $delivery->country_ar ?? '') }}">
-                                @error('country_ar')
-                                    <span class="invalid-feedback">{{ $message }}</span>
-                                @enderror
-                            </div>
-                            <div class="form-group mb-3">
-                                <label for="country_he" class="form-label">Country (Hebrew)</label>
-                                <input type="text" id="country_he" name="country_he"
-                                    class="form-control @error('country_he') is-invalid @enderror"
-                                    placeholder="Enter country in Hebrew"
-                                    value="{{ old('country_he', $delivery->country_he ?? '') }}">
-                                @error('country_he')
+                                <label for="company_city_id" class="form-label">Company City ID</label>
+                                <input type="text" id="company_city_id" name="company_city_id"
+                                    class="form-control @error('company_city_id') is-invalid @enderror"
+                                    placeholder="Enter company city ID"
+                                    value="{{ old('company_city_id', $delivery->company_city_id ?? '') }}">
+                                @error('company_city_id')
                                     <span class="invalid-feedback">{{ $message }}</span>
                                 @enderror
                             </div>
@@ -138,13 +120,14 @@
                 </div>
             </div>
 
+
             <!-- Submit Buttons -->
             <div class="form-group text-end">
-                <a href="{{ isset($isEdit) && $isEdit ? route('admin.deliveries.index') : route('admin.deliveries.index') }}"
-                    class="btn btn-secondary">Cancel</a>
+                <a href="{{ route('admin.deliveries.index') }}" class="btn btn-secondary">Cancel</a>
                 <button type="submit"
                     class="btn btn-success">{{ isset($isEdit) && $isEdit ? 'Update Delivery Location' : 'Create Delivery Location' }}</button>
             </div>
         </form>
     </div>
 @endsection
+

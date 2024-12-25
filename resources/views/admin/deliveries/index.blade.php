@@ -1,4 +1,4 @@
-@extends('admin.layouts.app')
+@extends('dashboard-layouts.app')
 
 @section('title', 'Delivery Locations')
 
@@ -11,7 +11,7 @@
                 <div class="card mb-4">
                     <div class="card-header pb-0 d-flex justify-content-between align-items-center">
                         <h6>Delivery Locations</h6>
-                        <a href="{{ route('admin.deliveries.create') }}" class="btn btn-primary btn-sm">Add New Locations</a>
+                        <a href="{{ route('admin.deliveries.create') }}" class="btn btn-primary btn-sm">Add New Location</a>
                     </div>
                     <div class="card-body px-0 pt-0 pb-2">
                         <div class="table-responsive p-0">
@@ -23,9 +23,6 @@
                                         </th>
                                         <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
                                             City
-                                        </th>
-                                        <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
-                                            Country
                                         </th>
                                         <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
                                             Price ($)
@@ -58,18 +55,7 @@
                                                 @endif
                                             </td>
 
-                                            <!-- Country -->
-                                            <td class="align-middle text-left">
-                                                <p class="text-xs text-secondary mb-0">En: {{ $delivery->country_en }}</p>
-                                                @if ($delivery->country_ar)
-                                                    <p class="text-xs text-secondary mb-0">Ar: {{ $delivery->country_ar }}
-                                                    </p>
-                                                @endif
-                                                @if ($delivery->country_he)
-                                                    <p class="text-xs text-secondary mb-0">He: {{ $delivery->country_he }}
-                                                    </p>
-                                                @endif
-                                            </td>
+                                    
 
                                             <!-- Price -->
                                             <td class="align-middle text-center">
@@ -116,9 +102,9 @@
                             </table>
                         </div>
                     </div>
-                    <div class="card-footer">
-                        {{ $deliveries->links() }} <!-- Pagination Links -->
-                    </div>
+                </div>
+                <div class="mt-3">
+                    {{ $deliveries->links('vendor.pagination.bootstrap-5') }}
                 </div>
             </div>
         </div>

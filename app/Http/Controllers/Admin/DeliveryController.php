@@ -18,7 +18,6 @@ class DeliveryController extends Controller
         // Fetch all delivery locations with pagination
         $deliveries = DeliveryLocationAndPrice::orderBy('id', 'desc')->paginate(10);
 
-        // Return the index view with delivery locations
         return view('admin.deliveries.index', compact('deliveries'));
     }
 
@@ -46,14 +45,11 @@ class DeliveryController extends Controller
     {
         // Validate the incoming request data, including multilingual fields
         $validatedData = $request->validate([
-            'city_en'     => 'required|string|max:255',
-            'city_ar'     => 'nullable|string|max:255',
-            'city_he'     => 'nullable|string|max:255',
-            'country_en'  => 'required|string|max:255',
-            'country_ar'  => 'nullable|string|max:255',
-            'country_he'  => 'nullable|string|max:255',
-            'price'       => 'required|numeric|min:0',
-            'is_active'   => 'required|boolean',
+            'city_en' => 'required|string|max:255',
+            'city_ar' => 'nullable|string|max:255',
+            'city_he' => 'nullable|string|max:255',
+            'price' => 'required|numeric|min:0',
+            'is_active' => 'required|boolean',
         ]);
 
         // Create a new delivery location with the validated data
@@ -86,14 +82,11 @@ class DeliveryController extends Controller
     {
         // Validate the incoming request data, including multilingual fields
         $validatedData = $request->validate([
-            'city_en'     => 'required|string|max:255',
-            'city_ar'     => 'nullable|string|max:255',
-            'city_he'     => 'nullable|string|max:255',
-            'country_en'  => 'required|string|max:255',
-            'country_ar'  => 'nullable|string|max:255',
-            'country_he'  => 'nullable|string|max:255',
-            'price'       => 'required|numeric|min:0',
-            'is_active'   => 'required|boolean',
+            'city_en' => 'required|string|max:255',
+            'city_ar' => 'nullable|string|max:255',
+            'city_he' => 'nullable|string|max:255',
+            'price' => 'required|numeric|min:0',
+            'is_active' => 'required|boolean',
         ]);
 
         // Update the delivery location with the validated data

@@ -195,7 +195,7 @@ public function updateQuantity($productId, $quantity)
                     'price' => $item->product->price,
                     'quantity' => $item->quantity,
                     'total' => $item->quantity * $item->product->price,
-                    'image_url' => $item->product->primaryImage ? asset('storage/' . $item->product->primaryImage->url) : 'https://via.placeholder.com/262x370',
+                    'image_url' => $item->product->primaryImage ? asset('storage/' . $item->product->primaryImage->image_url) : 'https://via.placeholder.com/262x370',
                     'available_quantity' => $item->product->quantity,
                     'in_stock' => $inStock
                 ];
@@ -216,7 +216,7 @@ public function updateQuantity($productId, $quantity)
                         'price' => $product->price,
                         'quantity' => $quantity,
                         'total' => $quantity * $product->price,
-                        'image_url' => $product->primaryImage ? asset('storage/' . $product->primaryImage->url) : 'https://via.placeholder.com/262x370',
+                        'image_url' => $product->primaryImage ? asset('storage/' . $product->primaryImage->image_url) : 'https://via.placeholder.com/262x370',
                         'available_quantity' => $product->quantity,
                         'in_stock' => $inStock
                     ];

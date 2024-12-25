@@ -91,41 +91,50 @@ body {
 
 
 
-.btn-menu {
-	margin-top: 23px;
-    color: #222222;
-    cursor: pointer;
-    display: none; /* Ensure it's visible in responsive layouts */
-    height: 45px;
-    width: 40px; /* Adjust width for better alignment */
+/* Navigation Menu Styles */
+.nav-menu {
     position: absolute;
-    top: 50%; /* Center vertically */
-    left: 15px; /* Align to the left edge */
-    transform: translateY(-50%); /* Center vertically within the header */
-    z-index: 111;
-}
-
-.btn-menu span {
-    background-color: white;
-    display: block;
-    height: 2px;
-    width: 100%; /* Full width of the parent .btn-menu */
-    position: relative;
-    margin: 5px 0; /* Space between spans for visual clarity */
-    transition: background-color 86ms ease-out, transform 86ms ease-out;
-}
-
-/* When the menu is active */
-.btn-menu.active span:nth-child(1) {
-    transform: translateY(7px) rotate(45deg);
-}
-
-.btn-menu.active span:nth-child(2) {
+    top: 80px; /* Adjust based on header height */
+    right: 15px; /* Align to the right side */
+    background-color: #ffffff;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    padding: 10px 0;
+    display: none; /* Hidden by default */
+    width: 200px; /* Adjust as needed */
+    z-index: 110; /* Ensure it sits below the button menu */
+    transition: opacity 0.3s ease, visibility 0.3s ease;
     opacity: 0;
+    visibility: hidden;
 }
 
-.btn-menu.active span:nth-child(3) {
-    transform: translateY(-7px) rotate(-45deg);
+.nav-menu.active {
+    display: block; /* Show when active */
+    opacity: 1;
+    visibility: visible;
+}
+
+.nav-menu ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.nav-menu li {
+    padding: 10px 20px;
+}
+
+.nav-menu li a {
+    text-decoration: none;
+    color: rgb(151, 29, 37);
+    display: block;
+}
+
+.nav-menu li a:hover,
+.nav-menu li a:focus {
+    background-color: #f0f0f0;
+    outline: none;
 }
 @media screen and (min-width: 1200px) {
     #block__content .saint-text,

@@ -5771,23 +5771,23 @@ fieldset:disabled .btn {
   --bs-pagination-padding-x: 0.75rem;
   --bs-pagination-padding-y: 0.375rem;
   --bs-pagination-font-size: 1rem;
-  --bs-pagination-color: #f97316;
-  --bs-pagination-bg: #fff;
+  --bs-pagination-color: black; /* Text color */
+  --bs-pagination-bg: #fff; /* Background color for buttons */
   --bs-pagination-border-width: 1px;
-  --bs-pagination-border-color: #d4d4d8;
-  --bs-pagination-border-radius: 0.5rem;
-  --bs-pagination-hover-color: rgb(189.6171548117, 80.5669456067, 4.8828451883);
-  --bs-pagination-hover-bg: #e3e3e7;
-  --bs-pagination-hover-border-color: #d4d4d8;
-  --bs-pagination-focus-color: rgb(189.6171548117, 80.5669456067, 4.8828451883);
-  --bs-pagination-focus-bg: #e3e3e7;
-  --bs-pagination-focus-box-shadow: 0 0 0 0.2rem rgba(249, 115, 22, 0.25);
-  --bs-pagination-active-color: #fff;
-  --bs-pagination-active-bg: #f97316;
-  --bs-pagination-active-border-color: #f97316;
-  --bs-pagination-disabled-color: #52525b;
-  --bs-pagination-disabled-bg: #fff;
-  --bs-pagination-disabled-border-color: #d4d4d8;
+  --bs-pagination-border-color: #791115; /* Border color */
+  --bs-pagination-border-radius: 0.5rem; /* Rounded corners */
+  --bs-pagination-hover-color: black; /* Text color on hover */
+  --bs-pagination-hover-bg: #e3e3e7; /* Background color on hover */
+  --bs-pagination-hover-border-color: #791115; /* Border color on hover */
+  --bs-pagination-focus-color: black; /* Text color on focus */
+  --bs-pagination-focus-bg: #e3e3e7; /* Background color on focus */
+  --bs-pagination-focus-box-shadow: 0 0 0 0.2rem rgba(121, 17, 21, 0.25); /* Focus outline */
+  --bs-pagination-active-color: #fff; /* Text color for active button */
+  --bs-pagination-active-bg: #791115; /* Background color for active button */
+  --bs-pagination-active-border-color: #791115; /* Border color for active button */
+  --bs-pagination-disabled-color: #52525b; /* Text color for disabled button */
+  --bs-pagination-disabled-bg: #fff; /* Background color for disabled button */
+  --bs-pagination-disabled-border-color: #d4d4d8; /* Border color for disabled button */
   display: flex;
   padding-left: 0;
   list-style: none;
@@ -25056,7 +25056,6 @@ html {
   display: flex;
   align-items: center;
   justify-content: center;
-  color: #71717a;
   padding: 0;
   margin: 0 3px;
   border-radius: 50% !important;

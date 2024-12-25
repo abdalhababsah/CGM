@@ -1,4 +1,4 @@
-@extends('admin.layouts.app')
+@extends('dashboard-layouts.app')
 
 @section('content')
 <div class="container-fluid py-4">
@@ -121,7 +121,7 @@
                                         <td class="align-middle text-center">{{ $product->quantity }}</td>
                                         <td class="align-middle text-center">
                                             @if ($product->primaryImage)
-                                                <img src="{{ asset('storage/'.$product->primaryImage->image_url) }}" class="img-fluid rounded" height="50" alt="Primary Image">
+                                                <img src="{{ asset('storage/'.$product->primaryImage->image_url) }}" class="img-fluid rounded"style="max-height: 150px" alt="Primary Image">
                                             @else
                                                 <span class="text-muted text-xs">No Image</span>
                                             @endif
@@ -165,8 +165,8 @@
     <!-- Pagination -->
     <div class="row">
         <div class="col-12">
-            <div class="d-flex justify-content-center">
-                {{ $products->links() }}
+            <div class="mt-3">
+                {{ $products->links('vendor.pagination.bootstrap-5') }}
             </div>
         </div>
     </div>

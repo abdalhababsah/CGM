@@ -1,4 +1,4 @@
-@extends('admin.layouts.app')
+@extends('dashboard-layouts.app')
 
 @section('title', 'Discount Codes')
 
@@ -135,7 +135,7 @@
                             </table>
                             <!-- Pagination Links -->
                             <div class="mt-3">
-                                {{ $discountCodes->links() }}
+                                {{ $discountCodes->links('vendor.pagination.bootstrap-5') }}
                             </div>
                         </div>
                     </div>

@@ -19,6 +19,7 @@ class Order extends Model
         'preferred_language',
         'delivery_location_id',
         'discount_code_id',
+        'area_id',
         'note',
     ];
 
@@ -45,8 +46,6 @@ class Order extends Model
     {
         return $this->hasMany(OrderItem::class);
     }
-
-    // An order can have many order history records
     public function orderHistories()
     {
         return $this->hasMany(OrderHistory::class);
@@ -55,9 +54,10 @@ class Order extends Model
     {
         return $this->belongsTo(DeliveryLocationAndPrice::class, 'delivery_location_id');
     }
-    /**
-     * An order belongs to a discount code.
-     */
+    public function areaLocation()
+    {
+        return $this->belongsTo(Area::class, 'area_id');
+    }
     public function discountCode()
     {
         return $this->belongsTo(DiscountCode::class, 'discount_code_id');

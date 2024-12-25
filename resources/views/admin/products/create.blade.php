@@ -1,4 +1,4 @@
-@extends('admin.layouts.app')
+@extends('dashboard-layouts.app')
 
 @section('title', isset($isEdit) && $isEdit ? 'Edit Product' : 'Create Product')
 

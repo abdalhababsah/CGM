@@ -211,9 +211,9 @@
             <!-- Image Carousel -->
             <div class="image-carousel">
                 <div class="carousel-images">
-                    <img src="{{ asset('user/img/273730271_684028492611578_5133492502804471349_n.jpg') }}" alt="Image 1">
-                    <img src="{{ asset('user/img/273762758_519699752760685_8305206659290026802_n.jpg') }}" alt="Image 2">
-                    <img src="{{ asset('user/img/273766824_434716441737100_8230357475063340314_n.jpg') }}" alt="Image 3">
+                    <img src="https://via.placeholder.com/400x570" alt="Image 1">
+                    <img src="https://via.placeholder.com/400x570" alt="Image 2">
+                    <img src="https://via.placeholder.com/400x570" alt="Image 3">
 
                 </div>
             </div>
@@ -229,121 +229,62 @@
                 {{-- <p>@lang('home.nourish_description')</p> --}}
             </div>
             <div class="tab-wrap trending-tabs">
-                <ul class="nav-tab-list tabs">
-                    <li class="active">
-                        <a href="#trending-tab_1">@lang('home.make_up')</a>
-                    </li>
-                    <li>
-                        <a href="#trending-tab_3">@lang('home.perfume')</a>
-                    </li>
-                    <li>
-                        <a href="#trending-tab_5">@lang('home.skin_care')</a>
-                    </li>
-                    <li>
-                        <a href="#trending-tab_6">@lang('home.hair_care')</a>
-                    </li>
-                </ul>
                 <div class="box-tab-cont">
                     <div class="tab-cont" id="trending-tab_1">
                         <div class="products-items js-products-items">
                             <a href="#" class="products-item">
                                 <div class="products-item__type">
-                                    <span class="products-item__sale">sale</span>
+                                    <span class="products-item__new">Soon</span>
                                 </div>
                                 <div class="products-item__img">
-                                    <img data-src="https://via.placeholder.com/400x570"
-                                        src="data:image/gif;base64,R0lGODlhAQABAAAAACw=" class="js-img" alt="">
-                                    <div class="products-item__hover">
-                                        <i class="icon-search"></i>
-                                        <div class="products-item__hover-options">
-                                            <i class="icon-heart"></i>
-                                            <i class="icon-cart"></i>
-                                        </div>
-                                    </div>
+                                    <img data-src="{{asset('user/img/comming-soon-1.png')}}"
+                                        src="{{asset('user/img/comming-soon-1.png')}}" class="js-img" alt="">
+
                                 </div>
                                 <div class="products-item__info">
-                                    <span class="products-item__name">Detox body Cream</span>
-                                    <span class="products-item__cost"><span>$249.95</span> $200.95</span>
+                                    <span class="products-item__name">Bomba De Vitaminas</span>
                                 </div>
                             </a>
                             <a href="#" class="products-item">
                                 <div class="products-item__type">
-                                    <span class="products-item__new">new</span>
+                                    <span class="products-item__new">Soon</span>
                                 </div>
                                 <div class="products-item__img">
-                                    <img data-src="https://via.placeholder.com/400x570"
-                                        src="data:image/gif;base64,R0lGODlhAQABAAAAACw=" class="js-img" alt="">
-                                    <div class="products-item__hover">
-                                        <i class="icon-search"></i>
-                                        <div class="products-item__hover-options">
-                                            <i class="icon-heart"></i>
-                                            <i class="icon-cart"></i>
-                                        </div>
-                                    </div>
+                                    <img data-src="{{asset('user/img/comming-soon-21.png')}}"
+                                        src="{{asset('user/img/comming-soon-21.png')}}" class="js-img" alt="">
+
                                 </div>
                                 <div class="products-item__info">
-                                    <span class="products-item__name">Detox body Cream</span>
-                                    <span class="products-item__cost">$200.95</span>
+                                    <span class="products-item__name">Raizes Do Morro</span>
+
                                 </div>
                             </a>
                             <a href="#" class="products-item">
                                 <div class="products-item__type">
-                                    <span class="products-item__sale">sale</span>
+                                    <span class="products-item__new">Soon</span>
                                 </div>
                                 <div class="products-item__img">
-                                    <img data-src="https://via.placeholder.com/400x570"
-                                        src="data:image/gif;base64,R0lGODlhAQABAAAAACw=" class="js-img" alt="">
-                                    <div class="products-item__hover">
-                                        <i class="icon-search"></i>
-                                        <div class="products-item__hover-options">
-                                            <i class="icon-heart"></i>
-                                            <i class="icon-cart"></i>
-                                        </div>
-                                    </div>
+                                    <img data-src="{{asset('user/img/comming-soon-31.png')}}"
+                                        src="{{asset('user/img/comming-soon-31.png')}}" class="js-img" alt="">
+
                                 </div>
                                 <div class="products-item__info">
-                                    <span class="products-item__name">Detox body Cream</span>
-                                    <span class="products-item__cost"><span>$249.95</span> $200.95</span>
+                                    <span class="products-item__name">Cacau</span>
+
                                 </div>
                             </a>
                             <a href="#" class="products-item">
                                 <div class="products-item__type">
-                                    <span class="products-item__sale">sale</span>
+                                    <span class="products-item__new">Soon</span>
                                 </div>
                                 <div class="products-item__img">
-                                    <img data-src="https://via.placeholder.com/400x570"
-                                        src="data:image/gif;base64,R0lGODlhAQABAAAAACw=" class="js-img" alt="">
-                                    <div class="products-item__hover">
-                                        <i class="icon-search"></i>
-                                        <div class="products-item__hover-options">
-                                            <i class="icon-heart"></i>
-                                            <i class="icon-cart"></i>
-                                        </div>
-                                    </div>
+                                    <img data-src="{{asset('user/img/comming-soon-41.png')}}"
+                                        src="{{asset('user/img/comming-soon-41.png')}}" class="js-img" alt="">
+
                                 </div>
                                 <div class="products-item__info">
-                                    <span class="products-item__name">Detox body Cream</span>
-                                    <span class="products-item__cost"><span>$249.95</span> $200.95</span>
-                                </div>
-                            </a>
-                            <a href="#" class="products-item">
-                                <div class="products-item__type">
-                                    <span class="products-item__sale">sale</span>
-                                </div>
-                                <div class="products-item__img">
-                                    <img data-src="https://via.placeholder.com/400x570"
-                                        src="data:image/gif;base64,R0lGODlhAQABAAAAACw=" class="js-img" alt="">
-                                    <div class="products-item__hover">
-                                        <i class="icon-search"></i>
-                                        <div class="products-item__hover-options">
-                                            <i class="icon-heart"></i>
-                                            <i class="icon-cart"></i>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="products-item__info">
-                                    <span class="products-item__name">Detox body Cream</span>
-                                    <span class="products-item__cost"><span>$249.95</span> $200.95</span>
+                                    <span class="products-item__name">Vitamin C And Collagen</span>
+
                                 </div>
                             </a>
                         </div>
@@ -358,17 +299,11 @@
                                 <div class="products-item__img">
                                     <img data-src="https://via.placeholder.com/400x570"
                                         src="data:image/gif;base64,R0lGODlhAQABAAAAACw=" class="js-img" alt="">
-                                    <div class="products-item__hover">
-                                        <i class="icon-search"></i>
-                                        <div class="products-item__hover-options">
-                                            <i class="icon-heart"></i>
-                                            <i class="icon-cart"></i>
-                                        </div>
-                                    </div>
+
                                 </div>
                                 <div class="products-item__info">
                                     <span class="products-item__name">Detox body Cream</span>
-                                    <span class="products-item__cost"><span>$249.95</span> $200.95</span>
+
                                 </div>
                             </a>
                         </div>
@@ -382,17 +317,11 @@
                                 <div class="products-item__img">
                                     <img data-src="https://via.placeholder.com/400x570"
                                         src="data:image/gif;base64,R0lGODlhAQABAAAAACw=" class="js-img" alt="">
-                                    <div class="products-item__hover">
-                                        <i class="icon-search"></i>
-                                        <div class="products-item__hover-options">
-                                            <i class="icon-heart"></i>
-                                            <i class="icon-cart"></i>
-                                        </div>
-                                    </div>
+
                                 </div>
                                 <div class="products-item__info">
                                     <span class="products-item__name">Detox body Cream</span>
-                                    <span class="products-item__cost"><span>$249.95</span> $200.95</span>
+
                                 </div>
                             </a>
                         </div>
@@ -406,17 +335,11 @@
                                 <div class="products-item__img">
                                     <img data-src="https://via.placeholder.com/400x570"
                                         src="data:image/gif;base64,R0lGODlhAQABAAAAACw=" class="js-img" alt="">
-                                    <div class="products-item__hover">
-                                        <i class="icon-search"></i>
-                                        <div class="products-item__hover-options">
-                                            <i class="icon-heart"></i>
-                                            <i class="icon-cart"></i>
-                                        </div>
-                                    </div>
+
                                 </div>
                                 <div class="products-item__info">
                                     <span class="products-item__name">Detox body Cream</span>
-                                    <span class="products-item__cost"><span>$249.95</span> $200.95</span>
+
                                 </div>
                             </a>
                         </div>

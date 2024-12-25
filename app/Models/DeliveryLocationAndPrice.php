@@ -15,9 +15,7 @@ class DeliveryLocationAndPrice extends Model
         'city_ar',
         'city_en',
         'city_he',
-        'country_ar',
-        'country_en',
-        'country_he',
+        'company_city_id',
         'price',
         'is_active',
     ];
@@ -32,5 +30,9 @@ class DeliveryLocationAndPrice extends Model
     public function orders()
     {
         return $this->hasMany(Order::class, 'delivery_location_id');
+    }
+    public function areas()
+    {
+        return $this->hasMany(Area::class, 'delivery_location_id')->orderBy('id', 'asc');
     }
 }

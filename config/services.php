@@ -34,5 +34,12 @@ return [
             'channel' => env('SLACK_BOT_USER_DEFAULT_CHANNEL'),
         ],
     ],
+    'delivery' => [
+        'base_url'       => env('DELIVERY_API_BASE_URL'),
+        'username'       => env('DELIVERY_API_USERNAME'),
+        'password'       => env('DELIVERY_API_PASSWORD'),
+        'device_token'   => env('DELIVERY_API_DEVICE_TOKEN'),
+    ],
+
 
 ];

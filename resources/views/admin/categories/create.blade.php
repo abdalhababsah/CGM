@@ -1,18 +1,19 @@
-@extends('admin.layouts.app')
+@extends('dashboard-layouts.app')
 
 @section('title', isset($category) ? 'Edit Category' : 'Create Category')
 
 @section('content')
 <div class="container-fluid py-4">
     @if ($errors->any())
-    <div class="alert alert-danger">
-        <ul>
-            @foreach ($errors->all() as $error)
-                <li>{{ $error }}</li>
-            @endforeach
-        </ul>
-    </div>
-@endif
+        <div class="alert alert-danger">
+            <ul>
+                @foreach ($errors->all() as $error)
+                    <li>{{ $error }}</li>
+                @endforeach
+            </ul>
+        </div>
+    @endif
+
     <form action="{{ isset($category) ? route('admin.categories.update', $category->id) : route('admin.categories.store') }}" method="POST" enctype="multipart/form-data">
         @csrf
         @if(isset($category))
@@ -72,18 +73,15 @@
                         <!-- Description Fields -->
                         <div class="form-group mb-3">
                             <label for="description_en" class="form-label">Description (English)</label>
-                            <div id="description_en_editor" class="quill-editor">{!! old('description_en', $category->description_en ?? '') !!}</div>
-                            <input type="hidden" name="description_en" id="description_en">
+                            <textarea id="description_en" name="description_en" class="form-control" placeholder="Enter description in English">{{ old('description_en', $category->description_en ?? '') }}</textarea>
                         </div>
                         <div class="form-group mb-3">
                             <label for="description_ar" class="form-label">Description (Arabic)</label>
-                            <div id="description_ar_editor" class="quill-editor">{!! old('description_ar', $category->description_ar ?? '') !!}</div>
-                            <input type="hidden" name="description_ar" id="description_ar">
+                            <textarea id="description_ar" name="description_ar" class="form-control" placeholder="Enter description in Arabic">{{ old('description_ar', $category->description_ar ?? '') }}</textarea>
                         </div>
                         <div class="form-group mb-3">
                             <label for="description_he" class="form-label">Description (Hebrew)</label>
-                            <div id="description_he_editor" class="quill-editor">{!! old('description_he', $category->description_he ?? '') !!}</div>
-                            <input type="hidden" name="description_he" id="description_he">
+                            <textarea id="description_he" name="description_he" class="form-control" placeholder="Enter description in Hebrew">{{ old('description_he', $category->description_he ?? '') }}</textarea>
                         </div>
 
                         <!-- Status -->
@@ -107,20 +105,3 @@
     </form>
 </div>
 @endsection
-@push('scripts')
-    <!-- Include Quill -->
-
-    <script>
-        // Initialize Quill editors
-        const descriptionEnEditor = new Quill('#description_en_editor', { theme: 'snow' });
-        const descriptionArEditor = new Quill('#description_ar_editor', { theme: 'snow' });
-        const descriptionHeEditor = new Quill('#description_he_editor', { theme: 'snow' });
-
-        // On form submit, set hidden inputs with the Quill editor contents
-        document.querySelector('form').addEventListener('submit', function () {
-            document.getElementById('description_en').value = descriptionEnEditor.root.innerHTML;
-            document.getElementById('description_ar').value = descriptionArEditor.root.innerHTML;
-            document.getElementById('description_he').value = descriptionHeEditor.root.innerHTML;
-        });
-    </script>
-@endpush

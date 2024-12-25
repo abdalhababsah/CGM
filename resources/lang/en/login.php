@@ -9,7 +9,7 @@ return [
     'login_with' => 'Log in with',
     'email' => 'Email',
     'password' => 'Password',
-    'enter_email_or_nickname' => 'Enter your email or nickname',
+    'enter_email_or_nickname' => 'Enter your email',
     'enter_password' => 'Enter your password',
     'remember_me' => 'Remember me',
     'log_in' => 'Log in',

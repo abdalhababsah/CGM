@@ -13,7 +13,7 @@
 
     <!-- Dynamic Title -->
     <title>
-        @yield('title', 'Soft UI Dashboard 3 by Creative Tim')
+        @yield('title', 'CGM Dashboard')
     </title>
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
@@ -46,13 +46,13 @@
 <body class="g-sidenav-show bg-gray-100">
 
     <!-- Sidebar Include -->
-    @include('admin.layouts.sidebar')
+    @include('dashboard-layouts.sidebar')
 
     <!-- Main Content Area -->
     <main class="main-content position-relative max-height-vh-100 h-100 border-radius-lg">
 
         <!-- Navbar Include -->
-        @include('admin.layouts.header')
+        @include('dashboard-layouts.header')
 
         <!-- Page Content -->
         @yield('content')

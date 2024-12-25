@@ -255,8 +255,10 @@
                 }
 
                 products.forEach(function(product) {
-                    let imageUrl = (product.images && product.images.length > 0) ? product.images[0].url :
-                        'https://via.placeholder.com/262x370';
+                    console.log(product)
+                    let imageUrl = product.primary_image && product.primary_image.image_url
+    ? `/storage/${product.primary_image.image_url}` // Adjust path if necessary for your storage setup
+    : 'https://via.placeholder.com/262x370';
                     let isInWishlist = product.is_in_wishlist; // Directly use the flag
                     let wishlistBtnClass = isInWishlist ? 'active' : '';
                     let wishlistBtnText = isInWishlist ? '@lang('wishlist.remove')' : '@lang('wishlist.add')';

@@ -32,7 +32,7 @@ class ShopController extends Controller
     public function fetchProducts(Request $request)
     {
         // Initialize the product query with relationships
-        $query = Product::with(['brand', 'category'])
+        $query = Product::with(['brand', 'category','primaryImage'])
                         ->where('is_active', 1)
                         ->whereHas('brand', function ($q) {
                             $q->where('is_active', 1);

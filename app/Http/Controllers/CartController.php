@@ -21,18 +21,17 @@ class CartController extends Controller
      */
     public function index()
     {
-        $cartDetails = $this->cartService->getCartDetails();
-    
-        if (request()->ajax()) {
-            return response()->json([
-                'cartItems' => $cartDetails['items'],
-                'totalPrice' => $cartDetails['totalPrice'],
-            ]);
-        }
-    
         return view('user.cart');
     }
 
+     public function fetchCart()
+     {
+        $cartDetails = $this->cartService->getCartDetails();
+        return response()->json([
+            'cartItems' => $cartDetails['items'],
+            'totalPrice' => $cartDetails['totalPrice'],
+        ]);
+     }
     /**
      * Add a product to the cart.
      *

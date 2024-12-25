@@ -24,9 +24,7 @@
             </div>
         </div>
     </div>
-    <!-- DETAIL MAIN BLOCK EOF -->
 
-    <!-- BEGIN LOGIN -->
     <div class="login">
         <div class="wrapper">
             <div class="login-form js-img" data-src="{{ asset('user/img/login-form__bg.png') }}">
@@ -39,13 +37,12 @@
                     <!-- Social Login Options -->
                     <h3>@lang('login.login_with')</h3>
                     <ul class="login-form__social">
-                        <li><a href=""><i class="icon-facebook"></i></a></li>
                         <li><a href=""><i class="icon-google"></i></a></li>
                     </ul>
 
                     <!-- Email Address -->
                     <div class="box-field">
-                        <x-input-label for="email" :value="__('Email')" />
+                        <x-input-label style="margin-bottom: 10px;" for="email" :value="__('login.email')" />
                         <x-text-input id="email" class="form-control" type="email" name="email" :value="old('email')"
                             required autofocus placeholder="{{ __('login.enter_email_or_nickname') }}" />
                         <x-input-error :messages="$errors->get('email')" class="mt-2" />
@@ -53,7 +50,7 @@
 
                     <!-- Password -->
                     <div class="box-field">
-                        <x-input-label for="password" :value="__('Password')" />
+                        <x-input-label style="margin-bottom: 10px;"  for="password" :value="__('login.password')" />
                         <x-text-input id="password" class="form-control" type="password" name="password" required
                             placeholder="{{ __('login.enter_password') }}" />
                         <x-input-error :messages="$errors->get('password')" class="mt-2" />
@@ -81,8 +78,7 @@
                 </form>
             </div>
         </div>
-        <img class="promo-video__decor js-img" data-src="{{ asset('https://via.placeholder.com/1197x1371/FFFFFF') }}"
-            src="data:image/gif;base64,R0lGODlhAQABAAAAACw=" alt="">
+
     </div>
     <!-- LOGIN EOF -->
 @endsection

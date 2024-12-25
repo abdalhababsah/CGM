@@ -143,7 +143,7 @@ class WishListService
                     'price' => $item->product->price,
                     'in_stock' => $item->product->quantity > 0,
                     'image_url' => $item->product->primaryImage 
-                        ? asset('storage/' . $item->product->primaryImage->url) 
+                        ? asset('storage/' . $item->product->primaryImage->image_url) 
                         : 'https://via.placeholder.com/110',
                 ];
             });
@@ -160,7 +160,7 @@ class WishListService
                         'price' => $product->price,
                         'in_stock' => $product->quantity > 0,
                         'image_url' => $product->primaryImage 
-                            ? asset('storage/' . $product->primaryImage->url) 
+                            ? asset('storage/' . $product->primaryImage->image_url) 
                             : 'https://via.placeholder.com/110',
                     ];
                 }

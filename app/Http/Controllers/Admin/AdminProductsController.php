@@ -85,30 +85,36 @@ class AdminProductsController extends Controller
             'is_active' => 'required|boolean',
             'price' => 'required|numeric|min:0',
             'quantity' => 'required|integer|min:0',
-            'images.*' => 'nullable|image|max:2048', // Max 2MB per image
             'is_primary' => 'nullable|image|max:2048', // Max 2MB
+            'images.*' => 'nullable|image|max:2048',   // Max 2MB per image
         ]);
-
+    
         // Create the product
         $product = new Product($validated);
-        $product->sku = $request->sku ?? strtoupper(Str::random(10)); // Auto-generate SKU if not provided
+        $product->sku = $request->sku ?? strtoupper(Str::random(10)); // Generate SKU if not provided
         $product->save();
-
+    
         // Handle primary image upload
         if ($request->hasFile('is_primary')) {
             $this->handlePrimaryImageUpload($request->file('is_primary'), $product);
         }
-
+    
         // Handle additional images upload
         if ($request->hasFile('images')) {
-            $this->handleAdditionalImagesUpload($request->file('images'), $product);
+            foreach ($request->file('images') as $image) {
+                $this->handleAdditionalImageUpload($image, $product);
+            }
         }
-
-        // Check if the request expects JSON (for AJAX requests)
+    
+        // Check if the request expects JSON
         if ($request->expectsJson()) {
-            return response()->json(['message' => 'Product created successfully.'], 201);
+            return response()->json([
+                'message' => 'Product created successfully.',
+                'product' => $product, // Return the created product
+            ], 201);
         }
-
+    
+        // Default redirect for standard form submission
         return redirect()->route('admin.products.index')->with('success', 'Product created successfully.');
     }
 
@@ -121,6 +127,16 @@ class AdminProductsController extends Controller
         $brands = Brand::all();
         $product->load('images');
         return view('admin.products.edit', compact('product', 'categories', 'brands'));
+    }
+
+    /**
+     * Fetch additional images for the specified product (AJAX).
+     */
+    public function fetchImages(Product $product)
+    {
+        $images = $product->images()->where('is_primary', false)->get();
+
+        return response()->json(['images' => $images], 200);
     }
 
     /**
@@ -165,6 +181,7 @@ class AdminProductsController extends Controller
      */
     public function uploadAdditionalImages(Request $request, Product $product)
     {
+        // dd($request);
         // Validate additional images
         $validated = $request->validate([
             'images.*' => 'required|image|max:2048', // Max 2MB per image
@@ -184,18 +201,28 @@ class AdminProductsController extends Controller
      */
     public function updatePrimaryImage(Request $request, Product $product)
     {
-        // Validate primary image
+        // Validate the uploaded file
         $validated = $request->validate([
-            'is_primary' => 'required|image|max:2048', // Max 2MB
+            'is_primary' => 'required|file|image|max:2048', // Validate file type and size
         ]);
-
+    
         if ($request->hasFile('is_primary')) {
+            // Handle primary image upload
             $this->handlePrimaryImageUpload($request->file('is_primary'), $product);
+    
+            // Fetch the new primary image
+            $primaryImage = $product->images()->where('is_primary', true)->first();
+    
+            return response()->json([
+                'message' => 'Primary image updated successfully.',
+                'primary_image_url' => asset('storage/' . $primaryImage->image_url),
+            ], 200);
         }
-
-        return response()->json(['message' => 'Primary image updated successfully.'], 200);
+    
+        return response()->json([
+            'message' => 'No image file provided.',
+        ], 422);
     }
-
     /**
      * Remove the specified product from storage.
      */
@@ -239,27 +266,6 @@ class AdminProductsController extends Controller
     }
 
     /**
-     * Delete the primary image.
-     */
-    public function deletePrimaryImage(Product $product)
-    {
-        // Find existing primary image
-        $primaryImage = $product->primaryImage()->first();
-
-        if (!$primaryImage) {
-            return response()->json(['message' => 'No primary image found.'], 404);
-        }
-
-        // Delete the image file
-        Storage::disk('public')->delete($primaryImage->image_url);
-
-        // Delete the image record
-        $primaryImage->delete();
-
-        return response()->json(['message' => 'Primary image deleted successfully.'], 200);
-    }
-
-    /**
      * Handle the upload of an additional image.
      *
      * @param  \Illuminate\Http\UploadedFile  $image
@@ -281,7 +287,7 @@ class AdminProductsController extends Controller
     protected function handlePrimaryImageUpload($image, Product $product)
     {
         // Delete existing primary image if any
-        $primaryImage = $product->primaryImage()->first();
+        $primaryImage = $product->images()->where('is_primary', true)->first();
         if ($primaryImage) {
             Storage::disk('public')->delete($primaryImage->image_url);
             $primaryImage->delete();

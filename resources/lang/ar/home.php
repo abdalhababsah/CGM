@@ -21,7 +21,7 @@ return [
 
     // Trending Section
     'cosmetics' => 'مستحضرات التجميل',
-    'trending_products' => 'المنتجات الرائجة',
+    'trending_products' => 'قريبًا',
     'make_up' => 'المكياج',
     'perfume' => 'عطر',
     'skin_care' => 'العناية بالبشرة',
