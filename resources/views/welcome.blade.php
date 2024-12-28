@@ -205,7 +205,7 @@
                 <span id="professional" class="saint-text">@lang('home.professional')</span>
                 <h1 id="beauty_and_care" class="main-text">@lang('home.beauty_and_care')</h1>
                 <p id="nourish_description">@lang('home.nourish_description')</p>
-                <a id="shop_now" href="#" class="btn">@lang('home.shop_now')</a>
+                <a id="shop_now" href="{{route('shop.index')}}" class="btn">@lang('home.shop_now')</a>
             </div>
 
             <!-- Image Carousel -->
@@ -221,7 +221,7 @@
     </div>
 
     <!-- BEGIN TRENDING -->
-    <section class="trending">
+    <section class="trending" style="direction: ltr;">
         <div class="trending-content">
             <div class="trending-top">
                 <span class="saint-text">@lang('home.cosmetics')</span>
@@ -232,12 +232,12 @@
                 <div class="box-tab-cont">
                     <div class="tab-cont" id="trending-tab_1">
                         <div class="products-items js-products-items">
-                            <a href="#" class="products-item">
+                            <a class="products-item">
                                 <div class="products-item__type">
                                     <span class="products-item__new">Soon</span>
                                 </div>
                                 <div class="products-item__img">
-                                    <img data-src="{{asset('user/img/comming-soon-1.png')}}"
+                                    <img style="object-fit: contain;" data-src="{{asset('user/img/comming-soon-1.png')}}"
                                         src="{{asset('user/img/comming-soon-1.png')}}" class="js-img" alt="">
 
                                 </div>
@@ -245,12 +245,12 @@
                                     <span class="products-item__name">Bomba De Vitaminas</span>
                                 </div>
                             </a>
-                            <a href="#" class="products-item">
+                            <a  class="products-item">
                                 <div class="products-item__type">
                                     <span class="products-item__new">Soon</span>
                                 </div>
                                 <div class="products-item__img">
-                                    <img data-src="{{asset('user/img/comming-soon-21.png')}}"
+                                    <img style="object-fit: contain;" data-src="{{asset('user/img/comming-soon-21.png')}}"
                                         src="{{asset('user/img/comming-soon-21.png')}}" class="js-img" alt="">
 
                                 </div>
@@ -259,32 +259,28 @@
 
                                 </div>
                             </a>
-                            <a href="#" class="products-item">
+                            <a  class="products-item">
                                 <div class="products-item__type">
                                     <span class="products-item__new">Soon</span>
                                 </div>
                                 <div class="products-item__img">
-                                    <img data-src="{{asset('user/img/comming-soon-31.png')}}"
+                                    <img style="object-fit: contain;" data-src="{{asset('user/img/comming-soon-31.png')}}"
                                         src="{{asset('user/img/comming-soon-31.png')}}" class="js-img" alt="">
-
                                 </div>
                                 <div class="products-item__info">
                                     <span class="products-item__name">Cacau</span>
-
                                 </div>
                             </a>
-                            <a href="#" class="products-item">
+                            <a  class="products-item">
                                 <div class="products-item__type">
                                     <span class="products-item__new">Soon</span>
                                 </div>
                                 <div class="products-item__img">
-                                    <img data-src="{{asset('user/img/comming-soon-41.png')}}"
+                                    <img style="object-fit: contain;" data-src="{{asset('user/img/comming-soon-41.png')}}"
                                         src="{{asset('user/img/comming-soon-41.png')}}" class="js-img" alt="">
-
                                 </div>
                                 <div class="products-item__info">
                                     <span class="products-item__name">Vitamin C And Collagen</span>
-
                                 </div>
                             </a>
                         </div>
@@ -335,11 +331,9 @@
                                 <div class="products-item__img">
                                     <img data-src="https://via.placeholder.com/400x570"
                                         src="data:image/gif;base64,R0lGODlhAQABAAAAACw=" class="js-img" alt="">
-
                                 </div>
                                 <div class="products-item__info">
                                     <span class="products-item__name">Detox body Cream</span>
-
                                 </div>
                             </a>
                         </div>
@@ -347,7 +341,6 @@
                 </div>
             </div>
     </section>
-
     <!-- BEGIN ADVANTAGES -->
     <div class="advantages">
         <div class="wrapper">
@@ -364,21 +357,19 @@
                         <i class="icon-quality"></i>
                     </div>
                     <h4>@lang('home.quality')</h4>
-                    <p>@lang('home.quality_description')</p>
+                    {{-- <p>@lang('home.quality_description')</p> --}}
                 </div>
                 <div class="advantages-item">
                     <div class="advantages-item__icon">
                         <i class="icon-organic"></i>
                     </div>
                     <h4>@lang('home.organic')</h4>
-                    <p>@lang('home.organic_description')</p>
+                    {{-- <p>@lang('home.organic_description')</p> --}}
                 </div>
             </div>
         </div>
     </div>
     <!-- ADVANTAGES EOF   -->
-
-
     <!-- BEGIN TOP CATEGORIES -->
     <section class="top-categories">
         <div class="top-categories__text text-center">
@@ -389,29 +380,23 @@
         <div class="top-categories__items d-flex justify-content-around">
             <a href="#" class="top-categories__item animate__animated animate__fadeInRight">
                 <img data-src="{{ 'user/img/image-1.png' }}" src="data:image/gif;base64,R0lGODlhAQABAAAAACw="
-                    class="js-img img-fluid" alt="@lang('home.spa')">
+                    class="js-img img-fluid" alt="@lang('home.men')">
                 <div class="top-categories__item-hover">
-                    <h5>@lang('home.spa')</h5>
-                    <span>@lang('home.browse_products') -</span>
-                    <i class="icon-arrow-lg"></i>
+                    <h5>@lang('home.men')</h5>
                 </div>
             </a>
             <a href="#" class="top-categories__item animate__animated animate__fadeInDown">
                 <img data-src="{{ asset('user/img/image-2.png') }}" src="data:image/gif;base64,R0lGODlhAQABAAAAACw="
-                    class="js-img img-fluid" alt="@lang('home.nails')">
+                    class="js-img img-fluid" alt="@lang('home.women')">
                 <div class="top-categories__item-hover">
-                    <h5>@lang('home.nails')</h5>
-                    <span>@lang('home.browse_products') -</span>
-                    <i class="icon-arrow-lg"></i>
+                    <h5>@lang('home.women')</h5>
                 </div>
             </a>
             <a href="#" class="top-categories__item animate__animated animate__fadeInLeft">
                 <img data-src="{{ 'user/img/image-3.png' }}" src="data:image/gif;base64,R0lGODlhAQABAAAAACw="
-                    class="js-img img-fluid" alt="@lang('home.perfume')">
+                    class="js-img img-fluid" alt="@lang('home.children')">
                 <div class="top-categories__item-hover">
-                    <h5>@lang('home.perfume')</h5>
-                    <span>@lang('home.browse_products') -</span>
-                    <i class="icon-arrow-lg"></i>
+                    <h5>@lang('home.children')</h5>
                 </div>
             </a>
         </div>
@@ -429,7 +414,7 @@
                     <span class="saint-text">@lang('home.check_this_out')</span>
                     <h2>@lang('home.new_collection')</h2>
                     <span class="info-blocks__item-descr">@lang('home.nourish_description')</span>
-                    <a href="#" class="btn">@lang('home.shop_now')</a>
+                    <a href="{{route('shop.index')}}" class="btn">@lang('home.shop_now')</a>
                 </div>
             </div>
         </div>
@@ -438,7 +423,6 @@
                 <div class="info-blocks__item-img">
                     <img data-src="{{ asset('user/img/image-5.png') }}" src="data:image/gif;base64,R0lGODlhAQABAAAAACw="
                         class="js-img" alt="@lang('home.promotion_video')">
-
                 </div>
                 <div class="info-blocks__item-text">
                     <span class="saint-text">@lang('home.about_us')</span>
@@ -451,17 +435,13 @@
     </div>
 
     <section id="call-to-action" class="call-to-action section dark-background">
-
         <img src="{{ asset('user/img/scroll-image.png') }}" alt="">
-
         <div class="container">
             <div class="row justify-content-center" data-aos="zoom-in" data-aos-delay="100">
                 <div class="col-xl-10">
-
                 </div>
             </div>
         </div>
-
     </section>
 
 

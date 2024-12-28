@@ -137,7 +137,7 @@
     <!-- BEGIN DETAIL MAIN BLOCK -->
     <div class="detail-block detail-block_margin">
         <div class="wrapper">
-            <div class="detail-block__content">
+            {{-- <div class="detail-block__content">
                 <h1>{{ __('wishlist.wishlist') }}</h1>
                 <ul class="bread-crumbs">
                     <li class="bread-crumbs__item">
@@ -145,7 +145,7 @@
                     </li>
                     <li class="bread-crumbs__item">{{ __('wishlist.wishlist') }}</li>
                 </ul>
-            </div>
+            </div> --}}
         </div>
     </div>
     <!-- DETAIL MAIN BLOCK EOF -->

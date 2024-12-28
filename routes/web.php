@@ -11,6 +11,7 @@ use App\Http\Controllers\CartController;
 use App\Http\Controllers\CheckoutController;
 use App\Http\Controllers\ContactUsController;
 use App\Http\Controllers\LocalizationController;
+use App\Http\Controllers\ProductController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\ShopController;
 use App\Http\Controllers\TestController;
@@ -97,7 +98,8 @@ Route::get('/cart/count', [CartController::class, 'getCartCount'])->name('cart.c
 // Shop Routes
 Route::get('/shop', [ShopController::class, 'index'])->name('shop.index');
 Route::get('/shop/fetch-products', [ShopController::class, 'fetchProducts'])->name('shop.fetchProducts');
-
+//view products
+Route::get('/view-product/{product}/{slug}', [ProductController::class, 'show'])->name(name: 'product.show');
 
 
 // User Dashboard Routes

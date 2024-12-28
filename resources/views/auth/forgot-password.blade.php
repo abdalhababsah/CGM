@@ -12,16 +12,16 @@
 
 @section('content')
     <!-- BEGIN DETAIL MAIN BLOCK -->
-    <div class="detail-block detail-block_margin">
+    <div class="detail-block detail-block_margin" style="background-image: url({{asset('user/img/website.png')}});">
         <div class="wrapper">
             <div class="detail-block__content">
-                <h1>@lang('login.forgot_password')</h1>
+                {{-- <h1>@lang('login.forgot_password')</h1>
                 <ul class="bread-crumbs">
                     <li class="bread-crumbs__item">
                         <a href="{{ route('home') }}" class="bread-crumbs__link">@lang('login.home')</a>
                     </li>
                     <li class="bread-crumbs__item">@lang('login.forgot_password')</li>
-                </ul>
+                </ul> --}}
             </div>
         </div>
     </div>

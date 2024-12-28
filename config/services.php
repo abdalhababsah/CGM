@@ -35,10 +35,15 @@ return [
         ],
     ],
     'delivery' => [
-        'base_url'       => env('DELIVERY_API_BASE_URL'),
-        'username'       => env('DELIVERY_API_USERNAME'),
-        'password'       => env('DELIVERY_API_PASSWORD'),
-        'device_token'   => env('DELIVERY_API_DEVICE_TOKEN'),
+        'base_url' => env('DELIVERY_API_BASE_URL'),
+        'username' => env('DELIVERY_API_USERNAME'),
+        'password' => env('DELIVERY_API_PASSWORD'),
+        'device_token' => env('DELIVERY_API_DEVICE_TOKEN'),
+    ],
+    'google' => [
+        'client_id' => env('GOOGLE_CLIENT_ID'),
+        'client_secret' => env('GOOGLE_CLIENT_SECRET'),
+        'redirect' => env('GOOGLE_REDIRECT_URI'),
     ],
 
 

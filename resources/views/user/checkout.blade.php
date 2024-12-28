@@ -7,13 +7,13 @@
     <div class="detail-block detail-block_margin">
         <div class="wrapper">
             <div class="detail-block__content">
-                <h1>{{ __('checkout.title') }}</h1>
+                {{-- <h1>{{ __('checkout.title') }}</h1>
                 <ul class="bread-crumbs">
                     <li class="bread-crumbs__item">
                         <a href="{{ route('home') }}" class="bread-crumbs__link">{{ __('checkout.home') }}</a>
                     </li>
                     <li class="bread-crumbs__item">{{ __('checkout.title') }}</li>
-                </ul>
+                </ul> --}}
             </div>
         </div>
     </div>

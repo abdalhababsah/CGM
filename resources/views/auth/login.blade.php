@@ -31,14 +31,19 @@
                 <!-- Session Status -->
                 <x-auth-session-status class="mb-4" :status="session('status')" />
 
+                <!-- Social Login Options -->
+                <h3>@lang('login.login_with')</h3>
+                <ul class="login-form__social">
+                    <li>
+                        <a href="{{ route('auth.google') }}" class="google-login">
+                            <i class="icon-google"></i>
+                        </a>
+                    </li>
+                </ul>
+
+                <!-- Regular Login Form -->
                 <form method="POST" action="{{ route('login') }}">
                     @csrf
-
-                    <!-- Social Login Options -->
-                    <h3>@lang('login.login_with')</h3>
-                    <ul class="login-form__social">
-                        <li><a href=""><i class="icon-google"></i></a></li>
-                    </ul>
 
                     <!-- Email Address -->
                     <div class="box-field">
@@ -62,8 +67,9 @@
                         <span class="checkmark"></span>
                         @lang('login.remember_me')
                     </label>
+
+                    <!-- Submit Button and Links -->
                     <div class="d-flex flex-column">
-                        <!-- Submit Button and Links -->
                         <button class="btn" type="submit">@lang('login.log_in')</button>
                         <div class="login-form__bottom">
                             @if (Route::has('register'))

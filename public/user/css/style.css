@@ -2234,7 +2234,9 @@ header {
 	.header-logo {
 		min-width: 110px;
 	}
-
+.detail-block{
+	min-height: 464px !important;
+}
 	.header-content {
 		padding: 46px 40px 0;
 	}
@@ -4001,7 +4003,7 @@ h6,
 
 .detail-block {
 	padding-top: 218px;
-	background-image: url(../img/website.png);
+	background-image: url(../img/socialmedia-01.jpg);
 	background-position: center;
 	background-repeat: no-repeat;
 	-webkit-background-size: cover;
@@ -4009,7 +4011,8 @@ h6,
 	position: relative;
 	text-align: center;
 	z-index: 1;
-	background-position: top;
+	background-position: bottom;
+	min-height: 564px;
 }
 
 .detail-block h1 {
@@ -5398,7 +5401,7 @@ blockquote:after,
 }
 
 .shop-aside__item .range-slider {
-	margin-bottom: 123px;
+	margin-bottom: 63px;
 }
 
 .shop-aside__item-product {
@@ -5939,7 +5942,7 @@ blockquote:after,
 }
 
 .product-buttons .btn {
-	margin-right: 11px;
+
 	padding: 0 49px;
 }
 
@@ -9548,7 +9551,7 @@ input[type="search"]::-webkit-search-results-decoration {
 	}
 
 	.shop-aside__item ul li a {
-		padding: 5px 0;
+		padding: 5px 5px;
 	}
 
 	.shop-aside__item {
@@ -10210,6 +10213,10 @@ input[type="search"]::-webkit-search-results-decoration {
 @media screen and (max-width: 480px) {
 	.main-block.load-bg {
 		background-image: none;
+	}
+	.detail-block{
+		min-height: 344px !important;
+
 	}
 
 	.insta-photo {

@@ -2,55 +2,14 @@
 @extends('user.layouts.app')
 
 @section('styles')
-    <!-- SweetAlert2 CSS -->
-    <style>
-        /* Remove default button styles */
-        .add-to-cart-btn,
-        .toggle-wishlist-btn {
-            background: none;
-            border: none;
-            padding: 0;
-            cursor: pointer;
-            outline: none;
-        }
-
-        .add-to-cart-btn:hover,
-        .toggle-wishlist-btn:hover {
-            opacity: 0.8;
-        }
-
-        .add-to-cart-btn:focus,
-        .toggle-wishlist-btn:focus {
-            outline: 2px solid #007BFF;
-        }
-
-        .add-to-cart-btn .icon-cart,
-        .toggle-wishlist-btn .icon-heart {
-            font-size: 1.5rem;
-            color: #333;
-        }
-
-        .toggle-wishlist-btn.active .icon-heart {
-            color: red;
-        }
-
-        .active-li {
-            color: white !important;
-            background: rgb(128, 0, 0) !important;
-        }
-
-        .active {
-            color: rgb(128, 0, 0) !important;
-        }
-        /* Additional styling for product listing or any other UI elements if needed */
-    </style>
+    <link rel="stylesheet" href="{{ asset('user/css/shop.css') }}">
 @endsection
 
 @section('content')
     <!-- BEGIN DETAIL MAIN BLOCK -->
     <div class="detail-block detail-block_margin">
         <div class="wrapper">
-            <div class="detail-block__content">
+            {{-- <div class="detail-block__content">
                 <h1>@lang('shop.shop')</h1>
                 <ul class="bread-crumbs">
                     <li class="bread-crumbs__item">
@@ -58,7 +17,7 @@
                     </li>
                     <li class="bread-crumbs__item">@lang('shop.shop')</li>
                 </ul>
-            </div>
+            </div> --}}
         </div>
     </div>
     <!-- DETAIL MAIN BLOCK EOF -->
@@ -91,10 +50,17 @@
                     </div>
 
                     <!-- Price Range -->
+                    <!-- In the Price Range section -->
+                    <!-- Price Range -->
                     <div class="shop-aside__item">
                         <span class="shop-aside__item-title">@lang('shop.price')</span>
-                        <div class="range-slider">
-                            <input type="text" id="price-range" class="js-range-slider-price" value="" />
+                        <div class="range-slider-container">
+                            <div class="range-slider">
+                                <input type="text" id="price-range" class="js-range-slider-price" value="" />
+                            </div>
+                            <button id="apply-price-filter" class="btn-price-filter">
+                                @lang('shop.filter_price')
+                            </button>
                         </div>
                     </div>
                 </div>
@@ -145,8 +111,6 @@
             let isNew = false;
 
             // Array of product IDs currently in the wishlist
-            // Ensure your controller passes this array
-            // Example: $currentWishlistIds = [1, 2, 5]; 
             let currentWishlistIds = @json($currentWishlistIds ?? []);
 
             $.ajaxSetup({
@@ -255,38 +219,54 @@
                 }
 
                 products.forEach(function(product) {
-                    console.log(product)
-                    let imageUrl = product.primary_image && product.primary_image.image_url
-    ? `/storage/${product.primary_image.image_url}` // Adjust path if necessary for your storage setup
-    : 'https://via.placeholder.com/262x370';
-                    let isInWishlist = product.is_in_wishlist; // Directly use the flag
+                    // console.log(product);
+                    let imageUrl = product.primary_image && product.primary_image.image_url ?
+                        `/storage/${product.primary_image.image_url}` :
+                        'https://via.placeholder.com/262x370';
+                    let isInWishlist = product.is_in_wishlist;
                     let wishlistBtnClass = isInWishlist ? 'active' : '';
                     let wishlistBtnText = isInWishlist ? '@lang('wishlist.remove')' : '@lang('wishlist.add')';
+                    let inStock = product.quantity > 0 ? '@lang('shop.available')' : '@lang('shop.soldOut')';
+                    let back_color = product.quantity > 0 ? 'products-item__sale' : 'products-item__new';
+                    let productUrl =
+                        `{{ url('/view-product') }}/${product.id}/${product.name_en.toLowerCase().replace(/[^a-z0-9]+/g, '-')}`;
 
+                    // Determine whether to display the "Add to Cart" button
+                    let addToCartButton = '';
+                    if (product.quantity > 0) {
+                        addToCartButton = `
+            <button class="add-to-cart-btn" data-product-id="${product.id}" aria-label="{{ __('shop.add_to_cart') }}">
+                <i style="color:white !important;" class="icon-cart"></i>
+            </button>
+        `;
+                    }
                     productsList.append(`
-            <div class="products-item">
-                <div class="products-item__img">
-                    <img data-src="${imageUrl}"
-                        src="data:image/gif;base64,R0lGODlhAQABAAAAACw="
-                        class="js-img" alt="${getLocalizedName(product)}">
-                    <div class="products-item__hover">
-                        <i class="icon-search"></i>
-                        <div class="products-item__hover-options">
-                            <button class="toggle-wishlist-btn ${wishlistBtnClass}" data-product-id="${product.id}" aria-label="${wishlistBtnText}">
-                                <i class="icon-heart"></i>
-                            </button>
-                            <button class="add-to-cart-btn" data-product-id="${product.id}" aria-label="{{ __('shop.add_to_cart') }}">
-                                <i class="icon-cart"></i>
-                            </button>
-                        </div>
+        <div class="products-item">
+            <a href="${productUrl}" class="products-item__link">
+            <div class="products-item__img">
+                <div class="products-item__type">
+                    <span class="${back_color}">${inStock}</span>
+                </div>
+                <img data-src="${imageUrl}"
+                    src="data:image/gif;base64,R0lGODlhAQABAAAAACw="
+                    class="js-img" alt="${getLocalizedName(product)}">
+                <div class="products-item__hover">
+                    <i class="icon-search"></i>
+                    <div class="products-item__hover-options">
+                        <button class="toggle-wishlist-btn ${wishlistBtnClass}" data-product-id="${product.id}" aria-label="${wishlistBtnText}">
+                            <i class="icon-heart"></i>
+                        </button>
+                        ${addToCartButton}
                     </div>
                 </div>
-                <div class="products-item__info">
-                    <span class="products-item__name">${getLocalizedName(product)}</span>
-                    <span class="products-item__cost">$${product.price}</span>
-                </div>
             </div>
-        `);
+            <div class="products-item__info">
+                <span class="products-item__name">${getLocalizedName(product)}</span>
+                <span class="products-item__cost">$${product.price}</span>
+            </div>
+               </a>
+        </div>
+    `);
                 });
 
                 lazyLoadImages();
@@ -416,26 +396,37 @@
                     return item.name_en;
                 }
             }
+            /* shop range */
+            if ($(".js-range-slider-price").length) {
+                var $range = $(".js-range-slider-price");
+                var instance;
+                var min = 0;
+                var max = 999;
 
-            function initializePriceSlider() {
-                let minPrice = 0;
-                let maxPrice = 1000;
-
-                $("#price-range").ionRangeSlider({
-                    type: "double",
-                    min: minPrice,
-                    max: maxPrice,
-                    from: minPrice,
-                    to: maxPrice,
+                $range.ionRangeSlider({
+                    skin: "round",
+                    type: 'double',
+                    min: min,
+                    max: max,
+                    from: 0,
+                    hide_min_max: 'true',
                     prefix: "$",
-                    onFinish: function(data) {
-                        priceMin = data.from;
-                        priceMax = data.to;
-                        page = 1;
-                        fetchData();
-                    }
+                    to: 999
+                });
+
+                instance = $range.data("ionRangeSlider");
+
+                // Add click event handler for the filter button
+                $('#apply-price-filter').on('click', function() {
+                    let values = instance.result;
+                    priceMin = values.from;
+                    priceMax = values.to;
+                    page = 1;
+                    fetchData();
                 });
             }
+
+            // Add this CSS to your styles section
 
             $('#search').on('input', function() {
                 search = $(this).val();
@@ -501,7 +492,7 @@
 
             // Initial load
             fetchData();
-            initializePriceSlider();
+
         });
     </script>
 @endsection

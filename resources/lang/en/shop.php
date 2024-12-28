@@ -16,4 +16,8 @@ return [
     'enter_email' => 'Enter your email',
     'no_products_found' => 'No products found.',
     'price' => 'Price',
+    'available' => 'Available',
+    'soldOut' => 'Sold Out',
+    'filter_price' => 'Filter Price',
+
 ];

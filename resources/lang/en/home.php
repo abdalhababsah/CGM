@@ -23,7 +23,6 @@ return [
     'cosmetics' => 'Cosmetics',
     'trending_products' => 'Comming Soon',
     'make_up' => 'Make up',
-    'perfume' => 'Perfume',
     'skin_care' => 'Skin care',
     'hair_care' => 'Hair care',
 
@@ -48,9 +47,6 @@ return [
     // Top Categories Section
     'popular_collections' => 'Popular collections',
     'top_categories' => 'Top categories',
-    'spa' => 'SPA',
-    'nails' => 'Nails',
-    'perfume' => 'Perfume',
     'browse_products' => 'browse products',
 
     // Info Blocks
@@ -65,4 +61,7 @@ return [
 
     'no_products_found' => 'No products found.',
 
+    'men' => 'Men',
+    'women' => 'Women',
+    'children' => 'Children',
 ];

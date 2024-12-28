@@ -16,4 +16,7 @@ return [
     'enter_email' => 'הזן את האימייל שלך',
     'no_products_found' => 'לא נמצאו מוצרים.',
     'price'=> 'מְחִיר',
+    'available' => 'זמין',
+    'soldOut' => 'אזל מהמלאי',
+    'filter_price' => 'סינון מחיר',
 ];

@@ -18,6 +18,7 @@ return new class extends Migration
             $table->string('email', 255)->unique();
             $table->string('password', 255)->nullable(); // Nullable for guest users
             $table->string(column: 'phone');
+            $table->string('google_id')->nullable();
             $table->integer('role'); // 'Admin 1, User 0' // 2 guest
             $table->integer('preferred_language')->default(0)->comment('0=en, 1=ar, 2=he');
             $table->timestamp('email_verified_at')->nullable();

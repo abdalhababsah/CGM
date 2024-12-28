@@ -49,10 +49,10 @@ body {
     direction: rtl;
 }
 
-.info-blocks__item-reverse .wrapper {
-    flex-direction: row-reverse;
-}
+.product-buttons .btn{
+    gap: 10px;
 
+}
 .top-categories__item-hover {
     text-align: right;
 }

@@ -5,13 +5,13 @@
 <div class="detail-block">
     <div class="wrapper">
         <div class="detail-block__content">
-            <h1>Contact</h1>
+            {{-- <h1>Contact</h1>
             <ul class="bread-crumbs">
                 <li class="bread-crumbs__item">
                     <a href="#" class="bread-crumbs__link">Home</a>
                 </li>
                 <li class="bread-crumbs__item">Contact</li>
-            </ul>
+            </ul> --}}
             <div class="detail-block__items">
                 <div class="detail-block__item">
                     <div class="detail-block__item-icon">

@@ -38,16 +38,16 @@ class CheckoutController extends Controller
     {
         // Fetch cart details
         $cartDetails = $this->cartService->getCartDetails();
-    
+
         if (empty($cartDetails['items'])) {
             // If cart is empty, redirect back with an error message
             return redirect()->route('cart.index')
-                             ->with('error', 'Your cart is empty. Add items before proceeding to checkout.');
+                ->with('error', 'Your cart is empty. Add items before proceeding to checkout.');
         }
-    
+
         // Return the view but add headers to prevent caching
         $view = view('user.checkout'); // This is your Blade view
-    
+
         return response($view)
             ->header('Cache-Control', 'no-cache, no-store, must-revalidate') // HTTP 1.1
             ->header('Pragma', 'no-cache') // HTTP 1.0
@@ -262,31 +262,31 @@ class CheckoutController extends Controller
     public function fetchAreas(Request $request)
     {
         $cityId = $request->city_id;
-    
+
         // Fetch all areas linked to this city/delivery_location
         $areas = Area::where('delivery_location_id', $cityId)->get();
-    
+
         if ($areas->isEmpty()) {
             return response()->json([
                 'status' => 'error',
                 'message' => 'No areas found for this city.'
             ]);
         }
-    
+
         // Get the current app locale
         $locale = app()->getLocale();
         // Construct the column name dynamically, e.g. 'area_en', 'area_ar', or 'area_he'
         $localeColumn = 'area_' . $locale;
-    
+
         $mappedAreas = $areas->map(function ($area) use ($localeColumn) {
             $localizedName = $area->$localeColumn ?: $area->area_en;
-    
+
             return [
                 'id' => $area->id,
                 'name' => $localizedName,
             ];
         });
-    
+
         return response()->json([
             'status' => 'success',
             'areas' => $mappedAreas,

@@ -16,5 +16,8 @@ return [
     'enter_email' => 'أدخل بريدك الإلكتروني',
     'price' => 'السعر',
     'no_products_found' => 'لم يتم العثور على منتجات.',
-
+    'available' => 'متاح',
+    'soldOut' => 'نفدت الكمية',
+    'filter_price' => 'تصفية السعر',
+   
 ];

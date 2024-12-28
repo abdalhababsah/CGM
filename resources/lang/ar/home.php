@@ -48,9 +48,6 @@ return [
     // Top Categories Section
     'popular_collections' => 'مجموعات شعبية',
     'top_categories' => 'أعلى الفئات',
-    'spa' => 'سبا',
-    'nails' => 'أظافر',
-    'perfume' => 'عطر',
     'browse_products' => 'تصفح المنتجات',
 
     // Info Blocks
@@ -63,4 +60,8 @@ return [
     'new_arrivals' => 'الوافدين الجدد',
     'full_description' => 'وصف كامل',
 
+
+    'men' => 'رجال',
+    'women' => 'نساء',
+    'children' => 'أطفال',
 ];

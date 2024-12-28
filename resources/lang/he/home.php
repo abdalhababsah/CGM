@@ -50,7 +50,6 @@ return [
     'top_categories' => 'קטגוריות מובילות',
     'spa' => 'ספא',
     'nails' => 'ציפורניים',
-    'perfume' => 'בושם',
     'browse_products' => 'עיין במוצרים',
 
     // Info Blocks
@@ -66,4 +65,7 @@ return [
     // Additional Keys (if needed)
     'no_products_found' => 'לא נמצאו מוצרים.',
 
+    'men' => 'גברים',
+    'women' => 'נשים',
+    'children' => 'ילדים',
 ];

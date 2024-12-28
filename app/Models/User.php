@@ -16,10 +16,10 @@ class User extends Authenticatable
         'last_name',
         'email',
         'password',
+        'phone',
+        'google_id',
         'role',
-        'preferred_language',
     ];
-
     // Hidden attributes for arrays
     protected $hidden = [
         'password',
