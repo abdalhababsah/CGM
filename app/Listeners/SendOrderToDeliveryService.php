@@ -41,8 +41,8 @@ class SendOrderToDeliveryService implements ShouldQueue
             'qrAltId'           => '',      // Empty string as per API
             'ShipmentTypeID'    => $this->getShipmentTypeId($order->delivery_company_id),
             'ClientName'        => $order->user->first_name . $order->user->last_name, // Assuming 'full_name' is available
-            'ClientCityID'      => $order->orderLocation->city_id ?? '1', 
-            'ClientAreaID'      => $order->orderLocation->area_id ?? '628',
+            'ClientCityID'      => $order->orderLocation->city_id ?? '', 
+            'ClientAreaID'      => $order->orderLocation->area_id ?? '',
             'ClientPhone'       => $order->user->phone,
             'ClientPhone2'      => $order->phone2 ?? '',
             'ClientAddress'     => $order->orderLocation->address ?? '',
@@ -51,9 +51,9 @@ class SendOrderToDeliveryService implements ShouldQueue
             'Remarks'           => $order->note ?? '',
             'IsReturn'          => false,
             'ShipmentContains'  => $this->formatShipmentContents($order->orderItems),
-            'lang'              => $order->preferred_language, // Assuming this is required
+            'lang'              => $order->preferred_language,
             'ShipmentQuantity'  => $this->getShipmentQuantity($order->orderItems),
-            'IsForeign'         => false, // Assuming local shipment
+            'IsForeign'         => false, 
         ];
 
         try {

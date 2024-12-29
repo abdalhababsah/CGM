@@ -15,6 +15,8 @@ class CreateOrdersTable extends Migration
             $table->foreignId(column: 'delivery_company_id')->nullable()->constrained()->onDelete('set null');
             $table->foreignId(column: 'area_id')->nullable()->constrained()->onDelete('set null');
             $table->decimal('total_amount', 10, 2);
+            $table->string('delivery_shipment_id')->nullable()->comment('ID provided by the delivery service');
+            $table->string('delivery_tracking_no')->nullable()->comment('Tracking number for the delivery shipment');    
             $table->string('payment_method', 50)->default('Cash on Delivery');
             $table->string('note')->nullable();
             $table->string('phone2')->nullable();

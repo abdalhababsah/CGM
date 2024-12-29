@@ -134,7 +134,10 @@ Route::middleware(['auth'])->prefix('checkout')->name('checkout.')->group(functi
 
 
 // Contact Us Route
-Route::get('/contact', [ContactUsController::class, 'index'])->name('contact');
+Route::get('/contact-us', [ContactUsController::class, 'index'])->name('contact');
+Route::post('/contact-us', [ContactUsController::class, 'submit'])->name('contact.submit');
 Route::get('/test-get-areas', [TestController::class, 'testGetAreas'])->name('test.getAreas');
-// Authentication Routes
+
+
+
 require __DIR__ . '/auth.php';

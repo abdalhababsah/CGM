@@ -4,7 +4,7 @@
         <div class="d-flex justify-content-between align-items-center">
             <!-- Footer Logo -->
             <div class="d-flex align-items-center">
-                <img src="{{ asset('user/img/logo-white-01.svg') }}" alt="@lang('home.header_logo_alt')" width="120">
+                <img src="{{ asset('user/img/logo-white-01.svg') }}" alt="@lang('home.header_logo_alt')" width="60">
             </div>
 
             <!-- Navigation Links -->

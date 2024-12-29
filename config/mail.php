@@ -107,6 +107,17 @@ return [
     | used globally for all emails that are sent by your application.
     |
     */
+        /*
+    |--------------------------------------------------------------------------
+    | Contact Email Address
+    |--------------------------------------------------------------------------
+    |
+    | This is the email address that contact form submissions will be sent to.
+    | You can set it via the .env file using CONTACT_EMAIL.
+    |
+    */
+
+    'contact_address' => env('CONTACT_EMAIL', 'contact@yourdomain.com'),
 
     'from' => [
         'address' => env('MAIL_FROM_ADDRESS', 'hello@example.com'),

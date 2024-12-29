@@ -15,6 +15,7 @@
         .product-detail-info p {
             margin-bottom: 10px;
         }
+
         .out-of-stock-warning {
             background-color: #fff3cd;
             color: #856404;
@@ -26,6 +27,7 @@
             width: 100%;
             font-size: 14px;
         }
+
         .product-stock.out-of-stock {
             color: #dc3545;
         }
@@ -39,9 +41,11 @@
             gap: 20px;
             margin-top: 15px;
         }
+
         .btn {
             flex: 1;
         }
+
         .toggle-wishlist-btn.active {
             background-color: #dc3545 !important;
             border-color: #dc3545 !important;
@@ -55,7 +59,6 @@
         .toggle-wishlist-btn i {
             transition: color 0.3s ease;
         }
-    </style>
     </style>
 @endsection
 
@@ -234,7 +237,7 @@
             $(document).on('click', '.toggle-wishlist-btn', function(e) {
                 e.preventDefault();
                 e.stopPropagation();
-                
+
                 let btn = $(this);
                 let productId = btn.data('product-id');
 
@@ -248,11 +251,13 @@
                     success: function(response) {
                         if (response.status === 'added') {
                             btn.addClass('active');
-                            btn.find('.wishlist-text').text("{{ __('view_product.remove_from_wishlist') }}");
+                            btn.find('.wishlist-text').text(
+                                "{{ __('view_product.remove_from_wishlist') }}");
                             showToast(response.message, 'success');
                         } else if (response.status === 'removed') {
                             btn.removeClass('active');
-                            btn.find('.wishlist-text').text("{{ __('view_product.add_to_wishlist') }}");
+                            btn.find('.wishlist-text').text(
+                                "{{ __('view_product.add_to_wishlist') }}");
                             showToast(response.message, 'success');
                         }
                     },

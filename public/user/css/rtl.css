@@ -49,10 +49,11 @@ body {
     direction: rtl;
 }
 
-.product-buttons .btn{
+.product-buttons .btn {
     gap: 10px;
 
 }
+
 .top-categories__item-hover {
     text-align: right;
 }
@@ -72,8 +73,7 @@ body {
     display: -webkit-box;
     display: -webkit-flex;
     display: -ms-flexbox;
-    display: flex
-;
+    display: flex;
     -webkit-box-pack: start;
     -webkit-justify-content: flex-start;
     -ms-flex-pack: end;
@@ -84,7 +84,8 @@ body {
     -ms-flex-align: start;
     align-items: flex-start;
 }
-.info-blocks__item-reverse .info-blocks__item-text{
+
+.info-blocks__item-reverse .info-blocks__item-text {
     padding: 237px 81px 223px 0 !important;
 }
 
@@ -94,23 +95,29 @@ body {
 /* Navigation Menu Styles */
 .nav-menu {
     position: absolute;
-    top: 80px; /* Adjust based on header height */
-    right: 15px; /* Align to the right side */
+    top: 80px;
+    /* Adjust based on header height */
+    right: 15px;
+    /* Align to the right side */
     background-color: #ffffff;
     border: 1px solid #ddd;
     border-radius: 4px;
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
     padding: 10px 0;
-    display: none; /* Hidden by default */
-    width: 200px; /* Adjust as needed */
-    z-index: 110; /* Ensure it sits below the button menu */
+    display: none;
+    /* Hidden by default */
+    width: 200px;
+    /* Adjust as needed */
+    z-index: 110;
+    /* Ensure it sits below the button menu */
     transition: opacity 0.3s ease, visibility 0.3s ease;
     opacity: 0;
     visibility: hidden;
 }
 
 .nav-menu.active {
-    display: block; /* Show when active */
+    display: block;
+    /* Show when active */
     opacity: 1;
     visibility: visible;
 }
@@ -136,17 +143,21 @@ body {
     background-color: #f0f0f0;
     outline: none;
 }
+
 @media screen and (min-width: 1200px) {
+
     #block__content .saint-text,
     #block__content .main-text,
-    #block__content p{
+    #block__content p {
         color: #fff !important;
     }
 
     /* For the button specifically */
     #block__content .btn {
-        background-color: transparent; /* Optional if button background needs adjustment */
-        border: 1px solid #fff !important; /* Optional for a border effect */
+        background-color: transparent;
+        /* Optional if button background needs adjustment */
+        border: 1px solid #fff !important;
+        /* Optional for a border effect */
     }
 
     #block__content .btn:hover {
@@ -154,3 +165,156 @@ body {
         background-color: #fff !important;
     }
 }
+
+
+
+
+/* 
+//////////////
+contacct us
+/////////////
+*/
+
+
+/* Adjust .about-us-images for RTL */
+.about-us-images img:nth-child(1) {
+    right: auto !important;
+    left: -39px;
+    width: 150px;
+    z-index: 3;
+    animation: bounce 4.5s infinite;
+}
+
+.about-us-images img:nth-child(2) {
+    right: auto !important;
+    left: 100px !important;
+    width: 320px !important;
+    z-index: 6 !important;
+}
+
+.about-us-images img:nth-child(3) {
+    right: auto !important;
+    left: 150px !important;
+    width: 100px !important;
+    z-index: 1 !important;
+}
+
+/* Adjust .about-us-images-2 for RTL */
+.about-us-images-2 img:nth-child(1) {
+    right: auto !important;
+    left: -39px;
+    width: 150px;
+    z-index: 3;
+    animation: bounce 4.5s infinite;
+}
+
+.about-us-images-2 img:nth-child(2) {
+    right: auto !important;
+    left: 60px !important;
+    width: 250px !important;
+}
+
+.about-us-images-2 img:nth-child(3) {
+    right: auto !important;
+    left: 100px !important;
+    width: 80px !important;
+}
+
+/* Responsive RTL Styles */
+
+/* Tablets */
+@media (max-width: 1024px) {
+
+    /* Adjust .about-us-images for tablets */
+    .about-us-images img:nth-child(1) {
+        right: auto !important;
+        left: -20px !important;
+        width: 120px !important;
+    }
+
+    .about-us-images-2 img:nth-child(1) {
+        right: auto !important;
+        left: -20px !important;
+        width: 120px !important;
+    }
+
+    .about-us-images img:nth-child(2) {
+        right: auto  !important;
+        left: 60px !important;
+        width: 250px !important;
+    }
+
+    .about-us-images img:nth-child(3) {
+        right: auto !important;
+        left: 100px !important;
+        width: 80px !important;
+    }
+}
+
+/* Mobile Devices */
+@media (max-width: 768px) {
+
+    .about-us-images,
+    .about-us-images-2 {
+        position: relative !important;
+        margin-top: 40px !important;
+        text-align: center !important;
+
+    }
+
+    .about-us-images img,
+    .about-us-images-2 img {
+        position: absolute !important;
+        width: 100px !important;
+        box-shadow: none  !important;
+    }
+
+    /* Position Image 1 to overlap Image 2 */
+    .about-us-images img:nth-child(1) {
+        top: -82px !important;
+        left: 15% !important;
+        transform: translateX(-50%) !important;
+        z-index: 2 !important;
+    }
+    .about-us-images img:nth-child(2) {
+        top: -22px !important;
+        left: 45% !important;
+        transform: translateX(-50%) !important;
+        z-index: 3 !important;
+    }
+    .about-us-images-2 img.img-3 {
+        top: -249px !important;
+        left: -1% !important;
+        transform: translateX(-50%);
+        z-index: 0 !important;
+    }
+    .about-us-images img:nth-child(3),
+    .about-us-images-2 img:nth-child(3) {
+        display: none;
+    }
+
+    .contacts-info__content {
+        position: relative;
+        z-index: 3;
+    }
+}
+
+@media (max-width: 480px) {
+
+    .about-us-images img:nth-child(1),
+    .about-us-images-2 img:nth-child(1) {
+        width: 80px;
+        top: 40px;
+        /* Adjust position for smaller screens */
+    }
+
+    .about-us-images img:nth-child(2),
+    .about-us-images-2 img:nth-child(2) {
+        width: 80px;
+        /* Match Image 1 size */
+        top: 20px;
+        /* Adjust position for smaller screens */
+    }
+}
+
+

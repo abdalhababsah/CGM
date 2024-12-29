@@ -15,4 +15,13 @@ return [
         'title' => 'Our Vision',
         'content' => 'Our vision at CGM is to be the go-to online destination for people with curly and textured hair, fostering confidence and pride in their hair.',
     ],
+    'leave_message' => 'Leave a message',
+    'write_to_us' => 'Write to us',
+    'write_to_us_description' => 'Write to us if you have any questions, and we will definitely contact you to find a solution.',
+    'enter_name' => 'Enter your name',
+    'enter_email' => 'Enter your email',
+    'enter_message' => 'Enter your message',
+    'send' => 'Send',
+    'message_sent_successfully' => 'Your message has been sent successfully!',
+    'email_send_failure' => 'There was an issue sending your message. Please try again later.',
 ];

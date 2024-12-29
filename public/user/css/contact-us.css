@@ -1,0 +1,184 @@
+
+@keyframes bounce {
+
+    0%,
+    100% {
+        transform: translateY(0);
+    }
+
+    50% {
+        transform: translateY(-10px);
+    }
+}
+
+.about-us-images {
+    position: relative;
+    width: 100%;
+    margin-top: 20px;
+}
+
+.about-us-images img {
+    position: absolute;
+    border-radius: 50%;
+    /* Makes the images rounded */
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    /* Adds subtle shadow */
+    transition: all 0.3s ease;
+
+    /* Smooth transition for responsiveness */
+}
+.about-us-images-2 {
+    position: relative;
+    width: 100%;
+    margin-top: 20px;
+    
+}
+
+.about-us-images-2 img {
+    position: absolute;
+    border-radius: 50%;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    transition: all 0.3s ease;
+    animation: bounce 4.5s infinite;
+}
+
+/* Existing styles for larger screens */
+.about-us-images img:nth-child(1) {
+    top: -150px;
+    right: -39px;
+    width: 150px;
+    z-index: 3;
+    animation: bounce 4.5s infinite;
+}
+
+.about-us-images-2 img:nth-child(1) {
+    top: -150px;
+    right: -39px;
+    width: 150px;
+    z-index: 3;
+    animation: bounce 4.5s infinite;
+}
+
+.about-us-images img:nth-child(2) {
+    top: -20px;
+    right: 100px;
+    width: 320px;
+    z-index: 2;
+
+}
+
+
+/* Responsive Styles */
+@media (max-width: 1024px) {
+
+    /* Adjustments for tablets */
+    .about-us-images img:nth-child(1) {
+        top: -100px;
+        right: -20px;
+        width: 120px;
+
+    }
+    .about-us-images-2 img:nth-child(1) {
+        top: -100px;
+        right: -20px;
+        width: 120px;
+
+    }
+
+    .about-us-images img:nth-child(2) {
+        top: -10px;
+        right: 60px;
+        width: 250px;
+
+    }
+
+    .about-us-images img:nth-child(3) {
+        top: 250px;
+        right: 100px;
+        width: 80px;
+
+    }
+}
+
+@media (max-width: 768px) {
+
+    /* Adjustments for mobile devices */
+    .about-us-images {
+        position: relative;
+        /* Change to relative to allow overlapping */
+        margin-top: 40px;
+        /* Add more spacing */
+        text-align: center;
+        /* Center the images */
+        height: 200px;
+        /* Set a height to contain overlapping images */
+    }
+
+    .about-us-images-2 {
+        position: relative;
+        /* Change to relative to allow overlapping */
+        margin-top: 0px;
+        /* Add more spacing */
+        text-align: center;
+        /* Center the images */
+        height: 0px;
+        /* Set a height to contain overlapping images */
+    }
+
+    .about-us-images img {
+        position: absolute;
+        /* Use absolute positioning for overlap */
+        width: 100px;
+        /* Smaller size */
+        box-shadow: none;
+        /* Remove shadow for cleaner look */
+    }
+    .about-us-images-2 img {
+        position: absolute;
+        /* Use absolute positioning for overlap */
+        width: 100px;
+        /* Smaller size */
+        box-shadow: none;
+        /* Remove shadow for cleaner look */
+    }
+
+    /* Position Image 2 as the base image */
+    .about-us-images img:nth-child(1) {
+        top: -22px;
+        left: 55%;
+        transform: translateX(-50%);
+        z-index: 0;
+    }
+
+    /* Position Image 1 to overlap Image 2 */
+    .about-us-images img:nth-child(2) {
+        top: 50px;
+        /* Base image positioned above */
+        left: 50%;
+        transform: translateX(-50%);
+        /* Center horizontally */
+        z-index: 1;
+        /* Ensure it appears below Image 1 */
+    }
+
+    /* If you have a third image, position it accordingly or hide it */
+    .about-us-images img:nth-child(3) {
+        display: none;
+        /* Hide the third image on mobile */
+    }
+
+    .contacts-info__content {
+        position: relative;
+        z-index: 3;
+    }
+
+    .img-3 {
+        top: -225px !important;
+        left: 62% !important;
+        transform: translateX(-50%);
+        z-index: 0;
+    }
+
+}
+
+
