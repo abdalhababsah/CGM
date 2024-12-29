@@ -4026,7 +4026,7 @@ h6,
 	display: flex;
 	margin-left: -15px;
 	margin-right: -15px;
-	margin-top: 57px;
+	margin-top: 225px;
 	margin-bottom: -60px;
 }
 
@@ -5939,15 +5939,17 @@ blockquote:after,
 	display: -webkit-flex;
 	display: -ms-flexbox;
 	display: flex;
+	flex-wrap: wrap;
 }
 
 .product-buttons .btn {
-
-	padding: 0 49px;
+	min-width: 235px;
+	padding: 0 10px;
 }
 
 .product-buttons .btn i {
 	margin-right: 10px;
+	
 }
 
 .product-detail {
@@ -8314,12 +8316,6 @@ input[type="search"]::-webkit-search-results-decoration {
 		width: calc(33.3% - 12px);
 	}
 
-	.detail-block__items {
-		margin-left: -6px;
-		margin-right: -6px;
-		margin-bottom: -35px;
-	}
-
 	.promo-video {
 		padding-top: 110px;
 		margin-bottom: 110px;
@@ -8671,9 +8667,6 @@ input[type="search"]::-webkit-search-results-decoration {
 		padding-top: 40px;
 	}
 
-	.detail-block {
-		padding-top: 180px;
-	}
 
 	.contacts-info__social span {
 		width: 100%;

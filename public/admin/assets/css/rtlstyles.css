@@ -1,0 +1,113 @@
+/* General RTL adjustments */
+body {
+    direction: rtl !important;
+    text-align: right;
+}
+
+/* Navbar adjustments */
+.navbar-nav {
+    margin-right: 0;
+    margin-left: auto;
+}
+
+.navbar-brand {
+    margin-left: 0;
+    margin-right: auto;
+}
+
+/* Cards and content adjustments */
+.order-card h2 {
+    display: flex;
+    flex-direction: row-reverse;
+    justify-content: flex-end;
+    align-items: center;
+}
+
+.order-card i {
+    margin-right: 0;
+    margin-left: 10px;
+}
+
+.f-left {
+    float: right !important;
+}
+
+.f-right {
+    float: left !important;
+}
+
+/* Breadcrumb alignment */
+nav[aria-label="breadcrumb"] {
+    text-align: right;
+}
+
+/* Buttons and alignment fixes */
+.navbar-collapse {
+    justify-content: flex-end !important;
+}
+
+.nav-link-text {
+    margin-left: 0 !important;
+    margin-right: 5px !important;
+}
+
+.icon {
+    margin-right: 0;
+    margin-left: 5px;
+}
+
+.sidenav-toggler-inner {
+    text-align: right;
+}
+
+/* Sidebar adjustments for RTL */
+.sidenav-toggler-line {
+    margin-right: auto;
+    margin-left: 0;
+}
+
+
+/* rtlstyles.css */
+
+/* Image Positioning - Switch from right to left */
+#total-users-card::before,
+#total-orders-card::before,
+#total-revenue-card::before,
+#pending-orders-card::before {
+    left: 0;
+    right: auto;
+    background-position: center left;
+}
+
+/* Card Content - Align text to the right */
+.order-card .card-block {
+    text-align: right;
+}
+
+/* Adjust flex direction in h2 for RTL */
+.order-card h2 {
+    flex-direction: row-reverse;
+    justify-content: flex-end;
+    align-items: center;
+}
+
+/* Invert float classes for RTL */
+.f-left {
+    float: right !important;
+}
+
+.f-right {
+    float: left !important;
+}
+
+/* Ensure all text remains white or as desired */
+.order-card h6,
+.order-card h2,
+.order-card span {
+    color: white;
+}
+
+/* Optional: Adjust margins or padding if necessary for RTL */
+ul {
+    padding: 0px 0px 0px 0px !important;
+}

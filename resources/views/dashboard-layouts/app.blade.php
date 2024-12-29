@@ -24,6 +24,9 @@
     <link href="{{ asset('admin/assets/css/nucleo-icons.css') }}" rel="stylesheet" />
     <link href="{{ asset('admin/assets/css/nucleo-svg.css') }}" rel="stylesheet" />
 
+    @if (Auth::check() && Auth::user()->role == 0 && in_array(app()->getLocale(), ['ar', 'he']))
+        <link rel="stylesheet" href="{{ asset('admin/assets/css/rtlstyles.css') }}">
+    @endif
     <!-- Font Awesome Icons -->
     <script src="https://kit.fontawesome.com/42d5adcbca.js" crossorigin="anonymous"></script>
 
@@ -35,12 +38,11 @@
     <script src="{{ asset('admin/assets/js/quill.js') }}"></script>
     <!-- Additional CSS (Page-Specific) -->
     @stack('styles')
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.1/css/all.min.css" integrity="sha512-5Hs3dF2AEPkpNAR7UiOHba+lRSJNeM2ECkwxUIxC1Q/FLycGTbNapWXB4tP889k5T5Ju8fs4b1P5z/iB4nMfSQ==" crossorigin="anonymous" referrerpolicy="no-referrer" />
-    <!-- Nepcha Analytics (Optional) -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.1/css/all.min.css"
+        integrity="sha512-5Hs3dF2AEPkpNAR7UiOHba+lRSJNeM2ECkwxUIxC1Q/FLycGTbNapWXB4tP889k5T5Ju8fs4b1P5z/iB4nMfSQ=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
     <script defer data-site="YOUR_DOMAIN_HERE" src="https://api.nepcha.com/js/nepcha-analytics.js"></script>
     <script src="{{ asset('admin/assets/js/jquery.min.js') }}"></script>
-
-
 </head>
 
 <body class="g-sidenav-show bg-gray-100">

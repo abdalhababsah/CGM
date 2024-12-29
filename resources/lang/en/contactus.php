@@ -1,20 +1,18 @@
 <?php
 
 return [
-    'contact_us' => 'Contact Us',
-    'address' => 'Address',
-    'address_content' => 'Wasfi At-Tall St. 248-260, Amman, Jordan',
-    'call_us' => 'For inquiries',
-    'call_us_content' => '+962 7 9674 3429',
-    'email_us' => 'Email Us',
-    'email_us_content' => 'info@example.com',
-    'your_name' => 'Your Name',
-    'your_email' => 'Your Email',
-    'subject' => 'Subject',
-    'message' => 'Message',
-    'send_message' => 'Send Message',
-    'loading' => 'Loading',
-    'sent_message' => 'Your message has been sent. Thank you!',
-    'error_message' => 'An error occurred while sending your message. Please try again later.',
-    'company_number' => 'Company Number',
+    'about_us' => 'About Us',
+    'who_we_are' => 'Who We Are',
+    'welcome' => 'Welcome to CGM, the first online hair beauty platform dedicated to delivering the perfect solution for frizzy and curly hair.',
+    'our_story' => 'Our story began when we recognized a glaring gap in the market for products and content that support curly hair. As a result, we founded CGM out of frustration and a desire to provide a solution.',
+    'mission' => [
+        'title' => 'Our Mission',
+        'embrace' => 'We are dedicated to embracing and promoting naturally curly hair as a unique appearance and lifestyle.',
+        'promote' => 'We aim to promote the beauty of naturally curly hair by providing education and resources to our customers.',
+        'empower' => 'Our goal is to empower women with curly and textured hair, ensuring confidence and pride in their natural curls.',
+    ],
+    'vision' => [
+        'title' => 'Our Vision',
+        'content' => 'Our vision at CGM is to be the go-to online destination for people with curly and textured hair, fostering confidence and pride in their hair.',
+    ],
 ];

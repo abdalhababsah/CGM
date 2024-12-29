@@ -90,7 +90,7 @@ class CheckoutService
         $deliveryLocation = $data['delivery_location_id'];
         $deliveryPrice = $data['delivery_price'] ?? 0;
         $grandTotal = $totalPrice + $deliveryPrice;
-        $area_id =$data['area_id'];
+        $area_id =$data['area'];
         // Apply discount if any
         $discountData = $data['discount'] ?? null;
         if ($discountData) {
@@ -159,7 +159,19 @@ class CheckoutService
             $this->cartService->clearCart();
             $this->orderService->postCheckout($order); 
 
-            event(new OrderPlaced($order));
+
+
+
+
+
+
+
+            // send order to delivary company
+            // event(new OrderPlaced($order));
+
+
+
+
             DB::commit();
 
             return $order;

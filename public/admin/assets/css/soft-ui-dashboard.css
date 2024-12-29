@@ -24372,6 +24372,65 @@ html {
   }
 }
 
+.sidenav-header {
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important; 
+  position: relative !important;
+}
+
+/* ===========================
+ 3. Logo Container Styles
+ =========================== */
+
+/* Logo Container with Black Background */
+.logo-container {
+  background-color: #981e24 !important; 
+  border-radius: 8px !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+}
+
+/* ===========================
+ 4. Logo Image Styles
+ =========================== */
+
+/* Logo Image Styles */
+.navbar-vertical .navbar-brand > .logo-container > img,
+.navbar-vertical .navbar-brand-img {
+  height: 80px !important;
+  max-height: 100px !important;
+  width: auto !important;
+}
+
+/* Optional: Responsive Logo Sizes */
+@media (max-width: 768px) {
+  .navbar-vertical .navbar-brand > .logo-container > img,
+  .navbar-vertical .navbar-brand-img {
+      height: 60px !important;
+      max-height: 80px !important;
+  }
+}
+
+@media (min-width: 1200px) {
+  .navbar-vertical .navbar-brand > .logo-container > img,
+  .navbar-vertical .navbar-brand-img {
+      height: 100px !important;
+      max-height: 100px !important;
+  }
+}
+
+/* ===========================
+ 5. Additional Adjustments
+ =========================== */
+
+/* Remove margins from navbar-brand */
+.navbar-brand {
+  margin: 0 !important;
+}
+
+
 @media (min-width: 1400px) {
   .navbar-vertical.navbar-expand-xxl {
     display: block;
@@ -24549,9 +24608,6 @@ html {
   transition: all 0.1s ease;
 }
 
-.sidenav .navbar-brand {
-  padding: 1.5rem 2rem;
-}
 
 .sidenav-header {
   height: 4.875rem;

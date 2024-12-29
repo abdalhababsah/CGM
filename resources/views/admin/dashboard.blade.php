@@ -1,74 +1,251 @@
 @extends('dashboard-layouts.app')
 
 @section('content')
-<div class="container-fluid p-0">
-    <!-- Metrics Cards -->
-    <div class="row g-4">
-        <!-- Total Users -->
-        <div class="col-lg-3 col-md-6 col-12">
-            <div class="card bg-primary text-white border-0 shadow-sm hover-effect">
-                <div class="card-body d-flex align-items-center">
-                    <div class="icon me-3">
-                        <i class="bi bi-people-fill" style="font-size: 2rem; color: #ffffff;"></i>
+@push('styles')
+        <style>
+            /* Image Positioning */
+            #total-users-card::before,
+            #total-orders-card::before,
+            #total-revenue-card::before,
+            #pending-orders-card::before {
+                right: 0;
+                /* Images on the right for LTR */
+                left: auto;
+            }
+
+            /* Card Content */
+            .order-card .card-block {
+                padding: 20px;
+                display: flex;
+                flex-direction: column;
+                justify-content: center;
+                position: relative;
+                z-index: 1;
+                text-align: left;
+            }
+
+            .order-card h2 {
+                display: flex;
+                flex-direction: row;
+                /* Text flows from left to right */
+                justify-content: space-between;
+                align-items: center;
+            }
+
+            .f-left {
+                float: left !important;
+            }
+
+            .f-right {
+                float: right !important;
+            }
+
+            .order-card h6,
+            .order-card h2,
+            .order-card span {
+                color: white;
+                font-size: 21px;
+                /* Explicitly ensure all text is white */
+            }
+
+            /* Total Users Card */
+            #total-users-card {
+                color: white;
+                position: relative;
+                overflow: hidden;
+                background-color: #c98a88;
+                margin-bottom: 20px;
+            }
+
+            #total-users-card .card-block {
+                padding: 20px;
+                display: flex;
+                flex-direction: column;
+                justify-content: center;
+                position: relative;
+                z-index: 1;
+            }
+
+            #total-users-card::before {
+                content: '';
+                position: absolute;
+                top: 0;
+                width: 50%;
+                height: 100%;
+                background-image: url('{{ asset('user/img/cards-images/card-1.png') }}'); /* Ensure this path is correct */
+                background-size: cover;
+                background-position: center;
+                z-index: 0;
+                opacity: 1;
+            }
+
+            /* Total Orders Card */
+            #total-orders-card {
+                color: white;
+                position: relative;
+                overflow: hidden;
+                background-color: #c98a88;
+                margin-bottom: 20px;
+            }
+
+            #total-orders-card .card-block {
+                padding: 20px;
+                display: flex;
+                flex-direction: column;
+                justify-content: center;
+                position: relative;
+                z-index: 1;
+            }
+
+            #total-orders-card::before {
+                content: '';
+                position: absolute;
+                top: 0;
+                width: 50%;
+                height: 100%;
+                background-image: url('{{ asset('user/img/cards-images/card-5.png') }}'); /* Ensure this path is correct */
+                background-size: cover;
+                background-position: center;
+                z-index: 0;
+                opacity: 1;
+            }
+
+            /* Total Revenue Card */
+            #total-revenue-card {
+                color: white;
+                position: relative;
+                overflow: hidden;
+                background-color: #c98a88;
+                margin-bottom: 20px;
+            }
+
+            #total-revenue-card .card-block {
+                padding: 20px;
+                display: flex;
+                flex-direction: column;
+                justify-content: center;
+                position: relative;
+                z-index: 1;
+            }
+
+            #total-revenue-card::before {
+                content: '';
+                position: absolute;
+                top: 0;
+                width: 50%;
+                height: 100%;
+                background-image: url('{{ asset('user/img/cards-images/card-3.png') }}'); /* Ensure this path is correct */
+                background-size: cover;
+                background-position: center;
+                z-index: 0;
+                opacity: 1;
+            }
+
+
+
+            /* Pending Orders Card */
+            #pending-orders-card {
+                color: white;
+                position: relative;
+                overflow: hidden;
+                background-color: #981e24;
+                margin-bottom: 20px;
+                /* Bounce animation */
+            }
+
+            #pending-orders-card .card-block {
+                padding: 20px;
+                display: flex;
+                flex-direction: column;
+                justify-content: center;
+                position: relative;
+                z-index: 1;
+            }
+
+            #pending-orders-card::before {
+                content: '';
+                position: absolute;
+                top: 0;
+                width: 50%;
+                height: 100%;
+                background-image: url('{{ asset('user/img/cards-images/card-4.png') }}'); /* Ensure this path is correct */
+                background-size: cover;
+                background-position: center;
+                z-index: 0;
+                opacity: 1;
+            }
+
+            #pending-orders-card p {
+                font-size: 1.2rem;
+                font-weight: bold;
+                color: #ffffff;
+                margin: 0;
+            }
+        </style>
+    @endpush
+    <div class="container-fluid p-0">
+        <!-- Metrics Cards -->
+
+        <div style="margin-top: 30px;" class="row">
+            <div class="row">
+                <!-- Total Users -->
+                <div class="col-md-4 col-xl-3">
+                    <div id="total-users-card" class="card order-card">
+                        <div class="card-block">
+                            <h6>Total Users</h6>
+                            <h2>
+                                <span class="f-right">{{ $metrics['total_users'] }}</span>
+                            </h2>
+                        </div>
                     </div>
-                    <div>
-                        <h5 class="card-title mb-1">Total Users</h5>
-                        <p class="card-text h4 mb-0">{{ $metrics['total_users'] }}</p>
+                </div>
+
+                <!-- Total Orders -->
+                <div class="col-md-4 col-xl-3">
+                    <div id="total-orders-card" class="card order-card">
+                        <div class="card-block">
+                            <h6 >Total Orders</h6>
+                            <h2>
+                                <span class="f-right">{{ $metrics['total_orders'] }}</span>
+                            </h2>
+                        </div>
                     </div>
+                </div>
+
+                <!-- Total Revenue -->
+                <div class="col-md-4 col-xl-3">
+                    <div id="total-revenue-card" class="card order-card">
+                        <div class="card-block">
+                            <h6>Total Revenue</h6>
+                            <h2>
+                                <span class="f-right">${{ number_format($metrics['revenue'], 2) }}</span>
+                            </h2>
+                        </div>
+                    </div>
+                </div>
+                <!-- Pending Orders -->
+                <div class="col-md-4 col-xl-3">
+                    <a href="{{ route('shop.index') }}">
+                        <div id="pending-orders-card" class="card order-card">
+                            <div class="card-block">
+                                <h6>Pending Orders</h6>
+                                <h2>
+                                    <span class="f-right">{{ $metrics['pending_orders'] }}</span>
+                                </h2>
+                            </div>
+                        </div>
+                    </a>
                 </div>
             </div>
         </div>
-        <!-- Total Orders -->
-        <div class="col-lg-3 col-md-6 col-12">
-            <div class="card bg-secondary text-white border-0 shadow-sm hover-effect">
-                <div class="card-body d-flex align-items-center">
-                    <div class="icon me-3">
-                        <i class="bi bi-basket-fill" style="font-size: 2rem; color: #ffffff;"></i>
-                    </div>
-                    <div>
-                        <h5 class="card-title mb-1">Total Orders</h5>
-                        <p class="card-text h4 mb-0">{{ $metrics['total_orders'] }}</p>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <!-- Total Revenue -->
-        <div class="col-lg-3 col-md-6 col-12">
-            <div class="card bg-success text-white border-0 shadow-sm hover-effect">
-                <div class="card-body d-flex align-items-center">
-                    <div class="icon me-3">
-                        <i class="bi bi-cash-stack" style="font-size: 2rem; color: #ffffff;"></i>
-                    </div>
-                    <div>
-                        <h5 class="card-title mb-1">Total Revenue</h5>
-                        <p class="card-text h4 mb-0">${{ number_format($metrics['revenue'], 2) }}</p>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <!-- Pending Orders -->
-        <div class="col-lg-3 col-md-6 col-12">
-            <div class="card bg-warning text-white border-0 shadow-sm hover-effect">
-                <div class="card-body d-flex align-items-center">
-                    <div class="icon me-3">
-                        <i class="bi bi-hourglass-split" style="font-size: 2rem; color: #ffffff;"></i>
-                    </div>
-                    <div>
-                        <h5 class="card-title mb-1">Pending Orders</h5>
-                        <p class="card-text h4 mb-0">{{ $metrics['pending_orders'] }}</p>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
 
     <!-- Charts Section -->
-    <div class="row g-4 mt-3">
+    <div class="row g-4  ">
         <!-- Sales Overview -->
         <div class="col-lg-6 col-12 mb-3">
             <div class="card border-0 h-100 shadow-sm">
                 <div class="card-header bg-transparent border-0 p-3">
-                    <h6 class="mb-0">Sales Overview</h6>
+                    <h6 style="color: #981e24" class="mb-0">Sales Overview</h6>
                 </div>
                 <div class="card-body p-3">
                     <canvas id="sales-overview-chart"></canvas>
@@ -79,7 +256,7 @@
         <div class="col-lg-6 col-12 mb-3">
             <div class="card border-0 h-100 shadow-sm">
                 <div class="card-header bg-transparent border-0 p-3">
-                    <h6 class="mb-0">Order Status Distribution</h6>
+                    <h6 style="color: #981e24" class="mb-0">Order Status Distribution</h6>
                 </div>
                 <div class="card-body p-3">
                     <canvas id="order-status-chart"></canvas>
@@ -88,12 +265,12 @@
         </div>
     </div>
 
-    <div class="row g-4 mt-3">
+    <div class="row g-4  ">
         <!-- Top Selling Products -->
         <div class="col-lg-6 col-12 mb-3">
             <div class="card border-0 h-100 shadow-sm">
                 <div class="card-header bg-transparent border-0 p-3">
-                    <h6 class="mb-0">Top Selling Products</h6>
+                    <h6 style="color: #981e24" class="mb-0">Top Selling Products</h6>
                 </div>
                 <div class="card-body p-3">
                     <canvas id="top-products-chart"></canvas>
@@ -104,7 +281,7 @@
         <div class="col-lg-6 col-12 mb-3">
             <div class="card border-0 h-100 shadow-sm">
                 <div class="card-header bg-transparent border-0 p-3">
-                    <h6 class="mb-0">User Registration Trends</h6>
+                    <h6 style="color: #981e24" class="mb-0">User Registration Trends</h6>
                 </div>
                 <div class="card-body p-3">
                     <canvas id="user-registration-chart"></canvas>
@@ -113,12 +290,12 @@
         </div>
     </div>
 
-    <div class="row g-4 mt-3">
+    <div class="row g-4  ">
         <!-- Revenue by Category -->
         <div class="col-lg-12 col-12 mb-3">
             <div class="card border-0 h-100 shadow-sm">
                 <div class="card-header bg-transparent border-0 p-3">
-                    <h6 class="mb-0">Revenue by Category</h6>
+                    <h6 style="color: #981e24" class="mb-0">Revenue by Category</h6>
                 </div>
                 <div class="card-body p-3">
                     <canvas id="revenue-category-chart"></canvas>
@@ -183,7 +360,7 @@
             labels: @json(array_keys($orderStatusDistribution->toArray())),
             datasets: [{
                 data: @json(array_values($orderStatusDistribution->toArray())),
-                backgroundColor: ['#007bff', '#ffc107', '#28a745'],
+                backgroundColor: ['#981e24', '#b66a68', '#c98a88'],
                 hoverOffset: 4
             }]
         },
@@ -205,7 +382,7 @@
             datasets: [{
                 label: 'Sales Quantity',
                 data: @json(array_values($topSellingProducts->toArray())),
-                backgroundColor: '#17a2b8'
+                backgroundColor: '#b66a68'
             }]
         },
         options: {
@@ -237,8 +414,8 @@
             datasets: [{
                 label: 'Registrations',
                 data: @json($userRegistrationTrends['data']),
-                borderColor: '#28a745',
-                backgroundColor: 'rgba(40, 167, 69, 0.2)',
+                borderColor: '#981e24',
+                backgroundColor: '#b66a68',
                 fill: true,
                 tension: 0.4
             }]
@@ -300,29 +477,7 @@
 
 <!-- Optional: Custom CSS for Enhanced Card Styles -->
 <style>
-    /* Hover Effect for Cards */
-    .hover-effect:hover {
-        transform: translateY(-5px);
-        transition: transform 0.3s, box-shadow 0.3s;
-        box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
-    }
 
-    /* Card Background Colors */
-    .bg-primary {
-        background-color: #007bff !important;
-    }
-
-    .bg-secondary {
-        background-color: #6c757d !important;
-    }
-
-    .bg-success {
-        background-color: #28a745 !important;
-    }
-
-    .bg-warning {
-        background-color: #ffc107 !important;
-    }
 
     /* Ensuring Icons Are Properly Aligned */
     .card-body .icon {

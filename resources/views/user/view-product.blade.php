@@ -39,9 +39,6 @@
             gap: 20px;
             margin-top: 15px;
         }
-        .product-buttons .btn {
-            padding: 0px 28px;
-        }
         .btn {
             flex: 1;
         }
