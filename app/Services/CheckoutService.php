@@ -16,7 +16,7 @@ use App\Events\OrderPlaced;
 class CheckoutService
 {
     protected $cartService;
-
+    protected $orderService;
     public function __construct(CartService $cartService, OrderService $orderService)
     {
         $this->cartService = $cartService;

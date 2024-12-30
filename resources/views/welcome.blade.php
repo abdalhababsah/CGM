@@ -422,7 +422,7 @@
             <div class="wrapper">
                 <div class="info-blocks__item-img">
                     <img data-src="{{ asset('user/img/image-5.png') }}" src="data:image/gif;base64,R0lGODlhAQABAAAAACw="
-                        class="js-img" alt="@lang('home.promotion_video')">
+                        class="js-img" >
                 </div>
                 <div class="info-blocks__item-text">
                     <span class="saint-text">@lang('home.about_us')</span>
