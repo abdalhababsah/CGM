@@ -122,74 +122,11 @@ $(function(){
 	});
 	/* close header top */
 
-	/* tabs*/
-	$('.tabs li a').click(function() {
-		$(this).parents('.tab-wrap').find('.tab-cont').addClass('hide');
-		$(this).parent().siblings().removeClass('active');
-		var id = $(this).attr('href');
-		$(id).removeClass('hide');
-		$(this).parent().addClass('active');
-		return false;
-	});
-	/* tabs*/
-
-	/* products slider */
-	$('.js-products-items').slick({
-		dots: false,
-		prevArrow: '<button id="prev" type="button" class="slick-arrow slick-prev"><i class="icon icon-arrow"></i></button>',
-		nextArrow: '<button id="next" type="button" class="slick-arrow slick-next"><i class="icon icon-arrow"></i></button>',
-		speed: 300,
-		slidesToShow: 4,
-		slidesToScroll: 1,
-		infinite: true, // Enable infinite loop
-		lazyLoad: 'progressive',
-		responsive: [
-			{
-				breakpoint: 1200,
-				settings: {
-					slidesToShow: 3,
-					slidesToScroll: 1,
-				}
-			},
-			{
-				breakpoint: 1023,
-				settings: {
-					slidesToShow: 2,
-					slidesToScroll: 1,
-				}
-			},
-			{
-				breakpoint: 650,
-				settings: {
-					slidesToShow: 1,
-					slidesToScroll: 1,
-				}
-			}
-		]
-	});
 	/* products slider */
 	
-	/* info block item play */
-	$('.info-blocks__item-img-play').on('click', function(e){
-		$(this).parent().css('display', 'none');
-		let videoSrc = "https://www.youtube.com/embed/K1yp7Q1hH1c?autoplay=1";
-		e.preventDefault();
-		$(this).parents().find('iframe').attr('src', videoSrc);
-	});
+
 	/* info block item play */
 
-	/* testimonials slider */
-	$('.js-testimonials-slider').slick({
-        dots: false,
-        prevArrow: '<button id="prev" type="button" class="slick-arrow slick-prev"><i class="icon icon-arrow"></i></button>',
-        nextArrow: '<button id="next" type="button" class="slick-arrow slick-next"><i class="icon icon-arrow"></i></button>',
-        speed: 300,
-        slidesToShow: 1,
-        slidesToScroll: 1,
-        infinite: true,
-        lazyLoad: 'progressive'
-    });
-	/* testimonials slider */
 
 	/* contacts map */
 	if ($('#map').length) {
