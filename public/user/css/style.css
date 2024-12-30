@@ -2447,19 +2447,7 @@ header {
 ================================================================================
 */
 /* Footer Styles */
-	#footer-header{
-	display: flex !important;
-	flex-direction: row !important;
-	justify-content: space-around !important;
-}
 
-
-#footer-nav-links {
-	display: flex !important;
-	gap: 20px !important;
-	margin-top: 20px !important;
-
-}
 
 .footer {
 	background: #ffded2;

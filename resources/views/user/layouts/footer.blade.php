@@ -1,14 +1,14 @@
 <footer class="text-center" style="background-color: #971d25 !important;">
     <!-- Top Section: Logo -->
     <div class="container py-4">
-        <div id="footer-header" class="d-flex flex-row flex-md-row justify-content-between align-items-center">
+        <div id="footer-header" style="display: flex !important; flex-direction: row !important; justify-content: space-around !important;" class="d-flex flex-row flex-md-row justify-content-between align-items-center">
             <!-- Footer Logo -->
             <div class="d-flex align-items-center mb-3 mb-md-0">
                 <img src="{{ asset('user/img/logo-white-01.svg') }}" alt="@lang('home.header_logo_alt')" width="60">
             </div>
 
             <!-- Navigation Links -->
-            <ul id="footer-nav-links" class="nav flex-column flex-md-row">
+            <ul id="footer-nav-links" style="display: flex !important; gap: 20px !important; margin-top: 20px !important;" class="nav flex-column flex-md-row">
                 <li class="nav-item">
                     <a style="color: white !important;" href="{{ route('home') }}" class="nav-link text-white fw-bold px-2">
                         <i class="fas fa-home me-2"></i>{{ __('home.nav_home') }}
