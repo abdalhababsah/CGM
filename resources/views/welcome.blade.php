@@ -205,7 +205,7 @@
                 <span id="professional" class="saint-text">@lang('home.professional')</span>
                 <h1 id="beauty_and_care" class="main-text">@lang('home.beauty_and_care')</h1>
                 <p id="nourish_description">@lang('home.nourish_description')</p>
-                <a id="shop_now" href="{{route('shop.index')}}" class="btn">@lang('home.shop_now')</a>
+                <a id="shop_now" href="{{ route('shop.index') }}" class="btn">@lang('home.shop_now')</a>
             </div>
 
             <!-- Image Carousel -->
@@ -352,7 +352,7 @@
                     <span class="saint-text">@lang('home.check_this_out')</span>
                     <h2>@lang('home.new_collection')</h2>
                     <span class="info-blocks__item-descr">@lang('home.nourish_description')</span>
-                    <a href="{{route('shop.index')}}" class="btn">@lang('home.shop_now')</a>
+                    <a href="{{ route('shop.index') }}" class="btn">@lang('home.shop_now')</a>
                 </div>
             </div>
         </div>
@@ -360,7 +360,7 @@
             <div class="wrapper">
                 <div class="info-blocks__item-img">
                     <img data-src="{{ asset('user/img/image-5.png') }}" src="data:image/gif;base64,R0lGODlhAQABAAAAACw="
-                        class="js-img" >
+                        class="js-img">
                 </div>
                 <div class="info-blocks__item-text">
                     <span class="saint-text">@lang('home.about_us')</span>
@@ -418,6 +418,42 @@
 
             // Swap images every 3 seconds
             setInterval(swapImages, 3000);
+        });
+
+
+        $(document).ready(function() {
+            $('.js-products-slider').slick({
+                dots: false,
+                prevArrow: '<button id="prev" type="button" class="slick-arrow slick-prev"><i class="icon icon-arrow"></i></button>',
+                nextArrow: '<button id="next" type="button" class="slick-arrow slick-next"><i class="icon icon-arrow"></i></button>',
+                speed: 300,
+                slidesToShow: 4,
+                slidesToScroll: 1,
+                infinite: true,
+                lazyLoad: 'progressive',
+                responsive: [{
+                        breakpoint: 1200,
+                        settings: {
+                            slidesToShow: 3,
+                            slidesToScroll: 1,
+                        },
+                    },
+                    {
+                        breakpoint: 1023,
+                        settings: {
+                            slidesToShow: 2,
+                            slidesToScroll: 1,
+                        },
+                    },
+                    {
+                        breakpoint: 650,
+                        settings: {
+                            slidesToShow: 1,
+                            slidesToScroll: 1,
+                        },
+                    },
+                ],
+            });
         });
     </script>
 @endsection

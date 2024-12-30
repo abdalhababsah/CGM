@@ -514,39 +514,3 @@ $(window).bind('load', handler);
 $(window).bind('resize', handler);
 
 
-
-$(document).ready(function () {
-    $('.js-products-slider').slick({
-        dots: false,
-        prevArrow: '<button id="prev" type="button" class="slick-arrow slick-prev"><i class="icon icon-arrow"></i></button>',
-        nextArrow: '<button id="next" type="button" class="slick-arrow slick-next"><i class="icon icon-arrow"></i></button>',
-        speed: 300,
-        slidesToShow: 4,
-        slidesToScroll: 1,
-        infinite: true,
-        lazyLoad: 'progressive',
-        responsive: [
-            {
-                breakpoint: 1200,
-                settings: {
-                    slidesToShow: 3,
-                    slidesToScroll: 1,
-                },
-            },
-            {
-                breakpoint: 1023,
-                settings: {
-                    slidesToShow: 2,
-                    slidesToScroll: 1,
-                },
-            },
-            {
-                breakpoint: 650,
-                settings: {
-                    slidesToShow: 1,
-                    slidesToScroll: 1,
-                },
-            },
-        ],
-    });
-});
