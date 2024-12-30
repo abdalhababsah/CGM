@@ -37,7 +37,7 @@
     }
 </style>
 
-<body class="loaded">
+{{-- <body class="loaded"> --}}
 
     <!-- BEGIN BODY -->
 
@@ -65,7 +65,7 @@
 
     </div>
 
-    <div class="icon-load"></div>
+    {{-- <div class="icon-load"></div> --}}
 
     <!-- BODY EOF   -->
     <script src="{{ asset('user/js/jquery-3.5.1.min.js') }}"></script>

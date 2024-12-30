@@ -1,7 +1,7 @@
 @extends('user.layouts.app')
 
 @section('styles')
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" />
+    {{-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" /> --}}
     <style>
         .header-content {
             background-color: rgb(151 29 37) !important;
@@ -233,8 +233,7 @@
                         <span class="products-item__new">Soon</span>
                     </div>
                     <div class="products-item__img">
-                        <img style="object-fit: contain;" data-src="{{ asset('user/img/comming-soon-1.png') }}"
-                            src="{{ asset('user/img/comming-soon-1.png') }}" class="js-img" alt="">
+                        <img style="object-fit: contain;" src="{{ asset('user/img/comming-soon-1.png') }}" alt="Bomba De Vitaminas">
                     </div>
                     <div class="products-item__info">
                         <span class="products-item__name">Bomba De Vitaminas</span>
@@ -245,8 +244,7 @@
                         <span class="products-item__new">Soon</span>
                     </div>
                     <div class="products-item__img">
-                        <img style="object-fit: contain;" data-src="{{ asset('user/img/comming-soon-21.png') }}"
-                            src="{{ asset('user/img/comming-soon-21.png') }}" class="js-img" alt="">
+                        <img style="object-fit: contain;" src="{{ asset('user/img/comming-soon-21.png') }}" alt="Raizes Do Morro">
                     </div>
                     <div class="products-item__info">
                         <span class="products-item__name">Raizes Do Morro</span>
@@ -257,8 +255,7 @@
                         <span class="products-item__new">Soon</span>
                     </div>
                     <div class="products-item__img">
-                        <img style="object-fit: contain;" data-src="{{ asset('user/img/comming-soon-31.png') }}"
-                            src="{{ asset('user/img/comming-soon-31.png') }}" class="js-img" alt="">
+                        <img style="object-fit: contain;" src="{{ asset('user/img/comming-soon-31.png') }}" alt="Cacau">
                     </div>
                     <div class="products-item__info">
                         <span class="products-item__name">Cacau</span>
@@ -269,8 +266,7 @@
                         <span class="products-item__new">Soon</span>
                     </div>
                     <div class="products-item__img">
-                        <img style="object-fit: contain;" data-src="{{ asset('user/img/comming-soon-41.png') }}"
-                            src="{{ asset('user/img/comming-soon-41.png') }}" class="js-img" alt="">
+                        <img style="object-fit: contain;" src="{{ asset('user/img/comming-soon-41.png') }}" alt="Vitamin C And Collagen">
                     </div>
                     <div class="products-item__info">
                         <span class="products-item__name">Vitamin C And Collagen</span>
@@ -418,42 +414,6 @@
 
             // Swap images every 3 seconds
             setInterval(swapImages, 3000);
-        });
-
-
-        $(document).ready(function() {
-            $('.js-products-slider').slick({
-                dots: false,
-                prevArrow: '<button id="prev" type="button" class="slick-arrow slick-prev"><i class="icon icon-arrow"></i></button>',
-                nextArrow: '<button id="next" type="button" class="slick-arrow slick-next"><i class="icon icon-arrow"></i></button>',
-                speed: 300,
-                slidesToShow: 4,
-                slidesToScroll: 1,
-                infinite: true,
-                lazyLoad: 'progressive',
-                responsive: [{
-                        breakpoint: 1200,
-                        settings: {
-                            slidesToShow: 3,
-                            slidesToScroll: 1,
-                        },
-                    },
-                    {
-                        breakpoint: 1023,
-                        settings: {
-                            slidesToShow: 2,
-                            slidesToScroll: 1,
-                        },
-                    },
-                    {
-                        breakpoint: 650,
-                        settings: {
-                            slidesToShow: 1,
-                            slidesToScroll: 1,
-                        },
-                    },
-                ],
-            });
         });
     </script>
 @endsection
