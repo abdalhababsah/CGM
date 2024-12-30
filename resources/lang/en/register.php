@@ -23,4 +23,5 @@ return [
     'enter_email' => 'Enter your email',
     'enter_password' => 'Enter your password',
     'error_fetching' => 'An error occurred while fetching data.',
+    'register' => 'Register',
 ];

@@ -23,4 +23,5 @@ return [
     'enter_email' => 'הכנס את האימייל שלך',
     'enter_password' => 'הכנס את הסיסמה שלך',
     'error_fetching' => 'אירעה שגיאה בעת שליפת הנתונים.',
+    'register' => 'להירשם',
 ];

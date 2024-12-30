@@ -85,17 +85,10 @@
                             <x-input-error :messages="$errors->get('password_confirmation')" class="mt-2" />
                         </div>
                     </div>
-
-                    <!-- Terms and Conditions (Optional) -->
-                    <label class="checkbox-box checkbox-box__sm">
-                        <input type="checkbox" name="terms" required>
-                        <span class="checkmark"></span>
-                        @lang('register.accept_terms')
-                    </label>
                     <x-input-error :messages="$errors->get('terms')" class="mt-2" />
 
                     <!-- Submit Button and Links -->
-                    <button class="btn" type="submit">@lang('register.registration')</button>
+                    <button class="btn" type="submit">@lang('register.register')</button>
                     
                     <div class="login-form__bottom">
                         @if (Route::has('login'))
@@ -105,8 +98,6 @@
                 </form>
             </div>
         </div>
-        <img class="promo-video__decor js-img" data-src="{{ asset('https://via.placeholder.com/1197x1371/FFFFFF') }}"
-            src="data:image/gif;base64,R0lGODlhAQABAAAAACw=" alt="">
     </div>
     <!-- LOGIN EOF -->
 @endsection

@@ -23,4 +23,5 @@ return [
     'enter_email' => 'أدخل بريدك الإلكتروني',
     'enter_password' => 'أدخل كلمة مرورك',
     'error_fetching' => 'حدث خطأ أثناء جلب البيانات.',
+    'register' => 'تسجيل',
 ];

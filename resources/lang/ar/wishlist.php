@@ -19,7 +19,6 @@ return [
     'action' => 'إجراء',
     'remove' => 'إزالة',
     'add_to_cart' => 'أضف إلى السلة',
-
     'confirm_remove_title' => 'هل أنت متأكد؟',
     'confirm_remove_text' => 'هل تريد إزالة هذا المنتج من قائمة رغباتك؟',
     'cancel' => 'إلغاء',

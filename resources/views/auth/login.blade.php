@@ -14,13 +14,13 @@
     <div class="detail-block detail-block_margin">
         <div class="wrapper">
             <div class="detail-block__content">
-                <h1>@lang('login.login')</h1>
+                {{-- <h1>@lang('login.login')</h1>
                 <ul class="bread-crumbs">
                     <li class="bread-crumbs__item">
                         <a href="{{ route('home') }}" class="bread-crumbs__link">@lang('login.home')</a>
                     </li>
                     <li class="bread-crumbs__item">@lang('login.login')</li>
-                </ul>
+                </ul> --}}
             </div>
         </div>
     </div>
@@ -30,8 +30,6 @@
             <div class="login-form js-img" data-src="{{ asset('user/img/login-form__bg.png') }}">
                 <!-- Session Status -->
                 <x-auth-session-status class="mb-4" :status="session('status')" />
-
-                <!-- Social Login Options -->
                 <h3>@lang('login.login_with')</h3>
                 <ul class="login-form__social">
                     <li>
