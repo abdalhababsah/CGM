@@ -248,7 +248,7 @@
                 <div class="products-item__type">
                     <span class="${back_color}">${inStock}</span>
                 </div>
-                <img data-src="${imageUrl}"
+                <img style="object-fit:contain;" data-src="${imageUrl}"
                     src="data:image/gif;base64,R0lGODlhAQABAAAAACw="
                     class="js-img" alt="${getLocalizedName(product)}">
                 <div class="products-item__hover">
