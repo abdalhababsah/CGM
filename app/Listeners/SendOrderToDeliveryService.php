@@ -34,15 +34,24 @@ class SendOrderToDeliveryService implements ShouldQueue
     public function handle(OrderPlaced $event)
     {
         $order = $event->order;
-
+    
+        // Fetch the related area and city IDs for the delivery company
+        $companyCityId = $order->deliveryLocation->company_city_id ?? null;
+        $companyAreaId = $order->areaLocation->company_area_id ?? null;
+    
+        if (!$companyCityId || !$companyAreaId) {
+            Log::error("Failed to send Order #{$order->id} to Delivery Service: Missing company_city_id or company_area_id.");
+            return;
+        }
+    
         // Prepare shipment data based on the API documentation
         $shipmentData = [
             'ShipmentTrackingNo' => 'new', // Must be 'new' as per API documentation
-            'qrAltId'           => '',      // Empty string as per API
+            'qrAltId'           => '',    // Empty string as per API
             'ShipmentTypeID'    => $this->getShipmentTypeId($order->delivery_company_id),
-            'ClientName'        => $order->user->first_name . $order->user->last_name, // Assuming 'full_name' is available
-            'ClientCityID'      => $order->orderLocation->city_id ?? '', 
-            'ClientAreaID'      => $order->orderLocation->area_id ?? '',
+            'ClientName'        => $order->user->first_name . ' ' . $order->user->last_name,
+            'ClientCityID'      => $companyCityId, // Use the company_city_id from the delivery location
+            'ClientAreaID'      => $companyAreaId, // Use the company_area_id from the area
             'ClientPhone'       => $order->user->phone,
             'ClientPhone2'      => $order->phone2 ?? '',
             'ClientAddress'     => $order->orderLocation->address ?? '',
@@ -53,25 +62,24 @@ class SendOrderToDeliveryService implements ShouldQueue
             'ShipmentContains'  => $this->formatShipmentContents($order->orderItems),
             'lang'              => $order->preferred_language,
             'ShipmentQuantity'  => $this->getShipmentQuantity($order->orderItems),
-            'IsForeign'         => false, 
+            'IsForeign'         => false,
         ];
-
+    
+        // dd($shipmentData);
         try {
             // Send the shipment data to the delivery system
             $response = $this->deliveryService->createShipment($shipmentData);
-
+    
             // Update the order with shipment details from the response
             $order->update([
                 'delivery_shipment_id' => $response['ID'] ?? null,
                 'delivery_tracking_no' => $response['ShipmentTrackingNo'] ?? null,
                 'status'               => 'Submitted', // Initial status after sending to delivery
             ]);
-
+    
             Log::info("Order #{$order->id} sent to Delivery Service successfully. Shipment ID: {$response['ID']}");
-
         } catch (\Exception $e) {
             Log::error("Failed to send Order #{$order->id} to Delivery Service: " . $e->getMessage());
-            // Optionally, implement retry logic or notify administrators
         }
     }
 

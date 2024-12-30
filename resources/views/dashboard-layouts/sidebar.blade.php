@@ -1,4 +1,5 @@
-<aside style="background-color:white;" class="sidenav navbar navbar-vertical navbar-expand-xs border-0 border-radius-xl my-3 fixed-start ms-3 "
+<aside style="background-color:white;"
+    class="sidenav navbar navbar-vertical navbar-expand-xs border-0 border-radius-xl my-3 fixed-start ms-3 "
     id="sidenav-main">
     <div class="sidenav-header">
         <!-- Close Icon for Sidebar (Visible on Small Screens) -->
@@ -162,6 +163,7 @@
                         </a>
                     </li>
 
+                    
                     <!-- User Profile -->
                     {{-- <li class="nav-item">
                     <a class="nav-link {{ Route::is('user.profile') ? 'active' : '' }}" href="{{ route('user.profile') }}">

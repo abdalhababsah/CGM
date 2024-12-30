@@ -90,7 +90,7 @@ class CheckoutService
         $deliveryLocation = $data['delivery_location_id'];
         $deliveryPrice = $data['delivery_price'] ?? 0;
         $grandTotal = $totalPrice + $deliveryPrice;
-        $area_id =$data['area'];
+        $area_id = $data['area'];
         // Apply discount if any
         $discountData = $data['discount'] ?? null;
         if ($discountData) {
@@ -129,18 +129,18 @@ class CheckoutService
             // Create Order Location
             $orderLocation = OrderLocation::create([
                 'order_id' => $order->id,
-                'country'  => $data['country'],
-                'city'     => $data['city'],
-                'address'    => $data['address'],
-                'longitude'=> $data['longitude'] ?? null,
+                'country' => $data['country'],
+                'city' => $data['city'],
+                'address' => $data['address'],
+                'longitude' => $data['longitude'] ?? null,
             ]);
             // Create Order Items
             foreach ($cartDetails['items'] as $item) {
                 OrderItem::create([
-                    'order_id'    => $order->id,
-                    'product_id'  => $item['product_id'],
-                    'quantity'    => $item['quantity'],
-                    'unit_price'  => $item['price'],
+                    'order_id' => $order->id,
+                    'product_id' => $item['product_id'],
+                    'quantity' => $item['quantity'],
+                    'unit_price' => $item['price'],
                     'total_price' => $item['total'],
                 ]);
             }
@@ -155,9 +155,12 @@ class CheckoutService
 
             // Clear the cart
             $this->cartService->clearCart();
-            $this->orderService->postCheckout($order); 
+            $this->orderService->postCheckout($order);
             DB::commit();
 
+
+                    // Dispatch the event after the transaction
+        event(new OrderPlaced($order));
             return $order;
         } catch (\Exception $e) {
             DB::rollback();
