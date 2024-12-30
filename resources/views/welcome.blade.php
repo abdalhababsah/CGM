@@ -380,6 +380,7 @@
 
 
     <script>
+        
         document.addEventListener('DOMContentLoaded', () => {
             const items = document.querySelectorAll('.top-categories__item');
 
@@ -392,6 +393,9 @@
             });
 
             items.forEach(item => observer.observe(item));
+
+
+            
         });
 
         document.addEventListener("DOMContentLoaded", function() {

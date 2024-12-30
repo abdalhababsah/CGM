@@ -76,6 +76,8 @@
     <script src="{{ asset('user/js/lazyload.min.js') }}"></script>
     <script src="{{ asset('user/js/slick.min.js') }}"></script>
     <script src="{{ asset('user/js/custom.js') }}"></script>
+    <script src="{{ asset('user/js/products-slider.js') }}"></script>
+
 
     <script>
         $(document).ready(function() {
