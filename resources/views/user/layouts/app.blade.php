@@ -12,7 +12,6 @@
     <meta name="keywords" content="" />
     <link rel="icon" type="image/x-icon" href="img/favicon.ico" />
     <meta name="csrf-token" content="{{ csrf_token() }}">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
 
     <!-- Load Default CSS -->
     <link rel="stylesheet" href="{{ asset('user/css/style.css') }}">
@@ -23,7 +22,20 @@
     @endif
 </head>
 
-    @yield('styles')
+@yield('styles')
+<style>
+    .detail-block .overlay {
+        position: absolute !important;
+        /* Positions the overlay relative to .detail-block */
+        top: 0 !important;
+        left: 0 !important;
+        width: 100% !important;
+        height: 100% !important;
+        background-color: rgba(0, 0, 0, 0.5) !important;
+        /* Black with 50% opacity */
+        z-index: 2 !important;
+    }
+</style>
 
 <body class="loaded">
 
@@ -57,14 +69,13 @@
 
     <!-- BODY EOF   -->
     <script src="{{ asset('user/js/jquery-3.5.1.min.js') }}"></script>
-    <script src="{{asset('user/js/ion.rangeSlider.min.js')}}"></script>
+    <script src="{{ asset('user/js/ion.rangeSlider.min.js') }}"></script>
     <script src="{{ asset('user/js/jquery.maskedinput.js') }}"></script>
     <script src="{{ asset('user/js/jquery.formstyler.js') }}"></script>
     <script src="{{ asset('user/sweetalert/sweetalert2.min.js') }}"></script>
     <script src="{{ asset('user/js/lazyload.min.js') }}"></script>
     <script src="{{ asset('user/js/slick.min.js') }}"></script>
     <script src="{{ asset('user/js/custom.js') }}"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
 
     <script>
         $(document).ready(function() {
@@ -74,7 +85,7 @@
                     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                 }
             });
-    
+
             /**
              * Function to fetch and update the cart count.
              */
@@ -92,10 +103,10 @@
                     }
                 });
             }
-    
+
             // Make updateCartCount globally accessible
             window.updateGlopalCartCount = updateGlopalCartCount;
-    
+
             // Initial cart count fetch on page load
             updateGlopalCartCount();
         });
