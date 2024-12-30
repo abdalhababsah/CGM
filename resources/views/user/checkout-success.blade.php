@@ -5,6 +5,7 @@
 @section('content')
 
 <div class="detail-block detail-block_margin">
+    <div class="overlay"></div>
     <div class="wrapper">
         <div class="detail-block__content">
             {{-- <h1>{{ __('checkout.title') }}</h1>

@@ -88,6 +88,7 @@
 @section('content')
     <!-- BEGIN DETAIL MAIN BLOCK -->
     <div class="detail-block detail-block_margin">
+        <div class="overlay"></div>
         <div class="wrapper">
             <div class="detail-block__content">
                 {{-- <h1>{{ __('cart.title') }}</h1>
