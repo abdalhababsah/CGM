@@ -4,6 +4,7 @@ namespace App\Services;
 
 use App\Mail\InvoiceMail;
 use App\Models\Order;
+use Barryvdh\DomPDF\Facade\Pdf;
 use Illuminate\Pagination\LengthAwarePaginator;
 use Illuminate\Support\Facades\Mail;
 
@@ -66,7 +67,7 @@ class OrderService
     public function generateInvoice(Order $order, string $language = 'en')
     {
         $order->load(['user', 'orderItems.product', 'orderLocation']);
-        $pdf = \Barryvdh\DomPDF\Facade\Pdf::loadView("admin.orders.invoice.invoice-pdf-{$language}", compact('order'));
+        $pdf = Pdf::loadView("admin.orders.invoice.invoice-pdf-{$language}", compact('order'));
 
         // Define the storage path for invoices
         $invoiceDirectory = storage_path('app/invoices');

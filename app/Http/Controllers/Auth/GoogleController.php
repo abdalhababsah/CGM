@@ -20,36 +20,40 @@ class GoogleController extends Controller
     public function handleGoogleCallback()
     {
         try {
-            $googleUser = Socialite::driver('google')->stateless()->user(); 
-            
-            $user = User::where('email', $googleUser->email)->first();
+            // Retrieve user from Google
+            $googleUser = Socialite::driver('google')->stateless()->user();
+            // Attempt to find an existing user by Google ID or email
+            $existingUser = User::where('google_id', $googleUser->id)
+                ->orWhere('email', $googleUser->email)
+                ->first();
+            if ($existingUser) {
+                // Update Google ID if the user was found by email
+                if ($existingUser->google_id !== $googleUser->id) {
+                    $existingUser->google_id = $googleUser->id;
+                    $existingUser->save();
+                }
+                Auth::login($existingUser);
 
-            if (!$user) {
+            } else {
                 $names = explode(' ', $googleUser->name);
                 $firstName = $names[0] ?? '';
                 $lastName = $names[1] ?? '';
-
-                $user = User::create([
+                
+                // Create a new user
+                $createUser = User::create([
                     'first_name' => $firstName,
-                    'last_name' => $lastName,
+                    'last_name'=> $lastName,
                     'email' => $googleUser->email,
+                    'phone'=> '00000000',
                     'google_id' => $googleUser->id,
-                    'password' => bcrypt(Str::random(16)),
                     'role' => 0,
+                    'password' => bcrypt(Str::random(16)),
                 ]);
-            } else {
-                if (!$user->google_id) {
-                    $user->update(['google_id' => $googleUser->id]);
-                }
+                Auth::login($createUser);
             }
-            dd($user);
-            Auth::login($user);
-
-            return redirect()->intended(route('home'));
-
-        } catch (Exception $e) {
-            return redirect()->route('login')
-                ->with('error', 'Something went wrong with Google login: ' . $e->getMessage());
+            return redirect()->to('/');
+        } catch (\Throwable $th) {
+            throw $th;
         }
     }
 }

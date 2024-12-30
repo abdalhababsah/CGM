@@ -98,8 +98,6 @@ class CheckoutService
             // Ensure grand total is not negative
             $grandTotal = max($grandTotal, 0);
         }
-
-        // Start transaction
         DB::beginTransaction();
 
         try {
@@ -158,20 +156,6 @@ class CheckoutService
             // Clear the cart
             $this->cartService->clearCart();
             $this->orderService->postCheckout($order); 
-
-
-
-
-
-
-
-
-            // send order to delivary company
-            // event(new OrderPlaced($order));
-
-
-
-
             DB::commit();
 
             return $order;

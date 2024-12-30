@@ -27,13 +27,6 @@ class CheckoutController extends Controller
 
     }
 
-    /**
-     * Display the checkout page.
-     * If AJAX, return JSON data; else, return Blade view.
-     *
-     * @param \Illuminate\Http\Request $request
-     * @return \Illuminate\Http\Response|\Illuminate\View\View
-     */
     public function index(Request $request)
     {
         // Fetch cart details
@@ -133,7 +126,7 @@ class CheckoutController extends Controller
         return response()->json([
             'status' => 'success',
             'price' => $deliveryLocation->price,
-            'currency' => 'USD', // Adjust as needed
+            'currency' => 'USD', 
         ]);
     }
 

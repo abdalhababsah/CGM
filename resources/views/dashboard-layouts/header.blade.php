@@ -1,5 +1,10 @@
+@if(Auth::check() && Auth::user()->role == 1)
+<nav class="navbar navbar-main navbar-expand-lg px-0 mx-4 shadow-none border-radius-xl" id="navbarBlur" navbar-scroll="true">
+@elseif(Auth::check() && Auth::user()->role == 0)
 <nav class="navbar navbar-main navbar-expand-lg px-0 mx-4 shadow-none border-radius-xl position-sticky blur shadow-blur mt-4 left-auto top-1 z-index-sticky" id="navbarBlur" navbar-scroll="true">
-    <div class="container-fluid py-1 px-3">
+@endif
+    
+  <div class="container-fluid py-1 px-3">
       <nav aria-label="breadcrumb">
 
       </nav>
