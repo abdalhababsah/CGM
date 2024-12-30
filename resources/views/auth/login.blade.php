@@ -46,16 +46,16 @@
 
                     <!-- Email Address -->
                     <div class="box-field">
-                        <x-input-label style="margin-bottom: 10px;" for="email" :value="__('login.email')" />
-                        <x-text-input id="email" class="form-control" type="email" name="email" :value="old('email')"
+                        <label style="margin-bottom: 10px;" for="email" :value="__('login.email')" />
+                        <input id="email" class="form-control" type="email" name="email" :value="old('email')"
                             required autofocus placeholder="{{ __('login.enter_email_or_nickname') }}" />
                         <x-input-error :messages="$errors->get('email')" class="mt-2" />
                     </div>
 
                     <!-- Password -->
                     <div class="box-field">
-                        <x-input-label style="margin-bottom: 10px;" for="password" :value="__('login.password')" />
-                        <x-text-input id="password" class="form-control" type="password" name="password" required
+                        <label style="margin-bottom: 10px;" for="password" :value="__('login.password')" />
+                        <input id="password" class="form-control" type="password" name="password" required
                             placeholder="{{ __('login.enter_password') }}" />
                         <x-input-error :messages="$errors->get('password')" class="mt-2" />
                     </div>
