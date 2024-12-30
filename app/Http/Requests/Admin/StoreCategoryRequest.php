@@ -14,7 +14,7 @@ class StoreCategoryRequest extends FormRequest
             'description_en' => 'nullable|string',
             'description_ar' => 'nullable|string',
             'description_he' => 'nullable|string',
-            'logo_path' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
+            'logo_path' => 'nullable|image|mimes:jpeg,png,jpg,gif',
             'is_active' => 'required|boolean',
         ];
     }

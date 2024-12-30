@@ -85,8 +85,8 @@ class AdminProductsController extends Controller
             'is_active' => 'required|boolean',
             'price' => 'required|numeric|min:0',
             'quantity' => 'required|integer|min:0',
-            'is_primary' => 'nullable|image|max:2048', // Max 2MB
-            'images.*' => 'nullable|image|max:2048',   // Max 2MB per image
+            'is_primary' => 'nullable|image', // Max 2MB
+            'images.*' => 'nullable|image',   // Max 2MB per image
         ]);
     
         // Create the product
@@ -184,7 +184,7 @@ class AdminProductsController extends Controller
         // dd($request);
         // Validate additional images
         $validated = $request->validate([
-            'images.*' => 'required|image|max:2048', // Max 2MB per image
+            'images.*' => 'required|image', // Max 2MB per image
         ]);
 
         if ($request->hasFile('images')) {
@@ -203,7 +203,7 @@ class AdminProductsController extends Controller
     {
         // Validate the uploaded file
         $validated = $request->validate([
-            'is_primary' => 'required|file|image|max:2048', // Validate file type and size
+            'is_primary' => 'required|file|image', // Validate file type and size
         ]);
     
         if ($request->hasFile('is_primary')) {

@@ -33,7 +33,7 @@ class CreateProductRequest extends FormRequest
             'brand_id' => 'nullable|exists:brands,id',
             'sku' => 'nullable|string|max:50|unique:products,sku',
             'is_active' => 'required|boolean',
-            'images.*' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
+            'images.*' => 'nullable|image|mimes:jpeg,png,jpg,gif',
         ];
     }
 
