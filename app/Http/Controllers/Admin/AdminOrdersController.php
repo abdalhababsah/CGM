@@ -46,6 +46,6 @@ class AdminOrdersController extends Controller
     {
         $language = $request->input('language', 'en');
         $pdf = $this->orderService->generateInvoice($order, $language);
-        return $pdf->download("invoice-{$order->id}.pdf");
+        return $pdf->Download("invoice-{$order->id}.pdf");
     }
 }

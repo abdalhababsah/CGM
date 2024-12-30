@@ -166,23 +166,18 @@ body {
     }
 }
 
-
-
-
 /* 
-//////////////
+/////////////
 contacct us
 /////////////
 */
-
-
 /* Adjust .about-us-images for RTL */
 .about-us-images img:nth-child(1) {
     right: auto !important;
     left: -39px;
     width: 150px;
     z-index: 3;
-    animation: bounce 4.5s infinite;
+    animation: bounce 1.5s infinite;
 }
 
 .about-us-images img:nth-child(2) {
@@ -205,7 +200,7 @@ contacct us
     left: -39px;
     width: 150px;
     z-index: 3;
-    animation: bounce 4.5s infinite;
+    animation: bounce 1.5s infinite;
 }
 
 .about-us-images-2 img:nth-child(2) {
@@ -239,7 +234,7 @@ contacct us
     }
 
     .about-us-images img:nth-child(2) {
-        right: auto  !important;
+        right: auto !important;
         left: 60px !important;
         width: 250px !important;
     }
@@ -266,7 +261,7 @@ contacct us
     .about-us-images-2 img {
         position: absolute !important;
         width: 100px !important;
-        box-shadow: none  !important;
+        box-shadow: none !important;
     }
 
     /* Position Image 1 to overlap Image 2 */
@@ -276,18 +271,21 @@ contacct us
         transform: translateX(-50%) !important;
         z-index: 2 !important;
     }
+
     .about-us-images img:nth-child(2) {
         top: -22px !important;
         left: 45% !important;
         transform: translateX(-50%) !important;
         z-index: 3 !important;
     }
+
     .about-us-images-2 img.img-3 {
         top: -249px !important;
         left: -1% !important;
         transform: translateX(-50%);
         z-index: 0 !important;
     }
+
     .about-us-images img:nth-child(3),
     .about-us-images-2 img:nth-child(3) {
         display: none;
@@ -298,6 +296,7 @@ contacct us
         z-index: 3;
     }
 }
+
 
 @media (max-width: 480px) {
 
@@ -316,5 +315,3 @@ contacct us
         /* Adjust position for smaller screens */
     }
 }
-
-

@@ -59,6 +59,26 @@
         .toggle-wishlist-btn i {
             transition: color 0.3s ease;
         }
+
+        /* General Body Direction */
+        body[dir="rtl"] {
+            direction: rtl;
+            text-align: right;
+        }
+
+        /* RTL Styles for login-form__bottom */
+        body[dir="rtl"] .login-form__bottom {
+            display: block !important;
+        }
+
+        body[dir="rtl"] .login-form__bottom a {
+            margin: 0;
+            /* Remove any inline margins */
+            text-align: right;
+            /* Ensure right alignment */
+            align-self: flex-end;
+            /* Align anchor to the right */
+        }
     </style>
 @endsection
 

@@ -54,18 +54,12 @@
 
                     <!-- Password -->
                     <div class="box-field">
-                        <x-input-label style="margin-bottom: 10px;"  for="password" :value="__('login.password')" />
+                        <x-input-label style="margin-bottom: 10px;" for="password" :value="__('login.password')" />
                         <x-text-input id="password" class="form-control" type="password" name="password" required
                             placeholder="{{ __('login.enter_password') }}" />
                         <x-input-error :messages="$errors->get('password')" class="mt-2" />
                     </div>
 
-                    <!-- Remember Me -->
-                    <label class="checkbox-box checkbox-box__sm">
-                        <input id="remember_me" type="checkbox" name="remember" {{ old('remember') ? 'checked' : '' }}>
-                        <span class="checkmark"></span>
-                        @lang('login.remember_me')
-                    </label>
 
                     <!-- Submit Button and Links -->
                     <div class="d-flex flex-column">
@@ -74,7 +68,9 @@
                             @if (Route::has('register'))
                                 <span>@lang('login.no_account') <a href="{{ route('register') }}">@lang('login.register_now')</a></span>
                             @endif
+
                             @if (Route::has('password.request'))
+                            <br>
                                 <a href="{{ route('password.request') }}">@lang('login.lost_password')</a>
                             @endif
 

@@ -39,7 +39,7 @@
     border-radius: 50%;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
     transition: all 0.3s ease;
-    animation: bounce 4.5s infinite;
+    animation: bounce 1.5s infinite;
 }
 
 /* Existing styles for larger screens */
@@ -48,7 +48,7 @@
     right: -39px;
     width: 150px;
     z-index: 3;
-    animation: bounce 4.5s infinite;
+    animation: bounce 1.5s infinite;
 }
 
 .about-us-images-2 img:nth-child(1) {
@@ -56,7 +56,7 @@
     right: -39px;
     width: 150px;
     z-index: 3;
-    animation: bounce 4.5s infinite;
+    animation: bounce 1.5s infinite;
 }
 
 .about-us-images img:nth-child(2) {

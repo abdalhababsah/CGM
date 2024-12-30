@@ -226,120 +226,58 @@
             <div class="trending-top">
                 <span class="saint-text">@lang('home.cosmetics')</span>
                 <h2>@lang('home.trending_products')</h2>
-                {{-- <p>@lang('home.nourish_description')</p> --}}
             </div>
-            <div class="tab-wrap trending-tabs">
-                <div class="box-tab-cont">
-                    <div class="tab-cont" id="trending-tab_1">
-                        <div class="products-items js-products-items">
-                            <a class="products-item">
-                                <div class="products-item__type">
-                                    <span class="products-item__new">Soon</span>
-                                </div>
-                                <div class="products-item__img">
-                                    <img style="object-fit: contain;" data-src="{{asset('user/img/comming-soon-1.png')}}"
-                                        src="{{asset('user/img/comming-soon-1.png')}}" class="js-img" alt="">
-
-                                </div>
-                                <div class="products-item__info">
-                                    <span class="products-item__name">Bomba De Vitaminas</span>
-                                </div>
-                            </a>
-                            <a  class="products-item">
-                                <div class="products-item__type">
-                                    <span class="products-item__new">Soon</span>
-                                </div>
-                                <div class="products-item__img">
-                                    <img style="object-fit: contain;" data-src="{{asset('user/img/comming-soon-21.png')}}"
-                                        src="{{asset('user/img/comming-soon-21.png')}}" class="js-img" alt="">
-
-                                </div>
-                                <div class="products-item__info">
-                                    <span class="products-item__name">Raizes Do Morro</span>
-
-                                </div>
-                            </a>
-                            <a  class="products-item">
-                                <div class="products-item__type">
-                                    <span class="products-item__new">Soon</span>
-                                </div>
-                                <div class="products-item__img">
-                                    <img style="object-fit: contain;" data-src="{{asset('user/img/comming-soon-31.png')}}"
-                                        src="{{asset('user/img/comming-soon-31.png')}}" class="js-img" alt="">
-                                </div>
-                                <div class="products-item__info">
-                                    <span class="products-item__name">Cacau</span>
-                                </div>
-                            </a>
-                            <a  class="products-item">
-                                <div class="products-item__type">
-                                    <span class="products-item__new">Soon</span>
-                                </div>
-                                <div class="products-item__img">
-                                    <img style="object-fit: contain;" data-src="{{asset('user/img/comming-soon-41.png')}}"
-                                        src="{{asset('user/img/comming-soon-41.png')}}" class="js-img" alt="">
-                                </div>
-                                <div class="products-item__info">
-                                    <span class="products-item__name">Vitamin C And Collagen</span>
-                                </div>
-                            </a>
-                        </div>
+            <div class="products-slider js-products-slider">
+                <div class="products-item">
+                    <div class="products-item__type">
+                        <span class="products-item__new">Soon</span>
                     </div>
-
-                    <div class="tab-cont hide" id="trending-tab_3">
-                        <div class="products-items">
-                            <a href="#" class="products-item">
-                                <div class="products-item__type">
-                                    <span class="products-item__sale">sale</span>
-                                </div>
-                                <div class="products-item__img">
-                                    <img data-src="https://via.placeholder.com/400x570"
-                                        src="data:image/gif;base64,R0lGODlhAQABAAAAACw=" class="js-img" alt="">
-
-                                </div>
-                                <div class="products-item__info">
-                                    <span class="products-item__name">Detox body Cream</span>
-
-                                </div>
-                            </a>
-                        </div>
+                    <div class="products-item__img">
+                        <img style="object-fit: contain;" data-src="{{ asset('user/img/comming-soon-1.png') }}"
+                            src="{{ asset('user/img/comming-soon-1.png') }}" class="js-img" alt="">
                     </div>
-                    <div class="tab-cont hide" id="trending-tab_5">
-                        <div class="products-items">
-                            <a href="#" class="products-item">
-                                <div class="products-item__type">
-                                    <span class="products-item__sale">sale</span>
-                                </div>
-                                <div class="products-item__img">
-                                    <img data-src="https://via.placeholder.com/400x570"
-                                        src="data:image/gif;base64,R0lGODlhAQABAAAAACw=" class="js-img" alt="">
-
-                                </div>
-                                <div class="products-item__info">
-                                    <span class="products-item__name">Detox body Cream</span>
-
-                                </div>
-                            </a>
-                        </div>
+                    <div class="products-item__info">
+                        <span class="products-item__name">Bomba De Vitaminas</span>
                     </div>
-                    <div class="tab-cont hide" id="trending-tab_6">
-                        <div class="products-items">
-                            <a href="#" class="products-item">
-                                <div class="products-item__type">
-                                    <span class="products-item__sale">sale</span>
-                                </div>
-                                <div class="products-item__img">
-                                    <img data-src="https://via.placeholder.com/400x570"
-                                        src="data:image/gif;base64,R0lGODlhAQABAAAAACw=" class="js-img" alt="">
-                                </div>
-                                <div class="products-item__info">
-                                    <span class="products-item__name">Detox body Cream</span>
-                                </div>
-                            </a>
-                        </div>
+                </div>
+                <div class="products-item">
+                    <div class="products-item__type">
+                        <span class="products-item__new">Soon</span>
+                    </div>
+                    <div class="products-item__img">
+                        <img style="object-fit: contain;" data-src="{{ asset('user/img/comming-soon-21.png') }}"
+                            src="{{ asset('user/img/comming-soon-21.png') }}" class="js-img" alt="">
+                    </div>
+                    <div class="products-item__info">
+                        <span class="products-item__name">Raizes Do Morro</span>
+                    </div>
+                </div>
+                <div class="products-item">
+                    <div class="products-item__type">
+                        <span class="products-item__new">Soon</span>
+                    </div>
+                    <div class="products-item__img">
+                        <img style="object-fit: contain;" data-src="{{ asset('user/img/comming-soon-31.png') }}"
+                            src="{{ asset('user/img/comming-soon-31.png') }}" class="js-img" alt="">
+                    </div>
+                    <div class="products-item__info">
+                        <span class="products-item__name">Cacau</span>
+                    </div>
+                </div>
+                <div class="products-item">
+                    <div class="products-item__type">
+                        <span class="products-item__new">Soon</span>
+                    </div>
+                    <div class="products-item__img">
+                        <img style="object-fit: contain;" data-src="{{ asset('user/img/comming-soon-41.png') }}"
+                            src="{{ asset('user/img/comming-soon-41.png') }}" class="js-img" alt="">
+                    </div>
+                    <div class="products-item__info">
+                        <span class="products-item__name">Vitamin C And Collagen</span>
                     </div>
                 </div>
             </div>
+        </div>
     </section>
     <!-- BEGIN ADVANTAGES -->
     <div class="advantages">
