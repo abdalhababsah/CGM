@@ -369,7 +369,16 @@
     </div>
 
     <section id="call-to-action" class="call-to-action section dark-background">
-        <img src="{{ asset('user/img/scroll-image.png') }}" alt="">
+        <picture>
+            <!-- Mobile Devices -->
+            <source media="(max-width: 767px)" srcset="{{ asset('user/img/mobile.jpg') }}">
+            
+            <!-- Tablet Devices -->
+            <source media="(min-width: 768px) and (max-width: 1023px)" srcset="{{ asset('user/img/scrol-image-tablet.jpg') }}">
+            
+            <!-- Desktop Devices -->
+            <img src="{{ asset('user/img/scroll-image.png') }}" alt="Call to Action Image">
+        </picture>
         <div class="container">
             <div class="row justify-content-center" data-aos="zoom-in" data-aos-delay="100">
                 <div class="col-xl-10">
