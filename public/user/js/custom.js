@@ -365,22 +365,22 @@ $(function(){
 	/* product color change */
 
 	/* product counter */
-	if($('.counter-input').length) {
-		$('.counter-link__prev').on('click', function(){
-			var $inputVal = $(this).parent().find('.counter-input');
-			var $countVal = $inputVal.val();
-			if($inputVal.val() > 1){
-				$countVal--;
-				$inputVal.prop("value", $countVal);
-			}
-		});
-		$('.counter-link__next').on('click', function(){
-			var $inputVal = $(this).parent().find('.counter-input');
-			var $countVal = $inputVal.val();
-			$countVal++;
-			$inputVal.prop("value", $countVal);
-		});
-	}
+	// if($('.counter-input').length) {
+	// 	$('.counter-link__prev').on('click', function(){
+	// 		var $inputVal = $(this).parent().find('.counter-input');
+	// 		var $countVal = $inputVal.val();
+	// 		if($inputVal.val() > 1){
+	// 			$countVal--;
+	// 			$inputVal.prop("value", $countVal);
+	// 		}
+	// 	});
+	// 	$('.counter-link__next').on('click', function(){
+	// 		var $inputVal = $(this).parent().find('.counter-input');
+	// 		var $countVal = $inputVal.val();
+	// 		$countVal++;
+	// 		$inputVal.prop("value", $countVal);
+	// 	});
+	// }
 	/* product counter */
 
 	/* form rating */
