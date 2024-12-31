@@ -22,10 +22,10 @@ class AdminProductsController extends Controller
         // Retrieve categories and brands for filter options
         $categories = Category::all();
         $brands = Brand::all();
-
+    
         // Query for filtering
         $query = Product::with(['category', 'brand']);
-
+    
         // Search by name (in all supported languages)
         if ($request->filled('search')) {
             $search = $request->search;
@@ -35,25 +35,25 @@ class AdminProductsController extends Controller
                   ->orWhere('name_he', 'like', '%' . $search . '%');
             });
         }
-
+    
         // Filter by category
         if ($request->filled('category_id')) {
             $query->where('category_id', $request->category_id);
         }
-
+    
         // Filter by brand
         if ($request->filled('brand_id')) {
             $query->where('brand_id', $request->brand_id);
         }
-
+    
         // Filter by status (active/inactive)
         if ($request->filled('status')) {
             $query->where('is_active', $request->status === 'active');
         }
-
+    
         // Paginated results
-        $products = $query->paginate(10);
-
+        $products = $query->paginate(10)->appends($request->except('page'));
+    
         return view('admin.products.index', compact('products', 'categories', 'brands'));
     }
 
