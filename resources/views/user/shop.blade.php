@@ -85,7 +85,7 @@
                     </div>
 
                     <!-- Pagination -->
-                    <ul class="paging-list" id="pagination">
+                    <ul class="paging-list" id="pagination" style="margin-bottom: 30px;">
                         <!-- Pagination links loaded via AJAX -->
                     </ul>
                 </div>
