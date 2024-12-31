@@ -75,7 +75,7 @@
     <script src="{{ asset('user/sweetalert/sweetalert2.min.js') }}"></script>
     <script src="{{ asset('user/js/lazyload.min.js') }}"></script>
     <script src="{{ asset('user/js/slick.min.js') }}"></script>
-    <script src="{{ asset('user/js/custom.js') }}"></script>
+    <script src="{{ asset('user/js/customs.js') }}"></script>
     <script src="{{ asset('user/js/products-slider.js') }}"></script>
 
 
