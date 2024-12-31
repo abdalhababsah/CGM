@@ -65,10 +65,10 @@ class SendOrderToDeliveryService implements ShouldQueue
         $shipmentData = [
             'ShipmentTrackingNo' => 'new', // Must be 'new' as per API documentation
             'qrAltId'           => '',    // Empty string as per API
-            'ShipmentTypeID'    => 21,
+            'ShipmentTypeID'    => $this->getShipmentTypeId($order->delivery_company_id),
             'ClientName'        => $order->user->first_name . ' ' . $order->user->last_name,
             'ClientCityID'      => $companyCityId, // Use the company_city_id from the delivery location
-            'ClientAreaID'      => 12, // Use the company_area_id from the Area model
+            'ClientAreaID'      => $companyAreaId, // Use the company_area_id from the Area model
             'ClientPhone'       => $order->user->phone,
             'ClientPhone2'      => $order->phone2 ?? '',
             'ClientAddress'     => $order->orderLocation->address ?? '',
