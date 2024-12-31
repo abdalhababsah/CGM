@@ -97,10 +97,10 @@
                     <a href="{{ route('admin.orders.index') }}" class="btn btn-secondary mb-3">
                         <i class="mdi mdi-arrow-left"></i> Back to Orders
                     </a>
-                    <a href="{{ route('admin.orders.invoice.download', ['order' => $order->id, 'language' => 'en']) }}" 
+                    {{-- <a href="{{ route('admin.orders.invoice.download', ['order' => $order->id, 'language' => 'en']) }}" 
                        class="btn btn-primary">
                         <i class="mdi mdi-download"></i> Download Invoice
-                    </a>
+                    </a> --}}
                 </div>
             </div>
         </div>
