@@ -127,9 +127,9 @@
                                             @endif
                                         </td>
                                         <td class="align-middle text-left">
-                                            En: {{ $product->description_en }}<br>
-                                            Ar: {{ $product->description_ar }}<br>
-                                            He: {{ $product->description_he }}
+                                            En: {{ \Illuminate\Support\Str::words($product->description_en, 3, '...') }}<br>
+                                            Ar: {{ \Illuminate\Support\Str::words($product->description_ar, 3, '...') }}<br>
+                                            He: {{ \Illuminate\Support\Str::words($product->description_he, 3, '...') }}
                                         </td>
                                         <td class="align-middle text-center">
                                             <span class="badge {{ $product->is_active ? 'bg-gradient-success' : 'bg-gradient-secondary' }}">
