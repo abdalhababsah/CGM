@@ -149,7 +149,7 @@
             position: absolute;
             width: 100%;
             height: 100%;
-            object-fit: cover;
+            object-fit: contain;
             border-radius: 100px;
             opacity: 0;
             transition: opacity 1s ease-in-out;
@@ -211,9 +211,9 @@
             <!-- Image Carousel -->
             <div class="image-carousel">
                 <div class="carousel-images">
-                    <img src="https://via.placeholder.com/400x570" alt="Image 1">
-                    <img src="https://via.placeholder.com/400x570" alt="Image 2">
-                    <img src="https://via.placeholder.com/400x570" alt="Image 3">
+                    <img src="{{asset('user/img/home.png')}}" alt="Image 1">
+                    <img src="{{asset('user/img/home-2.png')}}" alt="Image 2">
+                    <img src="{{asset('user/img/girl4.png')}}" alt="Image 3">
 
                 </div>
             </div>
