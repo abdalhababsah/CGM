@@ -101,6 +101,17 @@ class CheckoutService
         DB::beginTransaction();
 
         try {
+            $user = Auth::user();
+            if ($user) {
+                $user->update([
+                    'first_name' => $data['first_name'] ?? $user->first_name,
+                    'last_name' => $data['last_name'] ?? $user->last_name,
+                    'phone' => $data['phone'] ?? $user->phone,
+                    'email' => $data['email'] ?? $user->email,
+                ]);
+    
+                Log::info('User information updated:', $user->toArray());
+            }
             // Fetch discount code if applicable
             $discountCode = null;
             if ($discountData) {
@@ -122,6 +133,7 @@ class CheckoutService
                 'total_amount' => $grandTotal,
                 'payment_method' => 'Cash on Delivery',
                 'status' => 'Pending',
+                'phone2'=> $data['phone2'] ?? '',
                 'preferred_language' => Auth::user()->preferred_language ?? 'en',
                 'note' => $data['note'] ?? null,
             ]);
@@ -129,7 +141,7 @@ class CheckoutService
             // Create Order Location
             $orderLocation = OrderLocation::create([
                 'order_id' => $order->id,
-                'country' => $data['country'],
+                // 'country' => $data['country'],
                 'city' => $data['city'],
                 'address' => $data['address'],
                 'longitude' => $data['longitude'] ?? null,
@@ -159,6 +171,7 @@ class CheckoutService
             DB::commit();
 
 
+            
                     // Dispatch the event after the transaction
         event(new OrderPlaced($order));
             return $order;

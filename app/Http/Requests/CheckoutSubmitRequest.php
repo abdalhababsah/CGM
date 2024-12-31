@@ -29,7 +29,7 @@ class CheckoutSubmitRequest extends FormRequest
             'last_name' => 'required|string|max:255',
             'email' => 'required|email|max:255',
             'phone' => 'required|string|max:20',
-            'country' => 'required|string|max:255',
+            // 'country' => 'required|string|max:255',
             'city' => 'required|string|max:255',
             'address' => 'required|string|max:255',
             'delivery_location_id' => 'required|integer|exists:delivery_location_and_prices,id',
@@ -61,10 +61,6 @@ class CheckoutSubmitRequest extends FormRequest
             'phone.required' => __('checkout.phone_required'),
             'phone.string' => __('checkout.phone_must_be_string'),
             'phone.max' => __('checkout.phone_max_length'),
-
-            'country.required' => __('checkout.country_required'),
-            'country.string' => __('checkout.country_must_be_string'),
-            'country.max' => __('checkout.country_max_length'),
 
             'city.required' => __('checkout.city_required'),
             'city.string' => __('checkout.city_must_be_string'),

@@ -126,7 +126,7 @@ class CheckoutController extends Controller
         return response()->json([
             'status' => 'success',
             'price' => $deliveryLocation->price,
-            'currency' => 'USD', 
+            'currency' => 'USD',
         ]);
     }
 
@@ -205,7 +205,8 @@ class CheckoutController extends Controller
      */
     public function submit(CheckoutSubmitRequest $request)
     {
-        $validated = $request->validated();
+        // dd($request->all());
+        $validated = $request->all();
 
         // Prepare data for the service
         $data = [
@@ -213,7 +214,9 @@ class CheckoutController extends Controller
             'last_name' => $validated['last_name'],
             'email' => $validated['email'],
             'phone' => $validated['phone'],
-            'country' => $validated['country'],
+            'phone2' => $validated['phone2'],
+
+            // 'country' => $validated['country'],
             'city' => $validated['city'],
             'address' => $validated['address'],
             'note' => $validated['note'] ?? null,
@@ -224,6 +227,7 @@ class CheckoutController extends Controller
         ];
 
         // Process checkout
+        // dd($data);
         $order = $this->checkoutService->processCheckout($data);
 
         if ($order) {

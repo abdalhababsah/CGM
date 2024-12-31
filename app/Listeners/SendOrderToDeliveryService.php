@@ -3,6 +3,7 @@
 namespace App\Listeners;
 
 use App\Events\OrderPlaced;
+use App\Models\Area;
 use App\Services\DeliveryService;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Queue\InteractsWithQueue;
@@ -30,28 +31,44 @@ class SendOrderToDeliveryService implements ShouldQueue
      *
      * @param  \App\Events\OrderPlaced  $event
      * @return void
-     */
-    public function handle(OrderPlaced $event)
+     */    public function handle(OrderPlaced $event)
     {
         $order = $event->order;
-    
-        // Fetch the related area and city IDs for the delivery company
+
+        // Eager load necessary relationships
+        $order->load(['deliveryLocation', 'areaLocation.user']);
+
+        // Fetch the related city ID from deliveryLocation
         $companyCityId = $order->deliveryLocation->company_city_id ?? null;
-        $companyAreaId = $order->areaLocation->company_area_id ?? null;
-    
+
+        // Fetch company_area_id from the Area model using area_id
+        $area = Area::find($order->area_id);
+        $companyAreaId = $area->company_area_id;
+
+        // Log the fetched IDs for debugging
+        Log::info("Order #{$order->id} - CompanyCityID: {$companyCityId}, CompanyAreaID: {$companyAreaId}");
+
         if (!$companyCityId || !$companyAreaId) {
             Log::error("Failed to send Order #{$order->id} to Delivery Service: Missing company_city_id or company_area_id.");
             return;
         }
-    
+
+        // Validate preferred_language
+        $preferredLanguage = $order->preferred_language;
+        $validLanguages = ['en', 'ar', 'he']; // Define supported languages
+        if (!in_array($preferredLanguage, $validLanguages)) {
+            Log::warning("Order #{$order->id} has invalid preferred_language: {$preferredLanguage}. Defaulting to 'en'.");
+            $preferredLanguage = 'en'; // Default language
+        }
+
         // Prepare shipment data based on the API documentation
         $shipmentData = [
             'ShipmentTrackingNo' => 'new', // Must be 'new' as per API documentation
             'qrAltId'           => '',    // Empty string as per API
-            'ShipmentTypeID'    => $this->getShipmentTypeId($order->delivery_company_id),
+            'ShipmentTypeID'    => 21,
             'ClientName'        => $order->user->first_name . ' ' . $order->user->last_name,
             'ClientCityID'      => $companyCityId, // Use the company_city_id from the delivery location
-            'ClientAreaID'      => $companyAreaId, // Use the company_area_id from the area
+            'ClientAreaID'      => 12, // Use the company_area_id from the Area model
             'ClientPhone'       => $order->user->phone,
             'ClientPhone2'      => $order->phone2 ?? '',
             'ClientAddress'     => $order->orderLocation->address ?? '',
@@ -60,23 +77,31 @@ class SendOrderToDeliveryService implements ShouldQueue
             'Remarks'           => $order->note ?? '',
             'IsReturn'          => false,
             'ShipmentContains'  => $this->formatShipmentContents($order->orderItems),
-            'lang'              => $order->preferred_language,
+            'lang'              => $preferredLanguage,
             'ShipmentQuantity'  => $this->getShipmentQuantity($order->orderItems),
             'IsForeign'         => false,
         ];
-    
-        // dd($shipmentData);
+
+        // Log the shipment data for debugging
+        Log::info("Sending shipment data for Order #{$order->id}", $shipmentData);
+
         try {
             // Send the shipment data to the delivery system
             $response = $this->deliveryService->createShipment($shipmentData);
-    
+
+            // Check if response contains necessary shipment details
+            if (!isset($response['ID']) || !isset($response['ShipmentTrackingNo'])) {
+                Log::error("Delivery Service response missing required fields for Order #{$order->id}. Response: " . json_encode($response));
+                throw new \Exception('Incomplete response from Delivery Service.');
+            }
+
             // Update the order with shipment details from the response
             $order->update([
-                'delivery_shipment_id' => $response['ID'] ?? null,
-                'delivery_tracking_no' => $response['ShipmentTrackingNo'] ?? null,
+                'delivery_shipment_id' => $response['ID'],
+                'delivery_tracking_no' => $response['ShipmentTrackingNo'],
                 'status'               => 'Submitted', // Initial status after sending to delivery
             ]);
-    
+
             Log::info("Order #{$order->id} sent to Delivery Service successfully. Shipment ID: {$response['ID']}");
         } catch (\Exception $e) {
             Log::error("Failed to send Order #{$order->id} to Delivery Service: " . $e->getMessage());

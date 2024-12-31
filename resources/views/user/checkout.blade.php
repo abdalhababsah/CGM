@@ -1,7 +1,59 @@
 @extends('user.layouts.app')
 
 @section('title', __('checkout.title'))
+{{-- <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous"> --}}
+<style>
+.box-field .form-control {
+    margin-top: 0px !important;
+}
+    .d-none {
+    display: none !important;
+}
+/* Styling for the select elements */
+.styled-select {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 15px;
+}
 
+.styled-select select {
+    appearance: none;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    background: #f4f4f4;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    padding: 10px 15px;
+    font-size: 14px;
+    color: #333;
+    transition: all 0.3s ease-in-out;
+    width: 100%;
+    outline: none;
+}
+
+.styled-select select:focus {
+    border-color: #007bff;
+    box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
+}
+
+.styled-select::after {
+    content: "▼";
+    position: absolute;
+    right: 15px;
+    top: 50%;
+    transform: translateY(-50%);
+    pointer-events: none;
+    font-size: 12px;
+    color: #999;
+}
+
+.styled-select .invalid-feedback {
+    font-size: 12px;
+    color: #d9534f;
+    margin-top: 5px;
+}
+</style>
 @section('content')
     <!-- BEGIN DETAIL MAIN BLOCK -->
     <div class="detail-block detail-block_margin">
@@ -33,61 +85,68 @@
                         <div class="checkout-form__item">
                             <h6>{{ __('checkout.info_about_you') }}</h6>
                             <div class="box-field">
-                                <input type="text" id="first_name" name="first_name" class="form-control"
+                                <input style="margin-top: 0px !important;" type="text" id="first_name" name="first_name" class="form-control"
                                     placeholder="{{ __('checkout.enter_first_name') }}" required>
                                 <span class="invalid-feedback" id="error_first_name"></span>
                             </div>
                             <div class="box-field">
-                                <input type="text" id="last_name" name="last_name" class="form-control"
+                                <input style="margin-top: 0px !important;" type="text" id="last_name" name="last_name" class="form-control"
                                     placeholder="{{ __('checkout.enter_last_name') }}" required>
                                 <span class="invalid-feedback" id="error_last_name"></span>
                             </div>
                             <div class="box-field__row">
+                                <!-- Phone Number 1 -->
                                 <div class="box-field">
-                                    <input type="tel" id="phone" name="phone" class="form-control"
-                                        placeholder="{{ __('checkout.enter_phone') }}" required>
+                                    <input style="margin-top: 0px !important;" type="tel" id="phone" name="phone" class="form-control"
+                                        placeholder="{{ __('checkout.enter_phone') }}" maxlength="10" required>
                                     <span class="invalid-feedback" id="error_phone"></span>
                                 </div>
+                            
+                                <!-- Phone Number 2 -->
                                 <div class="box-field">
-                                    <input disabled type="email" id="email" name="email" class="form-control"
-                                        placeholder="{{ __('checkout.enter_email') }}" required>
-                                    <span class="invalid-feedback" id="error_email"></span>
+                                    <input style="margin-top: 0px !important;" type="tel" id="phone2" name="phone2" class="form-control"
+                                        placeholder="{{ __('checkout.enter_phone2') }}" maxlength="10">
+                                    <span class="invalid-feedback" id="error_phone2"></span>
                                 </div>
+                        
+                            </div>
+                            <div class="box-field">
+                                <input style="margin-top: 0px !important;" disabled type="email" id="email" name="email" class="form-control"
+                                    placeholder="{{ __('checkout.enter_email') }}" required>
+                                <span class="invalid-feedback" id="error_email"></span>
                             </div>
                         </div>
 
-                        <!-- Delivery Information -->
                         <!-- Delivery Information -->
                         <div class="checkout-form__item">
                             <h6>{{ __('checkout.delivery_info') }}</h6>
 
                             <!-- Delivery Location -->
-                            <div class="box-field">
+                            <div class="box-field styled-select">
                                 <select name="delivery_location_id" id="delivery-location" class="form-select" required>
-                                    <option value="" disabled selected>{{ __('checkout.select_delivery_location') }}
-                                    </option>
+                                    <option value="" disabled selected>{{ __('checkout.select_delivery_location') }}</option>
                                     <!-- Options will be populated via AJAX -->
                                 </select>
                                 <span class="invalid-feedback" id="error_delivery_location_id"></span>
                             </div>
-
-                            <div class="box-field">
+                            
+                            <div class="box-field styled-select">
                                 <select id="area" name="area" class="form-select" required>
-                                    <option value="" disabled selected>{{ __('checkout.select_area') }}
-                                    </option>
+                                    <option value="" disabled selected>{{ __('checkout.select_area') }}</option>
                                     <!-- Options will be populated via AJAX -->
                                 </select>
+                                <span class="invalid-feedback" id="error_area"></span>
                             </div>
                             <!-- City -->
                             <div class="box-field">
-                                <input type="text" id="city" name="city" class="form-control"
+                                <input style="margin-top: 0px !important;" type="text" id="city" name="city" class="form-control"
                                     placeholder="{{ __('checkout.enter_city') }}" required>
                                 <span class="invalid-feedback" id="error_city"></span>
                             </div>
 
                             <!-- Address -->
                             <div class="box-field">
-                                <input type="text" id="address" name="address" class="form-control"
+                                <input style="margin-top: 0px !important;" type="text" id="address" name="address" class="form-control"
                                     placeholder="{{ __('checkout.enter_address') }}" required>
                                 <span class="invalid-feedback" id="error_address"></span>
                             </div>
@@ -97,7 +156,7 @@
                         <div class="checkout-form__item">
                             <h6>{{ __('checkout.apply_discount_code') }}</h6>
                             <div class="box-field d-flex">
-                                <input type="text" id="discount-code-input" class="form-control"
+                                <input style="margin-top: 0px !important;" type="text" id="discount-code-input" class="form-control"
                                     placeholder="{{ __('checkout.enter_discount_code') }}">
                                 <button type="button" id="apply-discount-btn"
                                     class="btn btn-primary mx-2">{{ __('checkout.apply') }}</button>
@@ -165,8 +224,6 @@
     </div>
 @endsection
 @section('styles')
-    <!-- intl-tel-input CSS -->
-    <link rel="stylesheet" href="{{ asset('user/css/intlTelInput.min.css') }}" />
     <!-- Existing SweetAlert2 CSS -->
     <style>
         /* Custom styles */
@@ -182,8 +239,7 @@
 @endsection
 
 @section('scripts')
-    <!-- intl-tel-input JS -->
-    <script src="{{ asset('user/js/intlTelInputWithUtils.min.js') }}"></script>
+    <!-- Removed intl-tel-input JS -->
 
     <script>
         $(document).ready(function() {
@@ -200,43 +256,61 @@
             let goodsTotal = 0.00;
             let grandTotal = 0.00;
 
-            // Initialize intl-tel-input on the phone input field
-            const phoneInput = document.querySelector("#phone");
-            const iti = window.intlTelInput(phoneInput, {
-                separateDialCode: true,
-                utilsScript: "https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.19/js/utils.js", // just for formatting/placeholders etc
-            });
+            // Function to validate phone numbers
+            function validatePhoneNumbers() {
+                let isValid = true;
 
-            // Handle phone input validation
-            function validatePhoneNumber() {
-                if (phoneInput.value.trim()) {
-                    if (iti.isValidNumber()) {
-                        phoneInput.classList.remove('is-invalid');
-                        $('#error_phone').text('');
-                        return true;
+                // Validate Phone 1
+                let phone1 = $('#phone').val().trim();
+                if (!/^\d{10}$/.test(phone1)) {
+                    $('#phone').addClass('is-invalid');
+                    $('#error_phone').text('{{ __('checkout.phone_must_be_10_digits') }}');
+                    isValid = false;
+                } else {
+                    $('#phone').removeClass('is-invalid');
+                    $('#error_phone').text('');
+                }
+
+                // Validate Phone 2 (if not empty)
+                let phone2 = $('#phone2').val().trim();
+                if (phone2 !== '') {
+                    if (!/^\d{10}$/.test(phone2)) {
+                        $('#phone2').addClass('is-invalid');
+                        $('#error_phone2').text('{{ __('checkout.phone_must_be_10_digits') }}');
+                        isValid = false;
                     } else {
-                        phoneInput.classList.add('is-invalid');
-                        $('#error_phone').text('{{ __('checkout.invalid_phone_number') }}');
-                        return false;
+                        $('#phone2').removeClass('is-invalid');
+                        $('#error_phone2').text('');
                     }
                 } else {
-                    phoneInput.classList.remove('is-invalid');
-                    $('#error_phone').text('');
-                    return true;
+                    $('#phone2').removeClass('is-invalid');
+                    $('#error_phone2').text('');
                 }
+
+                return isValid;
             }
 
-            // Trigger validation on blur
-            phoneInput.addEventListener('blur', validatePhoneNumber);
+            // Trigger validation on blur for Phone 1
+            $('#phone').on('blur', function() {
+                let phone = $(this).val().trim();
+                if (!/^\d{10}$/.test(phone)) {
+                    $(this).addClass('is-invalid');
+                    $('#error_phone').text('{{ __('checkout.phone_must_be_10_digits') }}');
+                } else {
+                    $(this).removeClass('is-invalid');
+                    $('#error_phone').text('');
+                }
+            });
 
-            // Re-validate on form submission
-            $('#checkout-form').on('submit', function(e) {
-                // Prevent form submission if phone number is invalid
-                if (!validatePhoneNumber()) {
-                    e.preventDefault();
-                    console.error('{{ __('checkout.invalid_phone_number') }}');
-                    // Optionally, focus the phone input field
-                    $('#phone').focus();
+            // Trigger validation on blur for Phone 2
+            $('#phone2').on('blur', function() {
+                let phone = $(this).val().trim();
+                if (phone !== '' && !/^\d{10}$/.test(phone)) {
+                    $(this).addClass('is-invalid');
+                    $('#error_phone2').text('{{ __('checkout.phone_must_be_10_digits') }}');
+                } else {
+                    $(this).removeClass('is-invalid');
+                    $('#error_phone2').text('');
                 }
             });
 
@@ -292,7 +366,7 @@
                                 $('#last_name').val(response.user.last_name);
                                 $('#email').val(response.user.email);
                                 $('#phone').val(response.user.phone);
-                                iti.setNumber(response.user.phone); // Update intl-tel-input
+                                $('#phone').trigger('blur'); // Trigger validation
                             }
 
                             // Populate Cart Items
@@ -329,7 +403,7 @@
                                 if (response.discountCode.type === 'fixed') {
                                     discountText = `-$${discountAmount.toFixed(2)}`;
                                 } else if (response.discountCode.type === 'percentage') {
-                                    discountText = `-${discountAmount.toFixed(2)}`;
+                                    discountText = `-${discountAmount.toFixed(2)}%`;
                                 }
 
                                 $('#discount-info').text(discountText);
@@ -408,7 +482,7 @@
                             if (response.type === 'fixed') {
                                 discountText = `-$${discountAmount.toFixed(2)}`;
                             } else if (response.type === 'percentage') {
-                                discountText = `-${discountAmount.toFixed(2)}`;
+                                discountText = `-${discountAmount.toFixed(2)}%`;
                             }
 
                             $('#discount-info').text(discountText);
@@ -498,7 +572,7 @@
                         success: function(response) {
                             if (response.status === 'success') {
                                 let areaOptions =
-                                    '<option value="" disabled selected>Select area</option>';
+                                    '<option value="" disabled selected>{{ __('checkout.select_area') }}</option>';
                                 response.areas.forEach(area => {
                                     areaOptions +=
                                         `<option value="${area.id}">${area.name}</option>`;
@@ -518,6 +592,12 @@
             $('#checkout-form').submit(function(e) {
                 e.preventDefault(); // We'll handle the AJAX submission manually
 
+                // Validate phone numbers before submission
+                if (!validatePhoneNumbers()) {
+                    console.error('{{ __('checkout.invalid_phone_numbers') }}');
+                    return;
+                }
+
                 // ======================================
                 // SHOW LOADING on "Place Order" button
                 // ======================================
@@ -532,8 +612,8 @@
                     first_name: $('#first_name').val().trim(),
                     last_name: $('#last_name').val().trim(),
                     email: $('#email').val().trim(),
-                    phone: iti.getNumber(), 
-                    country: iti.getSelectedCountryData().name || '', // Get country name
+                    phone: $('#phone').val().trim(),
+                    phone2: $('#phone2').val().trim(),
                     city: $('#city').val().trim(),
                     area: $('#area').val().trim(),
                     address: $('#address').val().trim(),

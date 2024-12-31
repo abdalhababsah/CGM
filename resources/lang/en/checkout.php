@@ -78,9 +78,10 @@ return [
     'correct_errors_text' => 'Please fix the highlighted errors and try again.',
     'discount_code_not_found' => 'Discount code not found.',
     'select_delivery_location_first' => 'Please select a delivery location first.',
-    'invalid_phone_number' => 'Invalid phone number.',
-
+    'invalid_phone_number' => 'Please enter a valid phone number with exactly 10 digits, without any symbols or spaces.',
     'select_area' => 'Select Area',
+    'phone_must_be_10_digits' => 'Phone number must be exactly 10 digits, without any symbols or spaces.',
+    'enter_phone2' => 'Enter your second phone number',
     'no_areas_found' => 'No areas found for this city.',
     'error_fetching_areas' => 'There was an error fetching areas.',
 ];

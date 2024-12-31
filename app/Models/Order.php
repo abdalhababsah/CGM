@@ -17,6 +17,7 @@ class Order extends Model
         'payment_method',
         'status',
         'preferred_language',
+        'phone2',
         // It is the city ID FOCUS. The name was incorrectly identified, but it fits the delivery company because of major modifications in the locations tables.
         'delivery_location_id', 
         'discount_code_id',

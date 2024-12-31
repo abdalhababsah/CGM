@@ -7,6 +7,8 @@ return [
     'enter_first_name' => 'أدخل اسمك الأول',
     'enter_last_name' => 'أدخل اسمك الأخير',
     'enter_phone' => 'أدخل رقم هاتفك',
+    'enter_phone2' => 'أدخل رقم هاتفك الثاني' ,
+    
     'enter_email' => 'أدخل عنوان بريدك الإلكتروني',
     'delivery_info' => 'معلومات التسليم',
     'select_delivery_location' => 'اختر موقع التسليم',
@@ -75,7 +77,8 @@ return [
     'error_fetching_delivery_locations' => 'حدث خطأ أثناء جلب مواقع التسليم.',
     'error_fetching_cart_items' => 'حدث خطأ أثناء جلب عناصر السلة.',
     'correct_errors' => 'يرجى تصحيح الأخطاء أدناه.',
-    'invalid_phone_number' => 'رقم هاتف غير صالح.',
+    'invalid_phone_number' => 'يرجى إدخال رقم هاتف مكون من 10 أرقام بدون أي رموز أو مسافات.',
+    'phone_must_be_10_digits' => 'يجب أن يكون رقم الهاتف 10 أرقام بالضبط، بدون أي رموز أو مسافات.',
 
     'correct_errors_text' => 'يرجى إصلاح الأخطاء المميزة والمحاولة مرة أخرى.',
     'discount_code_not_found' => 'لم يتم العثور على رمز الخصم.',

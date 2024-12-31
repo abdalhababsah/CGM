@@ -78,8 +78,11 @@ return [
     'correct_errors_text' => 'אנא תקן את השגיאות המסומנות ונסה שוב.',
     'discount_code_not_found' => 'קוד ההנחה לא נמצא.',
     'select_delivery_location_first' => 'אנא בחר תחילה מיקום משלוח.',
-    'invalid_phone_number' => 'מספר טלפון לא חוקי.',
+    'invalid_phone_number' => 'אנא הזן מספר טלפון חוקי בן 10 ספרות בדיוק, ללא סמלים או רווחים.',
     'select_area' => 'בחר אזור',
+    'invalid_phone_numbers' => 'מספרי הטלפון אינם חוקיים. אנא הזן בדיוק 10 ספרות ללא סמלים או רווחים.',
+    'phone_must_be_10_digits' => 'מספר הטלפון חייב להיות בדיוק 10 ספרות, ללא סמלים או רווחים.',
+    'enter_phone2' => 'הזן את מספר הטלפון השני שלך',
     'no_areas_found' => 'לא נמצאו אזורים לעיר זו.',
     'error_fetching_areas' => 'אירעה שגיאה בעת טעינת האזורים.',
 
