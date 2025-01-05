@@ -66,6 +66,7 @@ return [
     'no_products_found' => 'לא נמצאו מוצרים.',
 
     'men' => 'גברים',
+    'tools' => 'כלים',
     'women' => 'נשים',
     'children' => 'ילדים',
 ];
