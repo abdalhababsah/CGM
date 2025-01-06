@@ -185,7 +185,7 @@
             </div>
             <div class="cart-table__col">
                 <span class="cart-table__price" data-price="${item.price}">
-                    $${parseFloat(item.price).toFixed(2)}
+                    ₪${parseFloat(item.price).toFixed(2)}
                 </span>
             </div>
             <div class="cart-table__col">
@@ -199,7 +199,7 @@
             </div>
             <div class="cart-table__col">
                 <span class="cart-table__total">
-                    $${(item.price * item.quantity).toFixed(2)}
+                    ₪${(item.price * item.quantity).toFixed(2)}
                 </span>
                 <button class="remove-btn text-remove" data-product-id="${item.product_id}">
                     {{ __('cart.remove') }}
@@ -214,7 +214,7 @@
     <div class="cart-bottom">
         <div class="cart-bottom__total">
             <div class="cart-bottom__total-goods">
-                {{ __('cart.total_goods') }}: <span id="cart-total-goods">$${totalPrice.toFixed(2)}</span>
+                {{ __('cart.total_goods') }}: <span id="cart-total-goods">₪${totalPrice.toFixed(2)}</span>
             </div>
             <span id="checkout-warning" style="color: red; display: none;">
                 {{ __('cart.checkout_disabled_message') }}
@@ -374,7 +374,7 @@
                     let rowTotal = parseFloat(rowTotalText) || 0;
                     totalPrice += rowTotal;
                 });
-                $('#cart-total-goods').text(`$${totalPrice.toFixed(2)}`);
+                $('#cart-total-goods').text(`₪${totalPrice.toFixed(2)}`);
             }
 
             function checkEmptyCart() {

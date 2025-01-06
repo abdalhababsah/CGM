@@ -324,7 +324,7 @@
                                             <i class="sli-wallet"></i>
                                             <div class="stats-info">
                                                 <div class="stats-title">Total Spent</div>
-                                                <div class="stats-value">$1,250.00</div>
+                                                <div class="stats-value">₪1,250.00</div>
                                             </div>
                                         </div>
                                     </div>
@@ -374,7 +374,7 @@
                                                     <td>{{ \Carbon\Carbon::parse($order->created_at)->format('M d, Y') }}
                                                     </td>
                                                     <td>{{ $order->status }}</td>
-                                                    <td>${{ number_format($order->total_amount, 2) }}</td>
+                                                    <td>₪{{ number_format($order->total_amount, 2) }}</td>
                                                     <td><a href="order-details.html"><strong>View</strong></a></td>
                                                 </tr>
                                             @empty

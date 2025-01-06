@@ -222,7 +222,7 @@
                         <div class="card-block">
                             <h6>Total Revenue</h6>
                             <h2>
-                                <span class="f-right">${{ number_format($metrics['revenue'], 2) }}</span>
+                                <span class="f-right">₪{{ number_format($metrics['revenue'], 2) }}</span>
                             </h2>
                         </div>
                     </div>
@@ -349,7 +349,7 @@
                         display: true,
                         title: {
                             display: true,
-                            text: 'Sales ($)'
+                            text: 'Sales (₪)'
                         },
                         beginAtZero: true
                     }
@@ -475,7 +475,9 @@
             data: {
                 labels: @json(array_keys($revenueByCategory->toArray())),
                 datasets: [{
-                    label: 'Revenue',
+
+                    label: 'Revenue (₪)',
+
                     data: @json(array_values($revenueByCategory->toArray())),
                     backgroundColor: '#6f42c1'
                 }]
@@ -497,7 +499,7 @@
                         display: true,
                         title: {
                             display: true,
-                            text: 'Revenue ($)'
+                            text: 'Revenue (₪)'
                         },
                         beginAtZero: true
                     },
