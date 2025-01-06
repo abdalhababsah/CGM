@@ -44,8 +44,23 @@ class AdminOrdersController extends Controller
      */
     public function downloadInvoice(Request $request, Order $order)
     {
-        $language = $request->input('language', 'en');
-        $pdf = $this->orderService->generateInvoice($order, $language);
-        return $pdf->Download("invoice-{$order->id}.pdf");
+        try {
+            // Determine the language (default: English)
+            $language = $request->input('language', 'en');
+            
+            // Validate language input
+            $allowedLanguages = ['en', 'ar', 'he'];
+            if (!in_array($language, $allowedLanguages)) {
+                $language = 'en';
+            }
+    
+            // Generate the PDF
+            $pdf = $this->orderService->generateInvoice($order, $language);
+    
+            // Return the PDF for download
+            return $pdf->download("invoice-{$order->id}.pdf");
+        } catch (\Exception $e) {
+            return response()->json(['error' => 'Failed to generate or download the invoice: ' . $e->getMessage()], 500);
+        }
     }
 }

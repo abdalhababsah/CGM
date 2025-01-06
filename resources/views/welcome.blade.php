@@ -348,7 +348,7 @@
                 <div class="info-blocks__item-text">
                     <span class="saint-text">@lang('home.check_this_out')</span>
                     <h2>@lang('home.new_collection')</h2>
-                    <span class="info-blocks__item-descr">@lang('home.nourish_description')</span>
+                    <span class="info-blocks__item-descr">@lang('home.check_this_out_description')</span>
                     <a href="{{ route('shop.index') }}" class="btn">@lang('home.shop_now')</a>
                 </div>
             </div>
@@ -362,7 +362,7 @@
                 <div class="info-blocks__item-text">
                     <span class="saint-text">@lang('home.about_us')</span>
                     <h2>@lang('home.who_we_are')</h2>
-                    <span class="info-blocks__item-descr">@lang('home.nourish_description')</span>
+                    <span class="info-blocks__item-descr">@lang('home.who_we_are_description')</span>
 
                 </div>
             </div>

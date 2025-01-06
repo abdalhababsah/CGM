@@ -30,9 +30,9 @@
                                                 <span>{{ $item->product->name_en }}</span>
                                             </div>
                                         </td>
-                                        <td>${{ number_format($item->unit_price, 2) }}</td>
+                                        <td>₪{{ number_format($item->unit_price, 2) }}</td>
                                         <td>{{ $item->quantity }}</td>
-                                        <td>${{ number_format($item->total_price, 2) }}</td>
+                                        <td>₪{{ number_format($item->total_price, 2) }}</td>
                                     </tr>
                                 @endforeach
                             </tbody>
@@ -51,7 +51,6 @@
                     <h6>Delivery Information</h6>
                     <p><strong>Address:</strong> {{ $order->orderLocation->address ?? 'N/A' }}</p>
                     <p><strong>City:</strong> {{ $order->orderLocation->city ?? 'N/A' }}</p>
-                    <p><strong>Country:</strong> {{ $order->orderLocation->country ?? 'N/A' }}</p>
                 </div>
             </div>
         </div>
@@ -67,20 +66,20 @@
                             <tbody>
                                 <tr>
                                     <td>Subtotal:</td>
-                                    <td class="text-end">${{ number_format($originalPrice, 2) }}</td>
+                                    <td class="text-end">₪{{ number_format($originalPrice, 2) }}</td>
                                 </tr>
                                 <tr>
                                     <td>Discount:</td>
-                                    <td class="text-end">- ${{ number_format($discount, 2) }}</td>
+                                    <td class="text-end">- ₪{{ number_format($discount, 2) }}</td>
                                 </tr>
                                 <tr>
                                     <td>Delivery Price:</td>
-                                    <td class="text-end">${{ number_format($deliveryPrice, 2) }}</td>
+                                    <td class="text-end">₪{{ number_format($deliveryPrice, 2) }}</td>
                                 </tr>
                                 <tr class="bg-light">
                                     <th>Total:</th>
                                     <td class="text-end">
-                                        <strong>${{ number_format($finalPrice, 2) }}</strong>
+                                        <strong>₪{{ number_format($finalPrice, 2) }}</strong>
                                     </td>
                                 </tr>
                             </tbody>
@@ -97,10 +96,10 @@
                     <a href="{{ route('admin.orders.index') }}" class="btn btn-secondary mb-3">
                         <i class="mdi mdi-arrow-left"></i> Back to Orders
                     </a>
-                    {{-- <a href="{{ route('admin.orders.invoice.download', ['order' => $order->id, 'language' => 'en']) }}" 
+                    <a href="{{ route('admin.orders.invoice.download', ['order' => $order->id, 'language' => 'en']) }}" 
                        class="btn btn-primary">
                         <i class="mdi mdi-download"></i> Download Invoice
-                    </a> --}}
+                    </a>
                 </div>
             </div>
         </div>

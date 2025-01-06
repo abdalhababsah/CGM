@@ -475,7 +475,7 @@
             data: {
                 labels: @json(array_keys($revenueByCategory->toArray())),
                 datasets: [{
-                    label: 'Revenue ($)',
+                    label: 'Revenue',
                     data: @json(array_values($revenueByCategory->toArray())),
                     backgroundColor: '#6f42c1'
                 }]

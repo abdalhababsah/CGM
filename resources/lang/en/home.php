@@ -16,7 +16,7 @@ return [
     // Main Block
     'professional' => 'Professional',
     'beauty_and_care' => 'Beauty & Care',
-    'nourish_description' => 'Nourish your skin with toxin-free cosmetic products. With offers that you can’t refuse.',
+    'nourish_description' => 'Welcome to CGM, the ultimate destination for celebrating naturally curly and textured hair.',
     'shop_now' => 'Shop now',
 
     // Trending Section
@@ -51,10 +51,14 @@ return [
 
     // Info Blocks
     'check_this_out' => 'Check This Out',
-    'new_collection' => 'new collection for delicate skin',
+    'check_this_out_description' => 'Your one-stop shop for top-quality products designed to transform and enhance your curly hair journey. Click below to explore our new collection tailored for gorgeous, healthy curls!',
+    'new_collection' => 'Discover the Perfect Products for Curly Hair',
     'promotion_video' => 'Promotion video',
     'about_us' => 'About Us',
+    'about_us_description' => 'About Us',
     'who_we_are' => 'Who we are',
+    'who_we_are_description' => 'At CGM, we celebrate natural beauty by offering innovative solutions and expert guidance for curly and textured hair.',
+
     'watch_video' => 'Watch video about us',
     'new_arrivals' => 'New arrivals',
     'full_description' => 'Full description',
