@@ -147,14 +147,17 @@
 
         .carousel-images img {
             border: 8px solid white;
-            position: absolute;
-            width: 90%;
-            height: 100%;
-            object-fit: contain;
-            border-radius: 100px;
-            opacity: 0;
-            transition: opacity 1s ease-in-out;
-        }
+    position: absolute;
+    background-color: #971d25;
+    width: 90%;
+    height: 100%;
+    object-fit: contain;
+    border-radius: 100px;
+    opacity: 0;
+    transition: opacity 1s ease-in-out;
+    box-shadow: 0px 3px 17px rgba(0, 0, 0, 1.2);
+/* Adds a subtle shadow effect */
+}
 
         .carousel-images img.active {
             opacity: 1;
