@@ -20,7 +20,7 @@ class LocalizationController extends Controller
 
         if (in_array($locale, $availableLocales)) {
             Session::put('locale', $locale);
-            // dd('hello');
+
             App::setlocale($locale);
         }
 

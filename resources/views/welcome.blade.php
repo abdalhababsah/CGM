@@ -118,12 +118,13 @@
         }
 
         .carousel-images {
-            position: absolute;
-            width: 100%;
+            position: relative;
+            width: 90%;
             height: 100%;
             display: flex;
             align-items: center;
             justify-content: center;
+            margin: auto;
         }
 
 
@@ -185,7 +186,7 @@
 
         /* Hero Section Flex Container */
         #hero-section {
-            margin-top: 43px;
+            margin-top: 60px;
             display: flex;
             flex-wrap: wrap;
             /* Enable wrapping for child elements */
@@ -314,9 +315,9 @@
         <div class="top-categories__items d-flex justify-content-around">
             <a href="#" class="top-categories__item animate__animated animate__fadeInRight">
                 <img data-src="{{ 'user/img/image-1.png' }}" src="data:image/gif;base64,R0lGODlhAQABAAAAACw="
-                    class="js-img img-fluid" alt="@lang('home.men')">
+                    class="js-img img-fluid" alt="@lang('home.tools')">
                 <div class="top-categories__item-hover">
-                    <h5>@lang('home.men')</h5>
+                    <h5>@lang('home.tools')</h5>
                 </div>
             </a>
             <a href="#" class="top-categories__item animate__animated animate__fadeInDown">

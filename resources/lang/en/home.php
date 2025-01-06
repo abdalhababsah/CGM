@@ -62,6 +62,7 @@ return [
     'no_products_found' => 'No products found.',
 
     'men' => 'Men',
+    'tools' => 'Tools',
     'women' => 'Women',
     'children' => 'Children',
 ];
