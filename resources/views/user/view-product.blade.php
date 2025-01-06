@@ -138,7 +138,7 @@
                         {{ $product->quantity > 0 ? __('view_product.in_stock') : __('view_product.out_of_stock') }}
                     </span>
                     <span class="product-num">{{ __('view_product.sku') }}: {{ $product->sku }}</span>
-                    <span class="product-price">${{ $product->price }}</span>
+                    <span class="product-price">₪{{ $product->price }}</span>
 
                     <div class="product-detail-info">
                         <p><strong>{{ __('view_product.category') }}:</strong>
