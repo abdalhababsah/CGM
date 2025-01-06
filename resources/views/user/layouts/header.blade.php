@@ -2,7 +2,7 @@
     <div class="header-content">
         <div class="header-top " style="margin-bottom: 10px; overflow: hidden;">
 
-                <span class="scrolling-text ">@lang('home.header_offer')</span>
+            <span class="scrolling-text ">@lang('home.header_offer')</span>
 
         </div>
 
@@ -57,4 +57,4 @@
 
 <style>
 
-    </style>
+</style>

@@ -79,6 +79,7 @@
         #beauty_and_care {
             animation: fadeInUp 3s ease-out 0.6s forwards;
             /* Delayed by 0.6s */
+            font-size: xx-large;
         }
 
         #nourish_description {
@@ -111,7 +112,6 @@
             /* Allocate space for carousel */
             position: relative;
             height: 500px;
-            /* Match height of images */
             margin: 0;
             /* Reset margins for cleaner alignment */
 
@@ -148,7 +148,7 @@
         .carousel-images img {
             border: 8px solid white;
             position: absolute;
-            width: 100%;
+            width: 90%;
             height: 100%;
             object-fit: contain;
             border-radius: 100px;
@@ -163,7 +163,8 @@
         /* Responsive Adjustments */
         @media (max-width: 768px) {
             #hero-section {
-                flex-direction: column;
+                gap: 45px;
+                /* padding: 0px 0px 0px 0px !important; */
                 /* Stack items vertically on smaller screens */
             }
 
@@ -174,7 +175,8 @@
 
             .main-block__content,
             .image-carousel {
-                width: 100%;
+                /* width: 100%; */
+
                 /* Make both sections take full width */
             }
 
@@ -195,7 +197,17 @@
             justify-content: space-between;
             /* Maintain space between items */
             gap: 20px;
+            max-width: 1600px;
             /* Add gap between items */
+        }
+
+        @media (max-width: 468px) {
+            .image-carousel {
+                /* width: 100%; */
+                max-width: 443px;
+                /* Make both sections take full width */
+            }
+
         }
     </style>
 @endsection
@@ -212,9 +224,9 @@
             <!-- Image Carousel -->
             <div class="image-carousel">
                 <div class="carousel-images">
-                    <img src="{{asset('user/img/home.png')}}" alt="Image 1">
-                    <img src="{{asset('user/img/home-2.png')}}" alt="Image 2">
-                    <img src="{{asset('user/img/girl4.png')}}" alt="Image 3">
+                    <img src="{{ asset('user/img/home.png') }}" alt="Image 1">
+                    <img src="{{ asset('user/img/home-2.png') }}" alt="Image 2">
+                    <img src="{{ asset('user/img/girl4.png') }}" alt="Image 3">
 
                 </div>
             </div>
@@ -234,7 +246,8 @@
                         <span class="products-item__new">Soon</span>
                     </div>
                     <div class="products-item__img">
-                        <img style="object-fit: contain;" src="{{ asset('user/img/comming-soon-1.png') }}" alt="Bomba De Vitaminas">
+                        <img style="object-fit: contain;" src="{{ asset('user/img/comming-soon-1.png') }}"
+                            alt="Bomba De Vitaminas">
                     </div>
                     <div class="products-item__info">
                         <span class="products-item__name">Bomba De Vitaminas</span>
@@ -245,7 +258,8 @@
                         <span class="products-item__new">Soon</span>
                     </div>
                     <div class="products-item__img">
-                        <img style="object-fit: contain;" src="{{ asset('user/img/comming-soon-21.png') }}" alt="Raizes Do Morro">
+                        <img style="object-fit: contain;" src="{{ asset('user/img/comming-soon-21.png') }}"
+                            alt="Raizes Do Morro">
                     </div>
                     <div class="products-item__info">
                         <span class="products-item__name">Raizes Do Morro</span>
@@ -267,7 +281,8 @@
                         <span class="products-item__new">Soon</span>
                     </div>
                     <div class="products-item__img">
-                        <img style="object-fit: contain;" src="{{ asset('user/img/comming-soon-41.png') }}" alt="Vitamin C And Collagen">
+                        <img style="object-fit: contain;" src="{{ asset('user/img/comming-soon-41.png') }}"
+                            alt="Vitamin C And Collagen">
                     </div>
                     <div class="products-item__info">
                         <span class="products-item__name">Vitamin C And Collagen</span>
@@ -313,21 +328,21 @@
             {{-- <p class="animate__animated animate__fadeIn">@lang('home.nourish_description')</p> --}}
         </div>
         <div class="top-categories__items d-flex justify-content-around">
-            <a href="#" class="top-categories__item animate__animated animate__fadeInRight">
+            <a href="{{route('shop.index')}}" class="top-categories__item animate__animated animate__fadeInRight">
                 <img data-src="{{ 'user/img/image-1.png' }}" src="data:image/gif;base64,R0lGODlhAQABAAAAACw="
                     class="js-img img-fluid" alt="@lang('home.tools')">
                 <div class="top-categories__item-hover">
                     <h5>@lang('home.tools')</h5>
                 </div>
             </a>
-            <a href="#" class="top-categories__item animate__animated animate__fadeInDown">
+            <a href="{{route('shop.index')}}" class="top-categories__item animate__animated animate__fadeInDown">
                 <img data-src="{{ asset('user/img/image-2.png') }}" src="data:image/gif;base64,R0lGODlhAQABAAAAACw="
                     class="js-img img-fluid" alt="@lang('home.women')">
                 <div class="top-categories__item-hover">
                     <h5>@lang('home.women')</h5>
                 </div>
             </a>
-            <a href="#" class="top-categories__item animate__animated animate__fadeInLeft">
+            <a href="{{route('shop.index')}}" class="top-categories__item animate__animated animate__fadeInLeft">
                 <img data-src="{{ 'user/img/image-3.png' }}" src="data:image/gif;base64,R0lGODlhAQABAAAAACw="
                     class="js-img img-fluid" alt="@lang('home.children')">
                 <div class="top-categories__item-hover">
@@ -373,10 +388,11 @@
         <picture>
             <!-- Mobile Devices -->
             <source media="(max-width: 767px)" srcset="{{ asset('user/img/mobile.jpg') }}">
-            
+
             <!-- Tablet Devices -->
-            <source media="(min-width: 768px) and (max-width: 1023px)" srcset="{{ asset('user/img/scrol-image-tablet.jpg') }}">
-            
+            <source media="(min-width: 768px) and (max-width: 1023px)"
+                srcset="{{ asset('user/img/scrol-image-tablet.jpg') }}">
+
             <!-- Desktop Devices -->
             <img src="{{ asset('user/img/scroll-image.png') }}" alt="Call to Action Image">
         </picture>
@@ -390,7 +406,6 @@
 
 
     <script>
-        
         document.addEventListener('DOMContentLoaded', () => {
             const items = document.querySelectorAll('.top-categories__item');
 
@@ -405,7 +420,7 @@
             items.forEach(item => observer.observe(item));
 
 
-            
+
         });
 
         document.addEventListener("DOMContentLoaded", function() {
