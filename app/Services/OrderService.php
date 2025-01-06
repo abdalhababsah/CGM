@@ -66,21 +66,21 @@ class OrderService
      */
     public function generateInvoice(Order $order, string $language = 'en')
     {
-        $order->load(['user', 'orderItems.product', 'orderLocation']);
-        $pdf = Pdf::loadView("admin.orders.invoice.invoice-pdf-{$language}", compact('order'));
-
-        // Define the storage path for invoices
-        $invoiceDirectory = storage_path('app/invoices');
-        if (!file_exists($invoiceDirectory)) {
-            mkdir($invoiceDirectory, 0755, true);
+        // Load necessary relationships
+        $order = $this->getOrderDetails($order);
+        $originalPrice = $order->orderItems->sum('total_price');
+        $deliveryPrice = $order->deliveryLocation->price ?? 0;
+        $discount = $order->discountCode ? $order->discountCode->amount : 0;
+        $finalPrice = $order->finalPrice;
+        // Ensure the Blade template exists
+        // dd( $deliveryPrice);
+        if (!view()->exists("admin.orders.invoice.invoice-pdf-{$language}")) {
+            throw new \Exception('Invoice view not found.');
         }
-
-        $invoicePath = "{$invoiceDirectory}/invoice-{$order->id}.pdf";
-
-        // Save the PDF to the defined path
-        $pdf->save($invoicePath);
-
-        return $invoicePath;
+        $pdf = Pdf::loadView("admin.orders.invoice.invoice-pdf-{$language}", compact('order' ,'originalPrice','discount','deliveryPrice','finalPrice'));
+    
+        // Return the PDF instance directly
+        return $pdf;
     }
 
     /**

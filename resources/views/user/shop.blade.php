@@ -91,8 +91,8 @@
                 </div>
             </div>
         </div>
-        <img class="promo-video__decor js-img" data-src="{{ asset('user/img/promo-video__decor.jpg') }}"
-            src="{{ asset('user/img/promo-video__decor.jpg') }}" alt="">
+        {{-- <img class="promo-video__decor js-img" data-src="{{ asset('user/img/promo-video__decor.jpg') }}"
+            src="{{ asset('user/img/promo-video__decor.jpg') }}" alt=""> --}}
     </div>
     <!-- SHOP EOF -->
 @endsection

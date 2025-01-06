@@ -12,22 +12,24 @@ class TestController extends Controller
      */
     public function testGetAreas(Request $request, DeliveryService $deliveryService)
     {
-        // For demonstration, let's fetch areas for cityId=1 (or use a query param).
-        $cityId = $request->input('city_id', 2);
+        // This API for returning areas and cities 
 
-        try {
-            $response = $deliveryService->getAreas((int) $cityId);
-            // Dump or return JSON
-            return response()->json([
-                'status'   => 'success',
-                'city_id'  => $cityId,
-                'response' => $response,
-            ]);
-        } catch (\Exception $e) {
-            return response()->json([
-                'status'  => 'error',
-                'message' => $e->getMessage(),
-            ], 500);
-        }
+        // // For demonstration, let's fetch areas for cityId=1 (or use a query param).
+        // $cityId = $request->input('city_id', 2);
+
+        // try {
+        //     $response = $deliveryService->getAreas((int) $cityId);
+        //     // Dump or return JSON
+        //     return response()->json([
+        //         'status'   => 'success',
+        //         'city_id'  => $cityId,
+        //         'response' => $response,
+        //     ]);
+        // } catch (\Exception $e) {
+        //     return response()->json([
+        //         'status'  => 'error',
+        //         'message' => $e->getMessage(),
+        //     ], 500);
+        // }
     }
 }
