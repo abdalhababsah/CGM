@@ -34,9 +34,9 @@
                                                 <span>{{ $item->product->{'name_' . app()->getLocale()} }}</span>
                                             </div>
                                         </td>
-                                        <td>${{ number_format($item->unit_price, 2) }}</td>
+                                        <td>₪{{ number_format($item->unit_price, 2) }}</td>
                                         <td>{{ $item->quantity }}</td>
-                                        <td>${{ number_format($item->total_price, 2) }}</td>
+                                        <td>₪{{ number_format($item->total_price, 2) }}</td>
                                     </tr>
                                 @endforeach
                             </tbody>
@@ -74,20 +74,20 @@
                             <tbody>
                                 <tr>
                                     <td>@lang('dashboard.order_summary.subtotal'):</td>
-                                    <td class="text-end">${{ number_format($originalPrice, 2) }}</td>
+                                    <td class="text-end">₪{{ number_format($originalPrice, 2) }}</td>
                                 </tr>
                                 <tr>
                                     <td>@lang('dashboard.order_summary.discount'):</td>
-                                    <td class="text-end">- ${{ number_format($discount, 2) }}</td>
+                                    <td class="text-end">- ₪{{ number_format($discount, 2) }}</td>
                                 </tr>
                                 <tr>
                                     <td>@lang('dashboard.order_summary.delivery_price'):</td>
-                                    <td class="text-end">${{ number_format($deliveryPrice, 2) }}</td>
+                                    <td class="text-end">₪{{ number_format($deliveryPrice, 2) }}</td>
                                 </tr>
                                 <tr class="bg-light">
                                     <th>@lang('dashboard.order_summary.total'):</th>
                                     <td class="text-end">
-                                        <strong>${{ number_format($finalPrice, 2) }}</strong>
+                                        <strong>₪{{ number_format($finalPrice, 2) }}</strong>
                                     </td>
                                 </tr>
                             </tbody>

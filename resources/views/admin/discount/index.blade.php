@@ -57,7 +57,7 @@
                                             <td class="align-middle text-center">
                                                 <p class="text-xs text-secondary mb-0">
                                                     @if($discount->type === 'fixed')
-                                                        ${{ number_format($discount->amount, 2) }}
+                                                    ₪{{ number_format($discount->amount, 2) }}
                                                     @elseif($discount->type === 'percentage')
                                                         {{ $discount->amount }}%
                                                     @endif

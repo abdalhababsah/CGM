@@ -30,9 +30,9 @@
                                                 <span>{{ $item->product->name_en }}</span>
                                             </div>
                                         </td>
-                                        <td>${{ number_format($item->unit_price, 2) }}</td>
+                                        <td>₪{{ number_format($item->unit_price, 2) }}</td>
                                         <td>{{ $item->quantity }}</td>
-                                        <td>${{ number_format($item->total_price, 2) }}</td>
+                                        <td>₪{{ number_format($item->total_price, 2) }}</td>
                                     </tr>
                                 @endforeach
                             </tbody>
@@ -67,20 +67,20 @@
                             <tbody>
                                 <tr>
                                     <td>Subtotal:</td>
-                                    <td class="text-end">${{ number_format($originalPrice, 2) }}</td>
+                                    <td class="text-end">₪{{ number_format($originalPrice, 2) }}</td>
                                 </tr>
                                 <tr>
                                     <td>Discount:</td>
-                                    <td class="text-end">- ${{ number_format($discount, 2) }}</td>
+                                    <td class="text-end">- ₪{{ number_format($discount, 2) }}</td>
                                 </tr>
                                 <tr>
                                     <td>Delivery Price:</td>
-                                    <td class="text-end">${{ number_format($deliveryPrice, 2) }}</td>
+                                    <td class="text-end">₪{{ number_format($deliveryPrice, 2) }}</td>
                                 </tr>
                                 <tr class="bg-light">
                                     <th>Total:</th>
                                     <td class="text-end">
-                                        <strong>${{ number_format($finalPrice, 2) }}</strong>
+                                        <strong>₪{{ number_format($finalPrice, 2) }}</strong>
                                     </td>
                                 </tr>
                             </tbody>

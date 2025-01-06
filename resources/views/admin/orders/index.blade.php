@@ -106,7 +106,7 @@
                                             <small>{{ $order->user->email }}</small>
                                         </td>
                                         <td>{{ $order->created_at->format('d M Y, h:i A') }}</td>
-                                        <td>${{ number_format($order->finalPrice, 2) }}</td>
+                                        <td>₪{{ number_format($order->finalPrice, 2) }}</td>
                                         <td class="text-center">
                                             <span class="badge bg-gradient-{{ $order->status == 'completed' ? 'success' : 'secondary' }}">
                                                 {{ ucfirst($order->status) }}

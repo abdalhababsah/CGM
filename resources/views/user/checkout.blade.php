@@ -200,20 +200,20 @@
 
                     <div class="cart-bottom__total">
                         <div class="cart-bottom__total-goods">
-                            {{ __('checkout.goods') }}: <span id="goods-total">$0.00</span>
+                            {{ __('checkout.goods') }}: <span id="goods-total">₪0.00</span>
                         </div>
                         <div class="cart-bottom__total-promo">
                             {{ __('checkout.discount_on_promo_code') }}:
-                            <span id="discount-info">$0.00</span>
+                            <span id="discount-info">₪0.00</span>
                         </div>
                         <div class="cart-bottom__total-delivery">
                             {{ __('checkout.delivery') }}: <span
                                 class="cart-bottom__total-delivery-date">{{ __('checkout.select_delivery_location_placeholder') }}</span>
-                            <span>$<span id="delivery-price-display">0.00</span></span>
+                            <span>₪<span id="delivery-price-display">0.00</span></span>
                         </div>
                         <div class="cart-bottom__total-num">
                             {{ __('checkout.total') }}:
-                            <span id="grand-total">$0.00</span>
+                            <span id="grand-total">₪0.00</span>
                         </div>
                     </div>
                 </div>
@@ -326,7 +326,7 @@
                                 '<option value="" disabled selected>{{ __('checkout.select_delivery_location') }}</option>';
                             response.deliveryLocations.forEach(function(location) {
                                 options +=
-                                    `<option value="${location.id}" data-price="${parseFloat(location.price).toFixed(2)}">${location.city}, - $${parseFloat(location.price).toFixed(2)}</option>`;
+                                    `<option value="${location.id}" data-price="${parseFloat(location.price).toFixed(2)}">${location.city}, - ₪${parseFloat(location.price).toFixed(2)}</option>`;
                             });
                             $('#delivery-location').html(options);
 
@@ -381,18 +381,18 @@
                                             </a>
                                             <div class="checkout-order__item-info">
                                                 <a class="title6" href="#">${item.name} <span>x${item.quantity}</span></a>
-                                                <span class="checkout-order__item-price">$${parseFloat(item.total).toFixed(2)}</span>
+                                                <span class="checkout-order__item-price">₪${parseFloat(item.total).toFixed(2)}</span>
                                             </div>
                                         </div>
                                     `;
                                     goodsTotal += parseFloat(item.total);
                                 });
                                 $('#order-items').html(orderItemsHtml);
-                                $('#goods-total').text(`$${goodsTotal.toFixed(2)}`);
+                                $('#goods-total').text(`₪${goodsTotal.toFixed(2)}`);
                                 calculateGrandTotal();
                             } else {
                                 $('#order-items').html('<p>{{ __('checkout.no_items_in_cart') }}</p>');
-                                $('#goods-total').text(`$0.00`);
+                                $('#goods-total').text(`₪0.00`);
                                 calculateGrandTotal();
                             }
 
@@ -401,7 +401,7 @@
                                 discountAmount = parseFloat(response.discountCode.amount);
                                 let discountText = '';
                                 if (response.discountCode.type === 'fixed') {
-                                    discountText = `-$${discountAmount.toFixed(2)}`;
+                                    discountText = `-₪${discountAmount.toFixed(2)}`;
                                 } else if (response.discountCode.type === 'percentage') {
                                     discountText = `-${discountAmount.toFixed(2)}%`;
                                 }
@@ -436,7 +436,7 @@
             function calculateGrandTotal() {
                 grandTotal = goodsTotal + deliveryPrice - discountAmount;
                 grandTotal = grandTotal < 0 ? 0 : grandTotal;
-                $('#grand-total').text(`$${grandTotal.toFixed(2)}`);
+                $('#grand-total').text(`₪${grandTotal.toFixed(2)}`);
             }
 
             // Event listener for delivery location change

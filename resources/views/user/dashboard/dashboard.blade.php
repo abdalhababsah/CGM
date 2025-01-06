@@ -236,7 +236,7 @@
                         <div class="card-block">
                             <h6>@lang('dashboard.total_revenue')</h6>
                             <h2>
-                                <span class="f-right">$12,345</span>
+                                <span class="f-right">₪12,345</span>
                             </h2>
                         </div>
                     </div>

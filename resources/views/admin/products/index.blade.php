@@ -117,7 +117,7 @@
                                         </td>
                                         <td class="align-middle text-left">{{ $product->category->name_en ?? 'No Category' }}</td>
                                         <td class="align-middle text-left">{{ $product->brand->name_en ?? 'No Brand' }}</td>
-                                        <td class="align-middle text-right">${{ number_format($product->price, 2) }}</td>
+                                        <td class="align-middle text-right">₪{{ number_format($product->price, 2) }}</td>
                                         <td class="align-middle text-center">{{ $product->quantity }}</td>
                                         <td class="align-middle text-center">
                                             @if ($product->primaryImage)

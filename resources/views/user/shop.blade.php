@@ -263,7 +263,7 @@
             </div>
             <div class="products-item__info">
                 <span class="products-item__name">${getLocalizedName(product)}</span>
-                <span class="products-item__cost">$${product.price}</span>
+                <span class="products-item__cost">₪${product.price}</span>
             </div>
                </a>
         </div>
@@ -411,7 +411,7 @@
                     max: max,
                     from: 0,
                     hide_min_max: 'true',
-                    prefix: "$",
+                    prefix: "₪",
                     to: 999
                 });
 
