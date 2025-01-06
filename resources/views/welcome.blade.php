@@ -147,17 +147,17 @@
 
         .carousel-images img {
             border: 8px solid white;
-    position: absolute;
-    background-color: #971d25;
-    width: 90%;
-    height: 100%;
-    object-fit: contain;
-    border-radius: 100px;
-    opacity: 0;
-    transition: opacity 1s ease-in-out;
-    box-shadow: 0px 3px 17px rgba(0, 0, 0, 1.2);
-/* Adds a subtle shadow effect */
-}
+            position: absolute;
+            background-color: #971d25;
+            width: 90%;
+            height: 100%;
+            object-fit: contain;
+            border-radius: 100px;
+            opacity: 0;
+            transition: opacity 1s ease-in-out;
+            box-shadow: 0px 3px 17px rgba(0, 0, 0, 1.2);
+            /* Adds a subtle shadow effect */
+        }
 
         .carousel-images img.active {
             opacity: 1;
@@ -331,21 +331,21 @@
             {{-- <p class="animate__animated animate__fadeIn">@lang('home.nourish_description')</p> --}}
         </div>
         <div class="top-categories__items d-flex justify-content-around">
-            <a href="{{route('shop.index')}}" class="top-categories__item animate__animated animate__fadeInRight">
+            <a href="{{ route('shop.index') }}" class="top-categories__item animate__animated animate__fadeInRight">
                 <img data-src="{{ 'user/img/image-1.png' }}" src="data:image/gif;base64,R0lGODlhAQABAAAAACw="
                     class="js-img img-fluid" alt="@lang('home.tools')">
                 <div class="top-categories__item-hover">
                     <h5>@lang('home.tools')</h5>
                 </div>
             </a>
-            <a href="{{route('shop.index')}}" class="top-categories__item animate__animated animate__fadeInDown">
+            <a href="{{ route('shop.index') }}" class="top-categories__item animate__animated animate__fadeInDown">
                 <img data-src="{{ asset('user/img/image-2.png') }}" src="data:image/gif;base64,R0lGODlhAQABAAAAACw="
                     class="js-img img-fluid" alt="@lang('home.women')">
                 <div class="top-categories__item-hover">
                     <h5>@lang('home.women')</h5>
                 </div>
             </a>
-            <a href="{{route('shop.index')}}" class="top-categories__item animate__animated animate__fadeInLeft">
+            <a href="{{ route('shop.index') }}" class="top-categories__item animate__animated animate__fadeInLeft">
                 <img data-src="{{ 'user/img/image-3.png' }}" src="data:image/gif;base64,R0lGODlhAQABAAAAACw="
                     class="js-img img-fluid" alt="@lang('home.children')">
                 <div class="top-categories__item-hover">
