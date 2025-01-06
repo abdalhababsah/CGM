@@ -2682,17 +2682,13 @@ h6,
 
 .icon-load {
 	background: url(../img/gif_logo.gif) no-repeat center center;
-	background-size: contain;
-	/* Ensures the GIF fits within the container */
-	width: 100px;
-	height: 100px;
+	background-size: contain; /* Ensures the GIF fits within the container */
+	width: 150px;
+	height: 150px;
 	position: fixed;
 	left: 50%;
 	top: 50%;
-	margin-left: -50px;
-	/* Half of the width */
-	margin-top: -50px;
-	/* Half of the height */
+	transform: translate(-50%, -50%); /* Centers the element perfectly */
 	display: none;
 }
 
