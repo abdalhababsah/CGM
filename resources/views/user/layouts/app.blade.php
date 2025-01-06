@@ -14,7 +14,7 @@
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
     <!-- Load Default CSS -->
-    <link rel="stylesheet" href="{{ asset('user/css/style.css') }}">
+    <link rel="stylesheet" href="{{ asset('user/css/styles.css') }}">
     <link rel="stylesheet" href="{{ asset('user/sweetalert/sweetalert2.min.css') }}">
     <!-- Conditionally Load RTL CSS -->
     @if (in_array(app()->getLocale(), ['ar', 'he']))

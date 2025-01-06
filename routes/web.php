@@ -5,6 +5,7 @@ use App\Http\Controllers\Admin\AdminProductsController;
 use App\Http\Controllers\Admin\AreaController;
 use App\Http\Controllers\Admin\BrandController;
 use App\Http\Controllers\Admin\CategoryController;
+use App\Http\Controllers\Admin\CommingSoonController;
 use App\Http\Controllers\Admin\DeliveryController;
 use App\Http\Controllers\Admin\DiscountCodeController;
 use App\Http\Controllers\CartController;
@@ -48,6 +49,8 @@ Route::middleware(['auth', 'admin'])->prefix('admin')->name('admin.')->group(fun
     // Discounts
     Route::resource('discount', DiscountCodeController::class);
     // Products
+    Route::resource('comming-soon', CommingSoonController::class);
+
     Route::get('products', [AdminProductsController::class, 'index'])->name('products.index');
     Route::get('products/create', [AdminProductsController::class, 'create'])->name('products.create');
     Route::post('products', [AdminProductsController::class, 'store'])->name('products.store');
