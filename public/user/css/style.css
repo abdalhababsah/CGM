@@ -1869,7 +1869,7 @@ header {
 
 .header-top {
 	background-color: #222222;
-	padding: 13px 0;
+	padding: 7px 0;
 	position: absolute;
 	top: 0;
 	left: 0;
@@ -1879,13 +1879,32 @@ header {
 
 .header-top span {
 	font-weight: bold;
-	font-size: 14px;
+	font-size: 19px;
 	color: #ffffff;
 	opacity: 0.8;
 	text-transform: uppercase;
 	margin-left: 60px;
 }
+@keyframes scroll {
+	0% {
+		transform: translateX(100%);
+	}
+	100% {
+		transform: translateX(-100%);
+	}
+}
 
+.scrolling-text {
+	display: inline-block;
+	white-space: nowrap;
+	animation: scroll 20s linear infinite;
+	padding: 5px 0;
+
+}
+/* Optional: Pause animation on hover */
+.scrolling-text:hover {
+	animation-play-state: paused;
+}
 .header-top-close {
 	position: absolute;
 	right: 14px;
@@ -2297,7 +2316,7 @@ header {
 	}
 
 	.header-top span {
-		font-size: 12px;
+		font-size: 15px;
 		margin-left: 0;
 	}
 
@@ -2318,7 +2337,7 @@ header {
 	}
 
 	.header-top span {
-		font-size: 9px;
+		font-size: 10px;
 		display: block;
 	}
 

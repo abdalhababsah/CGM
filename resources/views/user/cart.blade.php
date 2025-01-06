@@ -269,10 +269,10 @@
                             updateTotalPrice();
                             checkStockConflicts(updatedData);
 
-                            Toast.fire({
-                                icon: 'success',
-                                title: '{{ __('cart.quantity_updated') }}'
-                            });
+                            // Toast.fire({
+                            //     icon: 'success',
+                            //     title: '{{ __('cart.quantity_updated') }}'
+                            // });
                             // Check for stock conflicts
 
                         } else {

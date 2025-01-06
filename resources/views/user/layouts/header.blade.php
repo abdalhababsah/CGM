@@ -1,8 +1,11 @@
 <header class="header">
     <div class="header-content">
-        <div class="header-top" style="margin-bottom: 10px">
-            <span>@lang('home.header_offer')</span>
+        <div class="header-top " style="margin-bottom: 10px; overflow: hidden;">
+
+                <span class="scrolling-text ">@lang('home.header_offer')</span>
+
         </div>
+
         <div class="header-logo">
             <img src="{{ asset('user/img/logo-white-01.svg') }}" alt="@lang('home.header_logo_alt')">
         </div>
@@ -51,3 +54,7 @@
         </div>
     </div>
 </header>
+
+<style>
+
+    </style>
