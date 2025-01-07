@@ -1879,16 +1879,18 @@ header {
 
 .header-top span {
 	font-weight: bold;
-	font-size: 19px;
+	font-size: 23px;
 	color: #ffffff;
 	opacity: 0.8;
 	text-transform: uppercase;
 	margin-left: 60px;
 }
+
 @keyframes scroll {
 	0% {
 		transform: translateX(100%);
 	}
+
 	100% {
 		transform: translateX(-100%);
 	}
@@ -1901,10 +1903,12 @@ header {
 	padding: 5px 0;
 
 }
+
 /* Optional: Pause animation on hover */
 .scrolling-text:hover {
 	animation-play-state: paused;
 }
+
 .header-top-close {
 	position: absolute;
 	right: 14px;
@@ -2316,7 +2320,7 @@ header {
 	}
 
 	.header-top span {
-		font-size: 15px;
+		font-size: 21px;
 		margin-left: 0;
 	}
 
@@ -2337,7 +2341,7 @@ header {
 	}
 
 	.header-top span {
-		font-size: 10px;
+		font-size: 19px;
 		display: block;
 	}
 
@@ -2682,13 +2686,15 @@ h6,
 
 .icon-load {
 	background: url(../img/gif_logo.gif) no-repeat center center;
-	background-size: contain; /* Ensures the GIF fits within the container */
+	background-size: contain;
+	/* Ensures the GIF fits within the container */
 	width: 150px;
 	height: 150px;
 	position: fixed;
 	left: 50%;
 	top: 50%;
-	transform: translate(-50%, -50%); /* Centers the element perfectly */
+	transform: translate(-50%, -50%);
+	/* Centers the element perfectly */
 	display: none;
 }
 

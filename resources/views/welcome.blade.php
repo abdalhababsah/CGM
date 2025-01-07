@@ -244,53 +244,24 @@
                 <h2>@lang('home.trending_products')</h2>
             </div>
             <div class="products-slider js-products-slider">
-                <div class="products-item">
-                    <div class="products-item__type">
-                        <span class="products-item__new">Soon</span>
+
+                @foreach ($commingSoons as $commingSoon)
+                    <div class="products-item">
+                        <div class="products-item__type">
+                            <span class="products-item__new">Soon</span>
+                        </div>
+                        <div class="products-item__img">
+                            @if ($commingSoon->image)
+                            <img style="object-fit: contain;" src="{{ asset('storage/' . $commingSoon->image) }}"
+                                alt="{{ $commingSoon->name }}">
+                                @endif
+                        </div>
+                        <div class="products-item__info">
+                            <span class="products-item__name">{{ $commingSoon->name }}</span>
+                        </div>
                     </div>
-                    <div class="products-item__img">
-                        <img style="object-fit: contain;" src="{{ asset('user/img/comming-soon-1.png') }}"
-                            alt="Bomba De Vitaminas">
-                    </div>
-                    <div class="products-item__info">
-                        <span class="products-item__name">Bomba De Vitaminas</span>
-                    </div>
-                </div>
-                <div class="products-item">
-                    <div class="products-item__type">
-                        <span class="products-item__new">Soon</span>
-                    </div>
-                    <div class="products-item__img">
-                        <img style="object-fit: contain;" src="{{ asset('user/img/comming-soon-21.png') }}"
-                            alt="Raizes Do Morro">
-                    </div>
-                    <div class="products-item__info">
-                        <span class="products-item__name">Raizes Do Morro</span>
-                    </div>
-                </div>
-                <div class="products-item">
-                    <div class="products-item__type">
-                        <span class="products-item__new">Soon</span>
-                    </div>
-                    <div class="products-item__img">
-                        <img style="object-fit: contain;" src="{{ asset('user/img/comming-soon-31.png') }}" alt="Cacau">
-                    </div>
-                    <div class="products-item__info">
-                        <span class="products-item__name">Cacau</span>
-                    </div>
-                </div>
-                <div class="products-item">
-                    <div class="products-item__type">
-                        <span class="products-item__new">Soon</span>
-                    </div>
-                    <div class="products-item__img">
-                        <img style="object-fit: contain;" src="{{ asset('user/img/comming-soon-41.png') }}"
-                            alt="Vitamin C And Collagen">
-                    </div>
-                    <div class="products-item__info">
-                        <span class="products-item__name">Vitamin C And Collagen</span>
-                    </div>
-                </div>
+                @endforeach
+
             </div>
         </div>
     </section>
