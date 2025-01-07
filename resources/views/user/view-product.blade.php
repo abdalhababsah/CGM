@@ -152,8 +152,10 @@
                     <div class="contacts-info__social">
                         <span>{{ __('view_product.share') }}:</span>
                         <ul style="gap: 6px;">
-                            <li><a href="https://www.facebook.com/curlyhairproudectpalestine/"><i class="icon-facebook"></i></a></li>
-                            <li><a href="https://www.instagram.com/cgm_products_palestine/"><i class="icon-insta"></i></a></li>
+                            <li><a href="https://www.facebook.com/curlyhairproudectpalestine/"><i
+                                        class="icon-facebook"></i></a></li>
+                            <li><a href="https://www.instagram.com/cgm_products_palestine/"><i class="icon-insta"></i></a>
+                            </li>
                         </ul>
                     </div>
 
@@ -244,6 +246,7 @@
                         if (response.status === 'success') {
                             updateCartCount(response.cart_count);
                             showToast(response.message, 'success');
+                            updateGlopalCartCount()
                         } else {
                             showToast(response.message, 'error');
                         }
