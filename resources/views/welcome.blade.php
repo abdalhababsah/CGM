@@ -372,7 +372,7 @@
             </div>
         </div>
         <div class="info-blocks__item info-blocks__item-reverse js-img" data-src="">
-            <div class="wrapper">
+            <div class="wrapper" style="direction: ltr;">
                 <div class="info-blocks__item-img">
                     <img data-src="{{ asset('user/img/image-5.png') }}" src="data:image/gif;base64,R0lGODlhAQABAAAAACw="
                         class="js-img">
@@ -381,7 +381,6 @@
                     <span class="saint-text">@lang('home.about_us')</span>
                     <h2>@lang('home.who_we_are')</h2>
                     <span class="info-blocks__item-descr">@lang('home.who_we_are_description')</span>
-
                 </div>
             </div>
         </div>
