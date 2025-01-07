@@ -5,12 +5,15 @@ use App\Http\Controllers\Admin\AdminProductsController;
 use App\Http\Controllers\Admin\AreaController;
 use App\Http\Controllers\Admin\BrandController;
 use App\Http\Controllers\Admin\CategoryController;
+use App\Http\Controllers\Admin\CmsController;
 use App\Http\Controllers\Admin\CommingSoonController;
 use App\Http\Controllers\Admin\DeliveryController;
 use App\Http\Controllers\Admin\DiscountCodeController;
 use App\Http\Controllers\CartController;
 use App\Http\Controllers\CheckoutController;
 use App\Http\Controllers\ContactUsController;
+use App\Http\Controllers\HeaderSliderController;
+use App\Http\Controllers\HomeController;
 use App\Http\Controllers\LocalizationController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\ProfileController;
@@ -26,9 +29,7 @@ use App\Http\Controllers\Admin\AdminDashboardController;
 Route::get('/lang/{locale}', [LocalizationController::class, 'switchLang'])->name('lang.switch');
 
 // Public Routes
-Route::get('/', function () {
-    return view('welcome');
-})->name('home');
+Route::get('/', [HomeController::class, 'index'])->name('home');
 
 // Admin Routes Group
 Route::middleware(['auth', 'admin'])->prefix('admin')->name('admin.')->group(function () {
@@ -48,8 +49,10 @@ Route::middleware(['auth', 'admin'])->prefix('admin')->name('admin.')->group(fun
     Route::get('admin/orders/{order}/invoice', [AdminOrdersController::class, 'downloadInvoice'])->name('orders.invoice.download');
     // Discounts
     Route::resource('discount', DiscountCodeController::class);
-    // Products
-    Route::resource('comming-soon', CommingSoonController::class);
+    // cms-management home section
+    Route::resource('cms-management', CmsController::class);
+    //header top slider update
+    Route::put('cms-management/header-slider/{slider}', [CmsController::class, 'updateHeader'])->name('header-slider.update');
 
     Route::get('products', [AdminProductsController::class, 'index'])->name('products.index');
     Route::get('products/create', [AdminProductsController::class, 'create'])->name('products.create');
@@ -57,7 +60,11 @@ Route::middleware(['auth', 'admin'])->prefix('admin')->name('admin.')->group(fun
     Route::get('products/{product}/edit', [AdminProductsController::class, 'edit'])->name('products.edit');
     Route::put('products/{product}', [AdminProductsController::class, 'update'])->name('products.update');
     Route::delete('products/{product}', [AdminProductsController::class, 'destroy'])->name('products.destroy');
+    // import products
+    Route::post('/import', [AdminProductsController::class, 'import'])->name('products.import');
+
     // Partial Updates for Products
+    
     Route::put('products/{product}/general-info', [AdminProductsController::class, 'updateGeneralInfo'])->name('products.updateGeneralInfo');
     Route::put('products/{product}/options', [AdminProductsController::class, 'updateOptions'])->name('products.updateOptions');
     // Image Management Routes

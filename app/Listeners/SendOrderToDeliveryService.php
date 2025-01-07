@@ -5,14 +5,10 @@ namespace App\Listeners;
 use App\Events\OrderPlaced;
 use App\Models\Area;
 use App\Services\DeliveryService;
-use Illuminate\Contracts\Queue\ShouldQueue;
-use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Support\Facades\Log;
 
-class SendOrderToDeliveryService implements ShouldQueue
+class SendOrderToDeliveryService
 {
-    use InteractsWithQueue;
-
     protected $deliveryService;
 
     /**
@@ -31,7 +27,8 @@ class SendOrderToDeliveryService implements ShouldQueue
      *
      * @param  \App\Events\OrderPlaced  $event
      * @return void
-     */    public function handle(OrderPlaced $event)
+     */    
+    public function handle(OrderPlaced $event)
     {
         $order = $event->order;
 

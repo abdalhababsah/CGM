@@ -179,6 +179,7 @@
                 position: relative;
                 z-index: 1;
             }
+
             #pending-orders-card::before {
                 content: '';
                 position: absolute;
@@ -191,6 +192,7 @@
                 z-index: 0;
                 opacity: 1;
             }
+
             #pending-orders-card p {
                 font-size: 1.2rem;
                 font-weight: bold;
@@ -206,44 +208,34 @@
         <!-- Metrics Cards -->
         <div style="margin-top: 30px;" class="container">
             <div class="row">
-                <!-- Total Users -->
-                <div class="col-md-4 col-xl-3">
-                    <div id="total-users-card" class="card order-card">
-                        <div class="card-block">
-                            <h6>@lang('dashboard.total_users')</h6>
-                            <h2>
-                                <span class="f-right">486</span>
-                            </h2>
-                        </div>
-                    </div>
-                </div>
-
                 <!-- Total Orders -->
-                <div class="col-md-4 col-xl-3">
+                <div class="col-md-4 col-xl-4">
                     <div id="total-orders-card" class="card order-card">
                         <div class="card-block">
                             <h6>@lang('dashboard.total_orders')</h6>
                             <h2>
-                                <span class="f-right">486</span>
+                                <span class="f-right">{{ $ordersCount }}</span>
+                            </h2>
+                        </div>
+                    </div>
+                </div>
+                <!-- Total Users -->
+                <div class="col-md-4 col-xl-4">
+                    <div id="total-users-card" class="card order-card">
+                        <div class="card-block">
+                            <h6>@lang('dashboard.new_products')</h6>
+                            <h2>
+                                <span class="f-right">{{$productsLastThreeMonths}}</span>
                             </h2>
                         </div>
                     </div>
                 </div>
 
-                <!-- Total Revenue -->
-                <div class="col-md-4 col-xl-3">
-                    <div id="total-revenue-card" class="card order-card">
-                        <div class="card-block">
-                            <h6>@lang('dashboard.total_revenue')</h6>
-                            <h2>
-                                <span class="f-right">₪12,345</span>
-                            </h2>
-                        </div>
-                    </div>
-                </div>
+
+
 
                 <!-- Pending Orders -->
-                <div class="col-md-4 col-xl-3">
+                <div class="col-md-4 col-xl-4">
                     <a href="{{ route('shop.index') }}">
                         <div id="pending-orders-card" class="card order-card">
                             <div class="card-block">

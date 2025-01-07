@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Imports\ProductsImport;
 use App\Models\Product;
 use App\Models\Category;
 use App\Models\Brand;
@@ -11,6 +12,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 use Illuminate\Validation\ValidationException;
+use Vtiful\Kernel\Excel;
 
 class AdminProductsController extends Controller
 {
@@ -298,4 +300,15 @@ class AdminProductsController extends Controller
         $path = $image->storeAs('products', $filename, 'public');
         $product->images()->create(['image_url' => $path, 'is_primary' => true]);
     }
+    public function import(Request $request)
+{
+    $request->validate([
+        'file' => 'required|file|mimes:xlsx,csv',
+    ]);
+
+    // Import the Excel file
+    Excel::import(new ProductsImport, $request->file('file'));
+
+    return redirect()->route('admin.products.index')->with('success', 'Products imported successfully.');
+}
 }

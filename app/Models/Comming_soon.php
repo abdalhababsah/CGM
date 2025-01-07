@@ -12,4 +12,10 @@ class Comming_soon extends Model
         "name_he",
         "image",
     ];
+
+    public function getNameAttribute()
+    {
+        $locale = app()->getLocale();
+        return $this->{"name_$locale"};
+    }
 }

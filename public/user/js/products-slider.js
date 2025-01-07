@@ -2,8 +2,8 @@ $(document).ready(function () {
     $('.js-products-slider').slick({
         dots: false, // Disable dots
         arrows: true, // Enable navigation arrows
-        prevArrow: '<button id="prev" type="button" class="slick-arrow slick-prev"><i class="icon icon-arrow"></i></button>',
-        nextArrow: '<button id="next" type="button" class="slick-arrow slick-next"><i class="icon icon-arrow"></i></button>',
+        prevArrow: '<button style="z-index: 200;" id="prev" type="button" class="slick-arrow slick-prev"><i class="icon icon-arrow"></i></button>',
+        nextArrow: '<button style="z-index: 200;" id="next" type="button" class="slick-arrow slick-next"><i class="icon icon-arrow"></i></button>',
         slidesToShow: 4, // Number of visible items
         slidesToScroll: 1, // Number of items to scroll
         infinite: true, // Infinite looping

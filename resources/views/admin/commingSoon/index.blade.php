@@ -4,12 +4,63 @@
     <div class="container-fluid py-4">
         @include('components._messages')
 
+        <!-- Header Slider Section -->
+        <div class="row">
+            <div class="col-12">
+                <div class="card mb-4">
+                    <div class="card-header pb-0 d-flex justify-content-between align-items-center">
+                        <h6>Header Slider</h6>
+                    </div>
+                    <div class="card-body px-0 pt-0 pb-2">
+                        <div class="table-responsive p-0">
+                            <table class="table align-items-center table-striped mb-0">
+                                <thead>
+                                    <tr>
+                                        <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Title
+                                        </th>
+                                        <th
+                                            class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
+                                            Actions</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach ($sliders as $slider)
+                                        <tr>
+                                            <td class="align-middle">
+                                                <p class="text-xs text-secondary mb-0">Ar: {{ $slider->title_ar }}</p>
+                                                <p class="text-xs text-secondary mb-0">En: {{ $slider->title_en }}</p>
+                                                <p class="text-xs text-secondary mb-0">He: {{ $slider->title_he }}</p>
+                                            </td>
+
+                                            <!-- Actions -->
+                                            <td class="align-middle text-center">
+                                                <a href="#"
+                                                    class="text-secondary font-weight-bold text-xs edit-slider-btn"
+                                                    data-bs-toggle="modal" data-bs-target="#editHeaderSliderModal"
+                                                    data-id="{{ $slider->id }}" data-title_ar="{{ $slider->title_ar }}"
+                                                    data-title_en="{{ $slider->title_en }}"
+                                                    data-title_he="{{ $slider->title_he }}">
+                                                    Edit
+                                                </a>
+                                            </td>
+                                        </tr>
+                                    @endforeach
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Coming Soon Section -->
         <div class="row">
             <div class="col-12">
                 <div class="card mb-4">
                     <div class="card-header pb-0 d-flex justify-content-between align-items-center">
                         <h6>Coming Soon Section</h6>
-                        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#createComingSoonModal">
+                        <button type="button" class="btn btn-primary" data-bs-toggle="modal"
+                            data-bs-target="#createComingSoonModal">
                             Add Section
                         </button>
                     </div>
@@ -18,9 +69,13 @@
                             <table class="table align-items-center table-striped mb-0">
                                 <thead>
                                     <tr>
-                                        <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Image</th>
-                                        <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Name</th>
-                                        <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Actions</th>
+                                        <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
+                                            Image</th>
+                                        <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Name
+                                        </th>
+                                        <th
+                                            class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
+                                            Actions</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -29,7 +84,8 @@
                                             <!-- Image -->
                                             <td class="align-middle text-center">
                                                 @if ($commingSoon->image)
-                                                    <img src="{{ asset('storage/'.$commingSoon->image) }}" class="rounded-circle" height="50" alt="Image">
+                                                    <img src="{{ asset('storage/' . $commingSoon->image) }}"
+                                                        class="rounded-circle" height="50" alt="Image">
                                                 @else
                                                     <span class="text-muted text-xs">No Image</span>
                                                 @endif
@@ -44,7 +100,8 @@
 
                                             <!-- Actions -->
                                             <td class="align-middle text-center">
-                                                <a href="#" class="text-secondary font-weight-bold text-xs me-2 edit-coming-soon-btn"
+                                                <a href="#"
+                                                    class="text-secondary font-weight-bold text-xs me-2 edit-coming-soon-btn"
                                                     data-bs-toggle="modal" data-bs-target="#editComingSoonModal"
                                                     data-id="{{ $commingSoon->id }}"
                                                     data-name_ar="{{ $commingSoon->name_ar }}"
@@ -53,11 +110,14 @@
                                                     data-image="{{ $commingSoon->image }}">
                                                     Edit
                                                 </a>
-                                                <form action="{{ route('admin.comming-soon.destroy', $commingSoon->id) }}"
-                                                    method="POST" style="display: inline-block;" onsubmit="return confirm('Are you sure?');">
+                                                <form
+                                                    action="{{ route('admin.cms-management.destroy', $commingSoon->id) }}"
+                                                    method="POST" style="display: inline-block;"
+                                                    onsubmit="return confirm('Are you sure?');">
                                                     @csrf
                                                     @method('DELETE')
-                                                    <button type="submit" class="text-danger font-weight-bold text-xs border-0 bg-transparent">
+                                                    <button type="submit"
+                                                        class="text-danger font-weight-bold text-xs border-0 bg-transparent">
                                                         Delete
                                                     </button>
                                                 </form>
@@ -65,7 +125,8 @@
                                         </tr>
                                     @empty
                                         <tr>
-                                            <td colspan="3" class="text-center text-secondary text-sm">No sections found.</td>
+                                            <td colspan="3" class="text-center text-secondary text-sm">No sections found.
+                                            </td>
                                         </tr>
                                     @endforelse
                                 </tbody>
@@ -82,11 +143,42 @@
         </div>
     </div>
 
-    <!-- Create Modal -->
-    <div class="modal fade" id="createComingSoonModal" tabindex="-1" aria-labelledby="createComingSoonModalLabel" aria-hidden="true">
+    <div class="modal fade" id="editHeaderSliderModal" tabindex="-1" aria-labelledby="editHeaderSliderModalLabel" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
-                <form action="{{ route('admin.comming-soon.store') }}" method="POST" enctype="multipart/form-data">
+                <form id="editHeaderSliderForm" method="POST">
+                    @csrf
+                    @method('PUT')
+                    <input type="hidden" name="slider_id" id="edit_slider_id">
+                    <!-- Rest of your form fields -->
+                    <div class="modal-body">
+                        <div class="mb-3">
+                            <label for="edit_title_ar" class="form-label">Title (Arabic)</label>
+                            <input type="text" name="title_ar" class="form-control" id="edit_title_ar" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="edit_title_en" class="form-label">Title (English)</label>
+                            <input type="text" name="title_en" class="form-control" id="edit_title_en" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="edit_title_he" class="form-label">Title (Hebrew)</label>
+                            <input type="text" name="title_he" class="form-control" id="edit_title_he" required>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                        <button type="submit" class="btn btn-primary">Update</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    <!-- Create Modal -->
+    <div class="modal fade" id="createComingSoonModal" tabindex="-1" aria-labelledby="createComingSoonModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <form action="{{ route('admin.cms-management.store') }}" method="POST" enctype="multipart/form-data">
                     @csrf
                     <div class="modal-header">
                         <h5 class="modal-title" id="createComingSoonModalLabel">Add Section</h5>
@@ -96,7 +188,9 @@
                         <!-- Arabic Name -->
                         <div class="mb-3">
                             <label for="name_ar" class="form-label">Name (Arabic)</label>
-                            <input type="text" name="name_ar" class="form-control @error('name_ar') is-invalid @enderror" id="name_ar" value="{{ old('name_ar') }}" required>
+                            <input type="text" name="name_ar"
+                                class="form-control @error('name_ar') is-invalid @enderror" id="name_ar"
+                                value="{{ old('name_ar') }}" required>
                             @error('name_ar')
                                 <span class="invalid-feedback">{{ $message }}</span>
                             @enderror
@@ -105,7 +199,9 @@
                         <!-- English Name -->
                         <div class="mb-3">
                             <label for="name_en" class="form-label">Name (English)</label>
-                            <input type="text" name="name_en" class="form-control @error('name_en') is-invalid @enderror" id="name_en" value="{{ old('name_en') }}" required>
+                            <input type="text" name="name_en"
+                                class="form-control @error('name_en') is-invalid @enderror" id="name_en"
+                                value="{{ old('name_en') }}" required>
                             @error('name_en')
                                 <span class="invalid-feedback">{{ $message }}</span>
                             @enderror
@@ -114,7 +210,9 @@
                         <!-- Hebrew Name -->
                         <div class="mb-3">
                             <label for="name_he" class="form-label">Name (Hebrew)</label>
-                            <input type="text" name="name_he" class="form-control @error('name_he') is-invalid @enderror" id="name_he" value="{{ old('name_he') }}" required>
+                            <input type="text" name="name_he"
+                                class="form-control @error('name_he') is-invalid @enderror" id="name_he"
+                                value="{{ old('name_he') }}" required>
                             @error('name_he')
                                 <span class="invalid-feedback">{{ $message }}</span>
                             @enderror
@@ -123,7 +221,9 @@
                         <!-- Image -->
                         <div class="mb-3">
                             <label for="image" class="form-label">Image</label>
-                            <input type="file" name="image" class="form-control @error('image') is-invalid @enderror" id="image" accept="image/*" required>
+                            <input type="file" name="image"
+                                class="form-control @error('image') is-invalid @enderror" id="image" accept="image/*"
+                                required>
                             @error('image')
                                 <span class="invalid-feedback">{{ $message }}</span>
                             @enderror
@@ -139,7 +239,8 @@
     </div>
 
     <!-- Edit Modal -->
-    <div class="modal fade" id="editComingSoonModal" tabindex="-1" aria-labelledby="editComingSoonModalLabel" aria-hidden="true">
+    <div class="modal fade" id="editComingSoonModal" tabindex="-1" aria-labelledby="editComingSoonModalLabel"
+        aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
                 <form id="editComingSoonForm" method="POST" enctype="multipart/form-data">
@@ -190,13 +291,34 @@
 @push('scripts')
     <script>
         $(document).ready(function() {
+            $('.edit-slider-btn').on('click', function() {
+                const data = $(this).data();
+                const sliderId = data.id; // Get the slider ID
+
+                $('#edit_title_ar').val(data.title_ar);
+                $('#edit_title_en').val(data.title_en);
+                $('#edit_title_he').val(data.title_he);
+
+                // Set the form action with the correct slider ID
+                $('#editHeaderSliderForm').attr('action',
+                    "{{ url('admin/cms-management/header-slider') }}/" + sliderId);
+            });
+
+            // Reset the form when the modal is closed
+            $('#editHeaderSliderModal').on('hidden.bs.modal', function() {
+                $('#editHeaderSliderForm')[0].reset();
+            });
+
+
+
             $('.edit-coming-soon-btn').on('click', function() {
                 const data = $(this).data();
                 $('#edit_section_id').val(data.id);
                 $('#edit_name_ar').val(data.name_ar);
                 $('#edit_name_en').val(data.name_en);
                 $('#edit_name_he').val(data.name_he);
-                $('#editComingSoonForm').attr('action', "{{ url('admin/comming-soon') }}/" + data.id);
+                $('#editComingSoonForm').attr('action', "{{ url('admin/cms-management') }}/" +
+                    data.id);
             });
 
             $('#editComingSoonModal').on('hidden.bs.modal', function() {

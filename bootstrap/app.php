@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Middleware\AttachHeaderSlider;
 use App\Http\Middleware\IsUser;
 use Illuminate\Foundation\Application;
 use Illuminate\Foundation\Configuration\Exceptions;
@@ -20,7 +21,9 @@ return Application::configure(basePath: dirname(__DIR__))
 
         // Append web middleware
         $middleware->web(append: [
-            \App\Http\Middleware\Localization::class, // Ensure Localization middleware is used for web routes
+            \App\Http\Middleware\Localization::class, 
+            AttachHeaderSlider::class,
+            // Ensure Localization middleware is used for web routes
         ]);
     })
     ->withExceptions(function (Exceptions $exceptions) {

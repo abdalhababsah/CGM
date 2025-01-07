@@ -121,31 +121,18 @@
                             <span class="nav-link-text ms-1">Discount Codes</span>
                         </a>
                     </li>
-                    <!-- CMS Dropdown -->
                     <li class="nav-item">
-                        <a data-bs-toggle="collapse" href="#cmsSections" class="nav-link" aria-controls="cmsSections"
-                            role="button" aria-expanded="false">
+                        <a class="nav-link {{ Route::is('admin.cms-management.index') ? 'active' : '' }}"
+                            href="{{ route('admin.cms-management.index') }}">
                             <div
                                 class="icon icon-shape icon-sm shadow border-radius-md bg-white text-center me-2 d-flex align-items-center justify-content-center">
-                                <i class="fas fa-file-alt text-icon"></i>
+                                <i
+                                    class="fas fa-file-alt text-icon {{ Route::is('admin.discount.index') ? 'text-white' : 'text-icon' }}"></i>
                             </div>
                             <span class="nav-link-text ms-1">CMS</span>
                         </a>
-                        <div class="collapse" id="cmsSections">
-                            <ul class="nav ms-4">
-                                <li class="nav-item">
-                                    <a class="nav-link" href="{{ route('admin.comming-soon.index') }}">
-                                        <span class="nav-link-text">Coming Soon</span>
-                                    </a>
-                                </li>
-                                <li class="nav-item">
-                                    <a class="nav-link" href="#">
-                                        <span class="nav-link-text">Header Slider</span>
-                                    </a>
-                                </li>
-                            </ul>
-                        </div>
                     </li>
+
                     <!-- Logout -->
                     <li class="nav-item">
                         <form method="POST" action="{{ route('logout') }}" class="d-inline">
