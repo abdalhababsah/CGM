@@ -19,5 +19,12 @@ return [
     'available' => 'متاح',
     'soldOut' => 'نفدت الكمية',
     'filter_price' => 'تصفية السعر',
-   
+    'hair_pores' => 'مسام الشعر',
+    'hair_types' => 'أنواع الشعر',
+    'hair_thicknesses' => 'سماكة الشعر',
+    'select_up_to_two' => 'اختر حتى خيارين',
+    'default_sort' => 'الترتيب الافتراضي',
+    // Optional: Error Messages
+    'max_two_selection' => 'يمكنك اختيار خيارين كحد أقصى لهذا التصفية.',
+    'you_can_select_up_to_two_options_for_each_filter' => 'يمكنك اختيار خيارين كحد أقصى لكل تصفية.',
 ];

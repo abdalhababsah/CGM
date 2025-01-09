@@ -1,5 +1,5 @@
 <aside style="background-color:white;"
-    class="sidenav navbar navbar-vertical navbar-expand-xs border-0 border-radius-xl my-3 fixed-start ms-3 "
+    class="sidenav navbar navbar-vertical navbar-expand-xs border-0 border-radius-xl my-3 fixed-start ms-3"
     id="sidenav-main">
     <div class="sidenav-header">
         <!-- Close Icon for Sidebar (Visible on Small Screens) -->
@@ -16,11 +16,18 @@
         </a>
     </div>
     <hr class="horizontal dark mt-0">
+
     <div class="collapse navbar-collapse w-auto" id="sidenav-collapse-main">
         @if (Auth::check())
-            <ul class="navbar-nav">
+            <ul class="navbar-nav custom-navbar-nav"> <!-- Added 'custom-navbar-nav' class -->
                 @if (Auth::user()->role == 1)
-                    <!-- 1. Dashboard -->
+                    <!-- Main Section -->
+                    <li class="nav-item">
+                        <span
+                            class="nav-section-title ms-3 mt-2 mb-1 text-uppercase text-xs font-weight-bolder opacity-6">
+                            Main
+                        </span>
+                    </li>
                     <li class="nav-item">
                         <a class="nav-link {{ Route::is('admin.dashboard') ? 'active' : '' }}"
                             href="{{ route('admin.dashboard') }}">
@@ -33,20 +40,95 @@
                         </a>
                     </li>
 
-                    <!-- 2. Products -->
+                    <!-- Products Section with Dropdown -->
+                    @php
+                        $productsActive =
+                            Route::is('admin.products.index') ||
+                            Route::is('admin.brands.index') ||
+                            Route::is('admin.categories.index');
+                    @endphp
                     <li class="nav-item">
-                        <a class="nav-link {{ Route::is('admin.products.index') ? 'active' : '' }}"
-                            href="{{ route('admin.products.index') }}">
+                        <a class="nav-link {{ $productsActive ? '' : '' }}" data-bs-toggle="collapse"
+                            href="#productsMenu" role="button" aria-expanded="{{ $productsActive ? 'true' : 'false' }}"
+                            aria-controls="productsMenu">
                             <div
                                 class="icon icon-shape icon-sm shadow border-radius-md bg-white text-center me-2 d-flex align-items-center justify-content-center">
-                                <i
-                                    class="fas fa-box-open {{ Route::is('admin.products.index') ? 'text-white' : 'text-icon' }}"></i>
+                                <i class="fas fa-box-open text-icon"></i>
                             </div>
                             <span class="nav-link-text ms-1">Products</span>
                         </a>
+                        <div class="collapse {{ $productsActive ? 'show' : '' }}" id="productsMenu">
+                            <ul class="nav flex-column ms-3">
+                                <li class="nav-item">
+                                    <a class="nav-link {{ Route::is('admin.products.index') ? 'active' : '' }}"
+                                        href="{{ route('admin.products.index') }}">
+                                        <span class="nav-link-text ms-2">All Products</span>
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link {{ Route::is('admin.brands.index') ? 'active' : '' }}"
+                                        href="{{ route('admin.brands.index') }}">
+                                        <span class="nav-link-text ms-2">Brands</span>
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link {{ Route::is('admin.categories.index') ? 'active' : '' }}"
+                                        href="{{ route('admin.categories.index') }}">
+                                        <span class="nav-link-text ms-2">Categories</span>
+                                    </a>
+                                </li>
+                            </ul>
+                        </div>
                     </li>
 
-                    <!-- 3. Orders -->
+                    <!-- Inventory Section with Dropdown -->
+                    @php
+                        $inventoryActive =
+                            Route::is('admin.hair-thickness.index') ||
+                            Route::is('admin.hair-type.index') ||
+                            Route::is('admin.hair-pore.index');
+                    @endphp
+                    <li class="nav-item">
+                        <a class="nav-link {{ $inventoryActive ? '' : '' }}" data-bs-toggle="collapse"
+                            href="#inventoryMenu" role="button"
+                            aria-expanded="{{ $inventoryActive ? 'true' : 'false' }}" aria-controls="inventoryMenu">
+                            <div
+                                class="icon icon-shape icon-sm shadow border-radius-md bg-white text-center me-2 d-flex align-items-center justify-content-center">
+                                <i class="fas fa-cube text-icon"></i>
+                            </div>
+                            <span class="nav-link-text ms-1">Hair</span>
+                        </a>
+                        <div class="collapse {{ $inventoryActive ? 'show' : '' }}" id="inventoryMenu">
+                            <ul class="nav flex-column ms-3">
+                                <li class="nav-item">
+                                    <a class="nav-link {{ Route::is('admin.hair-thickness.index') ? 'active' : '' }}"
+                                        href="{{ route('admin.hair-thickness.index') }}">
+                                        <span class="nav-link-text ms-2">Hair Thickness</span>
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link {{ Route::is('admin.hair-type.index') ? 'active' : '' }}"
+                                        href="{{ route('admin.hair-type.index') }}">
+                                        <span class="nav-link-text ms-2">Hair Types</span>
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link {{ Route::is('admin.hair-pore.index') ? 'active' : '' }}"
+                                        href="{{ route('admin.hair-pore.index') }}">
+                                        <span class="nav-link-text ms-2">Hair Pores</span>
+                                    </a>
+                                </li>
+                            </ul>
+                        </div>
+                    </li>
+
+                    <!-- Orders Section -->
+                    <li class="nav-item">
+                        <span
+                            class="nav-section-title ms-3 mt-2 mb-1 text-uppercase text-xs font-weight-bolder opacity-6">
+                            Orders
+                        </span>
+                    </li>
                     <li class="nav-item">
                         <a class="nav-link {{ Route::is('admin.orders.index') ? 'active' : '' }}"
                             href="{{ route('admin.orders.index') }}">
@@ -59,57 +141,45 @@
                         </a>
                     </li>
 
-                    <!-- 4. Brands -->
+                    <!-- Deliveries Section with Dropdown -->
+                    @php
+                        $deliveriesActive = Route::is('admin.deliveries.index') || Route::is('admin.areas.index');
+                    @endphp
                     <li class="nav-item">
-                        <a class="nav-link {{ Route::is('admin.brands.index') ? 'active' : '' }}"
-                            href="{{ route('admin.brands.index') }}">
+                        <a class="nav-link {{ $deliveriesActive ? '' : '' }}" data-bs-toggle="collapse"
+                            href="#deliveriesMenu" role="button"
+                            aria-expanded="{{ $deliveriesActive ? 'true' : 'false' }}" aria-controls="deliveriesMenu">
                             <div
                                 class="icon icon-shape icon-sm shadow border-radius-md bg-white text-center me-2 d-flex align-items-center justify-content-center">
-                                <i
-                                    class="fas fa-tags {{ Route::is('admin.brands.index') ? 'text-white' : 'text-icon' }}"></i>
+                                <i class="fas fa-map-marker-alt text-icon"></i>
                             </div>
-                            <span class="nav-link-text ms-1">Brands</span>
+                            <span class="nav-link-text ms-1">Deliveries</span>
                         </a>
+                        <div class="collapse {{ $deliveriesActive ? 'show' : '' }}" id="deliveriesMenu">
+                            <ul class="nav flex-column ms-3">
+                                <li class="nav-item">
+                                    <a class="nav-link {{ Route::is('admin.deliveries.index') ? 'active' : '' }}"
+                                        href="{{ route('admin.deliveries.index') }}">
+                                        <span class="nav-link-text ms-2">Cities</span>
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link {{ Route::is('admin.areas.index') ? 'active' : '' }}"
+                                        href="{{ route('admin.areas.index') }}">
+                                        <span class="nav-link-text ms-2">Areas</span>
+                                    </a>
+                                </li>
+                            </ul>
+                        </div>
                     </li>
 
-                    <!-- 5. Categories -->
+                    <!-- Marketing Section -->
                     <li class="nav-item">
-                        <a class="nav-link {{ Route::is('admin.categories.index') ? 'active' : '' }}"
-                            href="{{ route('admin.categories.index') }}">
-                            <div
-                                class="icon icon-shape icon-sm shadow border-radius-md bg-white text-center me-2 d-flex align-items-center justify-content-center">
-                                <i
-                                    class="fas fa-list-alt {{ Route::is('admin.categories.index') ? 'text-white' : 'text-icon' }}"></i>
-                            </div>
-                            <span class="nav-link-text ms-1">Categories</span>
-                        </a>
+                        <span
+                            class="nav-section-title ms-3 mt-2 mb-1 text-uppercase text-xs font-weight-bolder opacity-6">
+                            Marketing
+                        </span>
                     </li>
-
-                    <!-- 6. Delivery Locations -->
-                    <li class="nav-item">
-                        <a class="nav-link {{ Route::is('admin.deliveries.index') ? 'active' : '' }}"
-                            href="{{ route('admin.deliveries.index') }}">
-                            <div
-                                class="icon icon-shape icon-sm shadow border-radius-md bg-white text-center me-2 d-flex align-items-center justify-content-center">
-                                <i
-                                    class="fas fa-map-marker-alt {{ Route::is('admin.deliveries.index') ? 'text-white' : 'text-icon' }}"></i>
-                            </div>
-                            <span class="nav-link-text ms-1">Cities</span>
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link {{ Route::is('admin.areas.index') ? 'active' : '' }}"
-                            href="{{ route('admin.areas.index') }}">
-                            <div
-                                class="icon icon-shape icon-sm shadow border-radius-md bg-white text-center me-2 d-flex align-items-center justify-content-center">
-                                <i
-                                    class="fas fa-map-marker-alt {{ Route::is('admin.areas.index') ? 'text-white' : 'text-icon' }}"></i>
-                            </div>
-                            <span class="nav-link-text ms-1">Areas</span>
-                        </a>
-                    </li>
-
-                    <!-- 7. Discount Codes -->
                     <li class="nav-item">
                         <a class="nav-link {{ Route::is('admin.discount.index') ? 'active' : '' }}"
                             href="{{ route('admin.discount.index') }}">
@@ -121,19 +191,33 @@
                             <span class="nav-link-text ms-1">Discount Codes</span>
                         </a>
                     </li>
+
+                    <!-- CMS Section -->
+                    <li class="nav-item">
+                        <span
+                            class="nav-section-title ms-3 mt-2 mb-1 text-uppercase text-xs font-weight-bolder opacity-6">
+                            CMS
+                        </span>
+                    </li>
                     <li class="nav-item">
                         <a class="nav-link {{ Route::is('admin.cms-management.index') ? 'active' : '' }}"
                             href="{{ route('admin.cms-management.index') }}">
                             <div
                                 class="icon icon-shape icon-sm shadow border-radius-md bg-white text-center me-2 d-flex align-items-center justify-content-center">
                                 <i
-                                    class="fas fa-file-alt text-icon {{ Route::is('admin.discount.index') ? 'text-white' : 'text-icon' }}"></i>
+                                    class="fas fa-file-alt text-icon {{ Route::is('admin.cms-management.index') ? 'text-white' : 'text-icon' }}"></i>
                             </div>
                             <span class="nav-link-text ms-1">CMS</span>
                         </a>
                     </li>
 
-                    <!-- Logout -->
+                    <!-- Logout Section -->
+                    <li class="nav-item">
+                        <hr class="horizontal dark mt-3 mb-2">
+                        <span class="nav-section-title ms-3 text-uppercase text-xs font-weight-bolder opacity-6">
+                            Account
+                        </span>
+                    </li>
                     <li class="nav-item">
                         <form method="POST" action="{{ route('logout') }}" class="d-inline">
                             @csrf
@@ -147,7 +231,7 @@
                             </a>
                         </form>
                     </li>
-                @elseif(Auth::user()->role == 0)
+                    @elseif(Auth::user()->role == 0)
                     <!-- User Dashboard -->
                     <li class="nav-item">
                         <a class="nav-link {{ Route::is('user.dashboard') ? 'active' : '' }}"
@@ -204,3 +288,13 @@
         @endif
     </div>
 </aside>
+
+<style>
+    #sidenav-main .nav-link.active,
+    #sidenav-main .nav-link.active-parent {
+        color: #981e24;
+        /* Desired active color */
+        font-weight: bold;
+        /* Make active links bold */
+    }
+</style>

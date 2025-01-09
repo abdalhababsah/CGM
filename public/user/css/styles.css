@@ -5387,7 +5387,7 @@ blockquote:after,
 .shop-aside .box-field__search i {
 	position: absolute;
 	right: 21px;
-	top: 50%;
+	top: 65%;
 	-webkit-transform: translateY(-50%);
 	-ms-transform: translateY(-50%);
 	transform: translateY(-50%);
@@ -5411,6 +5411,17 @@ blockquote:after,
 	color: #222222;
 	font-family: "Tenor Sans";
 	border-bottom: 2px solid #222222;
+	margin-bottom: 15px;
+}
+.shop-aside__item-price {
+	display: block;
+	font-size: 24px;
+	line-height: 100%;
+	text-transform: capitalize;
+	padding-bottom: 10px;
+	color: #222222;
+	font-family: "Tenor Sans";
+
 	margin-bottom: 15px;
 }
 
@@ -9573,6 +9584,9 @@ input[type="search"]::-webkit-search-results-decoration {
 	}
 
 	.shop-aside__item-title {
+		margin-bottom: 10px;
+	}
+	.shop-aside__item-price {
 		margin-bottom: 10px;
 	}
 

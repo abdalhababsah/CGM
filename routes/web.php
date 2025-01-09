@@ -9,6 +9,9 @@ use App\Http\Controllers\Admin\CmsController;
 use App\Http\Controllers\Admin\CommingSoonController;
 use App\Http\Controllers\Admin\DeliveryController;
 use App\Http\Controllers\Admin\DiscountCodeController;
+use App\Http\Controllers\Admin\HairPoreController;
+use App\Http\Controllers\Admin\HairThicknessController;
+use App\Http\Controllers\Admin\HairTypeController;
 use App\Http\Controllers\CartController;
 use App\Http\Controllers\CheckoutController;
 use App\Http\Controllers\ContactUsController;
@@ -53,7 +56,14 @@ Route::middleware(['auth', 'admin'])->prefix('admin')->name('admin.')->group(fun
     Route::resource('cms-management', CmsController::class);
     //header top slider update
     Route::put('cms-management/header-slider/{slider}', [CmsController::class, 'updateHeader'])->name('header-slider.update');
+    // Hair Thickness Routes
+    Route::resource('hair-thickness', HairThicknessController::class)->except(['show']);
 
+    // Hair Type Routes
+    Route::resource('hair-type', HairTypeController::class)->except(['show']);
+
+    // Hair Pore Routes
+    Route::resource('hair-pore', HairPoreController::class)->except(['show']);
     Route::get('products', [AdminProductsController::class, 'index'])->name('products.index');
     Route::get('products/create', [AdminProductsController::class, 'create'])->name('products.create');
     Route::post('products', [AdminProductsController::class, 'store'])->name('products.store');
@@ -64,7 +74,7 @@ Route::middleware(['auth', 'admin'])->prefix('admin')->name('admin.')->group(fun
     Route::post('/import', [AdminProductsController::class, 'import'])->name('products.import');
 
     // Partial Updates for Products
-    
+
     Route::put('products/{product}/general-info', [AdminProductsController::class, 'updateGeneralInfo'])->name('products.updateGeneralInfo');
     Route::put('products/{product}/options', [AdminProductsController::class, 'updateOptions'])->name('products.updateOptions');
     // Image Management Routes

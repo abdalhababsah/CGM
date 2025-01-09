@@ -1,6 +1,8 @@
+<!-- resources/views/admin/products/create.blade.php -->
+
 @extends('dashboard-layouts.app')
 
-@section('title', isset($isEdit) && $isEdit ? 'Edit Product' : 'Create Product')
+@section('title', 'Create Product')
 
 @section('content')
     <div class="container-fluid py-4">
@@ -21,8 +23,7 @@
                 <div class="card my-4">
                     <div class="card-header p-0 position-relative mt-n4 mx-3 z-index-2">
                         <div class="bg-gradient-dark shadow-dark border-radius-lg pt-4 pb-3">
-                            <h6 class="text-white text-capitalize ps-3">
-                                {{ isset($isEdit) && $isEdit ? 'Edit Product' : 'Create Product' }}</h6>
+                            <h6 class="text-white text-capitalize ps-3">Create Product</h6>
                         </div>
                     </div>
                     <div class="card-body">
@@ -139,6 +140,38 @@
                             </select>
                         </div>
 
+                        <!-- Replace your existing multi-select elements with these -->
+
+                        <div class="mb-3">
+                            <label for="hair_pores" class="form-label">Hair Pores</label>
+                            <select name="hair_pores[]" id="hair_pores" class="form-select select2-multiple"
+                                multiple="multiple" data-placeholder="Select Hair Pores">
+                                @foreach ($hairPores as $hairPore)
+                                    <option value="{{ $hairPore->id }}">{{ $hairPore->name_en }}</option>
+                                @endforeach
+                            </select>
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="hair_types" class="form-label">Hair Types</label>
+                            <select name="hair_types[]" id="hair_types" class="form-select select2-multiple"
+                                multiple="multiple" data-placeholder="Select Hair Types">
+                                @foreach ($hairTypes as $hairType)
+                                    <option value="{{ $hairType->id }}">{{ $hairType->name_en }}</option>
+                                @endforeach
+                            </select>
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="hair_thicknesses" class="form-label">Hair Thicknesses</label>
+                            <select name="hair_thicknesses[]" id="hair_thicknesses" class="form-select select2-multiple"
+                                multiple="multiple" data-placeholder="Select Hair Thicknesses">
+                                @foreach ($hairThicknesses as $hairThickness)
+                                    <option value="{{ $hairThickness->id }}">{{ $hairThickness->name_en }}</option>
+                                @endforeach
+                            </select>
+                        </div>
+
                         <div class="mb-1">
                             <label for="status" class="form-label">Status</label>
                             <select name="status" id="status" class="form-select styled-input">
@@ -172,9 +205,23 @@
         </div>
     </div>
 
+    <style>
+        .select2-container--classic .select2-selection--multiple .select2-selection__choice{
+            background-color: #981e24 !important;
+        }
+        .select2-container--classic .select2-selection--multiple .select2-selection__choice__display{
+            color: white !important;
+        }
+        .select2-container--classic .select2-selection--multiple .select2-selection__choice__remove{
+            color: white !important; 
+        }
+    </style>
     <!-- Dropzone.js -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/dropzone/5.9.3/dropzone.min.css">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/dropzone/5.9.3/dropzone.min.js"></script>
+    <!-- Add these in your layout file or before closing </head> -->
+    <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+    <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
     <script>
         Dropzone.autoDiscover = false;
 
@@ -211,6 +258,21 @@
             formData.append('is_active', document.getElementById('status').value === 'active' ? 1 : 0);
             formData.append('price', document.getElementById('price').value);
             formData.append('quantity', document.getElementById('quantity').value);
+
+            // Append hair pores
+            Array.from(document.getElementById('hair_pores').selectedOptions).forEach(option => {
+                formData.append('hair_pores[]', option.value);
+            });
+
+            // Append hair types
+            Array.from(document.getElementById('hair_types').selectedOptions).forEach(option => {
+                formData.append('hair_types[]', option.value);
+            });
+
+            // Append hair thicknesses
+            Array.from(document.getElementById('hair_thicknesses').selectedOptions).forEach(option => {
+                formData.append('hair_thicknesses[]', option.value);
+            });
 
             // Append main image (is_primary)
             if (document.getElementById('is_primary').files[0]) {
@@ -258,5 +320,24 @@
                     }
                 });
         });
+
+        $(document).ready(function() {
+                    $('.select2-multiple').select2({
+            theme: 'classic',
+            width: '100%',
+            closeOnSelect: false,
+            allowClear: true,
+            tags: false,
+        });
+
+        // Custom styling
+        $('.select2-multiple').each(function() {
+            $(this).siblings('.select2-container').css({
+                'border-radius': '0.375rem',
+                'border': '1px solid #d2d6da'
+            });
+        });
+    });
+
     </script>
 @endsection

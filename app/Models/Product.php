@@ -72,4 +72,21 @@ class Product extends Model
     {
         return $this->hasOne(ProductImage::class)->where('is_primary', true);
     }
+
+    public function hairTypes()
+    {
+        return $this->belongsToMany(HairType::class, 'product_hair_type');
+    }
+
+    public function hairThicknesses()
+    {
+        return $this->belongsToMany(HairThickness::class, 'product_hair_thickness');
+    }
+    /**
+     * The hair pores that belong to the product.
+     */
+    public function hairPores()
+    {
+        return $this->belongsToMany(HairPore::class, 'product_hair_pore');
+    }
 }

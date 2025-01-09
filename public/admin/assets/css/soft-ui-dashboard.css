@@ -28007,3 +28007,44 @@ pre[class*=language-] {
 }
 
 /*# sourceMappingURL=dashboard-free.css.map */
+
+.styled-input {
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  padding: 10px;
+  background-color: #f8f9fa;
+}
+
+.styled-input:focus {
+  border-color: #791115;
+  box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
+}
+
+.dropzone .dz-preview .dz-image img {
+  border-radius: 5px;
+  width: 100%;
+  height: auto;
+}
+
+/* Optional: Adjust Select2 to match the styled-input */
+.select2-container .select2-selection--multiple {
+  background-color: #f8f9fa;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  padding: 6px 12px;
+}
+
+.select2-container--default .select2-selection--multiple .select2-selection__choice {
+  background-color: #791115;
+  border: 1px solid #791115;
+  color: white;
+  padding: 2px 5px;
+  margin-top: 5px;
+  border-radius: 3px;
+}
+
+.select2-container--default .select2-selection--multiple .select2-selection__choice__remove {
+  color: white;
+  margin-left: 5px;
+  cursor: pointer;
+}

@@ -19,5 +19,12 @@ return [
     'available' => 'Available',
     'soldOut' => 'Sold Out',
     'filter_price' => 'Filter Price',
-
+    'hair_pores' => 'Hair Pores',
+    'hair_types' => 'Hair Types',
+    'hair_thicknesses' => 'Hair Thickness',
+    'select_up_to_two' => 'Select up to two',
+    'default_sort' => 'Default Sort',
+    // Optional: Error Messages
+    'max_two_selection' => 'You can select up to two options for this filter.',
+    'you_can_select_up_to_two_options_for_each_filter' => 'You can select up to two options for each filter.',
 ];

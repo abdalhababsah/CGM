@@ -1,3 +1,5 @@
+<!-- resources/views/admin/products/edit.blade.php -->
+
 @extends('dashboard-layouts.app')
 
 @section('title', 'Edit Product')
@@ -160,6 +162,42 @@
                                     brand</span>
                             </div>
                             <div class="mb-3">
+                                <label for="hair_pores" class="form-label">Hair Pores</label>
+                                <select name="hair_pores[]" id="hair_pores" class="form-select styled-input select2"
+                                    multiple>
+                                    @foreach ($hairPores as $hairPore)
+                                        <option value="{{ $hairPore->id }}"
+                                            {{ in_array($hairPore->id, old('hair_pores', $product->hairPores->pluck('id')->toArray())) ? 'selected' : '' }}>
+                                            {{ $hairPore->name_en }}</option>
+                                    @endforeach
+                                </select>
+                            </div>
+
+                            <div class="mb-3">
+                                <label for="hair_types" class="form-label">Hair Types</label>
+                                <select name="hair_types[]" id="hair_types" class="form-select styled-input select2"
+                                    multiple>
+                                    @foreach ($hairTypes as $hairType)
+                                        <option value="{{ $hairType->id }}"
+                                            {{ in_array($hairType->id, old('hair_types', $product->hairTypes->pluck('id')->toArray())) ? 'selected' : '' }}>
+                                            {{ $hairType->name_en }}</option>
+                                    @endforeach
+                                </select>
+                            </div>
+
+                            <div class="mb-3">
+                                <label for="hair_thicknesses" class="form-label">Hair Thicknesses</label>
+                                <select name="hair_thicknesses[]" id="hair_thicknesses"
+                                    class="form-select styled-input select2" multiple>
+                                    @foreach ($hairThicknesses as $hairThickness)
+                                        <option value="{{ $hairThickness->id }}"
+                                            {{ in_array($hairThickness->id, old('hair_thicknesses', $product->hairThicknesses->pluck('id')->toArray())) ? 'selected' : '' }}>
+                                            {{ $hairThickness->name_en }}</option>
+                                    @endforeach
+                                </select>
+                            </div>
+
+                            <div class="mb-3">
                                 <label for="price" class="form-label">Price</label>
                                 <input type="number" step="0.01" name="price" id="price"
                                     class="form-control styled-input" value="{{ old('price', $product->price) }}"
@@ -196,100 +234,122 @@
 
             </div>
         </div>
-    </div>
 
-    <!-- Include Dropzone CSS -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/dropzone/5.9.3/dropzone.min.css"
-        integrity="sha512-jU/7UFiaW5UBGODEopEqnbIAHOI8fO6T99m7Tsmqs2gkdujByJfkCbbfPSN4Wlqlb9TGnsuC0YgUgWkRBK7B9A=="
-        crossorigin="anonymous" referrerpolicy="no-referrer" />
+        <!-- Include Dropzone CSS -->
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/dropzone/5.9.3/dropzone.min.css"
+            integrity="sha512-jU/7UFiaW5UBGODEopEqnbIAHOI8fO6T99m7Tsmqs2gkdujByJfkCbbfPSN4Wlqlb9TGnsuC0YgUgWkRBK7B9A=="
+            crossorigin="anonymous" referrerpolicy="no-referrer" />
 
-    <!-- Include jQuery -->
-    {{-- <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script> --}}
+        <!-- Include Select2 CSS -->
+        <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/css/select2.min.css" rel="stylesheet" />
 
-    <!-- Include Dropzone JS -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/dropzone/5.9.3/dropzone.min.js"></script>
+        <!-- Include Dropzone JS -->
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/dropzone/5.9.3/dropzone.min.js"></script>
 
-    <!-- Include SweetAlert2 (for better alerts) -->
-    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+        <!-- Include Select2 JS -->
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/js/select2.min.js"></script>
 
-    <style>
-        .dropzone {
-            border: 2px dashed #007bff;
-            border-radius: 5px;
-            background: #f9f9f9;
-            padding: 20px;
-            text-align: center;
-        }
 
-        .styled-input {
-            border: 1px solid #ddd;
-            border-radius: 4px;
-            padding: 10px;
-            background-color: #f8f9fa;
-        }
-
-        .styled-input:focus {
-            border-color: #007bff;
-            box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
-        }
-
-        .dropzone .dz-preview .dz-image img {
-            border-radius: 5px;
-            width: 100%;
-            height: auto;
-        }
-    </style>
-
-    <script>
-        Dropzone.autoDiscover = false;
-
-        $(document).ready(function() {
-            // Setup CSRF token for AJAX requests
-            $.ajaxSetup({
-                headers: {
-                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                }
-            });
-
-            // Function to display success messages
-            function showSuccess(message) {
-                Swal.fire({
-                    toast: true,
-                    position: 'top-end',
-                    icon: 'success',
-                    title: message,
-                    showConfirmButton: false,
-                    timer: 3000,
-                    timerProgressBar: true,
-                    didOpen: (toast) => {
-                        toast.addEventListener('mouseenter', Swal.stopTimer);
-                        toast.addEventListener('mouseleave', Swal.resumeTimer);
-                    }
-                });
+        <style>
+            .dropzone {
+                border: 2px dashed #007bff;
+                border-radius: 5px;
+                background: #f9f9f9;
+                padding: 20px;
+                text-align: center;
             }
 
-            // Function to display validation errors
-            function showErrors(errors) {
-                // Hide all previous errors
-                $('span.text-danger').hide();
-
-                // Iterate through errors and display them
-                $.each(errors, function(field, messages) {
-                    if (field.startsWith('images')) {
-                        $('#images_error').text(messages[0]).removeClass('d-none');
-                    } else {
-                        $('#' + field + '_error').text(messages[0]).show();
-                    }
-                });
+            .styled-input {
+                border: 1px solid #ddd;
+                border-radius: 4px;
+                padding: 10px;
+                background-color: #f8f9fa;
             }
+
+            .styled-input:focus {
+                border-color: #791115;
+                box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
+            }
+
+            .dropzone .dz-preview .dz-image img {
+                border-radius: 5px;
+                width: 100%;
+                height: auto;
+            }
+
+            /* Optional: Adjust Select2 to match the styled-input */
+            .select2-container .select2-selection--multiple {
+                background-color: #f8f9fa;
+                border: 1px solid #ddd;
+                border-radius: 4px;
+                padding: 6px 12px;
+            }
+
+            .select2-container--default .select2-selection--multiple .select2-selection__choice {
+                background-color: #791115;
+                border: 1px solid #791115;
+                color: white;
+                padding: 2px 5px;
+                margin-top: 5px;
+                border-radius: 3px;
+            }
+
+            .select2-container--default .select2-selection--multiple .select2-selection__choice__remove {
+                color: white;
+                margin-left: 5px;
+                cursor: pointer;
+            }
+        </style>
+
+        <script>
+            Dropzone.autoDiscover = false;
 
             $(document).ready(function() {
+                // Initialize Select2 on multi-select fields
+                $('.select2').select2({
+                    width: '100%',
+                    placeholder: 'Select options',
+                    allowClear: true
+                });
+
                 // Setup CSRF token for AJAX requests
                 $.ajaxSetup({
                     headers: {
                         'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                     }
                 });
+
+                // Function to display success messages
+                function showSuccess(message) {
+                    Swal.fire({
+                        toast: true,
+                        position: 'top-end',
+                        icon: 'success',
+                        title: message,
+                        showConfirmButton: false,
+                        timer: 3000,
+                        timerProgressBar: true,
+                        didOpen: (toast) => {
+                            toast.addEventListener('mouseenter', Swal.stopTimer);
+                            toast.addEventListener('mouseleave', Swal.resumeTimer);
+                        }
+                    });
+                }
+
+                // Function to display validation errors
+                function showErrors(errors) {
+                    // Hide all previous errors
+                    $('span.text-danger').hide();
+
+                    // Iterate through errors and display them
+                    $.each(errors, function(field, messages) {
+                        if (field.startsWith('images')) {
+                            $('#images_error').text(messages[0]).removeClass('d-none');
+                        } else {
+                            $('#' + field + '_error').text(messages[0]).show();
+                        }
+                    });
+                }
 
                 // Function to refetch and reload images
                 function fetchImages() {
@@ -320,6 +380,7 @@
                         }
                     });
                 }
+
                 var myDropzone = new Dropzone("#imageDropzone", {
                     url: '{{ route('admin.products.uploadAdditionalImages', $product->id) }}',
                     paramName: "images[]",
@@ -334,8 +395,7 @@
 
                         // Handle image removal
                         this.on("removedfile", function(file) {
-                            if (file.previewElement && file.previewElement.dataset
-                                .imageId) {
+                            if (file.previewElement && file.previewElement.dataset.imageId) {
                                 var imageId = file.previewElement.dataset.imageId;
 
                                 // Send delete request to the backend
@@ -358,8 +418,7 @@
 
                         // Handle successful uploads
                         this.on("success", function(file, response) {
-                            // Dropzone.forElement('#imageDropzone').removeAllFiles(true);
-                            // fetchImages();
+                            // Optionally handle response
                         });
 
                         // Handle errors
@@ -374,126 +433,129 @@
                         });
                     }
                 });
-            });
-            /**
-             * Manually clears all files from a Dropzone instance.
-             * @param {Dropzone} dropzoneInstance - The Dropzone instance to clear.
-             */
-            function clearDropzone(dropzoneInstance) {
-                if (dropzoneInstance && dropzoneInstance.files.length > 0) {
-                    // Iterate over each file in the Dropzone instance and remove it
-                    dropzoneInstance.files.forEach(function(file) {
-                        dropzoneInstance.removeFile(file); // Removes file from Dropzone
+
+                /**
+                 * Manually clears all files from a Dropzone instance.
+                 * @param {Dropzone} dropzoneInstance - The Dropzone instance to clear.
+                 */
+                function clearDropzone(dropzoneInstance) {
+                    if (dropzoneInstance && dropzoneInstance.files.length > 0) {
+                        // Iterate over each file in the Dropzone instance and remove it
+                        dropzoneInstance.files.forEach(function(file) {
+                            dropzoneInstance.removeFile(file); // Removes file from Dropzone
+                        });
+                    }
+                }
+
+                // Handle General Information Update
+                $('#updateGeneralInfo').click(function() {
+                    let formData = {
+                        name_en: $('#name_en').val(),
+                        name_ar: $('#name_ar').val(),
+                        name_he: $('#name_he').val(),
+                        description_en: $('#description_en').val(),
+                        description_ar: $('#description_ar').val(),
+                        description_he: $('#description_he').val(),
+                    };
+
+                    $.ajax({
+                        url: '{{ route('admin.products.updateGeneralInfo', $product->id) }}',
+                        type: 'PUT',
+                        data: formData,
+                        success: function(response) {
+                            showSuccess(response.message);
+                        },
+                        error: function(xhr) {
+                            if (xhr.status === 422) {
+                                showErrors(xhr.responseJSON.errors);
+                            } else {
+                                Swal.fire('Error',
+                                    'An error occurred while updating general information.',
+                                    'error');
+                            }
+                        }
                     });
-                }
-            }
+                });
 
-            // Handle General Information Update
-            $('#updateGeneralInfo').click(function() {
-                let formData = {
-                    name_en: $('#name_en').val(),
-                    name_ar: $('#name_ar').val(),
-                    name_he: $('#name_he').val(),
-                    description_en: $('#description_en').val(),
-                    description_ar: $('#description_ar').val(),
-                    description_he: $('#description_he').val(),
-                };
+                // Handle Options Update
+                $('#updateOptions').click(function() {
+                    let formData = {
+                        category_id: $('#category_id').val(),
+                        brand_id: $('#brand_id').val(),
+                        price: $('#price').val(),
+                        quantity: $('#quantity').val(),
+                        is_active: $('#is_active').val(),
+                        hair_pores: $('#hair_pores').val(),
+                        hair_types: $('#hair_types').val(),
+                        hair_thicknesses: $('#hair_thicknesses').val(),
+                    };
 
-                $.ajax({
-                    url: '{{ route('admin.products.updateGeneralInfo', $product->id) }}',
-                    type: 'PUT',
-                    data: formData,
-                    success: function(response) {
-                        showSuccess(response.message);
-                    },
-                    error: function(xhr) {
-                        if (xhr.status === 422) {
-                            showErrors(xhr.responseJSON.errors);
-                        } else {
-                            Swal.fire('Error',
-                                'An error occurred while updating general information.',
-                                'error');
+                    $.ajax({
+                        url: '{{ route('admin.products.updateOptions', $product->id) }}',
+                        type: 'PUT',
+                        data: formData,
+                        success: function(response) {
+                            showSuccess(response.message);
+                        },
+                        error: function(xhr) {
+                            if (xhr.status === 422) {
+                                showErrors(xhr.responseJSON.errors);
+                            } else {
+                                Swal.fire('Error', 'An error occurred while updating options.',
+                                    'error');
+                            }
                         }
+                    });
+                });
+
+                // Handle Primary Image Update
+                $('#updatePrimaryImage').click(function() {
+                    var fileInput = $('#is_primary')[0];
+                    if (fileInput.files.length === 0) {
+                        $('#is_primary_error').text('Please upload a primary image').show();
+                        return;
                     }
+
+                    var formData = new FormData();
+                    formData.append('is_primary', fileInput.files[0]);
+                    formData.append('_method', 'PUT'); // Simulate a PUT request
+
+                    $.ajax({
+                        url: '{{ route('admin.products.updatePrimaryImage', $product->id) }}',
+                        type: 'POST', // Still use POST as the actual HTTP method
+                        data: formData,
+                        processData: false,
+                        contentType: false,
+                        success: function(response) {
+                            showSuccess(response.message);
+
+                            // Update the primary image display
+                            if ($('#primaryImageDisplay').length) {
+                                $('#primaryImageDisplay').attr('src', response.primary_image_url);
+                            } else {
+                                $('#noPrimaryImage').remove();
+                                $('#primaryImageContainer').append(
+                                    '<img src="' + response.primary_image_url +
+                                    '" class="img-thumbnail mb-2" style="max-height: 150px;" id="primaryImageDisplay">'
+                                );
+                            }
+
+                            // Reset the file input
+                            $('#is_primary').val('');
+                        },
+                        error: function(xhr) {
+                            if (xhr.status === 422) {
+                                $('#is_primary_error').text(xhr.responseJSON.errors.is_primary[0])
+                                    .show();
+                            } else {
+                                Swal.fire('Error',
+                                    'An error occurred while updating the primary image.',
+                                    'error');
+                            }
+                        }
+                    });
                 });
             });
+        </script>
 
-            // Handle Options Update
-            $('#updateOptions').click(function() {
-                let formData = {
-                    category_id: $('#category_id').val(),
-                    brand_id: $('#brand_id').val(),
-                    price: $('#price').val(),
-                    quantity: $('#quantity').val(),
-                    is_active: $('#is_active').val(),
-                };
-
-                $.ajax({
-                    url: '{{ route('admin.products.updateOptions', $product->id) }}',
-                    type: 'PUT',
-                    data: formData,
-                    success: function(response) {
-                        showSuccess(response.message);
-                    },
-                    error: function(xhr) {
-                        if (xhr.status === 422) {
-                            showErrors(xhr.responseJSON.errors);
-                        } else {
-                            Swal.fire('Error', 'An error occurred while updating options.',
-                                'error');
-                        }
-                    }
-                });
-            });
-
-            // Handle Primary Image Update
-            $('#updatePrimaryImage').click(function() {
-                var fileInput = $('#is_primary')[0];
-                if (fileInput.files.length === 0) {
-                    $('#is_primary_error').text('Please upload a primary image').show();
-                    return;
-                }
-
-                var formData = new FormData();
-                formData.append('is_primary', fileInput.files[0]);
-                formData.append('_method', 'PUT'); // Simulate a PUT request
-
-                $.ajax({
-                    url: '{{ route('admin.products.updatePrimaryImage', $product->id) }}',
-                    type: 'POST', // Still use POST as the actual HTTP method
-                    data: formData,
-                    processData: false,
-                    contentType: false,
-                    success: function(response) {
-                        showSuccess(response.message);
-
-                        // Update the primary image display
-                        if ($('#primaryImageDisplay').length) {
-                            $('#primaryImageDisplay').attr('src', response.primary_image_url);
-                        } else {
-                            $('#noPrimaryImage').remove();
-                            $('#primaryImageContainer').append(
-                                '<img src="' + response.primary_image_url +
-                                '" class="img-thumbnail mb-2" style="max-height: 150px;" id="primaryImageDisplay">'
-                            );
-                        }
-
-                        // Reset the file input
-                        $('#is_primary').val('');
-                    },
-                    error: function(xhr) {
-                        if (xhr.status === 422) {
-                            $('#is_primary_error').text(xhr.responseJSON.errors.is_primary[0])
-                                .show();
-                        } else {
-                            Swal.fire('Error',
-                                'An error occurred while updating the primary image.',
-                                'error');
-                        }
-                    }
-                });
-            });
-        });
-    </script>
-
-@endsection
+    @endsection
