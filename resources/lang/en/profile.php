@@ -1,13 +1,14 @@
 <?php
 
 return [
-    'name_required' => 'Name is required.',
-    'name_must_be_string' => 'Name must be a string.',
-    'name_max_length' => 'Name may not be greater than :max characters.',
-    'email_required' => 'Email is required.',
-    'email_must_be_string' => 'Email must be a string.',
-    'email_lowercase' => 'Email must be in lowercase.',
-    'email_invalid' => 'Email must be a valid email address.',
-    'email_max_length' => 'Email may not be greater than :max characters.',
-    'email_unique' => 'The provided email is already in use.',
+    'profile_information' => 'Profile Information',
+    'first_name' => 'First Name',
+    'last_name' => 'Last Name',
+    'email_address' => 'Email Address',
+    'email_not_verified' => 'Email not verified. Please check your email for verification link.',
+    'update_profile' => 'Update Profile',
+    'delete_account' => 'Delete Account',
+    'confirm_delete' => 'Are you sure you want to delete your account? This action cannot be undone.',
+    'password' => 'Password',
+    'delete_account_button' => 'Delete Account',
 ];

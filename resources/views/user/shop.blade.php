@@ -5,53 +5,55 @@
 @section('styles')
     <link rel="stylesheet" href="{{ asset('user/css/shop.css') }}">
     <style>
-/* Base styles for the title */
-.shop-aside__item-title {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    font-size: 24px;
-    line-height: 100%;
-    text-transform: capitalize;
-    padding: 10px 0;
-    color: #222222;
-    font-family: "Tenor Sans";
-    border-bottom: 2px solid #222222;
-    margin-bottom: 15px;
-    position: relative;
-    cursor: pointer;
-}
+        /* Base styles for the title */
+        .shop-aside__item-title {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 24px;
+            line-height: 100%;
+            text-transform: capitalize;
+            padding: 10px 0;
+            color: #222222;
+            font-family: "Tenor Sans";
+            border-bottom: 2px solid #222222;
+            margin-bottom: 15px;
+            position: relative;
+            cursor: pointer;
+        }
 
-/* Plus/Minus icon styles */
-.shop-aside__item-title::after {
-    content: '+';
-    font-size: 20px;
-    transition: transform 0.3s ease;
-    margin-left: 10px; /* Space for LTR */
-    margin-right: 10px; /* Space for RTL */
-}
+        /* Plus/Minus icon styles */
+        .shop-aside__item-title::after {
+            content: '+';
+            font-size: 20px;
+            transition: transform 0.3s ease;
+            margin-left: 10px;
+            /* Space for LTR */
+            margin-right: 10px;
+            /* Space for RTL */
+        }
 
-/* Active state */
-.shop-aside__item-title.active::after {
-    content: '-';
-}
+        /* Active state */
+        .shop-aside__item-title.active::after {
+            content: '-';
+        }
 
-/* Responsive styles */
-@media (max-width: 768px) {
-    .shop-aside__item-title {
-        font-size: 16px;
-    }
-    
-    .shop-aside__item-title::after {
-        font-size: 18px;
-    }
-}
+        /* Responsive styles */
+        @media (max-width: 768px) {
+            .shop-aside__item-title {
+                font-size: 16px;
+            }
 
-@media screen and (max-width: 767px) {
-    .shop-aside__item-title {
-        margin-bottom: 10px;
-    }
-}
+            .shop-aside__item-title::after {
+                font-size: 18px;
+            }
+        }
+
+        @media screen and (max-width: 767px) {
+            .shop-aside__item-title {
+                margin-bottom: 10px;
+            }
+        }
     </style>
 @endsection
 
@@ -107,43 +109,11 @@
                         </div>
                     </div>
 
-                    <!-- Hair Pores -->
-                    <div class="shop-aside__item">
-                        <span class="shop-aside__item-title">@lang('shop.hair_pores')</span>
-                        <div class="shop-aside__item-content">
-                            <ul id="hair-pores-list" class="custom-checkbox">
-                                <!-- Hair Pores loaded via AJAX -->
-                            </ul>
-                            {{-- Removed the "Select up to two" message --}}
-                        </div>
-                    </div>
-
-                    <!-- Hair Types -->
-                    <div class="shop-aside__item">
-                        <span class="shop-aside__item-title">@lang('shop.hair_types')</span>
-                        <div class="shop-aside__item-content">
-                            <ul id="hair-types-list" class="custom-checkbox">
-                                <!-- Hair Types loaded via AJAX -->
-                            </ul>
-                            {{-- Removed the "Select up to two" message --}}
-                        </div>
-                    </div>
-
-                    <!-- Hair Thicknesses -->
-                    <div class="shop-aside__item">
-                        <span class="shop-aside__item-title">@lang('shop.hair_thicknesses')</span>
-                        <div class="shop-aside__item-content">
-                            <ul id="hair-thicknesses-list" class="custom-checkbox">
-                                <!-- Hair Thicknesses loaded via AJAX -->
-                            </ul>
-                            {{-- Removed the "Select up to two" message --}}
-                        </div>
-                    </div>
 
                     <!-- Price Range -->
                     <div class="shop-aside__item">
-                        <span class="shop-aside__item-price">@lang('shop.price')</span>
-                        <div class="shop-aside__item-price">
+                        <span class="shop-aside__item-title">@lang('shop.price')</span>
+                        <div class="shop-aside__item-content">
                             <div class="range-slider-container">
                                 <div class="range-slider">
                                     <input type="text" id="price-range" class="js-range-slider-price" value="" />
@@ -158,14 +128,32 @@
 
                 <div class="shop-main">
                     <div class="shop-main__filter">
+                        <div class="shop-main__filter-container">
+                            <div class="shop-main__select">
+                                <select id="sort" class="styled">
+                                    <option value="default">@lang('shop.default_sort')</option>
+                                    <option value="price_asc">@lang('shop.from_cheap')</option>
+                                    <option value="price_desc">@lang('shop.from_expensive')</option>
+                                </select>
+                            </div>
+                            <div class="shop-main__select">
+                                <select id="hair-types-list" class="styled">
+                                    <option value="default">@lang('shop.hair_pores')</option>
 
-                        <div class="shop-main__select">
-                            <select id="sort" class="styled">
-                                <option value="default">@lang('shop.default_sort')</option>
-                                <option value="price_asc">@lang('shop.from_cheap')</option>
-                                <option value="price_desc">@lang('shop.from_expensive')</option>
-                                <!-- Add more sorting options if needed -->
-                            </select>
+                                </select>
+                            </div>
+                            <div class="shop-main__select">
+                                <select id="hair-pores-list" class="styled">
+                                    <option value="default">@lang('shop.hair_types')</option>
+
+                                </select>
+                            </div>
+                            <div class="shop-main__select">
+                                <select id="hair-thicknesses-list" class="styled">
+                                    <option value="default">@lang('shop.hair_thicknesses')</option>
+
+                                </select>
+                            </div>
                         </div>
                     </div>
 
@@ -202,7 +190,9 @@
             let page = 1;
             let isSale = false;
             let isNew = false;
-
+            let hairPore = 'default';
+            let hairType = 'default';
+            let hairThickness = 'default';
             // **New Filter Variables without Selection Limits**
             let hairPores = [];
             let hairTypes = [];
@@ -322,63 +312,64 @@
                     fetchData();
                 });
             }
-            // Render Hair Pores
+
             function renderHairPores(hairPoresData) {
                 let hairPoresList = $('#hair-pores-list');
                 hairPoresList.empty();
 
-                hairPoresData.forEach(function(hairPore) {
-                    let isActive = hairPores.includes(String(hairPore.id)) ? 'active-li' : '';
+                // Add default option
+                hairPoresList.append(`
+        <option value="default">@lang('shop.all_hair_pores')</option>
+    `);
+
+                // Populate select with options
+                hairPoresData.forEach(function(hairPoreItem) {
                     hairPoresList.append(`
-            <li>
-                <a href="#" class="hair-pore-filter ${isActive}" data-id="${hairPore.id}">
-                    ${getLocalizedName(hairPore)}
-                </a>
-            </li>
+            <option value="${hairPoreItem.id}">
+                ${getLocalizedName(hairPoreItem)}
+            </option>
         `);
                 });
 
-                $('.hair-pore-filter').off('click').on('click', function(e) {
-                    e.preventDefault();
-                    let selectedId = $(this).data('id');
-                    if (hairPores.includes(String(selectedId))) {
-                        hairPores = hairPores.filter(id => id !== String(selectedId));
-                        $(this).removeClass('active-li');
-                    } else {
-                        hairPores.push(String(selectedId));
-                        $(this).addClass('active-li');
-                    }
+                // Set the selected value
+                hairPoresList.val(hairPores.length > 0 ? hairPores[0] : 'default');
+
+                // Handle change event
+                hairPoresList.off('change').on('change', function() {
+                    const selectedValue = $(this).val();
+                    hairPores = selectedValue !== 'default' ? [selectedValue] : [];
                     page = 1;
                     fetchData();
                 });
             }
 
             // Render Hair Types
+
             function renderHairTypes(hairTypesData) {
                 let hairTypesList = $('#hair-types-list');
                 hairTypesList.empty();
 
-                hairTypesData.forEach(function(hairType) {
-                    let isActive = hairTypes.includes(String(hairType.id)) ? 'active-li' : '';
+                // Add default option
+                hairTypesList.append(`
+        <option value="default">@lang('shop.all_hair_types')</option>
+    `);
+
+                // Populate select with options
+                hairTypesData.forEach(function(hairTypeItem) {
                     hairTypesList.append(`
-            <li>
-                <a href="#" class="hair-type-filter ${isActive}" data-id="${hairType.id}">
-                    ${getLocalizedName(hairType)}
-                </a>
-            </li>
+            <option value="${hairTypeItem.id}">
+                ${getLocalizedName(hairTypeItem)}
+            </option>
         `);
                 });
 
-                $('.hair-type-filter').off('click').on('click', function(e) {
-                    e.preventDefault();
-                    let selectedId = $(this).data('id');
-                    if (hairTypes.includes(String(selectedId))) {
-                        hairTypes = hairTypes.filter(id => id !== String(selectedId));
-                        $(this).removeClass('active-li');
-                    } else {
-                        hairTypes.push(String(selectedId));
-                        $(this).addClass('active-li');
-                    }
+                // Set the selected value
+                hairTypesList.val(hairTypes.length > 0 ? hairTypes[0] : 'default');
+
+                // Handle change event
+                hairTypesList.off('change').on('change', function() {
+                    const selectedValue = $(this).val();
+                    hairTypes = selectedValue !== 'default' ? [selectedValue] : [];
                     page = 1;
                     fetchData();
                 });
@@ -389,27 +380,27 @@
                 let hairThicknessesList = $('#hair-thicknesses-list');
                 hairThicknessesList.empty();
 
-                hairThicknessesData.forEach(function(hairThickness) {
-                    let isActive = hairThicknesses.includes(String(hairThickness.id)) ? 'active-li' : '';
+                // Add default option
+                hairThicknessesList.append(`
+        <option value="default">@lang('shop.all_hair_thicknesses')</option>
+    `);
+
+                // Populate select with options
+                hairThicknessesData.forEach(function(hairThicknessItem) {
                     hairThicknessesList.append(`
-            <li>
-                <a href="#" class="hair-thickness-filter ${isActive}" data-id="${hairThickness.id}">
-                    ${getLocalizedName(hairThickness)}
-                </a>
-            </li>
+            <option value="${hairThicknessItem.id}">
+                ${getLocalizedName(hairThicknessItem)}
+            </option>
         `);
                 });
 
-                $('.hair-thickness-filter').off('click').on('click', function(e) {
-                    e.preventDefault();
-                    let selectedId = $(this).data('id');
-                    if (hairThicknesses.includes(String(selectedId))) {
-                        hairThicknesses = hairThicknesses.filter(id => id !== String(selectedId));
-                        $(this).removeClass('active-li');
-                    } else {
-                        hairThicknesses.push(String(selectedId));
-                        $(this).addClass('active-li');
-                    }
+                // Set the selected value
+                hairThicknessesList.val(hairThicknesses.length > 0 ? hairThicknesses[0] : 'default');
+
+                // Handle change event
+                hairThicknessesList.off('change').on('change', function() {
+                    const selectedValue = $(this).val();
+                    hairThicknesses = selectedValue !== 'default' ? [selectedValue] : [];
                     page = 1;
                     fetchData();
                 });

@@ -37,7 +37,7 @@ class CheckoutController extends Controller
             return redirect()->route('cart.index')
                 ->with('error', 'Your cart is empty. Add items before proceeding to checkout.');
         }
-
+        session()->forget('applied_discount_code');
         // Return the view but add headers to prevent caching
         $view = view('user.checkout'); // This is your Blade view
 

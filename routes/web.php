@@ -12,6 +12,7 @@ use App\Http\Controllers\Admin\DiscountCodeController;
 use App\Http\Controllers\Admin\HairPoreController;
 use App\Http\Controllers\Admin\HairThicknessController;
 use App\Http\Controllers\Admin\HairTypeController;
+use App\Http\Controllers\Admin\UserController;
 use App\Http\Controllers\CartController;
 use App\Http\Controllers\CheckoutController;
 use App\Http\Controllers\ContactUsController;
@@ -51,6 +52,9 @@ Route::middleware(['auth', 'admin'])->prefix('admin')->name('admin.')->group(fun
     Route::get('orders/{order}', [AdminOrdersController::class, 'show'])->name('orders.show');
     Route::get('admin/orders/{order}/invoice', [AdminOrdersController::class, 'downloadInvoice'])->name('orders.invoice.download');
     // Discounts
+    Route::resource('users', UserController::class);
+
+
     Route::resource('discount', DiscountCodeController::class);
     // cms-management home section
     Route::resource('cms-management', CmsController::class);
@@ -88,7 +92,7 @@ Route::middleware(['auth', 'admin'])->prefix('admin')->name('admin.')->group(fun
 
 // Profile Routes
 Route::middleware('auth')->group(function () {
-    Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
+    Route::get('/profile', [ProfileController::class, 'index'])->name('user.profile');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });

@@ -115,7 +115,7 @@
                 </div>
                 <!-- Floating Images -->
                 <div class="about-us-images">
-                    <img src="{{ asset('user/img/cards-images/card-1.png') }}" alt="Image 1">
+                    <img style="display: none" src="{{ asset('user/img/cards-images/card-1.png') }}" alt="Image 1">
                     <img src="{{ asset('user/img/image-5.png') }}" alt="Image 2">
                 </div>
             </div>

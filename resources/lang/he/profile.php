@@ -1,13 +1,14 @@
 <?php
 
 return [
-    'name_required' => 'שם נדרש.',
-    'name_must_be_string' => 'השם חייב להיות מחרוזת.',
-    'name_max_length' => 'השם לא יכול לעלות על :max תווים.',
-    'email_required' => 'אימייל נדרש.',
-    'email_must_be_string' => 'האימייל חייב להיות מחרוזת.',
-    'email_lowercase' => 'האימייל חייב להיות באותיות קטנות.',
-    'email_invalid' => 'האימייל חייב להיות כתובת אימייל חוקית.',
-    'email_max_length' => 'האימייל לא יכול לעלות על :max תווים.',
-    'email_unique' => 'האימייל המסופק כבר בשימוש.',
+    'profile_information' => 'מידע פרופיל',
+    'first_name' => 'שם פרטי',
+    'last_name' => 'שם משפחה',
+    'email_address' => 'כתובת אימייל',
+    'email_not_verified' => 'האימייל לא אומת. אנא בדוק את האימייל שלך עבור קישור האימות.',
+    'update_profile' => 'עדכן פרופיל',
+    'delete_account' => 'מחק חשבון',
+    'confirm_delete' => 'האם אתה בטוח שברצונך למחוק את החשבון שלך? פעולה זו אינה ניתנת לביטול.',
+    'password' => 'סיסמה',
+    'delete_account_button' => 'מחק חשבון',
 ];

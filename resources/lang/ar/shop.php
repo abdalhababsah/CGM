@@ -25,6 +25,9 @@ return [
     'select_up_to_two' => 'اختر حتى خيارين',
     'default_sort' => 'الترتيب الافتراضي',
     // Optional: Error Messages
+    'all_hair_types' => 'جميع أنواع الشعر',
+    'all_hair_pores' => 'جميع مسام الشعر',
+    'all_hair_thicknesses' => 'جميع سماكات الشعر',
     'max_two_selection' => 'يمكنك اختيار خيارين كحد أقصى لهذا التصفية.',
     'you_can_select_up_to_two_options_for_each_filter' => 'يمكنك اختيار خيارين كحد أقصى لكل تصفية.',
 ];

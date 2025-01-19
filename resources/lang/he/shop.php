@@ -23,7 +23,9 @@ return [
     'hair_types' => 'סוגי שיער',
     'hair_thicknesses' => 'עובי השיער',
     'select_up_to_two' => 'בחר עד שתי אפשרויות',
-
+    'all_hair_types' => 'כל סוגי השיער',
+    'all_hair_pores' => 'כל נקבוביות השיער',
+    'all_hair_thicknesses' => 'כל עובי השיער',
     'default_sort' => 'מיון ברירת מחדל',
     // Optional: Error Messages
     'max_two_selection' => 'אתה יכול לבחור עד שתי אפשרויות לסינון זה.',

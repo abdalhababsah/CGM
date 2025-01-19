@@ -80,7 +80,17 @@
                             </ul>
                         </div>
                     </li>
-
+                    <li class="nav-item">
+                        <a class="nav-link {{ Route::is('admin.users.index') ? 'active' : '' }}"
+                            href="{{ route('admin.users.index') }}">
+                            <div
+                                class="icon icon-shape icon-sm shadow border-radius-md bg-white text-center me-2 d-flex align-items-center justify-content-center">
+                                <i
+                                    class="fas fa-users {{ Route::is('admin.users.index') ? 'text-white' : 'text-icon' }}"></i>
+                            </div>
+                            <span class="nav-link-text ms-1">Users</span>
+                        </a>
+                    </li>
                     <!-- Inventory Section with Dropdown -->
                     @php
                         $inventoryActive =
@@ -260,14 +270,14 @@
 
 
                     <!-- User Profile -->
-                    {{-- <li class="nav-item">
+                    <li class="nav-item">
                     <a class="nav-link {{ Route::is('user.profile') ? 'active' : '' }}" href="{{ route('user.profile') }}">
                         <div class="icon icon-shape icon-sm shadow border-radius-md bg-white text-center me-2 d-flex align-items-center justify-content-center">
                             <i class="fas fa-user {{ Route::is('user.profile') ? 'text-white' : 'text-icon' }}"></i>
                         </div>
                         <span class="nav-link-text ms-1">@lang('dashboard.profile')</span>
                     </a>
-                    </li> --}}
+                    </li>
 
                     <!-- Logout -->
                     <li class="nav-item">

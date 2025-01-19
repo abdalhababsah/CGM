@@ -292,7 +292,7 @@
     </div>
     <!-- Chart.js CDN -->
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-    // Add this after your existing Chart.js inclusion
+  
     <script>
         // Common Chart.js Configuration
         Chart.defaults.font.family = "'Poppins', sans-serif";

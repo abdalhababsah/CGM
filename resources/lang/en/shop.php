@@ -25,6 +25,9 @@ return [
     'select_up_to_two' => 'Select up to two',
     'default_sort' => 'Default Sort',
     // Optional: Error Messages
+    'all_hair_types' => 'All Hair Types',
+    'all_hair_pores' => 'All Hair Pores',
+    'all_hair_thicknesses' => 'All Hair Thicknesses',
     'max_two_selection' => 'You can select up to two options for this filter.',
     'you_can_select_up_to_two_options_for_each_filter' => 'You can select up to two options for each filter.',
 ];

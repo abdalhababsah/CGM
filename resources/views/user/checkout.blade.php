@@ -155,7 +155,7 @@
                         <!-- Discount Code -->
                         <div class="checkout-form__item">
                             <h6>{{ __('checkout.apply_discount_code') }}</h6>
-                            <div class="box-field d-flex">
+                            <div class="box-field d-flex" style="display: flex">
                                 <input style="margin-top: 0px !important;" type="text" id="discount-code-input" class="form-control"
                                     placeholder="{{ __('checkout.enter_discount_code') }}">
                                 <button type="button" id="apply-discount-btn"
@@ -219,8 +219,8 @@
                 </div>
             </div>
         </div>
-        <img class="promo-video__decor js-img" data-src="https://via.placeholder.com/1197x1371/FFFFFF"
-            src="data:image/gif;base64,R0lGODlhAQABAAAAACw=" alt="">
+        {{-- <img class="promo-video__decor js-img" data-src="https://via.placeholder.com/1197x1371/FFFFFF"
+            src="data:image/gif;base64,R0lGODlhAQABAAAAACw=" alt=""> --}}
     </div>
 @endsection
 @section('styles')
@@ -412,7 +412,7 @@
                                 $('#remove-discount-btn').removeClass('d-none');
                                 $('#discount-message').html(`
                                     <div class="alert alert-success">
-                                        {{ __('checkout.discount_applied_success') }}: <strong>${response.discountCode.code}</strong> - ${discountText}
+                                        {{ __('checkout.discount_applied_success') }}: <strong>${response.discountCode.code}</strong> ${discountText}
                                     </div>
                                 `);
                                 calculateGrandTotal();
@@ -480,9 +480,9 @@
                             discountAmount = parseFloat(response.discount_amount);
                             let discountText = '';
                             if (response.type === 'fixed') {
-                                discountText = `-$${discountAmount.toFixed(2)}`;
+                                discountText = `- ₪${discountAmount.toFixed(2)}`;
                             } else if (response.type === 'percentage') {
-                                discountText = `-${discountAmount.toFixed(2)}%`;
+                                discountText = `- ₪${discountAmount.toFixed(2)}`;
                             }
 
                             $('#discount-info').text(discountText);
@@ -491,7 +491,7 @@
                             $('#remove-discount-btn').removeClass('d-none');
                             $('#discount-message').html(`
                                 <div class="alert alert-success">
-                                    {{ __('checkout.discount_applied_success') }}: <strong>${response.code}</strong> - ${discountText}
+                                    {{ __('checkout.discount_applied_success') }}: <strong>${response.code}</strong> ${discountText}
                                 </div>
                             `);
                             calculateGrandTotal();

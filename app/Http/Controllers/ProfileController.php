@@ -11,7 +11,14 @@ use Illuminate\View\View;
 
 class ProfileController extends Controller
 {
+
+
+    public function index() {
+        $user = Auth::user();
+        return view('user.dashboard.profile', compact('user'));
+    }
     /**
+     * 
      * Display the user's profile form.
      */
     public function edit(Request $request): View
@@ -46,7 +53,7 @@ class ProfileController extends Controller
             $user->update($request->only('first_name', 'last_name'));
         }
     
-        return redirect()->route('user.dashboard')->with('status', 'Profile updated successfully.');
+        return redirect()->route('user.profile')->with('status', 'Profile updated successfully.');
     }
 
     /**
@@ -59,7 +66,7 @@ class ProfileController extends Controller
         ]);
 
         $user = $request->user();
-
+// dd('heelo');
         Auth::logout();
 
         $user->delete();

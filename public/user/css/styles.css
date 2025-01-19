@@ -5348,7 +5348,7 @@ blockquote:after,
 }
 
 .shop {
-	padding-top: 180px;
+	padding-top: 100px;
 	position: relative;
 }
 
@@ -5396,6 +5396,7 @@ blockquote:after,
 
 .shop-aside .box-field__search .form-control {
 	padding-right: 50px;
+	margin-top: 2px !important;
 }
 
 .shop-aside__item {
@@ -5517,9 +5518,9 @@ blockquote:after,
 	display: -ms-flexbox;
 	display: flex;
 	-webkit-box-pack: justify;
-	-webkit-justify-content: space-between;
+	-webkit-justify-content: center;
 	-ms-flex-pack: justify;
-	justify-content: space-between;
+	justify-content: center;
 	-webkit-box-align: center;
 	-webkit-align-items: center;
 	-ms-flex-align: center;
@@ -5729,7 +5730,7 @@ blockquote:after,
 	line-height: 170%;
 	padding: 6px 30px;
 	color: #666666;
-	width: 270px;
+	max-width: 200px;
 }
 
 .jq-selectbox__select:hover {
@@ -6665,7 +6666,7 @@ blockquote:after,
 }
 
 .checkout {
-	padding-top: 240px;
+	padding-top: 40px;
 	padding-bottom: 50px;
 }
 
@@ -7859,7 +7860,20 @@ input[type="search"]::-webkit-search-results-decoration {
 .main-block .wrapper {
 	width: 100%;
 }
-
+.shop-main__filter-container {
+    display: flex;
+    flex-wrap: nowrap;
+	gap: 20px;
+    overflow-x: auto;   
+	overflow-y: hidden !important; /* Enable horizontal scrolling */
+    overflow-y: visible; /* Allow vertical overflow */
+    position: relative;  /* Establish a new positioning context */
+    z-index: 10;       /* Ensure it's above other elements */
+}
+.styled {
+    position: relative;
+    z-index: 11;
+}
 @media screen and (min-width: 1600px) {
 	.main-block {
 		padding-top: 180px;
@@ -7906,7 +7920,7 @@ input[type="search"]::-webkit-search-results-decoration {
 	.all-categories,
 	.faq,
 	.post,
-	.shop,
+
 	.product,
 	.cart,
 	.wishlist,
@@ -7914,7 +7928,9 @@ input[type="search"]::-webkit-search-results-decoration {
 	.error-page {
 		padding-top: 110px;
 	}
-
+	.shop{
+		padding-top: 20px;
+	}
 	.subscribe,
 	.insta-photos,
 	.blog {
@@ -7943,7 +7959,7 @@ input[type="search"]::-webkit-search-results-decoration {
 	}
 
 	.checkout {
-		padding-top: 170px;
+		padding-top: 30px;
 		padding-bottom: 0;
 	}
 
@@ -8153,7 +8169,10 @@ input[type="search"]::-webkit-search-results-decoration {
 	.wrapper {
 		padding: 0 20px 0 20px;
 	}
+	.jq-selectbox__select {
 
+		max-width: 150px;
+	}
 	p {
 		font-size: 15px;
 	}
@@ -8469,7 +8488,7 @@ input[type="search"]::-webkit-search-results-decoration {
 	}
 
 	.shop {
-		padding-top: 110px;
+		padding-top: 50px;
 	}
 
 	.shop-main__filter {
@@ -8481,6 +8500,12 @@ input[type="search"]::-webkit-search-results-decoration {
 	.shop-main__select {
 		margin-top: 20px;
 		width: 100%;
+		position: relative;
+		z-index: 10; 
+	}
+	.shop-main__select select {
+		position: relative;
+		z-index: 10; /* Ensure select is above its container */
 	}
 
 	.shop-main__select .jq-selectbox__select {
@@ -8599,7 +8624,7 @@ input[type="search"]::-webkit-search-results-decoration {
 	}
 
 	.checkout {
-		padding-top: 110px;
+		padding-top: 30px;
 		padding-bottom: 0;
 	}
 
@@ -9058,6 +9083,10 @@ input[type="search"]::-webkit-search-results-decoration {
 
 	.box-field .form-control {
 		padding: 18px 15px;
+	}
+	.shop-aside .box-field__search .form-control {
+		padding-right: 50px;
+		margin-top: 20px !important;
 	}
 
 	.subscribe-form__img {
@@ -9565,7 +9594,7 @@ input[type="search"]::-webkit-search-results-decoration {
 	}
 
 	.shop {
-		padding-top: 60px;
+		padding-top: 0px;
 	}
 
 	.shop-content {
@@ -9614,9 +9643,6 @@ input[type="search"]::-webkit-search-results-decoration {
 		margin-bottom: 0;
 	}
 
-	.shop-main {
-		margin-top: 40px;
-	}
 
 	.shop-main__filter {
 		margin-bottom: 20px;
@@ -9862,7 +9888,7 @@ input[type="search"]::-webkit-search-results-decoration {
 	}
 
 	.checkout {
-		padding-top: 60px;
+		padding-top: 30px;
 	}
 
 	.checkout-form__item .box-field__row {
