@@ -54,6 +54,131 @@
                 margin-bottom: 10px;
             }
         }
+
+        /* Updated Floating Price Filter styles */
+        .floating-price-filter {
+            display: none;
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            z-index: 1000;
+        }
+
+        .price-filter-button {
+            width: 45px;
+            /* Reduced from 60px */
+            height: 45px;
+            /* Reduced from 60px */
+            border-radius: 50%;
+            color: white;
+            border: none;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        .price-filter-button img {
+    width: 100%; /* Make the icon fill the button's width */
+    height: 100%; /* Make the icon fill the button's height */
+    object-fit: cover; /* Ensure the icon scales proportionally */
+    border-radius: 50%; /* Maintain the circular shape */
+}
+        .price-filter-button i {
+            font-size: 18px;
+            /* Reduced from 24px */
+        }
+
+        .price-filter-panel {
+            display: none;
+            position: fixed;
+            bottom: 75px;
+            /* Adjusted to be closer to button */
+            right: 20px;
+            background: white;
+            padding: 15px;
+            /* Reduced padding */
+            border-radius: 10px;
+            box-shadow: 0 2px 15px rgba(0, 0, 0, 0.1);
+            width: 260px;
+            transform: scale(0.8);
+            transform-origin: bottom right;
+            transition: all 0.3s ease;
+        }
+
+        .price-filter-panel h4 {
+            font-size: 16px;
+            /* Smaller title */
+            margin-bottom: 10px;
+            font-weight: 500;
+        }
+
+        /* Style for the range slider container */
+        .price-filter-panel .range-slider {
+            margin: 10px 0;
+            padding: 0 10px;
+        }
+
+        /* Style for the IonRangeSlider elements */
+        .price-filter-panel .irs {
+            margin-bottom: 20px;
+        }
+
+        /* Style for the Apply Filter button */
+        #apply-mobile-price-filter {
+            background-color: rgb(151 29 37);
+            color: white;
+            border: none;
+
+            padding: 8px 15px;
+            font-size: 14px;
+            width: 100%;
+            cursor: pointer;
+            margin-top: 68px;
+            transition: background-color 0.3s ease;
+        }
+
+        #apply-mobile-price-filter:hover {
+            background-color: #333333;
+        }
+
+        /* Fix for IonRangeSlider display issues */
+        .price-filter-panel .irs-with-grid {
+            height: 60px;
+        }
+
+        .price-filter-panel .irs-grid {
+            display: none;
+            /* Hide the grid if not needed */
+        }
+
+        /* Ensure the panel is visible when active */
+        .price-filter-panel.active {
+            transform: scale(1);
+            opacity: 1;
+            visibility: visible;
+        }
+
+        /* Media Query for Mobile */
+        @media (max-width: 768px) {
+            .floating-price-filter {
+                display: block;
+            }
+
+            /* Hide the original price filter in sidebar */
+            .shop-aside .shop-aside__item:has(.js-range-slider-price) {
+                display: none;
+            }
+
+            /* Adjust panel position for smaller screens */
+            .price-filter-panel {
+                width: calc(100% - 40px);
+                right: 20px;
+                left: 20px;
+                bottom: 75px;
+            }
+        }
     </style>
 @endsection
 
@@ -168,11 +293,22 @@
                 </div>
             </div>
         </div>
-        {{-- Promotional Image (Optional) --}}
-        {{-- 
-        <img class="promo-video__decor js-img" data-src="{{ asset('user/img/promo-video__decor.jpg') }}"
-        src="{{ asset('user/img/promo-video__decor.jpg') }}" alt="">
-        --}}
+
+        <!-- Floating Price Filter for Mobile -->
+        <div class="floating-price-filter">
+            <button class="price-filter-button">
+                <img src="{{asset('user/img/filter-price.png')}}" alt="">
+            </button>
+            <div class="price-filter-panel">
+                <h4>@lang('shop.price')</h4>
+                <div class="range-slider">
+                    <input type="text" id="mobile-price-range" class="js-range-slider-price-mobile" value="" />
+                </div>
+                <button id="apply-mobile-price-filter">
+                    @lang('shop.filter_price')
+                </button>
+            </div>
+        </div>
     </div>
     <!-- SHOP EOF -->
 @endsection
@@ -197,7 +333,7 @@
             let hairPores = [];
             let hairTypes = [];
             let hairThicknesses = [];
-
+            let mobileInstance;
             // Array of product IDs currently in the wishlist
             let currentWishlistIds = @json($currentWishlistIds ?? []);
 
@@ -595,6 +731,58 @@
                     return item.name_en;
                 }
             }
+            if ($(".js-range-slider-price-mobile").length) {
+                $(".js-range-slider-price-mobile").ionRangeSlider({
+                    skin: "round",
+                    type: 'double',
+                    min: 0,
+                    max: 999,
+                    from: 0,
+                    hide_min_max: 'true',
+                    prefix: "₪",
+                    to: 999
+                });
+
+                mobileInstance = $(".js-range-slider-price-mobile").data("ionRangeSlider");
+            }
+
+            // Toggle Price Filter Panel
+            $('.price-filter-button').on('click', function() {
+                const panel = $('.price-filter-panel');
+                if (panel.is(':visible')) {
+                    panel.removeClass('active');
+                    setTimeout(() => panel.hide(), 300);
+                } else {
+                    panel.show();
+                    setTimeout(() => panel.addClass('active'), 10);
+                }
+            });
+
+            // Close panel when clicking outside
+            $(document).on('click', function(e) {
+                if (!$(e.target).closest('.floating-price-filter').length) {
+                    const panel = $('.price-filter-panel');
+                    if (panel.is(':visible')) {
+                        panel.removeClass('active');
+                        setTimeout(() => panel.hide(), 300);
+                    }
+                }
+            });
+
+            // Apply mobile price filter
+            $('#apply-mobile-price-filter').on('click', function() {
+                let values = mobileInstance.result;
+                priceMin = values.from;
+                priceMax = values.to;
+                page = 1;
+                fetchData();
+
+                // Close the panel
+                const panel = $('.price-filter-panel');
+                panel.removeClass('active');
+                setTimeout(() => panel.hide(), 300);
+            });
+
 
             /* shop range */
             if ($(".js-range-slider-price").length) {
