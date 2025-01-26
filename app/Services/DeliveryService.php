@@ -15,6 +15,7 @@ class DeliveryService
     public function __construct()
     {
         $this->baseUrl = rtrim(config('services.delivery.base_url'), '/');
+        //if you migrate db for the first time comment these
         $this->token = Cache::get('delivery_token');
         $this->tokenExpiry = Cache::get('delivery_token_expiry');
     }

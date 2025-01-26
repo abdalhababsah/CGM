@@ -364,11 +364,17 @@ public function store(Request $request)
     public function import(Request $request)
 {
     $request->validate([
-        'file' => 'required|file|mimes:xlsx,csv',
+        'file' => 'required|file|mimes:xls,xlsx,csv',
     ]);
-
+    
     // Import the Excel file
-    Excel::import(new ProductsImport, $request->file('file'));
+    $productImport = new ProductsImport();
+    $productImport->import( $request->file('file'));
+    
+    foreach ($productImport->failures() as $failure) {
+        $failure->row();
+        $failure->errors();
+    }
 
     return redirect()->route('admin.products.index')->with('success', 'Products imported successfully.');
 }
