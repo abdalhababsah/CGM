@@ -375,15 +375,23 @@
                         renderHairThicknesses(response.hair_thicknesses);
                         renderProducts(response.products.data);
                         renderPagination(response.products);
-                        // Set focus on the products list div
-                        document.getElementById('products-list').scrollIntoView({ behavior: 'smooth' });
-                                    
                     },
                     error: function(xhr, status, error) {
                         console.error('Fetch Products Error:', error);
                         showToast('@lang('shop.error_fetching')', 'error');
                     }
                 });
+
+            // Scroll to the products list div with offset for the fixed header
+            var productsList = document.getElementById('products-list');
+            var headerOffset = 150; // Adjust this value based on your header height
+            var elementPosition = productsList.getBoundingClientRect().top + window.scrollY; // Get the element position relative to the document
+            var offsetPosition = elementPosition - headerOffset;
+
+            window.scrollTo({
+                top: offsetPosition,
+                behavior: 'smooth'
+            });
             }
 
             // Render Categories with Multi-Select
