@@ -375,6 +375,9 @@
                         renderHairThicknesses(response.hair_thicknesses);
                         renderProducts(response.products.data);
                         renderPagination(response.products);
+                        // Set focus on the products list div
+                        document.getElementById('products-list').scrollIntoView({ behavior: 'smooth' });
+                                    
                     },
                     error: function(xhr, status, error) {
                         console.error('Fetch Products Error:', error);
