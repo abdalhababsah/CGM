@@ -124,7 +124,7 @@ Route::get('/cart/count', [CartController::class, 'getCartCount'])->name('cart.c
 Route::get('/shop', [ShopController::class, 'index'])->name('shop.index');
 Route::get('/shop/fetch-products', [ShopController::class, 'fetchProducts'])->name('shop.fetchProducts');
 //view products
-Route::get('/view-product/{product}/{slug}', [ProductController::class, 'show'])->name(name: 'product.show');
+Route::get('/view-product/{product}/{slug}', [ProductController::class, 'show'])->name('product.show');
 
 
 // User Dashboard Routes

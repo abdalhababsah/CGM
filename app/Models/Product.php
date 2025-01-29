@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
@@ -25,6 +26,10 @@ class Product extends Model
         'is_active',
     ];
 
+    protected $appends = [
+        'is_new',
+    ];
+    
     // Relationships
 
     // A product belongs to a category
@@ -89,4 +94,10 @@ class Product extends Model
     {
         return $this->belongsToMany(HairPore::class, 'product_hair_pore');
     }
+    // getter 
+    public function getIsNewAttribute()
+    {
+        return Carbon::parse($this->created_at)->betweenIncluded(now(), now()->subMonth()) ? 1 : 0;
+    }
+
 }

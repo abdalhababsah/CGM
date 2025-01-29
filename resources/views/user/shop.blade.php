@@ -561,6 +561,7 @@
                     productsList.append(`<p>@lang('shop.no_products_found')</p>`);
                     return;
                 }
+console.log(products);
 
                 products.forEach(function(product) {
                     // Determine image URL
@@ -569,10 +570,11 @@
                         'https://via.placeholder.com/262x370';
 
                     let isInWishlist = product.is_in_wishlist;
+                    let isNew = product.is_new;
                     let wishlistBtnClass = isInWishlist ? 'active' : '';
                     let wishlistBtnText = isInWishlist ? '@lang('wishlist.remove')' : '@lang('wishlist.add')';
                     let inStock = product.quantity > 0 ? '@lang('shop.available')' : '@lang('shop.soldOut')';
-                    let back_color = product.quantity > 0 ? 'products-item__sale' : 'products-item__new';
+                    let back_color = product.quantity > 0 ? 'products-item__sale' : 'products-item__soldout';
                     let productUrl =
                         `{{ url('/view-product') }}/${product.id}/${product.name_en.toLowerCase().replace(/[^a-z0-9]+/g, '-')}`;
 
@@ -585,6 +587,13 @@
                             </button>
                         `;
                     }
+                    let newLable = '';
+                    if (isNew) {
+                        newLable =`
+                        <div class="products-item__type1">
+                            <span class="products-item__new">@lang("shop.new")</span>
+                        </div>`
+                    }
 
                     productsList.append(`
                         <div class="products-item">
@@ -593,7 +602,8 @@
                                     <div class="products-item__type">
                                         <span class="${back_color}">${inStock}</span>
                                     </div>
-                                    <img style="object-fit:contain;" data-src="${imageUrl}"
+                                    ${newLable}
+                                    <img style="object-fit:contain;" data-src="${imageUrl ?? ''}"
                                         src="data:image/gif;base64,R0lGODlhAQABAAAAACw="
                                         class="js-img" alt="${getLocalizedName(product)}">
                                     <div class="products-item__hover">
