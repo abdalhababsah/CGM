@@ -204,8 +204,8 @@
     <!-- DETAIL MAIN BLOCK EOF -->
 
     <!-- BEGIN SHOP -->
-    <div class="shop">
-        <div class="wrapper shop-bg">
+    <div class="shop shop-bg">
+        <div class="wrapper">
             <div class="shop-content">
                 <div class="shop-aside">
                     <!-- Search Field -->
