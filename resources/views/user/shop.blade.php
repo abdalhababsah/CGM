@@ -205,7 +205,7 @@
 
     <!-- BEGIN SHOP -->
     <div class="shop">
-        <div class="wrapper">
+        <div class="wrapper shop-bg">
             <div class="shop-content">
                 <div class="shop-aside">
                     <!-- Search Field -->
