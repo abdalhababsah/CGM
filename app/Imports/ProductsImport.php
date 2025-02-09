@@ -4,6 +4,7 @@ namespace App\Imports;
 
 use App\Models\Product;
 use App\Models\ProductImage;
+use Carbon\Carbon;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Storage;
@@ -83,6 +84,7 @@ class ProductsImport implements ToModel, WithHeadingRow, SkipsOnError, WithValid
                     'description_en' => $row['description_en'] ?? null,
                     'description_ar' => $row['description_ar'] ?? null,
                     'description_he' => $row['description_he'] ?? null,
+                    'created_at' => $row['new'] ? now() : Carbon::now()->subMonth(),
                 ]
             );
     
