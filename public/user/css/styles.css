@@ -6422,6 +6422,11 @@ blockquote:after,
 	color: #666666;
 }
 
+.cart-table__old_price {
+    text-decoration: line-through;
+    color: #c98a88;
+}
+
 .cart-table__price {
 	color: #666666;
 	font-size: 18px;

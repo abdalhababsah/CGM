@@ -25,6 +25,7 @@ class Product extends Model
         'description_he',
         'is_active',
         'created_at',
+        'discount',
     ];
 
     protected $appends = [

@@ -172,6 +172,12 @@
                         `<span style="color: green;">{{ __('cart.in_stock') }} (${item.available_quantity})</span>` :
                         `<span style="color: red;">{{ __('cart.out_of_stock') }}</span>`;
 
+                    let oldPrice = item.old_price ? 
+                    `<span class="cart-table__old_price" data-price="${item.old_price}">
+                        ₪${parseFloat(item.old_price).toFixed(2)}
+                    </span>`
+                    :'';
+
                     cartHtml += `
         <div class="cart-table__row" data-product-id="${item.product_id}">
             <div class="cart-table__col">
@@ -187,6 +193,7 @@
                 <span class="cart-table__price" data-price="${item.price}">
                     ₪${parseFloat(item.price).toFixed(2)}
                 </span>
+                ${oldPrice}
             </div>
             <div class="cart-table__col">
                 <div class="cart-table__quantity">

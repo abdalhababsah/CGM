@@ -182,7 +182,8 @@ public function updateQuantity($productId, $quantity)
      *
      * @return array
      */
-    public function getCartItems()
+    public function 
+    getCartItems()
     {
         if (Auth::check()) {
             $cartItems = $this->cart->cartItems()->with('product')->get();
@@ -192,20 +193,22 @@ public function updateQuantity($productId, $quantity)
                 return [
                     'product_id' => $item->product->id,
                     'name' => $this->getLocalizedName($item->product),
-                    'price' => $item->product->price,
+                    'price' => $item->product->price  * (1-$item->product->discount/100),
+                    'old_price' => ($item->product->discount > 0) ? $item->product->price : null,
+                    'discount' => $item->product->discount,
                     'quantity' => $item->quantity,
-                    'total' => $item->quantity * $item->product->price,
+                    // 'total' => $item->quantity * $item->product->price * (1-$item->product->discount/100),
                     'image_url' => $item->product->primaryImage ? asset('storage/' . $item->product->primaryImage->image_url) : 'https://via.placeholder.com/262x370',
                     'available_quantity' => $item->product->quantity,
                     'in_stock' => $inStock
                 ];
             });
-
+            
             return $items->toArray();
         } else {
             $cart = $this->getGuestCart();
             $items = [];
-
+            
             foreach ($cart as $productId => $quantity) {
                 $product = Product::find($productId);
                 if ($product && $product->is_active) {
@@ -213,9 +216,11 @@ public function updateQuantity($productId, $quantity)
                     $items[] = [
                         'product_id' => $product->id,
                         'name' => $this->getLocalizedName($product),
-                        'price' => $product->price,
+                        'price' => $product->price * (1-$product->discount/100),
+                        'old_price' => ($product->discount > 0) ? $product->price : null,
+                        'discount' => $product->discount,
                         'quantity' => $quantity,
-                        'total' => $quantity * $product->price,
+                        'total' => $quantity * $product->price * (1-$product->discount/100),
                         'image_url' => $product->primaryImage ? asset('storage/' . $product->primaryImage->image_url) : 'https://via.placeholder.com/262x370',
                         'available_quantity' => $product->quantity,
                         'in_stock' => $inStock
@@ -238,7 +243,8 @@ public function updateQuantity($productId, $quantity)
         $total = 0;
 
         foreach ($items as $item) {
-            $productTotal = $item['price'] * $item['quantity'];
+            $price = $item['price']* (1-$item['discount']/100) ?? $item['price'];
+            $productTotal =  $price * $item['quantity'];
             $total += $productTotal;
         }
 
