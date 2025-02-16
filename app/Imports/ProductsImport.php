@@ -173,7 +173,7 @@ class ProductsImport implements ToModel, WithHeadingRow, SkipsOnError, WithValid
             }
 
             // Generate a unique filename
-            $filename = time() . '_' . Str::random(10) . '.jpg';
+            $filename = time() . '_' . Str::random(10) . '.png';
             $path = 'products/' . $filename;
 
             // Store the image
