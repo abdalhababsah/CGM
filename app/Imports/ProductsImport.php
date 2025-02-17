@@ -84,7 +84,7 @@ class ProductsImport implements ToModel, WithHeadingRow, SkipsOnError, WithValid
                     'description_en' => $row['description_en'] ?? null,
                     'description_ar' => $row['description_ar'] ?? null,
                     'description_he' => $row['description_he'] ?? null,
-                    'created_at' => $row['new'] ? now() : Carbon::now()->subMonth(),
+                    'created_at' => ($row['new'] ?? 1) ? now() : Carbon::now()->subMonth(),
                 ]
             );
     
@@ -173,7 +173,7 @@ class ProductsImport implements ToModel, WithHeadingRow, SkipsOnError, WithValid
             }
 
             // Generate a unique filename
-            $filename = time() . '_' . Str::random(10) . '.jpg';
+            $filename = time() . '_' . Str::random(10) . '.png';
             $path = 'products/' . $filename;
 
             // Store the image
