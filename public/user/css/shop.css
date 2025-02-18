@@ -71,3 +71,183 @@
 .active {
     color: rgb(128, 0, 0) !important;
 }
+/* Base styles for the title */
+.shop-aside__item-title {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 24px;
+    line-height: 100%;
+    text-transform: capitalize;
+    padding: 10px 0;
+    color: #222222;
+    font-family: "Tenor Sans";
+    border-bottom: 2px solid #222222;
+    margin-bottom: 15px;
+    position: relative;
+    cursor: pointer;
+}
+
+/* Plus/Minus icon styles */
+.shop-aside__item-title::after {
+    content: '+';
+    font-size: 20px;
+    transition: transform 0.3s ease;
+    margin-left: 10px;
+    /* Space for LTR */
+    margin-right: 10px;
+    /* Space for RTL */
+}
+
+/* Active state */
+.shop-aside__item-title.active::after {
+    content: '-';
+}
+
+/* Responsive styles */
+@media (max-width: 768px) {
+    .shop-aside__item-title {
+        font-size: 16px;
+    }
+
+    .shop-aside__item-title::after {
+        font-size: 18px;
+    }
+}
+
+@media screen and (max-width: 767px) {
+    .shop-aside__item-title {
+        margin-bottom: 10px;
+    }
+}
+
+/* Updated Floating Price Filter styles */
+.floating-price-filter {
+    display: none;
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    z-index: 1000;
+}
+
+.price-filter-button {
+    width: 45px;
+    /* Reduced from 60px */
+    height: 45px;
+    /* Reduced from 60px */
+    border-radius: 50%;
+    color: white;
+    border: none;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+.price-filter-button img {
+width: 100%; /* Make the icon fill the button's width */
+height: 100%; /* Make the icon fill the button's height */
+object-fit: cover; /* Ensure the icon scales proportionally */
+border-radius: 50%; /* Maintain the circular shape */
+}
+.price-filter-button i {
+    font-size: 18px;
+    /* Reduced from 24px */
+}
+
+.price-filter-panel {
+    display: none;
+    position: fixed;
+    bottom: 75px;
+    /* Adjusted to be closer to button */
+    right: 20px;
+    background: white;
+    padding: 15px;
+    /* Reduced padding */
+    border-radius: 10px;
+    box-shadow: 0 2px 15px rgba(0, 0, 0, 0.1);
+    width: 260px;
+    transform: scale(0.8);
+    transform-origin: bottom right;
+    transition: all 0.3s ease;
+}
+
+.price-filter-panel h4 {
+    font-size: 16px;
+    /* Smaller title */
+    margin-bottom: 10px;
+    font-weight: 500;
+}
+
+/* Style for the range slider container */
+.price-filter-panel .range-slider {
+    margin: 10px 0;
+    padding: 0 10px;
+}
+
+/* Style for the IonRangeSlider elements */
+.price-filter-panel .irs {
+    margin-bottom: 20px;
+}
+
+/* Style for the Apply Filter button */
+#apply-mobile-price-filter {
+    background-color: rgb(151 29 37);
+    color: white;
+    border: none;
+
+    padding: 8px 15px;
+    font-size: 14px;
+    width: 100%;
+    cursor: pointer;
+    margin-top: 68px;
+    transition: background-color 0.3s ease;
+}
+
+#apply-mobile-price-filter:hover {
+    background-color: #333333;
+}
+
+/* Fix for IonRangeSlider display issues */
+.price-filter-panel .irs-with-grid {
+    height: 60px;
+}
+
+.price-filter-panel .irs-grid {
+    display: none;
+    /* Hide the grid if not needed */
+}
+
+/* Ensure the panel is visible when active */
+.price-filter-panel.active {
+    transform: scale(1);
+    opacity: 1;
+    visibility: visible;
+}
+.shop-main__items .products-item__cost del {
+    color: #c98a88;
+    font-size: 80%;
+    margin: 5px;
+}
+
+/* Media Query for Mobile */
+@media (max-width: 768px) {
+    .floating-price-filter {
+        display: block;
+    }
+
+    /* Hide the original price filter in sidebar */
+    .shop-aside .shop-aside__item:has(.js-range-slider-price) {
+        display: none;
+    }
+
+    /* Adjust panel position for smaller screens */
+    .price-filter-panel {
+        width: calc(100% - 40px);
+        right: 20px;
+        left: 20px;
+        bottom: 75px;
+    }
+}
+

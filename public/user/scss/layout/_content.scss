@@ -16,8 +16,8 @@
 	flex-direction:column;
     -webkit-flex-direction:column;
     -ms-flex-direction: column;
-	justify-content:flex-start;	
-    -webkit-justify-content:flex-start;	
+	justify-content:flex-start;
+    -webkit-justify-content:flex-start;
     -ms-flex-pack: start;
 }
 .wrapper{
@@ -29,19 +29,19 @@
 }
 
 /* titles */
-p {	
+p {
 	@include font($base-font-size,$base-line-height,$text-color);
-	font-weight: 400;	
+	font-weight: 400;
 	line-height: 170%;
 }
-h1 {	
+h1 {
 	@include font($font-size-h1,$line-height-h1,$title-color);
 	font-family: 'Tenor Sans';
 	text-transform: capitalize;
-	font-weight: 400;	
+	font-weight: 400;
 }
 h2 {
-	@include font($font-size-h2,$line-height-h2,$title-color);	
+	@include font($font-size-h2,$line-height-h2,$title-color);
 	font-family: 'Tenor Sans';
 	text-transform: capitalize;
 	font-weight: 400;
@@ -96,7 +96,7 @@ h6, .title6 {
 |                                     CONTENT                                 |
 ================================================================================
 */
-.content{	
+.content{
 	min-width: $min-width;
 	text-align:left;
     width: 100%;
@@ -280,7 +280,7 @@ h6, .title6 {
 		}
 	}
 }
- 
+
 .products {
 	&-items {
 		padding: 0 115px;
@@ -730,7 +730,7 @@ h6, .title6 {
 			h2, p {
 				max-width: 456px;
 			}
-			
+
 			p {
 				display: block;
 				font-size: 16px;
@@ -883,7 +883,7 @@ h6, .title6 {
 		margin-bottom: 15px;
 		// display: -webkit-box;
 		// -webkit-line-clamp: 1;
-		// -webkit-box-orient: vertical;  
+		// -webkit-box-orient: vertical;
 		// overflow: hidden;
 		// text-transform: capitalize;
 		&:hover {
@@ -894,7 +894,7 @@ h6, .title6 {
 		margin-bottom: 25px;
 		display: -webkit-box;
 		-webkit-line-clamp: 2;
-		-webkit-box-orient: vertical;  
+		-webkit-box-orient: vertical;
 		overflow: hidden;
 		width: 90%;
 	}
@@ -986,11 +986,11 @@ h6, .title6 {
 			color: #999999;
 			opacity: 1;
 		}
-		  
-		&:-ms-input-placeholder { 
+
+		&:-ms-input-placeholder {
 			color: #999999;
 		}
-		  
+
 		&::-ms-input-placeholder {
 			color: #999999;
 		}
@@ -1122,7 +1122,7 @@ h6, .title6 {
 			&:hover {
 				color: #D05278;
 			}
-			
+
 		}
 		&:last-of-type {
 			&:after {
@@ -1377,7 +1377,7 @@ h6, .title6 {
 		height: 100%;
 		pointer-events: none;
 		position: relative;
-		
+
 		&:after {
 			position: absolute;
 			width: 100%;
@@ -1510,7 +1510,7 @@ h6, .title6 {
 				background-color: #EEEEEE;
 				width: 95.5%;
 				height: 1px;
-			} 
+			}
 		}
 		&__content {
 			padding-top: 0;
@@ -1528,7 +1528,7 @@ h6, .title6 {
 				background-color: #EEEEEE;
 				width: 95.5%;
 				height: 1px;
-			} 
+			}
 		}
 		&.active {
 			// margin-top: 50px;
@@ -1545,7 +1545,7 @@ h6, .title6 {
 				&:before {
 					display: none;
 				}
-				
+
 			}
 		}
 	}
@@ -1694,7 +1694,7 @@ h6, .title6 {
 						display: block;
 					}
 				}
-				
+
 			}
 		}
 		&__user {
@@ -1940,7 +1940,7 @@ h6, .title6 {
 					background-image: url(../img/comment-form-decor.png);
 					left: 50%;
 					top: 0%;
-					width: 380px;				
+					width: 380px;
 				}
 			}
 			form {
@@ -1973,7 +1973,7 @@ h6, .title6 {
 	}
 }
 
-blockquote, 
+blockquote,
 .blockquote {
 	font-size: 20px;
 	line-height: 150%;
@@ -2264,7 +2264,7 @@ blockquote,
 	align-items: center;
 	margin-right: 19px;
 }
-  
+
 .checkbox-box input {
 	position: absolute;
 	opacity: 0;
@@ -2272,7 +2272,7 @@ blockquote,
 	height: 0;
 	width: 0;
 }
-  
+
 .checkmark {
 	width: 15px;
 	height: 15px;
@@ -2285,17 +2285,17 @@ blockquote,
 	background-color: #fff;
 	transition: $transition;
 }
-  
+
 .checkbox-box input:checked ~ .checkmark {
 	background-color: #D05278;
 }
-  
+
 .checkmark:after {
 	content: "";
 	position: absolute;
 	display: none;
 }
-  
+
 .checkbox-box input:checked ~ .checkmark:after {
 	display: block;
 }
@@ -2519,7 +2519,7 @@ blockquote,
 		margin-top: 60px;
 		padding-bottom: 60px;
 		border-bottom: 1px solid #eee;
-		
+
 		&__form {
 			margin-top: 0;
 			width: 410px;
@@ -3174,9 +3174,9 @@ blockquote,
 				font-size: 10px;
 				line-height: 170%;
 			}
-			
+
 		}
-		
+
 	}
 }
 
@@ -3285,7 +3285,7 @@ blockquote,
 			font-size: 12px;
 			line-height: 145%;
 			text-transform: initial;
-			font-family: 'Lato', sans-serif; 
+			font-family: 'Lato', sans-serif;
 			color: #999999;
 		    width: 250px;
 			left: 43px;
@@ -3312,7 +3312,7 @@ blockquote,
 		}
 	}
 }
-  
+
 .radio-box input {
 	position: absolute;
 	opacity: 0;
@@ -3320,7 +3320,7 @@ blockquote,
 	height: 0;
 	width: 0;
 }
-  
+
 .radio-box .checkmark {
 	position: absolute;
 	top: -1px;
@@ -3331,13 +3331,13 @@ blockquote,
 	border-radius: 50%;
 	border: 2px solid #999999;
 }
-  
+
 .radio-box .checkmark:after {
 	content: "";
 	position: absolute;
 	display: none;
 }
-  
+
 .radio-box input:checked ~ .checkmark:after {
 	display: block;
 }
@@ -4123,7 +4123,7 @@ input[type="search"]::-webkit-search-results-decoration { display: none; }
 	.cart-table__img {
 		min-width: 110px;
 	}
-	
+
 	.error-page__info {
 		max-width: 420px;
 		margin-right: 65px;
@@ -4318,7 +4318,7 @@ input[type="search"]::-webkit-search-results-decoration { display: none; }
 		flex-wrap: wrap;
 		margin-top: 110px;
 	}
-	
+
 	.subscribe-form form {
 		padding-bottom: 20px;
 	}
@@ -4540,7 +4540,7 @@ input[type="search"]::-webkit-search-results-decoration { display: none; }
 	.checkout-buttons {
 		margin-top: 40px;
 	}
-	
+
 	.login {
 		padding-top: 110px;
 	}
@@ -4601,7 +4601,7 @@ input[type="search"]::-webkit-search-results-decoration { display: none; }
 		width: calc(50% - 30px);
 	}
 
-	
+
 	.arrivals {
 		padding-top: 40px;
 	}
@@ -4619,7 +4619,7 @@ input[type="search"]::-webkit-search-results-decoration { display: none; }
 	.cart-table__col:first-of-type {
 		width: 48%;
 	}
-	
+
 	.wishlist .cart-table__col:first-of-type {
 		width: 48%;
 	}
@@ -4717,7 +4717,7 @@ input[type="search"]::-webkit-search-results-decoration { display: none; }
 	.products-item__name {
 		font-size: 20px;
 		margin-bottom: 0px;
-	}	
+	}
 	.products-item__cost {
 		font-size: 16px;
 	}
@@ -4898,7 +4898,7 @@ input[type="search"]::-webkit-search-results-decoration { display: none; }
 	}
 	.subscribe-form form {
 		padding-bottom: 0;
-	} 
+	}
 
 	.insta-photos {
 		margin-top: 60px;
@@ -5319,7 +5319,7 @@ input[type="search"]::-webkit-search-results-decoration { display: none; }
 	.product {
 		padding-top: 60px;
 	}
-	
+
 	.product-stock {
 		margin-top: 10px;
 	}
@@ -5503,7 +5503,7 @@ input[type="search"]::-webkit-search-results-decoration { display: none; }
 		font-size: 14px;
 	}
 
-	
+
 	.checkout-order__item-img {
 		min-width: 95px;
 		width: 95px;

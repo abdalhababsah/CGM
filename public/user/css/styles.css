@@ -4060,7 +4060,7 @@ h6,
 
 .detail-block {
 	padding-top: 218px;
-	background-image: url(../img/socialmedia-01.jpg);
+	background-image: url(../img/socialmedia.jpg);
 	background-position: center;
 	background-repeat: no-repeat;
 	-webkit-background-size: cover;
@@ -5453,7 +5453,7 @@ blockquote:after,
 .shop-aside__item ul li a {
 	font-size: 16px;
 	line-height: 170%;
-	color: #666666;
+	text-shadow: 1px 1px 2px white;
 	display: block;
 	padding: 13px;
 	border-bottom: 1px solid #eeeeee;
@@ -7893,7 +7893,7 @@ input[type="search"]::-webkit-search-results-decoration {
     display: flex;
     flex-wrap: nowrap;
 	gap: 20px;
-    overflow-x: auto;   
+    overflow-x: auto;
 	overflow-y: hidden !important; /* Enable horizontal scrolling */
     overflow-y: visible; /* Allow vertical overflow */
     position: relative;  /* Establish a new positioning context */
@@ -8530,7 +8530,7 @@ input[type="search"]::-webkit-search-results-decoration {
 		margin-top: 20px;
 		width: 100%;
 		position: relative;
-		z-index: 10; 
+		z-index: 10;
 	}
 	.shop-main__select select {
 		position: relative;
@@ -10440,10 +10440,15 @@ input[type="search"]::-webkit-search-results-decoration {
 }
 
 .shop-bg {
-    background-image: url(../img/filter-bg.png);
+    background-image: url(../img/cream-rotate.png);
     background-repeat: no-repeat;
+    opacity: 85%;
+    background-position-x: -200px;
+    background-position-y: -200px;
 }
 
-
-
+del {
+    font-size: 70%;
+    color: #c98a88;
+}
 /* contact us */

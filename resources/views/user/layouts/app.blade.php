@@ -91,7 +91,7 @@
             /**
              * Function to fetch and update the cart count.
              */
-            function updateGlopalCartCount() {
+            function updateGlobalCartCount() {
                 $.ajax({
                     url: "{{ route('cart.count') }}",
                     method: "GET",
@@ -107,10 +107,10 @@
             }
 
             // Make updateCartCount globally accessible
-            window.updateGlopalCartCount = updateGlopalCartCount;
+            window.updateGlobalCartCount = updateGlobalCartCount;
 
             // Initial cart count fetch on page load
-            updateGlopalCartCount();
+            updateGlobalCartCount();
         });
     </script>
     @yield('scripts')

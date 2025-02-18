@@ -24,8 +24,8 @@
                                     <tr>
                                         <td>
                                             <div class="d-flex align-items-center">
-                                                <img src="{{ $item->product->primaryImage->url ?? 'https://via.placeholder.com/50' }}" 
-                                                     alt="{{ $item->product->name_en }}" 
+                                                <img src="{{ $item->product->primaryImage->url ?? 'https://via.placeholder.com/50' }}"
+                                                     alt="{{ $item->product->name_en }}"
                                                      class="rounded me-3" width="50">
                                                 <span>{{ $item->product->name_en }}</span>
                                             </div>
@@ -49,8 +49,9 @@
                     <hr>
 
                     <h6>Delivery Information</h6>
+                    <p><strong>City:</strong> {{ $order->deliveryLocation->city ?? 'N/A' }}</p>
+                    <p><strong>Area:</strong> {{ $order->areaLocation->area ?? 'N/A' }}</p>
                     <p><strong>Address:</strong> {{ $order->orderLocation->address ?? 'N/A' }}</p>
-                    <p><strong>City:</strong> {{ $order->orderLocation->city ?? 'N/A' }}</p>
                 </div>
             </div>
         </div>
@@ -96,7 +97,7 @@
                     <a href="{{ route('admin.orders.index') }}" class="btn btn-secondary mb-3">
                         <i class="mdi mdi-arrow-left"></i> Back to Orders
                     </a>
-                    <a href="{{ route('admin.orders.invoice.download', ['order' => $order->id, 'language' => 'en']) }}" 
+                    <a href="{{ route('admin.orders.invoice.download', ['order' => $order->id, 'language' => 'en']) }}"
                        class="btn btn-primary">
                         <i class="mdi mdi-download"></i> Download Invoice
                     </a>

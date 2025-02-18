@@ -18,6 +18,9 @@ class HairPore extends Model
         'name_ar',
         'name_he',
     ];
+    protected $appends = [
+        'name',
+    ];
 
     /**
      * The products that belong to the hair pore.
@@ -25,5 +28,14 @@ class HairPore extends Model
     public function products()
     {
         return $this->belongsToMany(Product::class, 'product_hair_pore');
+    }
+
+    //Localize
+    public function getNameAttribute()
+    {
+        $local = config('app.locale');
+        return $this->attributes['name_'.$local]
+        ?? $this->attributes['name_en']
+        ?? $this->attributes['name'];
     }
 }

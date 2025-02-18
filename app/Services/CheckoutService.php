@@ -81,10 +81,6 @@ class CheckoutService
      */
     public function processCheckout(array $data)
     {
-        // dd($data);
-        // Log incoming data for debugging
-        Log::info('Processing checkout with data:', $data);
-
         $cartDetails = $this->cartService->getCartDetails();
         $totalPrice = $cartDetails['totalPrice'];
         $deliveryLocation = $data['delivery_location_id'];
@@ -109,7 +105,7 @@ class CheckoutService
                     'phone' => $data['phone'] ?? $user->phone,
                     'email' => $data['email'] ?? $user->email,
                 ]);
-    
+
                 Log::info('User information updated:', $user->toArray());
             }
             // Fetch discount code if applicable
@@ -137,6 +133,7 @@ class CheckoutService
                 'preferred_language' => Auth::user()->preferred_language ?? 'en',
                 'note' => $data['note'] ?? null,
             ]);
+                Log::info('Order information updated:', $order->toArray());
 
             // Create Order Location
             $orderLocation = OrderLocation::create([
@@ -167,13 +164,11 @@ class CheckoutService
 
             // Clear the cart
             $this->cartService->clearCart();
-            $this->orderService->postCheckout($order);
+            // $this->orderService->postCheckout($order);
             DB::commit();
 
-
-            
-                    // Dispatch the event after the transaction
-        event(new OrderPlaced($order));
+            // Dispatch the event after the transaction
+            // event(new OrderPlaced($order));
             return $order;
         } catch (\Exception $e) {
             DB::rollback();

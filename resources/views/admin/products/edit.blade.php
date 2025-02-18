@@ -206,6 +206,11 @@
                                     required</span>
                             </div>
                             <div class="mb-3">
+                                <label for="discount" class="form-label">Discount %</label>
+                                <input type="number" name="discount" id="discount" class="form-control styled-input"
+                                value="{{ old('discount', $product) }}">
+                            </div>
+                            <div class="mb-3">
                                 <label for="quantity" class="form-label">Quantity</label>
                                 <input type="number" name="quantity" id="quantity" class="form-control styled-input"
                                     value="{{ old('quantity', $product->quantity) }}" required>
@@ -483,6 +488,7 @@
                         category_id: $('#category_id').val(),
                         brand_id: $('#brand_id').val(),
                         price: $('#price').val(),
+                        discount: $('#discount').val(),
                         quantity: $('#quantity').val(),
                         is_active: $('#is_active').val(),
                         hair_pores: $('#hair_pores').val(),

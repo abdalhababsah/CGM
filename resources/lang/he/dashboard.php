@@ -35,6 +35,7 @@ return [
         'phone'              => 'טלפון',
         'delivery_information' => 'מידע משלוח',
         'address'            => 'כתובת',
+        'area'               => 'אֵזוֹר',
         'city'               => 'עיר',
         'country'            => 'מדינה',
     ],

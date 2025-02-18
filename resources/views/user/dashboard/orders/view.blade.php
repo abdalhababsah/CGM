@@ -7,7 +7,7 @@
             <div class="card border shadow-none">
                 <div class="card-header bg-transparent border-bottom py-3 px-4">
                     <h5 class="font-size-16 mb-0">
-                        @lang('dashboard.order_details.order_details') 
+                        @lang('dashboard.order_details.order_details')
                         <span class="float-end">#{{ $order->id }}</span>
                     </h5>
                 </div>
@@ -28,8 +28,8 @@
                                     <tr>
                                         <td>
                                             <div class="d-flex align-items-center">
-                                                <img src="{{ $item->product->primaryImage->url ?? 'https://via.placeholder.com/50' }}" 
-                                                     alt="{{ $item->product->{'name_' . app()->getLocale()} }}" 
+                                                <img src="{{ $item->product->primaryImage->url ?? 'https://via.placeholder.com/50' }}"
+                                                     alt="{{ $item->product->{'name_' . app()->getLocale()} }}"
                                                      class="rounded me-3" width="50">
                                                 <span>{{ $item->product->{'name_' . app()->getLocale()} }}</span>
                                             </div>
@@ -55,9 +55,10 @@
 
                     <!-- Delivery Information -->
                     <h6>@lang('dashboard.order_details.delivery_information')</h6>
+                    <p><strong>@lang('dashboard.order_details.city'):</strong> {{ $order->deliveryLocation->city ?? 'N/A' }}</p>
+                    <p><strong>@lang('dashboard.order_details.area'):</strong> {{ $order->areaLocation->area ?? 'N/A' }}</p>
                     <p><strong>@lang('dashboard.order_details.address'):</strong> {{ $order->orderLocation->address ?? 'N/A' }}</p>
-                    <p><strong>@lang('dashboard.order_details.city'):</strong> {{ $order->orderLocation->city ?? 'N/A' }}</p>
-                    <p><strong>@lang('dashboard.order_details.country'):</strong> {{ $order->orderLocation->country ?? 'N/A' }}</p>
+                    {{-- <p><strong>@lang('dashboard.order_details.country'):</strong> {{ $order->orderLocation->country ?? 'N/A' }}</p> --}}
                 </div>
             </div>
         </div>

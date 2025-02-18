@@ -9,7 +9,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Cookie;
 use Illuminate\Support\Facades\DB;
 
-class CartService
+class CartServiceOld
 {
     protected $cart;
     protected $cookieName = 'guest_cart';
@@ -112,96 +112,95 @@ class CartService
             }
         }
     }
-
-    /**
-     * Update the quantity of a product in the cart.
-     *
-     * If requested quantity exceeds available stock, it is automatically adjusted to the maximum available quantity.
-     *
-     * @param int $productId
-     * @param int $quantity
-     * @return array
-     */
-    public function updateQuantity($productId, $quantity)
-    {
-        if ($quantity < 1) {
-            return ['status' => 'error', 'message' => __('cart.invalid_quantity')];
-        }
-
-        $product = Product::find($productId);
-
-        if (!$product || !$product->is_active) {
-            return ['status' => 'error', 'message' => __('cart.product_not_found')];
-        }
-
-        if (Auth::check()) {
-            $cartItem = $this->cart->cartItems()->where('product_id', $productId)->first();
-
-            if ($cartItem) {
-                $currentQuantity = $cartItem->quantity;
-
-                // Check if the user is increasing or decreasing the quantity
-                if ($quantity > $currentQuantity) {
-                    // Increasing the quantity, check stock
-                    if ($quantity > $product->quantity) {
-                        return ['status' => 'error', 'message' => __('cart.reached_max_quantity')];
-                    }
-                }
-
-                // Update the quantity in the cart
-                $cartItem->quantity = $quantity;
-                $cartItem->save();
-            } else {
-                return ['status' => 'error', 'message' => __('cart.product_not_in_cart')];
-            }
-        } else {
-            $cart = $this->getGuestCart();
-
-            if (isset($cart[$productId])) {
-                $currentQuantity = $cart[$productId];
-
-                // Check if the user is increasing or decreasing the quantity
-                if ($quantity > $currentQuantity) {
-                    // Increasing the quantity, check stock
-                    if ($quantity > $product->quantity) {
-                        return ['status' => 'error', 'message' => __('cart.reached_max_quantity')];
-                    }
-                }
-
-                // Update the quantity in the guest cart
-                $cart[$productId] = $quantity;
-                $this->saveGuestCart($cart);
-            } else {
-                return ['status' => 'error', 'message' => __('cart.product_not_in_cart')];
-            }
-        }
-
-        return ['status' => 'success', 'message' => __('cart.cart_updated')];
+/**
+ * Update the quantity of a product in the cart.
+ *
+ * If requested quantity exceeds available stock, it is automatically adjusted to the maximum available quantity.
+ *
+ * @param int $productId
+ * @param int $quantity
+ * @return array
+ */
+public function updateQuantity($productId, $quantity)
+{
+    if ($quantity < 1) {
+        return ['status' => 'error', 'message' => __('cart.invalid_quantity')];
     }
 
+    $product = Product::find($productId);
+
+    if (!$product || !$product->is_active) {
+        return ['status' => 'error', 'message' => __('cart.product_not_found')];
+    }
+
+    if (Auth::check()) {
+        $cartItem = $this->cart->cartItems()->where('product_id', $productId)->first();
+
+        if ($cartItem) {
+            $currentQuantity = $cartItem->quantity;
+
+            // Check if the user is increasing or decreasing the quantity
+            if ($quantity > $currentQuantity) {
+                // Increasing the quantity, check stock
+                if ($quantity > $product->quantity) {
+                    return ['status' => 'error', 'message' => __('cart.reached_max_quantity')];
+                }
+            }
+
+            // Update the quantity in the cart
+            $cartItem->quantity = $quantity;
+            $cartItem->save();
+        } else {
+            return ['status' => 'error', 'message' => __('cart.product_not_in_cart')];
+        }
+    } else {
+        $cart = $this->getGuestCart();
+
+        if (isset($cart[$productId])) {
+            $currentQuantity = $cart[$productId];
+
+            // Check if the user is increasing or decreasing the quantity
+            if ($quantity > $currentQuantity) {
+                // Increasing the quantity, check stock
+                if ($quantity > $product->quantity) {
+                    return ['status' => 'error', 'message' => __('cart.reached_max_quantity')];
+                }
+            }
+
+            // Update the quantity in the guest cart
+            $cart[$productId] = $quantity;
+            $this->saveGuestCart($cart);
+        } else {
+            return ['status' => 'error', 'message' => __('cart.product_not_in_cart')];
+        }
+    }
+
+    return ['status' => 'success', 'message' => __('cart.cart_updated')];
+}
     /**
      * Get all cart items.
      *
      * @return array
      */
-    public function getCartItems()
+    public function
+    getCartItems()
     {
         if (Auth::check()) {
             $cartItems = $this->cart->cartItems()->with('product')->get();
 
             $items = $cartItems->map(function ($item) {
+                $inStock = $item->product->quantity > 0;
                 return [
                     'product_id' => $item->product->id,
-                    'name' => $item->product->name,
-                    'description' => $item->product->description,
-                    'price' => $item->product->price,
-                    'discounted_price' => $item->product->discounted_price,
+                    'name' => $this->getLocalizedName($item->product),
+                    'price' => $item->product->price  * (1-$item->product->discount/100),
+                    'old_price' => ($item->product->discount > 0) ? $item->product->price : null,
                     'discount' => $item->product->discount,
                     'quantity' => $item->quantity,
-                    'total' => $item->quantity * $item->product->discounted_price,
+                    // 'total' => $item->quantity * $item->product->price * (1-$item->product->discount/100),
                     'image_url' => $item->product->primaryImage ? asset('storage/' . $item->product->primaryImage->image_url) : 'https://via.placeholder.com/262x370',
                     'available_quantity' => $item->product->quantity,
-                    'in_stock' => $item->product->in_stock
+                    'in_stock' => $inStock
                 ];
             });
 
@@ -213,18 +212,18 @@ class CartService
             foreach ($cart as $productId => $quantity) {
                 $product = Product::find($productId);
                 if ($product && $product->is_active) {
+                    $inStock = $product->quantity > 0;
                     $items[] = [
                         'product_id' => $product->id,
-                        'name' => $product->name,
-                        'description' => $product->description,
-                        'discounted_price' => $product->discounted_price,
-                        'price' => $product->price,
+                        'name' => $this->getLocalizedName($product),
+                        'price' => $product->price * (1-$product->discount/100),
+                        'old_price' => ($product->discount > 0) ? $product->price : null,
                         'discount' => $product->discount,
                         'quantity' => $quantity,
-                        'total' => $quantity * $product->discounted_price,
+                        'total' => $quantity * $product->price * (1-$product->discount/100),
                         'image_url' => $product->primaryImage ? asset('storage/' . $product->primaryImage->image_url) : 'https://via.placeholder.com/262x370',
                         'available_quantity' => $product->quantity,
-                        'in_stock' => $product->in_stock
+                        'in_stock' => $inStock
                     ];
                 }
             }
@@ -244,7 +243,8 @@ class CartService
         $total = 0;
 
         foreach ($items as $item) {
-            $productTotal = $item['discounted_price'] * $item['quantity'];
+            $price = $item['price']* (1-$item['discount']/100) ?? $item['price'];
+            $productTotal =  $price * $item['quantity'];
             $total += $productTotal;
         }
 
@@ -315,6 +315,24 @@ class CartService
         Cookie::queue(Cookie::forget($this->cookieName));
     }
 
+    /**
+     * Helper function to get localized product name.
+     *
+     * @param \App\Models\Product $product
+     * @return string
+     */
+    protected function getLocalizedName($product)
+    {
+        $locale = app()->getLocale();
+        if ($locale === 'ar') {
+            return $product->name_ar ?? $product->name_en;
+        } elseif ($locale === 'he') {
+            return $product->name_he ?? $product->name_en;
+        } else {
+            return $product->name_en;
+        }
+    }
+
     public function getCartDetails()
     {
         $items = $this->getCartItems(); // Fetch cart items
@@ -338,4 +356,5 @@ class CartService
             Cookie::queue(Cookie::forget($this->cookieName));
         }
     }
+
 }

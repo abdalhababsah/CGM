@@ -65,20 +65,6 @@
             direction: rtl;
             text-align: right;
         }
-
-        /* RTL Styles for login-form__bottom */
-        body[dir="rtl"] .login-form__bottom {
-            display: block !important;
-        }
-
-        body[dir="rtl"] .login-form__bottom a {
-            margin: 0;
-            /* Remove any inline margins */
-            text-align: right;
-            /* Ensure right alignment */
-            align-self: flex-end;
-            /* Align anchor to the right */
-        }
     </style>
 @endsection
 
@@ -133,21 +119,26 @@
                 </div>
                 <!-- Product Info section in your view-product.blade.php -->
                 <div class="product-info">
-                    <h3>{{ $product->{'name_' . app()->getLocale()} }}</h3>
-                    <span class="product-stock {{ $product->quantity <= 0 ? 'out-of-stock' : 'in-stock' }}">
-                        {{ $product->quantity > 0 ? __('view_product.in_stock') : __('view_product.out_of_stock') }}
+                    <h3>{{ $product->name }}</h3>
+                    <span class="product-stock {{ $product->in_stock ? 'in-stock' : 'out-of-stock' }}">
+                        {{ $product->in_stock ? __('view_product.in_stock') : __('view_product.out_of_stock') }}
                     </span>
                     <span class="product-num">{{ __('view_product.sku') }}: {{ $product->sku }}</span>
-                    <span class="product-price">₪{{ $product->price }}</span>
+                    <span class="product-price">
+                        @if ($product->discount > 0)
+                        <del>₪{{$product->price}}</del>
+                        @endif
+                        ₪{{ $product->discounted_price }}
+                    </span>
 
                     <div class="product-detail-info">
                         <p><strong>{{ __('view_product.category') }}:</strong>
-                            {{ $product->category->{'name_' . app()->getLocale()} }}</p>
+                            {{ $product->category->name }}</p>
                         <p><strong>{{ __('view_product.brand') }}:</strong>
-                            {{ $product->brand->{'name_' . app()->getLocale()} }}</p>
+                            {{ $product->brand->name }}</p>
                     </div>
 
-                    <p>{{ $product->{'description_' . app()->getLocale()} }}</p>
+                    <p>{{ $product->description }}</p>
 
                     <div class="contacts-info__social">
                         <span>{{ __('view_product.share') }}:</span>
@@ -246,7 +237,7 @@
                         if (response.status === 'success') {
                             updateCartCount(response.cart_count);
                             showToast(response.message, 'success');
-                            updateGlopalCartCount()
+                            updateGlobalCartCount()
                         } else {
                             showToast(response.message, 'error');
                         }

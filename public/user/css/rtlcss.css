@@ -19,7 +19,9 @@ body {
 }
 
 .main-block,
-#hero-section{
+#hero-section,
+.shop-bg,
+.scale-1{
     -webkit-transform: scaleX(-1) !important;
     transform: scaleX(-1) !important;
 }
@@ -165,7 +167,7 @@ body {
     }
 }
 
-/* 
+/*
 /////////////
 contacct us
 /////////////

@@ -219,7 +219,7 @@
             color: white !important;
         }
         .select2-container--classic .select2-selection--multiple .select2-selection__choice__remove{
-            color: white !important; 
+            color: white !important;
         }
     </style>
     <!-- Dropzone.js -->

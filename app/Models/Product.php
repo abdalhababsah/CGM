@@ -29,9 +29,17 @@ class Product extends Model
     ];
 
     protected $appends = [
+        'name',
+        'description',
         'is_new',
+        'discounted_price',
+        'in_stock',
     ];
-    
+
+    protected $casts = [
+        'price'=> 'decimal:2',
+    ];
+
     // Relationships
 
     // A product belongs to a category
@@ -96,10 +104,42 @@ class Product extends Model
     {
         return $this->belongsToMany(HairPore::class, 'product_hair_pore');
     }
-    // getter 
+
+    //Localize
+    public function getNameAttribute()
+    {
+        $local = config('app.locale');
+        return $this->attributes['name_'.$local]
+        ?? $this->attributes['name_en']
+        ?? $this->attributes['name'];
+    }
+
+    public function getDescriptionAttribute()
+    {
+        $local = config('app.locale');
+        return $this->attributes['description_'.$local]
+        ?? $this->attributes['description_en']
+        ?? $this->attributes['description'];
+    }
+
+    // getter
     public function getIsNewAttribute()
     {
         return Carbon::parse($this->created_at)->betweenIncluded(now(), now()->subMonth()) ? 1 : 0;
+    }
+    /**
+     * Get the price after applying the discount.
+     *
+     * @return float
+     */
+    public function getDiscountedPriceAttribute()
+    {
+        return number_format($this->price * (1 - $this->discount / 100), 2);
+    }
+
+    public function getInStockAttribute()
+    {
+        return $this->quantity > 0 ;
     }
 
 }

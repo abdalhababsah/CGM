@@ -205,7 +205,11 @@ class CheckoutController extends Controller
      */
     public function submit(CheckoutSubmitRequest $request)
     {
-        // dd($request->all());
+        try {
+
+        } catch (\Throwable $th) {
+            //throw $th;
+        }
         $validated = $request->all();
 
         // Prepare data for the service
@@ -227,7 +231,6 @@ class CheckoutController extends Controller
         ];
 
         // Process checkout
-        // dd($data);
         $order = $this->checkoutService->processCheckout($data);
 
         if ($order) {

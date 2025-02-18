@@ -78,7 +78,7 @@ class OrderService
             throw new \Exception('Invoice view not found.');
         }
         $pdf = Pdf::loadView("admin.orders.invoice.invoice-pdf-{$language}", compact('order' ,'originalPrice','discount','deliveryPrice','finalPrice'));
-    
+
         // Return the PDF instance directly
         return $pdf;
     }

@@ -16,6 +16,10 @@ class Area extends Model
         'area_he',
         'company_area_id',
     ];
+    
+    protected $appends = [
+        'area',
+    ];
 
     /**
      * Get the delivery location that owns the area.
@@ -27,5 +31,13 @@ class Area extends Model
     public function orders()
     {
         return $this->hasMany(Order::class, 'area_id');
+    }
+    //Localize
+    public function getAreaAttribute()
+    {
+        $local = config('app.locale');
+        return $this->attributes['area_'.$local]
+        ?? $this->attributes['area_en']
+        ?? $this->attributes['area'];
     }
 }
