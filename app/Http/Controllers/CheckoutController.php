@@ -205,11 +205,6 @@ class CheckoutController extends Controller
      */
     public function submit(CheckoutSubmitRequest $request)
     {
-        try {
-
-        } catch (\Throwable $th) {
-            //throw $th;
-        }
         $validated = $request->all();
 
         // Prepare data for the service
