@@ -225,11 +225,6 @@ border-radius: 50%; /* Maintain the circular shape */
     opacity: 1;
     visibility: visible;
 }
-.shop-main__items .products-item__cost del {
-    color: #c98a88;
-    font-size: 80%;
-    margin: 5px;
-}
 
 /* Media Query for Mobile */
 @media (max-width: 768px) {

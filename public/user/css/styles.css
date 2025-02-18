@@ -10450,5 +10450,6 @@ input[type="search"]::-webkit-search-results-decoration {
 del {
     font-size: 70%;
     color: #c98a88;
+    margin: 5px;
 }
 /* contact us */
