@@ -9,8 +9,8 @@ class DeliveryLocationAndPrice extends Model
 {
     use HasFactory;
 
-    protected $table = 'delivery_location_and_prices'; 
-    
+    protected $table = 'delivery_location_and_prices';
+
     protected $fillable = [
         'city_ar',
         'city_en',
@@ -34,5 +34,16 @@ class DeliveryLocationAndPrice extends Model
     public function areas()
     {
         return $this->hasMany(Area::class, 'delivery_location_id')->orderBy('id', 'asc');
+    }
+    protected $appends = [
+        'city',
+    ];
+    //Localize
+    public function getCityAttribute()
+    {
+        $local = config('app.locale');
+        return $this->attributes['city_'.$local]
+        ?? $this->attributes['city_en']
+        ?? $this->attributes['city'];
     }
 }

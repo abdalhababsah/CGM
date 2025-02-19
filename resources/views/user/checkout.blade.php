@@ -60,13 +60,6 @@
         <div class="overlay"></div>
         <div class="wrapper">
             <div class="detail-block__content">
-                {{-- <h1>{{ __('checkout.title') }}</h1>
-                <ul class="bread-crumbs">
-                    <li class="bread-crumbs__item">
-                        <a href="{{ route('home') }}" class="bread-crumbs__link">{{ __('checkout.home') }}</a>
-                    </li>
-                    <li class="bread-crumbs__item">{{ __('checkout.title') }}</li>
-                </ul> --}}
             </div>
         </div>
     </div>
@@ -101,14 +94,14 @@
                                         placeholder="{{ __('checkout.enter_phone') }}" maxlength="10" required>
                                     <span class="invalid-feedback" id="error_phone"></span>
                                 </div>
-                            
+
                                 <!-- Phone Number 2 -->
                                 <div class="box-field">
                                     <input style="margin-top: 0px !important;" type="tel" id="phone2" name="phone2" class="form-control"
                                         placeholder="{{ __('checkout.enter_phone2') }}" maxlength="10">
                                     <span class="invalid-feedback" id="error_phone2"></span>
                                 </div>
-                        
+
                             </div>
                             <div class="box-field">
                                 <input style="margin-top: 0px !important;" disabled type="email" id="email" name="email" class="form-control"
@@ -129,7 +122,7 @@
                                 </select>
                                 <span class="invalid-feedback" id="error_delivery_location_id"></span>
                             </div>
-                            
+
                             <div class="box-field styled-select">
                                 <select id="area" name="area" class="form-select" required>
                                     <option value="" disabled selected>{{ __('checkout.select_area') }}</option>
@@ -373,6 +366,8 @@
                             if (response.cartItems && response.cartItems.length > 0) {
                                 let orderItemsHtml = '';
                                 goodsTotal = 0.00; // Reset to avoid accumulation
+                                console.log(response.cartItems);
+
                                 response.cartItems.forEach(function(item) {
                                     orderItemsHtml += `
                                         <div class="checkout-order__item">

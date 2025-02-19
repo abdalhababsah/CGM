@@ -20,6 +20,9 @@ class Brand extends Model
         'logo_url',
         'is_active',
     ];
+    protected $appends = [
+        'name',
+    ];
 
     // Relationships
 
@@ -27,5 +30,13 @@ class Brand extends Model
     public function products()
     {
         return $this->hasMany(Product::class);
+    }
+    //Localize
+    public function getNameAttribute()
+    {
+        $local = config('app.locale');
+        return $this->attributes['name_'.$local]
+        ?? $this->attributes['name_en']
+        ?? $this->attributes['name'];
     }
 }

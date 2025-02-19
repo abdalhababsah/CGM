@@ -19,7 +19,7 @@ class Order extends Model
         'preferred_language',
         'phone2',
         // It is the city ID FOCUS. The name was incorrectly identified, but it fits the delivery company because of major modifications in the locations tables.
-        'delivery_location_id', 
+        'delivery_location_id',
         'discount_code_id',
         'area_id',
         'note',
@@ -52,6 +52,7 @@ class Order extends Model
     {
         return $this->hasMany(OrderHistory::class);
     }
+    //meant for city
     public function deliveryLocation()
     {
         return $this->belongsTo(DeliveryLocationAndPrice::class, 'delivery_location_id');

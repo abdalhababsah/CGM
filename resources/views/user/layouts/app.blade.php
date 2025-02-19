@@ -9,20 +9,20 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no, maximum-scale=1">
     <title>@yield('title')</title>
     <meta name='description' content="" />
-    <meta name="keywords" content="" />
-    <link rel="icon" type="image/x-icon" href="img/favicon.ico" />
+    <meta name="keywords" content="cgm products, curly hair products, shampoo for curly hair, curl cream, curly hair, ملفلف, منتجات شعر, شعر مجعد, شامبو للشعر المجعد, كريم للشعر المجعد" />
     <meta name="csrf-token" content="{{ csrf_token() }}">
+    <link rel="icon" type="image/png" href="{{ asset('user\img\cards-images\card-2.png') }}">
 
     <!-- Load Default CSS -->
     <link rel="stylesheet" href="{{ asset('user/css/styles.css') }}">
     <link rel="stylesheet" href="{{ asset('user/sweetalert/sweetalert2.min.css') }}">
     <!-- Conditionally Load RTL CSS -->
+    @yield('styles')
     @if (in_array(app()->getLocale(), ['ar', 'he']))
         <link rel="stylesheet" href="{{ asset('user/css/rtlcss.css') }}">
     @endif
 </head>
 
-@yield('styles')
 <style>
     .detail-block .overlay {
         position: absolute !important;
@@ -91,7 +91,7 @@
             /**
              * Function to fetch and update the cart count.
              */
-            function updateGlopalCartCount() {
+            function updateGlobalCartCount() {
                 $.ajax({
                     url: "{{ route('cart.count') }}",
                     method: "GET",
@@ -107,10 +107,10 @@
             }
 
             // Make updateCartCount globally accessible
-            window.updateGlopalCartCount = updateGlopalCartCount;
+            window.updateGlobalCartCount = updateGlobalCartCount;
 
             // Initial cart count fetch on page load
-            updateGlopalCartCount();
+            updateGlobalCartCount();
         });
     </script>
     @yield('scripts')

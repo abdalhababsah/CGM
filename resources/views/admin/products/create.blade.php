@@ -194,6 +194,12 @@
                                 <span id="quantity_error" class="text-danger small" style="display:none;">This field is
                                     required</span>
                             </div>
+                            <div class="col-md-6 mb-3">
+                                <label for="discount" class="form-label">Discount</label>
+                                <input type="number" name="discount" id="discount" class="form-control styled-input">
+                                <span id="discount_error" class="text-danger small" style="display:none;">This field is
+                                    required</span>
+                            </div>
                         </div>
                         <div class="d-grid">
                             <button type="button" id="submitBtn" class="btn btn-primary mb-2">Submit</button>
@@ -213,7 +219,7 @@
             color: white !important;
         }
         .select2-container--classic .select2-selection--multiple .select2-selection__choice__remove{
-            color: white !important; 
+            color: white !important;
         }
     </style>
     <!-- Dropzone.js -->
@@ -257,6 +263,7 @@
             formData.append('brand_id', document.getElementById('brand_id').value);
             formData.append('is_active', document.getElementById('status').value === 'active' ? 1 : 0);
             formData.append('price', document.getElementById('price').value);
+            formData.append('discount', document.getElementById('discount').value);
             formData.append('quantity', document.getElementById('quantity').value);
 
             // Append hair pores

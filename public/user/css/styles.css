@@ -2804,7 +2804,7 @@ h6,
 	transform: translate(-50%, -50%);
 	width: 181px;
 	height: 155px;
-	background-image: url(../img/main-text-decor.png);
+	/* background-image: url(../img/main-text-decor.png); */
 	-webkit-background-size: contain;
 	background-size: contain;
 	background-repeat: no-repeat;
@@ -3351,7 +3351,7 @@ h6,
 	transform: translate(-50%, -50%);
 	width: 110.52px;
 	height: 94.85px;
-	background-image: url(../img/main-text-decor.png);
+	/* background-image: url(../img/main-text-decor.png); */
 	-webkit-background-size: contain;
 	background-size: contain;
 	background-repeat: no-repeat;
@@ -4060,7 +4060,7 @@ h6,
 
 .detail-block {
 	padding-top: 218px;
-	background-image: url(../img/socialmedia-01.jpg);
+	background-image: url(../img/socialmedia.jpg);
 	background-position: center;
 	background-repeat: no-repeat;
 	-webkit-background-size: cover;
@@ -4606,7 +4606,7 @@ h6,
 	transform: translate(-50%, -50%);
 	width: 40px;
 	height: 34.33px;
-	background-image: url(../img/main-text-decor.png);
+	/* background-image: url(../img/main-text-decor.png); */
 	-webkit-background-size: contain;
 	background-size: contain;
 	background-repeat: no-repeat;
@@ -5453,7 +5453,7 @@ blockquote:after,
 .shop-aside__item ul li a {
 	font-size: 16px;
 	line-height: 170%;
-	color: #666666;
+	text-shadow: 1px 1px 2px white;
 	display: block;
 	padding: 13px;
 	border-bottom: 1px solid #eeeeee;
@@ -7570,7 +7570,7 @@ input[type="search"]::-webkit-search-results-decoration {
 	transform: translate(-50%, -50%);
 	width: 87px;
 	height: 75px;
-	background-image: url(../img/main-text-decor.png);
+	/* background-image: url(../img/main-text-decor.png); */
 	-webkit-background-size: contain;
 	background-size: contain;
 	background-repeat: no-repeat;
@@ -7888,7 +7888,7 @@ input[type="search"]::-webkit-search-results-decoration {
     display: flex;
     flex-wrap: nowrap;
 	gap: 20px;
-    overflow-x: auto;   
+    overflow-x: auto;
 	overflow-y: hidden !important; /* Enable horizontal scrolling */
     overflow-y: visible; /* Allow vertical overflow */
     position: relative;  /* Establish a new positioning context */
@@ -8525,7 +8525,7 @@ input[type="search"]::-webkit-search-results-decoration {
 		margin-top: 20px;
 		width: 100%;
 		position: relative;
-		z-index: 10; 
+		z-index: 10;
 	}
 	.shop-main__select select {
 		position: relative;
@@ -10435,10 +10435,16 @@ input[type="search"]::-webkit-search-results-decoration {
 }
 
 .shop-bg {
-    background-image: url(../img/filter-bg.png);
+    background-image: url(../img/cream-rotate.png);
     background-repeat: no-repeat;
+    opacity: 85%;
+    background-position-x: -200px;
+    background-position-y: -200px;
 }
 
-
-
+del {
+    font-size: 70%;
+    color: #c98a88;
+    margin: 5px;
+}
 /* contact us */

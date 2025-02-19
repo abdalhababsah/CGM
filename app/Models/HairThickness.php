@@ -13,9 +13,21 @@ class HairThickness extends Model
         'name_ar',
         'name_he',
     ];
+    protected $appends = [
+        'name',
+    ];
 
     public function products()
     {
         return $this->belongsToMany(Product::class, 'product_hair_thickness');
+    }
+
+    //Localize
+    public function getNameAttribute()
+    {
+        $local = config('app.locale');
+        return $this->attributes['name_'.$local]
+        ?? $this->attributes['name_en']
+        ?? $this->attributes['name'];
     }
 }

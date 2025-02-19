@@ -36,6 +36,7 @@ return [
         'phone'              => 'الهاتف',
         'delivery_information' => 'معلومات التوصيل',
         'address'            => 'العنوان',
+        'area'               => 'المنطقة',
         'city'               => 'المدينة',
         'country'            => 'الدولة',
     ],

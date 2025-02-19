@@ -7,40 +7,40 @@ $(window).on('load', function () {
 
 	if ($(window).width() < 767) {
 		setTimeout(function () {
-			$('body').removeClass('loaded'); 
-			$('.main-block').removeClass('load-bg'); 
+			$('body').removeClass('loaded');
+			$('.main-block').removeClass('load-bg');
 		}, 1000);
 		setTimeout(function() {
 			$( "head" ).append( '<link rel="preconnect" href="https://fonts.gstatic.com">' );
 			$( "head" ).append( '<link href="https://fonts.googleapis.com/css2?family=Lato:wght@400;700&family=Montserrat:wght@700&family=Mrs+Saint+Delafield&family=Tenor+Sans&display=swap" rel="stylesheet">' );
-			
-			
+
+
 		}, 1300);
 	} else {
 		setTimeout(function () {
-			$('body').removeClass('loaded'); 
+			$('body').removeClass('loaded');
 		}, 1000);
 		setTimeout(function() {
 			$( "head" ).append( '<link rel="preconnect" href="https://fonts.gstatic.com">' );
 			$( "head" ).append( '<link href="https://fonts.googleapis.com/css2?family=Lato:wght@400;700&family=Montserrat:wght@700&family=Mrs+Saint+Delafield&family=Tenor+Sans&display=swap" rel="stylesheet">' );
-			
+
 		}, 500);
-		
+
 	}
 
 	setTimeout(function () {
 		var tag = document.createElement('script');
 
-		tag.src = "https://www.youtube.com/iframe_api";
+		// tag.src = "https://www.youtube.com/iframe_api";
 		var firstScriptTag = document.getElementsByTagName('script')[0];
-		firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
+		// firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
 
 	}, 3000);
 });
 
 /* viewport width */
 function viewport(){
-	var e = window, 
+	var e = window,
 		a = 'inner';
 	if ( !( 'innerWidth' in window ) )
 	{
@@ -55,11 +55,11 @@ function viewport(){
 $(function(){
 
 	var isSafari = /Safari/.test(navigator.userAgent) && /Apple Computer/.test(navigator.vendor);
-	if (isSafari) { 
+	if (isSafari) {
 		$('body').addClass('safari');
 	};
 
-	/* lazy */	
+	/* lazy */
 	if ($('.js-img').length) {
 		var jsImg = $(".js-img");
 		new LazyLoad(jsImg, {
@@ -68,7 +68,7 @@ $(function(){
 			threshold: 0
 		});
 	};
-	/* lazy */	
+	/* lazy */
 
 	/* burger */
 	$('.js-btn-menu').on('click', function(){
@@ -90,7 +90,7 @@ $(function(){
 		$(this).parent().siblings('li').find('ul').removeClass('active');
 		$(this).parent().find('ul').toggleClass('active');
 	});
-	
+
 	/* header scroll */
 	$(window).scroll(function () {
 		var scroll = $(window).scrollTop();
@@ -102,16 +102,16 @@ $(function(){
 	});
 	/* header scroll */
 
-	/* placeholder*/	   
+	/* placeholder*/
 	$('input, textarea').each(function(){
  		var placeholder = $(this).attr('placeholder');
  		$(this).focus(function(){ $(this).attr('placeholder', '');});
- 		$(this).focusout(function(){			 
- 			$(this).attr('placeholder', placeholder);  			
+ 		$(this).focusout(function(){
+ 			$(this).attr('placeholder', placeholder);
  		});
  	});
 	/* placeholder*/
-	
+
 	/* phone mask */
 
 	/* phone mask */
@@ -123,7 +123,7 @@ $(function(){
 	/* close header top */
 
 	/* products slider */
-	
+
 
 	/* info block item play */
 
@@ -314,7 +314,7 @@ $(function(){
             google.maps.event.addDomListener(window, 'load', init);
             init();
         }, 2500);
-        
+
 	};
 	/* contacts map */
 
@@ -420,18 +420,18 @@ var handler = function(){
 	if($('.js-testimonials-slider').length) {
 		$('.js-testimonials-slider').slick('refresh');
 	}
-	
-	var height_footer = $('footer').height();	
-	var height_header = $('header').height();		
-	
-	
+
+	var height_footer = $('footer').height();
+	var height_header = $('header').height();
+
+
 	var viewport_wid = viewport().width;
 	var viewport_height = viewport().height;
 }
 
 $(window).on('resize', function(){
 	if($('.main-block').length) {
-		$('.main-block').removeClass('load-bg'); 
+		$('.main-block').removeClass('load-bg');
 	}
 });
 
@@ -444,7 +444,7 @@ if($('.radio-box__info-content').length) {
 			$(this).find('.radio-box__info-content').toggleClass('active');
 		});
 	}
-	
+
 }
 
 $(window).bind('load', handler);

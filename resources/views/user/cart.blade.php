@@ -91,13 +91,6 @@
         <div class="overlay"></div>
         <div class="wrapper">
             <div class="detail-block__content">
-                {{-- <h1>{{ __('cart.title') }}</h1>
-                <ul class="bread-crumbs">
-                    <li class="bread-crumbs__item">
-                        <a href="{{ route('home') }}" class="bread-crumbs__link">{{ __('cart.home') }}</a>
-                    </li>
-                    <li class="bread-crumbs__item">{{ __('cart.title') }}</li>
-                </ul> --}}
             </div>
         </div>
     </div>
@@ -172,6 +165,9 @@
                         `<span style="color: green;">{{ __('cart.in_stock') }} (${item.available_quantity})</span>` :
                         `<span style="color: red;">{{ __('cart.out_of_stock') }}</span>`;
 
+                    let oldPrice = item.discount ?
+                    `<del>₪${item.price}</del>` : '';
+
                     cartHtml += `
         <div class="cart-table__row" data-product-id="${item.product_id}">
             <div class="cart-table__col">
@@ -184,8 +180,9 @@
                 </div>
             </div>
             <div class="cart-table__col">
-                <span class="cart-table__price" data-price="${item.price}">
-                    ₪${parseFloat(item.price).toFixed(2)}
+                <span class="cart-table__price" data-price="${item.discounted_price}">
+                    ${oldPrice}
+                    ₪${item.discounted_price}
                 </span>
             </div>
             <div class="cart-table__col">
@@ -199,7 +196,7 @@
             </div>
             <div class="cart-table__col">
                 <span class="cart-table__total">
-                    ₪${(item.price * item.quantity).toFixed(2)}
+                    ₪${item.discounted_price * item.quantity}
                 </span>
                 <button class="remove-btn text-remove" data-product-id="${item.product_id}">
                     {{ __('cart.remove') }}
@@ -265,15 +262,9 @@
                         if (success) {
                             input.val(newQty);
                             let newTotal = (price * newQty).toFixed(2);
-                            row.find('.cart-table__total').text(`$${newTotal}`);
+                            row.find('.cart-table__total').text(`₪${newTotal}`);
                             updateTotalPrice();
                             checkStockConflicts(updatedData);
-
-                            // Toast.fire({
-                            //     icon: 'success',
-                            //     title: '{{ __('cart.quantity_updated') }}'
-                            // });
-                            // Check for stock conflicts
 
                         } else {
                             // Show error and reset input value to old quantity
@@ -354,7 +345,7 @@
                     success: function(response) {
                         if (response.status === 'success') {
                             callback(true, null);
-                            updateGlopalCartCount();
+                            updateGlobalCartCount();
                             loadCartItems();
                         } else {
                             callback(false, response.message);
@@ -370,7 +361,7 @@
             function updateTotalPrice() {
                 let totalPrice = 0;
                 $('.cart-table__row').each(function() {
-                    let rowTotalText = $(this).find('.cart-table__total').text().replace('$', '').trim();
+                    let rowTotalText = $(this).find('.cart-table__total').text().replace('₪', '').trim();
                     let rowTotal = parseFloat(rowTotalText) || 0;
                     totalPrice += rowTotal;
                 });
@@ -423,5 +414,6 @@
             loadCartItems();
 
         });
+
     </script>
 @endsection

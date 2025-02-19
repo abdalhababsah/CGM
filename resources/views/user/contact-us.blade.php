@@ -70,8 +70,6 @@
                 <div class="detail-block__items">
                     <div class="detail-block__item">
                         <div class="detail-block__item-icon">
-                            <img data-src="img/main-text-decor.svg" src="data:image/gif;base64,R0lGODlhAQABAAAAACw="
-                                class="js-img" alt="">
                             <i class="icon-map-pin-big"></i>
                         </div>
                         <div class="detail-block__item-info">
@@ -80,8 +78,6 @@
                     </div>
                     <div class="detail-block__item">
                         <div class="detail-block__item-icon">
-                            <img data-src="img/main-text-decor.svg" src="data:image/gif;base64,R0lGODlhAQABAAAAACw="
-                                class="js-img" alt="">
                             <i class="icon-phone"></i>
                         </div>
                         <div class="detail-block__item-info">
@@ -91,8 +87,6 @@
                     </div>
                     <div class="detail-block__item">
                         <div class="detail-block__item-icon">
-                            <img data-src="img/main-text-decor.svg" src="data:image/gif;base64,R0lGODlhAQABAAAAACw="
-                                class="js-img" alt="">
                             <i class="icon-2"></i>
                         </div>
                         <div class="detail-block__item-info">

@@ -29,7 +29,7 @@
             justify-content: space-between;
             align-items: center;
             margin-bottom: 1px;
-            border-bottom: 2px solid #3498db;
+            border-bottom: 2px solid #791115;
             padding-bottom: 20px;
         }
 
@@ -44,7 +44,7 @@
         .invoice-header h1 {
             margin: 0;
             font-size: 32px;
-            color: #3498db;
+            color: #791115;
             font-weight: 700;
         }
 
@@ -61,7 +61,7 @@
             font-size: 20px;
             margin-bottom: 15px;
             color: #2c3e50;
-            border-bottom: 2px solid #3498db;
+            border-bottom: 2px solid #791115;
             padding-bottom: 5px;
             display: inline-block;
         }
@@ -81,7 +81,7 @@
         }
 
         .invoice-table th {
-            background: #3498db;
+            background: #791115;
             color: #ffffff;
             font-weight: 600;
             text-transform: uppercase;
@@ -97,7 +97,7 @@
             font-size: 18px;
             margin-top: 10px;
             padding-top: 20px;
-            border-top: 2px solid #3498db;
+            border-top: 2px solid #791115;
         }
 
         .text-center {
@@ -113,7 +113,7 @@
 
         .total-amount {
             font-size: 24px;
-            color: #3498db;
+            color: #791115;
             font-weight: bold;
         }
     </style>

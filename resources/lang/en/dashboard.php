@@ -36,6 +36,7 @@ return [
         'phone'              => 'Phone',
         'delivery_information' => 'Delivery Information',
         'address'            => 'Address',
+        'area'               => 'Area',
         'city'               => 'City',
         'country'            => 'Country',
     ],

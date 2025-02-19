@@ -56,4 +56,9 @@ class User extends Authenticatable
     {
         return $this->hasMany(Notification::class);
     }
+
+    public function getNameAttribute()
+    {
+        return ucfirst($this->first_name).' '.ucfirst($this->last_name);
+    }
 }

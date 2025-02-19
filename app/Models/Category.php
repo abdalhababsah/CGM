@@ -17,8 +17,11 @@ class Category extends Model
         'description_en',
         'description_ar',
         'description_he',
-        'logo_url', 
+        'logo_url',
         'is_active',
+    ];
+    protected $appends = [
+        'name',
     ];
 
     // Relationships
@@ -27,5 +30,14 @@ class Category extends Model
     public function products()
     {
         return $this->hasMany(Product::class);
+    }
+    
+    //Localize
+    public function getNameAttribute()
+    {
+        $local = config('app.locale');
+        return $this->attributes['name_'.$local]
+        ?? $this->attributes['name_en']
+        ?? $this->attributes['name'];
     }
 }
