@@ -215,6 +215,10 @@ contacct us
     left: 100px !important;
     width: 80px !important;
 }
+.styled-select::after {
+    right: auto;
+    left: 15px;
+}
 
 /* Responsive RTL Styles */
 

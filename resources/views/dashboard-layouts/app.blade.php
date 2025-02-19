@@ -9,7 +9,7 @@
     <link rel="apple-touch-icon" sizes="76x76" href="{{ asset('admin/assets/img/apple-icon.png') }}">
 
     <!-- Favicon -->
-    <link rel="icon" type="image/png" href="{{ asset('admin/assets/img/favicon.png') }}">
+    <link rel="icon" type="image/png" href="{{ asset('user\img\cards-images\card-2.png') }}">
 
     <!-- Dynamic Title -->
     <title>

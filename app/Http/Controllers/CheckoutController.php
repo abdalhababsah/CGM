@@ -77,12 +77,11 @@ class CheckoutController extends Controller
      */
     public function fetchDeliveryLocations()
     {
-        $locale = app()->getLocale();
 
-        $deliveryLocations = DeliveryLocationAndPrice::active()->get()->map(function ($delivery) use ($locale) {
+        $deliveryLocations = DeliveryLocationAndPrice::active()->get()->map(function ($delivery) {
             return [
                 'id' => $delivery->id,
-                'city' => $delivery->{'city_' . $locale},
+                'city' => $delivery->city,
                 'price' => $delivery->price,
             ];
         });
@@ -268,17 +267,11 @@ class CheckoutController extends Controller
             ]);
         }
 
-        // Get the current app locale
-        $locale = app()->getLocale();
-        // Construct the column name dynamically, e.g. 'area_en', 'area_ar', or 'area_he'
-        $localeColumn = 'area_' . $locale;
-
-        $mappedAreas = $areas->map(function ($area) use ($localeColumn) {
-            $localizedName = $area->$localeColumn ?: $area->area_en;
+        $mappedAreas = $areas->map(function ($area) {
 
             return [
                 'id' => $area->id,
-                'name' => $localizedName,
+                'name' => $area->area,
             ];
         });
 

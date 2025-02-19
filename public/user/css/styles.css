@@ -2804,7 +2804,7 @@ h6,
 	transform: translate(-50%, -50%);
 	width: 181px;
 	height: 155px;
-	background-image: url(../img/main-text-decor.png);
+	/* background-image: url(../img/main-text-decor.png); */
 	-webkit-background-size: contain;
 	background-size: contain;
 	background-repeat: no-repeat;
@@ -3351,7 +3351,7 @@ h6,
 	transform: translate(-50%, -50%);
 	width: 110.52px;
 	height: 94.85px;
-	background-image: url(../img/main-text-decor.png);
+	/* background-image: url(../img/main-text-decor.png); */
 	-webkit-background-size: contain;
 	background-size: contain;
 	background-repeat: no-repeat;
@@ -4606,7 +4606,7 @@ h6,
 	transform: translate(-50%, -50%);
 	width: 40px;
 	height: 34.33px;
-	background-image: url(../img/main-text-decor.png);
+	/* background-image: url(../img/main-text-decor.png); */
 	-webkit-background-size: contain;
 	background-size: contain;
 	background-repeat: no-repeat;
@@ -6422,11 +6422,6 @@ blockquote:after,
 	color: #666666;
 }
 
-.cart-table__old_price {
-    text-decoration: line-through;
-    color: #c98a88;
-}
-
 .cart-table__price {
 	color: #666666;
 	font-size: 18px;
@@ -7575,7 +7570,7 @@ input[type="search"]::-webkit-search-results-decoration {
 	transform: translate(-50%, -50%);
 	width: 87px;
 	height: 75px;
-	background-image: url(../img/main-text-decor.png);
+	/* background-image: url(../img/main-text-decor.png); */
 	-webkit-background-size: contain;
 	background-size: contain;
 	background-repeat: no-repeat;

@@ -166,10 +166,7 @@
                         `<span style="color: red;">{{ __('cart.out_of_stock') }}</span>`;
 
                     let oldPrice = item.discount ?
-                    `<span class="cart-table__old_price" data-price="${item.price}">
-                        ₪${item.price}
-                    </span>`
-                    :'';
+                    `<del>₪${item.price}</del>` : '';
 
                     cartHtml += `
         <div class="cart-table__row" data-product-id="${item.product_id}">
@@ -184,9 +181,9 @@
             </div>
             <div class="cart-table__col">
                 <span class="cart-table__price" data-price="${item.discounted_price}">
+                    ${oldPrice}
                     ₪${item.discounted_price}
                 </span>
-                ${oldPrice}
             </div>
             <div class="cart-table__col">
                 <div class="cart-table__quantity">
@@ -268,12 +265,6 @@
                             row.find('.cart-table__total').text(`₪${newTotal}`);
                             updateTotalPrice();
                             checkStockConflicts(updatedData);
-
-                            // Toast.fire({
-                            //     icon: 'success',
-                            //     title: '{{ __('cart.quantity_updated') }}'
-                            // });
-                            // Check for stock conflicts
 
                         } else {
                             // Show error and reset input value to old quantity
