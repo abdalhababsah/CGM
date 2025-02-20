@@ -5,8 +5,10 @@ namespace App\Services;
 use App\Mail\InvoiceMail;
 use App\Models\Order;
 use Barryvdh\DomPDF\Facade\Pdf;
+use Exception;
 use Illuminate\Pagination\LengthAwarePaginator;
 use Illuminate\Support\Facades\Mail;
+use Log;
 
 class OrderService
 {
@@ -152,10 +154,10 @@ class OrderService
      * Send the invoice email to the user.
      *
      * @param Order $order
-     * @param string $invoicePath
+     * @param mixed $invoicePath
      * @return void
      */
-    public function sendInvoiceEmail(Order $order, string $invoicePath)
+    public function sendInvoiceEmail(Order $order, mixed $invoicePath)
     {
         Mail::to($order->user->email)->send(new InvoiceMail($order, $invoicePath));
     }
@@ -168,10 +170,14 @@ class OrderService
      */
     public function postCheckout(Order $order)
     {
-        // Generate the invoice PDF
-        $invoicePath = $this->generateInvoice($order);
+        try {
+            // Generate the invoice PDF
+            $invoicePath = $this->generateInvoice($order);
+            // Send the invoice email to the user
+            $this->sendInvoiceEmail($order, $invoicePath);
 
-        // Send the invoice email to the user
-        $this->sendInvoiceEmail($order, $invoicePath);
+        } catch (Exception $e) {
+            Log::error('postCheckout error :'.$e->getMessage());
+        }
     }
 }

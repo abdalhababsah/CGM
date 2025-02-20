@@ -24,7 +24,7 @@ class ProductsImport implements ToModel, WithHeadingRow, SkipsOnError, WithValid
 {
     use Importable;
     use SkipsFailures;
-    
+
     protected $errors = [];
     protected $rowNumber = 1;
 
@@ -43,32 +43,32 @@ class ProductsImport implements ToModel, WithHeadingRow, SkipsOnError, WithValid
     public function model(array $row)
     {
         $this->rowNumber++;
-    
+
         try {
             // Generate SKU if not provided
             $sku = $row['sku'] ?? strtoupper(Str::random(10));
-    
+
             // Validate required fields
             if (empty($row['name_en']) || empty($row['name_ar']) || empty($row['name_he'])) {
                 $this->addError($this->rowNumber, 'name', 'All name translations are required');
                 return null;
             }
-    
+
             if (empty($row['category_id'])) {
                 $this->addError($this->rowNumber, 'category_id', 'Category ID is required');
                 return null;
             }
-    
+
             if (empty($row['brand_id'])) {
                 $this->addError($this->rowNumber, 'brand_id', 'Brand ID is required');
                 return null;
             }
-    
+
             if (!isset($row['price']) || !is_numeric($row['price'])) {
                 $this->addError($this->rowNumber, 'price', 'Valid price is required');
                 return null;
             }
-    
+
             // Create or update the product
             $product = Product::updateOrCreate(
                 ['sku' => $sku], // Use the generated or provided SKU
@@ -84,10 +84,10 @@ class ProductsImport implements ToModel, WithHeadingRow, SkipsOnError, WithValid
                     'description_en' => $row['description_en'] ?? null,
                     'description_ar' => $row['description_ar'] ?? null,
                     'description_he' => $row['description_he'] ?? null,
-                    'created_at' => ($row['new'] ?? 1) ? now() : Carbon::now()->subMonth(),
+                    'created_at' => ($row['old'] ?? 1) ? Carbon::now()->subMonth() : now(),
                 ]
             );
-    
+
             // Handle primary image
             if (!empty($row['primary_image'])) {
                 try {
@@ -96,7 +96,7 @@ class ProductsImport implements ToModel, WithHeadingRow, SkipsOnError, WithValid
                     $this->addError($this->rowNumber, 'primary_image', 'Failed to store primary image: ' . $e->getMessage());
                 }
             }
-    
+
             // Handle additional images
             foreach (['image_1', 'image_2', 'image_3'] as $imageColumn) {
                 if (!empty($row[$imageColumn])) {
@@ -107,9 +107,9 @@ class ProductsImport implements ToModel, WithHeadingRow, SkipsOnError, WithValid
                     }
                 }
             }
-    
+
             return $product;
-    
+
         } catch (\Exception $e) {
             $this->addError($this->rowNumber, 'general', 'Error processing row: ' . $e->getMessage());
             return null;

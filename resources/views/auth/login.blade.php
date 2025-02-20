@@ -28,7 +28,7 @@
 
     <div class="login">
         <div class="wrapper">
-            <div class="login-form js-img" data-src="{{ asset('user/img/login-form__bg.png') }}">
+            <div class="login-form js-img" data-src="">
                 <!-- Session Status -->
                 <x-auth-session-status class="mb-4" :status="session('status')" />
                 <h3>@lang('login.login_with')</h3>

@@ -366,7 +366,6 @@
                             if (response.cartItems && response.cartItems.length > 0) {
                                 let orderItemsHtml = '';
                                 goodsTotal = 0.00; // Reset to avoid accumulation
-                                console.log(response.cartItems);
 
                                 response.cartItems.forEach(function(item) {
                                     orderItemsHtml += `

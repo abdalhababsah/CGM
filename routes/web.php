@@ -144,8 +144,7 @@ Route::middleware(['auth'])->prefix('checkout')->name('checkout.')->group(functi
     // Fetch delivery locations via AJAX
     Route::get('/fetch-delivery-locations', [CheckoutController::class, 'fetchDeliveryLocations'])->name('fetchDeliveryLocations');
     Route::get('/checkout/fetch-areas', [CheckoutController::class, 'fetchAreas'])->name('checkout.fetchAreas');
-    // Get delivery price based on selected location via AJAX
-    Route::post('/get-delivery-price', [CheckoutController::class, 'getDeliveryPrice'])->name('getDeliveryPrice');
+
     // Apply a discount code via AJAX
     Route::post('/apply-discount-code', [CheckoutController::class, 'applyDiscountCode'])->name('applyDiscountCode');
     // Remove an applied discount code via AJAX

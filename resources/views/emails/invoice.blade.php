@@ -101,7 +101,7 @@
             </div>
 
             <!-- Personalized Message -->
-            <p class="message">Dear {{ $order->user->first_name }} {{ $order->user->last_name }},</p>
+            <p class="message">Dear {{ $order->user->name }},</p>
 
             <p class="message">
                 Thank you for your purchase! Please find your invoice attached to this email. If you have any questions or need further assistance, feel free to contact our support team.

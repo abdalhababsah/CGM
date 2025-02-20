@@ -117,11 +117,11 @@ return [
     |
     */
 
-    'contact_address' => env('CONTACT_EMAIL', 'contact@yourdomain.com'),
+    'contact_address' => env('CONTACT_EMAIL', 'contact@cgm-product.com'),
 
     'from' => [
-        'address' => env('MAIL_FROM_ADDRESS', 'hello@example.com'),
-        'name' => env('MAIL_FROM_NAME', 'Example'),
+        'address' => env('MAIL_FROM_ADDRESS', 'hello@cgm-product.com'),
+        'name' => env('MAIL_FROM_NAME', 'CGM Product'),
     ],
 
 ];

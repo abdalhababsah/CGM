@@ -16,7 +16,7 @@ class Area extends Model
         'area_he',
         'company_area_id',
     ];
-    
+
     protected $appends = [
         'area',
     ];
@@ -38,6 +38,7 @@ class Area extends Model
         $local = config('app.locale');
         return $this->attributes['area_'.$local]
         ?? $this->attributes['area_en']
-        ?? $this->attributes['area'];
+        ?? $this->attributes['area']
+        ?? '';
     }
 }

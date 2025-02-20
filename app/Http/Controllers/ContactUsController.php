@@ -7,6 +7,7 @@ use App\Models\ContactMessage;
 use App\Mail\ContactUsMail;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Validator;
+use Log;
 class ContactUsController extends Controller
 {
     public function index()

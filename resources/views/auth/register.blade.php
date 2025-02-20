@@ -28,7 +28,7 @@
     <!-- BEGIN REGISTRATION -->
     <div class="login registration">
         <div class="wrapper">
-            <div class="login-form js-img" data-src="{{ asset('user/img/login-form__bg.png') }}">
+            <div class="login-form js-img" data-src="">
                 <!-- Session Status -->
                 <x-auth-session-status class="mb-4" :status="session('status')" />
 
@@ -90,7 +90,7 @@
 
                     <!-- Submit Button and Links -->
                     <button class="btn" type="submit">@lang('register.register')</button>
-                    
+
                     <div class="login-form__bottom">
                         @if (Route::has('login'))
                             <span>@lang('register.already_account') <a href="{{ route('login') }}">@lang('register.log_in')</a></span>

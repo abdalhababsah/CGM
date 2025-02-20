@@ -27,13 +27,13 @@ class SendOrderToDeliveryService
      *
      * @param  \App\Events\OrderPlaced  $event
      * @return void
-     */    
+     */
     public function handle(OrderPlaced $event)
     {
         $order = $event->order;
 
         // Eager load necessary relationships
-        $order->load(['deliveryLocation', 'areaLocation.user']);
+        $order->load(['deliveryLocation', 'user','areaLocation']);
 
         // Fetch the related city ID from deliveryLocation
         $companyCityId = $order->deliveryLocation->company_city_id ?? null;

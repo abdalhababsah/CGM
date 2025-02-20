@@ -37,6 +37,7 @@ class Brand extends Model
         $local = config('app.locale');
         return $this->attributes['name_'.$local]
         ?? $this->attributes['name_en']
-        ?? $this->attributes['name'];
+        ?? $this->attributes['name']
+        ?? null;
     }
 }
