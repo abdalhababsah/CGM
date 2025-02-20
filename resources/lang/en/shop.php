@@ -8,6 +8,7 @@ return [
     'search' => 'Search',
     'sale' => 'SALE',
     'new' => 'NEW',
+    'status' => 'Status',
     'from_expensive' => 'From expensive to cheap',
     'from_cheap' => 'From cheap to expensive',
     'subscribe' => 'Subscribe',

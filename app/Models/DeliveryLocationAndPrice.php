@@ -44,6 +44,7 @@ class DeliveryLocationAndPrice extends Model
         $local = config('app.locale');
         return $this->attributes['city_'.$local]
         ?? $this->attributes['city_en']
-        ?? $this->attributes['city'];
+        ?? $this->attributes['city']
+        ?? null;
     }
 }

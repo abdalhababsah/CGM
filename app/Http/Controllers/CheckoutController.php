@@ -77,14 +77,7 @@ class CheckoutController extends Controller
      */
     public function fetchDeliveryLocations()
     {
-
-        $deliveryLocations = DeliveryLocationAndPrice::active()->get()->map(function ($delivery) {
-            return [
-                'id' => $delivery->id,
-                'city' => $delivery->city,
-                'price' => $delivery->price,
-            ];
-        });
+        $deliveryLocations = DeliveryLocationAndPrice::active()->get();
 
         return response()->json([
             'status' => 'success',
@@ -106,27 +99,6 @@ class CheckoutController extends Controller
         $user->update($data);
 
         return response()->json(['status' => 'success', 'message' => 'User information updated successfully.']);
-    }
-
-    /**
-     * Handle AJAX request to get delivery price.
-     *
-     * @param \App\Http\Requests\GetDeliveryPriceRequest $request
-     * @return \Illuminate\Http\JsonResponse
-     */
-    public function getDeliveryPrice(GetDeliveryPriceRequest $request)
-    {
-        $deliveryLocation = DeliveryLocationAndPrice::find($request->delivery_location_id);
-
-        if (!$deliveryLocation || !$deliveryLocation->is_active) {
-            return response()->json(['status' => 'error', 'message' => 'Invalid delivery location.'], 400);
-        }
-
-        return response()->json([
-            'status' => 'success',
-            'price' => $deliveryLocation->price,
-            'currency' => 'USD',
-        ]);
     }
 
     /**
@@ -215,11 +187,11 @@ class CheckoutController extends Controller
             'phone2' => $validated['phone2'],
 
             // 'country' => $validated['country'],
+            'delivery_location_id' => $validated['delivery_location_id'],//this city from delivery location
+            'area' => $validated['area'] ?? null,
             'city' => $validated['city'],
             'address' => $validated['address'],
             'note' => $validated['note'] ?? null,
-            'area' => $validated['area'] ?? null,
-            'delivery_location_id' => $validated['delivery_location_id'],
             'discount' => session('applied_discount_code'),
             'delivery_price' => $this->calculateDeliveryPrice($validated['delivery_location_id']),
         ];

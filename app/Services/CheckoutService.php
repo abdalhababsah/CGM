@@ -164,15 +164,15 @@ class CheckoutService
 
             // Clear the cart
             $this->cartService->clearCart();
-            // $this->orderService->postCheckout($order);
+            $this->orderService->postCheckout($order);
             DB::commit();
 
             // Dispatch the event after the transaction
-            // event(new OrderPlaced($order));
+            event(new OrderPlaced($order));
             return $order;
         } catch (\Exception $e) {
             DB::rollback();
-            Log::error('Checkout Error: ' . $e->getMessage());
+            Log::error('Checkout Error: ' . $e);
             return false;
         }
     }

@@ -46,6 +46,21 @@
                         </div>
                     </div>
 
+                    <!-- Status -->
+                    {{-- <div class="shop-aside__item">
+                        <span class="shop-aside__item-title">@lang('shop.status')</span>
+                        <div class="shop-aside__item-content">
+                            <ul id="">
+                                <li>
+                                    <a href="#" class="status-filter" data-id="filter-sale">@lang('shop.sale')</a>
+                                </li>
+                                <li>
+                                    <a href="#" class="status-filter active-li" data-id="filter-new">@lang('shop.new')</a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div> --}}
+
 
                     <!-- Price Range -->
                     <div class="shop-aside__item">
@@ -302,6 +317,7 @@
                 lazyLoadImages();
                 bindProductEvents();
             }
+
             function renderPagination(pagination) {
                 let paginationList = $('#pagination');
                 paginationList.empty();
@@ -349,6 +365,23 @@
                         $(this).removeClass('active-li');
                     } else {
                         filters.brands.push(String(selectedId));
+                        $(this).addClass('active-li');
+                    }
+                    filters.page = 1;
+                    fetchData();
+                });
+            }
+
+            function bindStatusFilterEvents() {
+                $('.status-filter').off('click').on('click', function(e) {
+
+                    e.preventDefault();
+                    let selectedId = $(this).data('value');
+                    if (filters.statuses.includes(String(selectedId))) {
+                        filters.statuses = filters.statuses.filter(id => id !== String(selectedId));
+                        $(this).removeClass('active-li');
+                    } else {
+                        filters.statuses.push(String(selectedId));
                         $(this).addClass('active-li');
                     }
                     filters.page = 1;
@@ -576,6 +609,25 @@
                 fetchData();
             });
 
+            // Status filter event handler
+            $('.status-filter').on('click', function(e) {
+                e.preventDefault();
+                $('.status-filter').removeClass('active-li');
+                $(this).addClass('active-li');
+
+                let filterId = $(this).data('id');
+                if (filterId === 'filter-sale') {
+                    filters.isSale = true;
+                    filters.isNew = false;
+                } else if (filterId === 'filter-new') {
+                    filters.isSale = false;
+                    filters.isNew = true;
+                }
+                filters.page = 1;
+                fetchData();
+                console.log(filterId);
+
+            });
             $('.shop-main__checkboxes input').on('change', function() {
                 if ($(this).attr('id') === 'filter-sale') {
                     filters.isSale = $(this).is(':checked');

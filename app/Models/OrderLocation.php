@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
 class OrderLocation extends Model
-{
+{ // address colum is used must improve
     use HasFactory;
 
     protected $fillable = [

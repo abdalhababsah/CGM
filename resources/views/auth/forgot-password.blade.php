@@ -31,7 +31,7 @@
     <!-- BEGIN FORGOT PASSWORD -->
     <div class="login"> <!-- Reusing the 'login' class for consistent styling -->
         <div class="wrapper">
-            <div class="login-form js-img" data-src="{{ asset('user/img/login-form__bg.png') }}">
+            <div class="login-form js-img" data-src="">
                 <!-- Session Status -->
                 <x-auth-session-status class="mb-4" :status="session('status')" />
 

@@ -18,9 +18,9 @@ class InvoiceMail extends Mailable
      * Create a new message instance.
      *
      * @param Order $order
-     * @param string $invoicePath
+     * @param mixed $invoicePath
      */
-    public function __construct(Order $order, string $invoicePath)
+    public function __construct(Order $order, mixed $invoicePath)
     {
         $this->order = $order;
         $this->invoicePath = $invoicePath;
@@ -34,10 +34,10 @@ class InvoiceMail extends Mailable
     public function build()
     {
         return $this->subject('Your Invoice for Order #' . $this->order->id)
-                    ->view('emails.invoice')
-                    ->attach($this->invoicePath, [
-                        'as' => 'invoice-' . $this->order->id . '.pdf',
-                        'mime' => 'application/pdf',
-                    ]);
+                    ->view('emails.invoice');
+                    // ->attach($this->invoicePath, [
+                    //     'as' => 'invoice-' . $this->order->id . '.pdf',
+                    //     'mime' => 'application/pdf',
+                    // ]);
     }
 }

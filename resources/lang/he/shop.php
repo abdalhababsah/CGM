@@ -8,6 +8,7 @@ return [
     'search' => 'חיפוש',
     'sale' => 'מבצע',
     'new' => 'חדש',
+    'status' => 'מצב',
     'from_expensive' => 'מהיקר לזול',
     'from_cheap' => 'מהזול ליקר',
     'subscribe' => 'הרשמה',

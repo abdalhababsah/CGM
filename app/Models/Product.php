@@ -111,7 +111,8 @@ class Product extends Model
         $local = config('app.locale');
         return $this->attributes['name_'.$local]
         ?? $this->attributes['name_en']
-        ?? $this->attributes['name'];
+        ?? $this->attributes['name']
+        ?? null;
     }
 
     public function getDescriptionAttribute()
@@ -119,7 +120,8 @@ class Product extends Model
         $local = config('app.locale');
         return $this->attributes['description_'.$local]
         ?? $this->attributes['description_en']
-        ?? $this->attributes['description'];
+        ?? $this->attributes['description']
+        ?? null;
     }
 
     // getter
