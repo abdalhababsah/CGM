@@ -10,7 +10,7 @@
         "barryvdh/laravel-dompdf": "^3.0",
         "bensampo/laravel-enum": "^6.11",
         "laravel/framework": "^11.31",
-        "laravel/socialite": "^5.16",
+        "laravel/socialite": "^5.18",
         "laravel/tinker": "^2.9",
         "maatwebsite/excel": "^3.1",
         "still-code/ar-php-laravel": "^2.0"

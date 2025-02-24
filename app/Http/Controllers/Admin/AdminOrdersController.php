@@ -47,16 +47,16 @@ class AdminOrdersController extends Controller
         try {
             // Determine the language (default: English)
             $language = $request->input('language', 'en');
-            
+
             // Validate language input
             $allowedLanguages = ['en', 'ar', 'he'];
             if (!in_array($language, $allowedLanguages)) {
                 $language = 'en';
             }
-    
+
             // Generate the PDF
             $pdf = $this->orderService->generateInvoice($order, $language);
-    
+
             // Return the PDF for download
             return $pdf->download("invoice-{$order->id}.pdf");
         } catch (\Exception $e) {

@@ -79,7 +79,7 @@
                                 </tr>
                                 <tr>
                                     <td>@lang('dashboard.order_summary.discount'):</td>
-                                    <td class="text-end">- ₪{{ number_format($discount, 2) }}</td>
+                                    <td class="text-end">- ₪{{ number_format($order->discount, 2) }}</td>
                                 </tr>
                                 <tr>
                                     <td>@lang('dashboard.order_summary.delivery_price'):</td>

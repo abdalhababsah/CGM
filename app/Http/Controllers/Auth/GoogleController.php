@@ -13,13 +13,13 @@ class GoogleController extends Controller
 {
     public function redirectToGoogle()
     {
-        
         return Socialite::driver('google')->redirect();
     }
 
     public function handleGoogleCallback()
     {
         try {
+
             // Retrieve user from Google
             $googleUser = Socialite::driver('google')->stateless()->user();
             // Attempt to find an existing user by Google ID or email
@@ -38,7 +38,7 @@ class GoogleController extends Controller
                 $names = explode(' ', $googleUser->name);
                 $firstName = $names[0] ?? '';
                 $lastName = $names[1] ?? '';
-                
+
                 // Create a new user
                 $createUser = User::create([
                     'first_name' => $firstName,

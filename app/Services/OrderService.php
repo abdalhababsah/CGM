@@ -9,6 +9,7 @@ use Exception;
 use Illuminate\Pagination\LengthAwarePaginator;
 use Illuminate\Support\Facades\Mail;
 use Log;
+use function PHPUnit\Framework\returnValueMap;
 
 class OrderService
 {
@@ -72,10 +73,12 @@ class OrderService
         $order = $this->getOrderDetails($order);
         $originalPrice = $order->orderItems->sum('total_price');
         $deliveryPrice = $order->deliveryLocation->price ?? 0;
-        $discount = $order->discountCode ? $order->discountCode->amount : 0;
+        $discount = $order->discountCode ?
+        $this->calculateDiscount($order->discountCode, $originalPrice)
+        : 0;
         $finalPrice = $order->finalPrice;
         // Ensure the Blade template exists
-        // dd( $deliveryPrice);
+
         if (!view()->exists("admin.orders.invoice.invoice-pdf-{$language}")) {
             throw new \Exception('Invoice view not found.');
         }
@@ -93,19 +96,26 @@ class OrderService
         $originalPrice = $order->orderItems->sum('total_price');
         $deliveryPrice = $order->deliveryLocation->price ?? 0;
 
+        $order->discount = $this->calculateDiscount($order->discountCode, $originalPrice);
+
+        $order->finalPrice = $originalPrice - $order->discount + $deliveryPrice;
+    }
+
+    private function calculateDiscount($discountCode , $originalPrice)
+    {
         $discount = 0;
-        if ($order->discountCode) {
-            if ($order->discountCode->type === 'fixed') {
-                $discount = $order->discountCode->amount;
-            } elseif ($order->discountCode->type === 'percentage') {
-                $discount = ($originalPrice * $order->discountCode->amount) / 100;
+
+        if ($discountCode) {
+            if ($discountCode->type === 'fixed') {
+                $discount = $discountCode->amount;
+            } elseif ($discountCode->type === 'percentage') {
+                $discount = ($originalPrice * $discountCode->amount) / 100;
             }
         }
 
         $discount = min($discount, $originalPrice);
-        $order->finalPrice = $originalPrice - $discount + $deliveryPrice;
+        return $discount;
     }
-
     /**
      * Get paginated orders for a specific user with optional filters.
      *

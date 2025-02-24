@@ -22,13 +22,22 @@
                             <tbody>
                                 @foreach ($order->orderItems as $item)
                                     <tr>
-                                        <td>
-                                            <div class="d-flex align-items-center">
-                                                <img src="{{ $item->product->primaryImage->url ?? 'https://via.placeholder.com/50' }}"
-                                                     alt="{{ $item->product->name_en }}"
-                                                     class="rounded me-3" width="50">
-                                                <span>{{ $item->product->name_en }}</span>
-                                            </div>
+                                        <td class="d-flex align-items-center"
+                                        style="
+                                            width: max-content;
+                                        "
+                                        >
+                                            <img
+                                            @if ($item->product->primaryImage)
+                                            src="{{ asset('storage/' . $item->product->primaryImage->image_url) }}"
+                                            class="img-fluid rounded" style="max-height: 150px"
+                                            alt="{{ $item->product->name_en }}"
+                                            @else
+                                            src="https://via.placeholder.com/50"
+                                            alt="Primary Image"
+                                            @endif
+                                            class="rounded me-3" width="50">
+                                            <span>{{ $item->product->name_en }}</span>
                                         </td>
                                         <td>₪{{ number_format($item->unit_price, 2) }}</td>
                                         <td>{{ $item->quantity }}</td>
@@ -71,7 +80,7 @@
                                 </tr>
                                 <tr>
                                     <td>Discount:</td>
-                                    <td class="text-end">- ₪{{ number_format($discount, 2) }}</td>
+                                    <td class="text-end">- ₪{{ number_format($order->discount, 2) }}</td>
                                 </tr>
                                 <tr>
                                     <td>Delivery Price:</td>
