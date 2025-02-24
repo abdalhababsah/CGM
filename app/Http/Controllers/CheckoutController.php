@@ -115,7 +115,7 @@ class CheckoutController extends Controller
         $deliveryPrice = $request->delivery_price ?? 0;
 
         $cartDetails = $this->cartService->getCartDetails();
-        $grandTotal = $cartDetails['totalPrice'] + $deliveryPrice;
+        $grandTotal = $cartDetails['totalPrice'];
 
         $result = $this->checkoutService->applyDiscountCode($discountCodeInput, $grandTotal);
 
@@ -138,7 +138,7 @@ class CheckoutController extends Controller
                     'type' => $discount->type,
                     'amount' => $discountAmount,
                     'percentage' => $percentage, // Include percentage if applicable
-                    'grand_total' => $result['grand_total'],
+                    'grand_total' => $result['grand_total'] + $deliveryPrice,
                 ]
             ]);
 

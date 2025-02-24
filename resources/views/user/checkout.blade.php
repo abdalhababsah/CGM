@@ -455,12 +455,12 @@
                     return;
                 }
 
-                if (!deliveryLocationId) {
-                    console.warn('{{ __('checkout.select_delivery_location_first') }}');
-                    $('#discount-message').text('{{ __('checkout.select_delivery_location_first') }}')
-                        .addClass('warning');
-                    return;
-                }
+                // if (!deliveryLocationId) {
+                //     console.warn('{{ __('checkout.select_delivery_location_first') }}');
+                //     $('#discount-message').text('{{ __('checkout.select_delivery_location_first') }}')
+                //         .addClass('warning');
+                //     return;
+                // }
 
                 $.ajax({
                     url: "{{ route('checkout.applyDiscountCode') }}",

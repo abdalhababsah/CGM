@@ -98,6 +98,9 @@
                 <p><strong>Order ID:</strong> {{ $order->id }}</p>
                 <p><strong>Date:</strong> {{ $order->created_at->format('F d, Y') }}</p>
                 <p><strong>Total Amount:</strong> ${{ number_format($order->total_amount, 2) }}</p>
+                @if ($order->discountCode)
+                <p><strong>Discount:</strong> ${{ number_format($order->discount, 2) }}</p>
+                @endif
             </div>
 
             <!-- Personalized Message -->

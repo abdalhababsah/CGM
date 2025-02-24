@@ -34,10 +34,10 @@ class InvoiceMail extends Mailable
     public function build()
     {
         return $this->subject('Your Invoice for Order #' . $this->order->id)
-                    ->view('emails.invoice');
-                    // ->attach($this->invoicePath, [
-                    //     'as' => 'invoice-' . $this->order->id . '.pdf',
-                    //     'mime' => 'application/pdf',
-                    // ]);
+                    ->view('emails.invoice')
+                    ->attachData(
+                        $this->invoicePath->output(),
+                        'invoice-' . $this->order->id . '.pdf'
+                    );
     }
 }
