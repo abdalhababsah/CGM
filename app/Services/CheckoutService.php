@@ -106,7 +106,6 @@ class CheckoutService
                     'email' => $data['email'] ?? $user->email,
                 ]);
 
-                Log::info('User information updated:', $user->toArray());
             }
             // Fetch discount code if applicable
             $discountCode = null;

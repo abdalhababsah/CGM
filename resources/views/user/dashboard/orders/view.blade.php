@@ -26,13 +26,18 @@
                             <tbody>
                                 @foreach ($order->orderItems as $item)
                                     <tr>
-                                        <td>
-                                            <div class="d-flex align-items-center">
-                                                <img src="{{ $item->product->primaryImage->url ?? 'https://via.placeholder.com/50' }}"
-                                                     alt="{{ $item->product->{'name_' . app()->getLocale()} }}"
-                                                     class="rounded me-3" width="50">
-                                                <span>{{ $item->product->{'name_' . app()->getLocale()} }}</span>
-                                            </div>
+                                        <td class="d-flex align-items-center">
+                                            <img
+                                            @if ($item->product->primaryImage)
+                                            src="{{ asset('storage/' . $item->product->primaryImage->image_url) }}"
+                                            alt="{{ $item->product->name }}"
+                                            @else
+                                            src="https://via.placeholder.com/50"
+                                            alt="Primary Image"
+                                            @endif
+                                            style="max-height: 150px"
+                                            class="img-fluid rounded me-3" width="50">
+                                            <span>{{ $item->product->name }}</span>
                                         </td>
                                         <td>₪{{ number_format($item->unit_price, 2) }}</td>
                                         <td>{{ $item->quantity }}</td>
