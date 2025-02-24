@@ -97,9 +97,9 @@
             <div class="details">
                 <p><strong>Order ID:</strong> {{ $order->id }}</p>
                 <p><strong>Date:</strong> {{ $order->created_at->format('F d, Y') }}</p>
-                <p><strong>Total Amount:</strong> ${{ number_format($order->total_amount, 2) }}</p>
-                @if ($order->discountCode)
-                <p><strong>Discount:</strong> ${{ number_format($order->discount, 2) }}</p>
+                <p><strong>Total Amount:</strong> ₪{{ number_format($order->total_amount, 2) }}</p>
+                @if ($order->has('discountCode'))
+                <p><strong>Discount:</strong> ₪{{ number_format($order->discount, 2) }}</p>
                 @endif
             </div>
 
@@ -116,7 +116,7 @@
 
             <!-- Footer Section -->
             <div class="footer">
-                <p>{{ config('app.name') }} | 1234 Street Address, City, State, ZIP</p>
+                <p>{{ config('app.name') }} | Palestine</p>
                 <p>&copy; {{ date('Y') }} {{ config('app.name') }}. All rights reserved.</p>
             </div>
         </div>
