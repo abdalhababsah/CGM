@@ -17,15 +17,18 @@
                         <table class="table align-items-center">
                             <thead>
                                 <tr>
-                                    <th>@lang('dashboard.order_details.product')</th>
                                     <th>@lang('dashboard.order_details.unit_price')</th>
                                     <th>@lang('dashboard.order_details.quantity')</th>
                                     <th>@lang('dashboard.order_details.total')</th>
+                                    <th>@lang('dashboard.order_details.product')</th>
                                 </tr>
                             </thead>
                             <tbody>
                                 @foreach ($order->orderItems as $item)
                                     <tr>
+                                        <td>₪{{ number_format($item->unit_price, 2) }}</td>
+                                        <td>{{ $item->quantity }}</td>
+                                        <td>₪{{ number_format($item->total_price, 2) }}</td>
                                         <td class="d-flex align-items-center">
                                             <img
                                             @if ($item->product->primaryImage)
@@ -39,9 +42,6 @@
                                             class="img-fluid rounded me-3" width="50">
                                             <span>{{ $item->product->name }}</span>
                                         </td>
-                                        <td>₪{{ number_format($item->unit_price, 2) }}</td>
-                                        <td>{{ $item->quantity }}</td>
-                                        <td>₪{{ number_format($item->total_price, 2) }}</td>
                                     </tr>
                                 @endforeach
                             </tbody>
