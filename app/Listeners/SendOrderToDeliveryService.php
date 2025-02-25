@@ -67,7 +67,7 @@ class SendOrderToDeliveryService
             'ClientCityID'      => $companyCityId, // Use the company_city_id from the delivery location
             'ClientAreaID'      => $companyAreaId, // Use the company_area_id from the Area model
             'ClientPhone'       => $order->user->phone,
-            'ClientPhone2'      => $order->phone2 ?? '',
+            'ClientPhone2'      => $order->phone2 ?? '000000000',
             'ClientAddress'     => $order->orderLocation->address ?? '',
             'Alert'             => $order->note ?? '',
             'ShipmentTotal'     => $order->total_amount,
@@ -85,7 +85,7 @@ class SendOrderToDeliveryService
         try {
             // Send the shipment data to the delivery system
             $response = $this->deliveryService->createShipment($shipmentData);
-
+            Log::info("response:", $response);
             // Check if response contains necessary shipment details
             if (!isset($response['ID']) || !isset($response['ShipmentTrackingNo'])) {
                 Log::error("Delivery Service response missing required fields for Order #{$order->id}. Response: " . json_encode($response));
