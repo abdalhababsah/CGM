@@ -54,32 +54,34 @@ class UpdateShipmentStatuses extends Command
         // Fetch all orders that have been sent to the delivery system
         $orders = Order::whereNotNull('delivery_tracking_no')->get();
 
-        foreach ($orders as $order) {
-            try {
-                // Fetch the current shipment status using the delivery API
-                $response = $this->deliveryService->getShipmentStatus($order->delivery_tracking_no);
+        if ($orders->count() > 0) {
+            foreach ($orders as $order) {
+                try {
+                    // Fetch the current shipment status using the delivery API
+                    $response = $this->deliveryService->getShipmentStatus($order->delivery_shipment_id);//kant tracking_no
 
-                // Check if response is valid
-                if ($response && isset($response['StatusEn'])) {
-                    $deliveryStatus = $response['StatusEn'];
+                    // Check if response is valid
+                    if ($response && isset($response['StatusEn'])) {
+                        $deliveryStatus = $response['StatusEn'];
 
-                    // Map the delivery system status to your application's status
-                    $mappedStatus = $this->mapDeliveryStatusToOrderStatus($deliveryStatus);
+                        // Map the delivery system status to your application's status
+                        $mappedStatus = $this->mapDeliveryStatusToOrderStatus($deliveryStatus);
 
-                    // Update the order status if it has changed
-                    if ($order->status !== $mappedStatus) {
-                        $order->status = $mappedStatus;
-                        $order->save();
+                        // Update the order status if it has changed
+                        if ($order->status !== $mappedStatus) {
+                            $order->status = $mappedStatus;
+                            $order->save();
 
-                        Log::info("Order #{$order->id} status updated to '{$mappedStatus}'.");
+                            Log::info("Order #{$order->id} status updated to '{$mappedStatus}'.");
+                        }
+                    } else {
+                        Log::warning("Invalid response for Order #{$order->id}: " . json_encode($response));
                     }
-                } else {
-                    Log::warning("Invalid response for Order #{$order->id}: " . json_encode($response));
+                } catch (\Exception $e) {
+                    Log::error("Failed to update status for Order #{$order->id}: " . $e->getMessage());
+                    // Optionally, you can continue or stop the command based on the exception
+                    continue;
                 }
-            } catch (\Exception $e) {
-                Log::error("Failed to update status for Order #{$order->id}: " . $e->getMessage());
-                // Optionally, you can continue or stop the command based on the exception
-                continue;
             }
         }
 
