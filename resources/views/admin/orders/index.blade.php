@@ -21,12 +21,12 @@
                             <!-- Search Filter -->
                             <div class="col-md-3">
                                 <label for="search" class="form-label">Order ID or User Name</label>
-                                <input 
-                                    type="text" 
-                                    id="search" 
-                                    name="search" 
-                                    class="form-control" 
-                                    placeholder="Search by ID or User Name" 
+                                <input
+                                    type="text"
+                                    id="search"
+                                    name="search"
+                                    class="form-control"
+                                    placeholder="Search by ID or User Name"
                                     value="{{ request('search') }}">
                             </div>
 
@@ -44,22 +44,22 @@
                             <!-- Date From Filter -->
                             <div class="col-md-3">
                                 <label for="date_from" class="form-label">Date From</label>
-                                <input 
-                                    type="date" 
-                                    id="date_from" 
-                                    name="date_from" 
-                                    class="form-control" 
+                                <input
+                                    type="date"
+                                    id="date_from"
+                                    name="date_from"
+                                    class="form-control"
                                     value="{{ request('date_from') }}">
                             </div>
 
                             <!-- Date To Filter -->
                             <div class="col-md-3">
                                 <label for="date_to" class="form-label">Date To</label>
-                                <input 
-                                    type="date" 
-                                    id="date_to" 
-                                    name="date_to" 
-                                    class="form-control" 
+                                <input
+                                    type="date"
+                                    id="date_to"
+                                    name="date_to"
+                                    class="form-control"
                                     value="{{ request('date_to') }}">
                             </div>
 
@@ -90,6 +90,7 @@
                             <thead>
                                 <tr>
                                     <th>Order ID</th>
+                                    <th>Tracking Number</th>
                                     <th>User</th>
                                     <th>Ordered At</th>
                                     <th>Total</th>
@@ -101,6 +102,16 @@
                                 @forelse ($orders as $order)
                                     <tr>
                                         <td>{{ $order->id }}</td>
+                                        <td>
+                                            @isset($order->delivery_tracking_no)
+                                            {{ $order->delivery_tracking_no }}
+                                            @else
+                                            {{  }}
+                                            <a href="{{ route('admin.orders.resend', $order->id) }}" class="btn btn-secondary btn-sm">
+                                                Resend
+                                            </a>
+                                            @endisset
+                                        </td>
                                         <td>
                                             {{ $order->user->name }}<br>
                                             <small>{{ $order->user->email }}</small>

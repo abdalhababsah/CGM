@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Events\OrderPlaced;
 use App\Http\Controllers\Controller;
 use App\Models\Order;
 use App\Services\OrderService;
@@ -37,6 +38,14 @@ class AdminOrdersController extends Controller
         $finalPrice = $order->finalPrice;
 
         return view('admin.orders.view', compact('order', 'originalPrice', 'deliveryPrice', 'discount', 'finalPrice'));
+    }
+
+    public function resend(Order $order)
+    {
+        $order = $this->orderService->getOrderDetails($order);
+        event(new OrderPlaced($order));
+
+        return redirect()->route('admin.orders.index')->with('success', 'Order resend successfully.');
     }
 
     /**
