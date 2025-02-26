@@ -25,6 +25,8 @@ class Order extends Model
         'discount_code_id',
         'area_id',
         'note',
+        'delivery_tracking_no',
+        'delivery_shipment_id',
     ];
 
     // Relationships
