@@ -8,3 +8,5 @@ Artisan::command('inspire', function () {
 })->purpose('Display an inspiring quote')->hourly();
 
 Schedule::command('shipments:update-statuses')->hourly();
+
+Log::info('command console ran');

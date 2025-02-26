@@ -56,6 +56,7 @@ class UpdateShipmentStatuses extends Command
 
         if ($orders->count() > 0) {
             foreach ($orders as $order) {
+                $this->deliveryService->authenticate();
                 try {
                     // Fetch the current shipment status using the delivery API
                     $response = $this->deliveryService->getShipmentStatus($order->delivery_shipment_id);//kant tracking_no

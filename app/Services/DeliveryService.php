@@ -2,6 +2,7 @@
 
 namespace App\Services;
 
+use Exception;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Cache;
@@ -23,7 +24,7 @@ class DeliveryService
     /**
      * Authenticate with the delivery system and retrieve the token.
      */
-    protected function authenticate()
+    public function authenticate()
     {
         // Check if token is already set and not expired
         if ($this->token && $this->tokenExpiry && now()->lt($this->tokenExpiry)) {
@@ -49,9 +50,9 @@ class DeliveryService
                 Log::info('Successfully authenticated with Delivery Service.');
             } else {
                 Log::error('Failed to authenticate with Delivery Service.', ['response' => $response->body()]);
-                throw new \Exception('Authentication with Delivery Service failed.');
+                throw new Exception('Authentication with Delivery Service failed.');
             }
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             Log::critical('DeliveryService Authentication Error: ' . $e->getMessage());
             throw $e;
         }
@@ -74,9 +75,9 @@ class DeliveryService
                 return $response->json();
             } else {
                 Log::error("POST {$endpoint} failed.", ['response' => $response->body()]);
-                throw new \Exception("POST {$endpoint} failed with status {$response->status()}.");
+                throw new Exception("POST {$endpoint} failed with status {$response->status()}.");
             }
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             Log::error("DeliveryService POST Request Error: " . $e->getMessage());
             throw $e;
         }
@@ -98,9 +99,9 @@ class DeliveryService
                 return $response->json();
             } else {
                 Log::error("GET {$endpoint} failed.", ['response' => $response->body()]);
-                throw new \Exception("GET {$endpoint} failed with status {$response->status()}.");
+                throw new Exception("GET {$endpoint} failed with status {$response->status()}.");
             }
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             Log::error("DeliveryService GET Request Error: " . $e->getMessage());
             throw $e;
         }
