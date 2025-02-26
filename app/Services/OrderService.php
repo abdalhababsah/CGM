@@ -80,7 +80,7 @@ class OrderService
         // Ensure the Blade template exists
 
         if (!view()->exists("admin.orders.invoice.invoice-pdf-{$language}")) {
-            throw new \Exception('Invoice view not found.');
+            throw new Exception('Invoice view not found.');
         }
         $pdf = Pdf::loadView("admin.orders.invoice.invoice-pdf-{$language}", compact('order' ,'originalPrice','discount','deliveryPrice','finalPrice'));
 
