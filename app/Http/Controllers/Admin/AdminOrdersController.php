@@ -45,7 +45,13 @@ class AdminOrdersController extends Controller
     {
         $order = $this->orderService->getOrderDetails($order);
         Log::info('order detail from order service (getOrderDetails):'. $order);
-        event(new OrderPlaced($order));
+        $e = event(new OrderPlaced($order));
+
+        if($e)
+        {
+            dd($e);
+            return redirect()->route('admin.orders.index')->with('error', $e);
+        }
 
         return redirect()->route('admin.orders.index')->with('success', 'Order resend successfully.');
     }
