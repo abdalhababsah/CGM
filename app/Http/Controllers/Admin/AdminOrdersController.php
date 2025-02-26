@@ -47,9 +47,7 @@ class AdminOrdersController extends Controller
         // Log::info('order detail from order service (getOrderDetails):'. $order);
         $e = event(new OrderPlaced($order));
 
-        if($e)
-        {
-            dd($e);
+        if($e){
             return redirect()->route('admin.orders.index')->with('error', $e);
         }
 

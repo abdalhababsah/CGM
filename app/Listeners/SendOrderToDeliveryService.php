@@ -102,7 +102,7 @@ class SendOrderToDeliveryService
             Log::info("Order #{$order->id} sent to Delivery Service successfully. Shipment ID: {$response['ID']}");
         } catch (\Exception $e) {
             Log::error("Failed to send Order #{$order->id} to Delivery Service: " . $e->getMessage());
-            return "Failed to send Order #{$order->id} to Delivery Service: " . $e;
+            return "Failed to send Order #{$order->id} to Delivery Service: " . $e->getMessage();
         }
     }
 
