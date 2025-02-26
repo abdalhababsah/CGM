@@ -67,7 +67,7 @@ class SendOrderToDeliveryService
             'ClientCityID'      => $companyCityId, // Use the company_city_id from the delivery location
             'ClientAreaID'      => $companyAreaId, // Use the company_area_id from the Area model
             'ClientPhone'       => $order->user->phone,
-            'ClientPhone2'      => $order->phone2 ?? '000000000',
+            'ClientPhone2'      => $order->phone2 ?? $order->user->phone,
             'ClientAddress'     => $order->orderLocation->address ?? '',
             'Alert'             => $order->note ?? '',
             'ShipmentTotal'     => $order->total_amount,

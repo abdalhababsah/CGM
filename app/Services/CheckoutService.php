@@ -128,7 +128,7 @@ class CheckoutService
                 'total_amount' => $grandTotal,
                 'payment_method' => 'Cash on Delivery',
                 'status' => 'Pending',
-                'phone2'=> $data['phone2'] ?? '',
+                'phone2'=> $data['phone2'] ?? $user->phone,
                 'preferred_language' => Auth::user()->preferred_language ?? 'en',
                 'note' => $data['note'] ?? null,
             ]);

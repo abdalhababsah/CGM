@@ -7,6 +7,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Order;
 use App\Services\OrderService;
 use Illuminate\Http\Request;
+use Log;
 
 class AdminOrdersController extends Controller
 {
@@ -43,6 +44,7 @@ class AdminOrdersController extends Controller
     public function resend(Order $order)
     {
         $order = $this->orderService->getOrderDetails($order);
+        Log::info('order detail from order service (getOrderDetails):'. $order);
         event(new OrderPlaced($order));
 
         return redirect()->route('admin.orders.index')->with('success', 'Order resend successfully.');
