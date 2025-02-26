@@ -106,7 +106,6 @@
                                             @isset($order->delivery_tracking_no)
                                             {{ $order->delivery_tracking_no }}
                                             @else
-                                            {{  }}
                                             <a href="{{ route('admin.orders.resend', $order->id) }}" class="btn btn-secondary btn-sm">
                                                 Resend
                                             </a>
