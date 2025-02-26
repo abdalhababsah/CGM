@@ -144,7 +144,7 @@ class DeliveryService
      */
     public function getShipmentStatus(string $shipmentTrackingNo): ?array
     {
-        $response = $this->get('/api/Business/GetShipmentStatus', ['shipmentId' => $shipmentTrackingNo]);
+        $response = $this->get('/api/Business/GetShipmentNots?shipmentId='.$shipmentTrackingNo);
         return $response;
     }
 
