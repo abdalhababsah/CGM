@@ -50,6 +50,7 @@ Route::middleware(['auth', 'admin'])->prefix('admin')->name('admin.')->group(fun
     // Orders
     Route::get('orders', [AdminOrdersController::class, 'index'])->name('orders.index');
     Route::get('orders/{order}', [AdminOrdersController::class, 'show'])->name('orders.show');
+    Route::get('ordersl/resend/{order}', [AdminOrdersController::class, 'resend'])->name('orders.resend');
     Route::get('admin/orders/{order}/invoice', [AdminOrdersController::class, 'downloadInvoice'])->name('orders.invoice.download');
     // Discounts
     Route::resource('users', UserController::class);
