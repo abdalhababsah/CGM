@@ -48,7 +48,7 @@ class AdminOrdersController extends Controller
         $e = event(new OrderPlaced($order));
 
         if($e){
-            return redirect()->route('admin.orders.index')->with('error', $e);
+            return redirect()->route('admin.orders.index')->with('errors', $e);
         }
 
         return redirect()->route('admin.orders.index')->with('success', 'Order resend successfully.');
