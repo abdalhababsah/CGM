@@ -70,7 +70,7 @@ class SendOrderToDeliveryService
             'ClientPhone2'      => $order->phone2 ?? $order->user->phone,
             'ClientAddress'     => $order->orderLocation->address ?? '',
             'Alert'             => $order->note ?? '',
-            'ShipmentTotal'     => $order->total_amount,
+            'ShipmentTotal'     => $order->finalPrice ??($order->total_amount - ($order->discount ?? 0)),
             'Remarks'           => $order->note ?? '',
             'IsReturn'          => false,
             'ShipmentContains'  => $this->formatShipmentContents($order->orderItems),
