@@ -44,7 +44,7 @@ class AdminOrdersController extends Controller
     public function resend(Order $order)
     {
         $order = $this->orderService->getOrderDetails($order);
-        Log::info('order detail from order service (getOrderDetails):'. $order);
+        // Log::info('order detail from order service (getOrderDetails):'. $order);
         $e = event(new OrderPlaced($order));
 
         if($e)
