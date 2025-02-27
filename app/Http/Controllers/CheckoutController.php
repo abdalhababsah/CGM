@@ -4,7 +4,6 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\ApplyDiscountCodeRequest;
 use App\Http\Requests\CheckoutSubmitRequest;
-use App\Http\Requests\GetDeliveryPriceRequest;
 use App\Http\Requests\UpdateUserInfoRequest;
 use App\Models\Area;
 use App\Models\DeliveryLocationAndPrice;
