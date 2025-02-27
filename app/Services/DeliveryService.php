@@ -94,7 +94,7 @@ class DeliveryService
             $response = Http::withHeaders([
                 'Authorization' => "Bearer {$this->token}",
             ])->get("{$this->baseUrl}{$endpoint}", $params);
-
+Log::info("{$this->baseUrl}{$endpoint}");
             if ($response->successful()) {
                 return $response->json();
             } else {
@@ -144,7 +144,7 @@ class DeliveryService
      */
     public function getShipmentStatus(string $shipmentId): ?array
     {
-        $response = $this->get('/api/Business/GetShipmentNots?shipmentId='.$shipmentId);
+        $response = $this->get('/api/Business/GetShipmentNots',['shipmentId='.$shipmentId]);
         return $response;
     }
 
