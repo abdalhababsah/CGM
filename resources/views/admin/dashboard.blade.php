@@ -219,7 +219,7 @@
                         <i class="fas fa-dollar-sign fa-lg"></i>
                     </div>
                     <h6 class="stat-title">Total Revenue</h6>
-                    <h3 class="stat-value">₪{{ number_format($metrics['revenue'], 2) }}</h3>
+                    <h3 class="stat-value">₪{{ $metrics['revenue'] }}</h3>
                     <div class="stat-trend text-success">
 
                     </div>
@@ -292,7 +292,7 @@
     </div>
     <!-- Chart.js CDN -->
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-  
+
     <script>
         // Common Chart.js Configuration
         Chart.defaults.font.family = "'Poppins', sans-serif";

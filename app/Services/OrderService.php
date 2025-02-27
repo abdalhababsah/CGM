@@ -9,7 +9,6 @@ use Exception;
 use Illuminate\Pagination\LengthAwarePaginator;
 use Illuminate\Support\Facades\Mail;
 use Log;
-use function PHPUnit\Framework\returnValueMap;
 
 class OrderService
 {
@@ -47,7 +46,7 @@ class OrderService
 
         // Transform orders
         $orders->getCollection()->transform(function ($order) {
-            $this->calculateFinalPrice($order);
+            // $this->calculateFinalPrice($order);
             return $order;
         });
 
@@ -74,8 +73,9 @@ class OrderService
         $originalPrice = $order->orderItems->sum('total_price');
         $deliveryPrice = $order->deliveryLocation->price ?? 0;
         $discount = $order->discountCode ?
-        $this->calculateDiscount($order->discountCode, $originalPrice)
-        : 0;
+        // $this->calculateDiscount($order->discountCode, $originalPrice)
+        $order->discount : 0;
+
         $finalPrice = $order->finalPrice;
         // Ensure the Blade template exists
 

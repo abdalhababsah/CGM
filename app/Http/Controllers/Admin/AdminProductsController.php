@@ -14,8 +14,6 @@ use App\Models\ProductImage;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
-use Illuminate\Validation\ValidationException;
-use Maatwebsite\Excel\Facades\Excel;
 
 class AdminProductsController extends Controller
 {
@@ -27,10 +25,10 @@ class AdminProductsController extends Controller
         // Retrieve categories and brands for filter options
         $categories = Category::all();
         $brands = Brand::all();
-    
+
         // Query for filtering
         $query = Product::with(['category', 'brand']);
-    
+
         // Search by name (in all supported languages)
         if ($request->filled('search')) {
             $search = $request->search;
@@ -40,25 +38,25 @@ class AdminProductsController extends Controller
                   ->orWhere('name_he', 'like', '%' . $search . '%');
             });
         }
-    
+
         // Filter by category
         if ($request->filled('category_id')) {
             $query->where('category_id', $request->category_id);
         }
-    
+
         // Filter by brand
         if ($request->filled('brand_id')) {
             $query->where('brand_id', $request->brand_id);
         }
-    
+
         // Filter by status (active/inactive)
         if ($request->filled('status')) {
             $query->where('is_active', $request->status === 'active');
         }
-    
+
         // Paginated results
         $products = $query->paginate(10)->appends($request->except('page'));
-    
+
         return view('admin.products.index', compact('products', 'categories', 'brands'));
     }
 
@@ -72,7 +70,7 @@ class AdminProductsController extends Controller
         $hairPores = HairPore::all();
         $hairTypes = HairType::all();
         $hairThicknesses = HairThickness::all();
-        
+
         return view('admin.products.create', compact('categories', 'brands', 'hairPores', 'hairTypes', 'hairThicknesses'));
     }
 
@@ -96,7 +94,7 @@ public function store(Request $request)
         'is_active' => 'required|boolean',
         'price' => 'required|numeric|min:0',
         'quantity' => 'required|integer|min:0',
-        'is_primary' => 'nullable|image', 
+        'is_primary' => 'nullable|image',
         'images.*' => 'nullable|image',
         'hair_pores' => 'nullable|array',
         'hair_pores.*' => 'exists:hair_pores,id',
@@ -104,6 +102,7 @@ public function store(Request $request)
         'hair_types.*' => 'exists:hair_types,id',
         'hair_thicknesses' => 'nullable|array',
         'hair_thicknesses.*' => 'exists:hair_thicknesses,id',
+        'colors' => 'nullable|array',
     ]);
 
     // Create the product
@@ -161,7 +160,7 @@ public function store(Request $request)
         $hairTypes = HairType::all();
         $hairThicknesses = HairThickness::all();
         $product->load(['images', 'hairPores', 'hairTypes', 'hairThicknesses']);
-        
+
         return view('admin.products.edit', compact('product', 'categories', 'brands', 'hairPores', 'hairTypes', 'hairThicknesses'));
     }
 
@@ -212,30 +211,30 @@ public function store(Request $request)
             'hair_thicknesses' => 'nullable|array',
             'hair_thicknesses.*' => 'exists:hair_thicknesses,id',
         ]);
-    
+
         $product->update($validated);
-    
+
         // Sync hair pores
         if ($request->has('hair_pores')) {
             $product->hairPores()->sync($validated['hair_pores']);
         } else {
             $product->hairPores()->detach();
         }
-    
+
         // Sync hair types
         if ($request->has('hair_types')) {
             $product->hairTypes()->sync($validated['hair_types']);
         } else {
             $product->hairTypes()->detach();
         }
-    
+
         // Sync hair thicknesses
         if ($request->has('hair_thicknesses')) {
             $product->hairThicknesses()->sync($validated['hair_thicknesses']);
         } else {
             $product->hairThicknesses()->detach();
         }
-    
+
         return response()->json(['message' => 'Options updated successfully.'], 200);
     }
 
@@ -268,20 +267,20 @@ public function store(Request $request)
         $validated = $request->validate([
             'is_primary' => 'required|file|image', // Validate file type and size
         ]);
-    
+
         if ($request->hasFile('is_primary')) {
             // Handle primary image upload
             $this->handlePrimaryImageUpload($request->file('is_primary'), $product);
-    
+
             // Fetch the new primary image
             $primaryImage = $product->images()->where('is_primary', true)->first();
-    
+
             return response()->json([
                 'message' => 'Primary image updated successfully.',
                 'primary_image_url' => asset('storage/' . $primaryImage->image_url),
             ], 200);
         }
-    
+
         return response()->json([
             'message' => 'No image file provided.',
         ], 422);
@@ -362,20 +361,24 @@ public function store(Request $request)
         $product->images()->create(['image_url' => $path, 'is_primary' => true]);
     }
     public function import(Request $request)
-{
-    $request->validate([
-        'file' => 'required|file|mimes:xls,xlsx,csv',
-    ]);
-    
-    // Import the Excel file
-    $productImport = new ProductsImport();
-    $productImport->import( $request->file('file'));
-    
-    foreach ($productImport->failures() as $failure) {
-        $failure->row();
-        $failure->errors();
-    }
+    {
+        $request->validate([
+            'file' => 'required|file|mimes:xls,xlsx,csv',
+        ]);
 
-    return redirect()->route('admin.products.index')->with('success', 'Products imported successfully.');
-}
+        // Import the Excel file
+        $productImport = new ProductsImport();
+        $productImport->import( $request->file('file'));
+
+        foreach ($productImport->failures() as $failure) {
+            $failure->row();
+            $failure->errors();
+        }
+
+        if($productImport->failures()) {
+            return redirect()->route('admin.products.index')->with('failures', $productImport->failures());
+        }
+
+        return redirect()->route('admin.products.index')->with('success', 'Products imported successfully.');
+    }
 }

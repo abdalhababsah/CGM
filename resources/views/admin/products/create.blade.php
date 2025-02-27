@@ -88,6 +88,14 @@
                                     </div>
                                 </div>
                             </section>
+
+                            <!-- Product Images Section -->
+                            <section class="mb-4">
+                                <h5 class="mb-3">Product Colors</h5>
+                                <button type="button" class="btn" onclick="addColor()">Add</button>
+                                <div class="row" id="addColor">
+                                </div>
+                            </section>
                         </form>
                     </div>
                 </div>
@@ -346,5 +354,15 @@
         });
     });
 
+    function addColor() {
+        const colorDiv = document.createElement('div');
+        colorDiv.classList.add('col-md-4', 'mb-2', 'btn-group');
+        colorDiv.innerHTML = `
+        <input type="color" class="form-control" name="colors[]" />
+        <button type="button" class="bg-danger btn-close"
+        onclick="this.parentElement.remove()"></button>
+        `;
+        document.getElementById('addColor').appendChild(colorDiv);
+    }
     </script>
 @endsection

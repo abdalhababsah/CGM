@@ -54,7 +54,7 @@ class UpdateShipmentStatuses extends Command
 
         // Fetch all orders that have been sent to the delivery system
         $orders = Order::whereNotNull('delivery_shipment_id')
-                        ->whereNot('status','Delivered')
+                        ->where('status', '!=', 'Delivered')
                         ->get();
 
         if ($orders->count() > 0) {
