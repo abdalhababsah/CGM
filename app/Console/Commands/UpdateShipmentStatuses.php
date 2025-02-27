@@ -59,11 +59,11 @@ class UpdateShipmentStatuses extends Command
                 $this->deliveryService->authenticate();
                 try {
                     // Fetch the current shipment status using the delivery API
-                    $response = $this->deliveryService->getShipmentStatus($order->delivery_shipment_id);//kant tracking_no
-
+                    $response = $this->deliveryService->getShipmentStatus($order->delivery_shipment_id)?->last();//kant tracking_no
+Log::info('response',$response);
                     // Check if response is valid
-                    if ($response && isset($response['StatusEn'])) {
-                        $deliveryStatus = $response['StatusEn'];
+                    if ($response && isset($response['NewStatusId'])) {
+                        $deliveryStatus = $response['NewStatusId'];
 
                         // Map the delivery system status to your application's status
                         $mappedStatus = $this->mapDeliveryStatusToOrderStatus($deliveryStatus);
@@ -101,7 +101,8 @@ class UpdateShipmentStatuses extends Command
     {
         // Define your mapping based on the delivery system's status
         $mapping = [
-            'Confirmed'    => 'Submitted',
+            '2'    => 'Submitted',
+            '11'    => 'Cancelled',
             'In Transit'   => 'Shipped',
             'Delivered'    => 'Delivered',
             'Returned'     => 'Returned',

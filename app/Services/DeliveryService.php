@@ -139,12 +139,12 @@ class DeliveryService
     /**
      * Get the current status of a shipment.
      *
-     * @param string $shipmentTrackingNo
+     * @param string $shipmentId
      * @return array|null
      */
-    public function getShipmentStatus(string $shipmentTrackingNo): ?array
+    public function getShipmentStatus(string $shipmentId): ?array
     {
-        $response = $this->get('/api/Business/GetShipmentNots?shipmentId='.$shipmentTrackingNo);
+        $response = $this->get('/api/Business/GetShipmentNots?shipmentId='.$shipmentId);
         return $response;
     }
 

@@ -111,9 +111,7 @@ class CheckoutService
             $discountCode = null;
             if ($discountData) {
                 $discountCode = DiscountCode::where('code', $discountData['code'])->first();
-                if ($discountCode) {
-                    Log::info('Discount Code Found:', ['code' => $discountCode->code, 'id' => $discountCode->id]);
-                } else {
+                if (!$discountCode) {
                     Log::warning('Discount Code Not Found:', ['code' => $discountData['code']]);
                     throw new \Exception('Discount code not found.');
                 }
