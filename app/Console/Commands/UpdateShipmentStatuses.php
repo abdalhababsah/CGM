@@ -105,7 +105,7 @@ Log::info('response',[$response]);
             '2'    => 'Submitted',
             '11'    => 'Cancelled',
             'In Transit'   => 'Shipped',
-            'Delivered'    => 'Delivered',
+            '8'    => 'Delivered',
             'Returned'     => 'Returned',
             // Add more mappings as per delivery API documentation
         ];
