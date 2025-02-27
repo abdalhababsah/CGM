@@ -60,7 +60,7 @@ class UpdateShipmentStatuses extends Command
                 $this->deliveryService->authenticate();
                 try {
                     // Fetch the current shipment status using the delivery API
-                    $response = Arr::last($this->deliveryService->getShipmentStatus($order->delivery_shipment_id));//kant tracking_no
+                    $response = Arr::last($this->deliveryService->getShipmentStatus($order->delivery_shipment_id) ?? []);//kant tracking_no
 Log::info('response',$response);
                     // Check if response is valid
                     if ($response && isset($response['NewStatusId'])) {
