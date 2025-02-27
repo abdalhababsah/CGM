@@ -94,7 +94,7 @@ class DeliveryService
             $response = Http::withHeaders([
                 'Authorization' => "Bearer {$this->token}",
             ])->get("{$this->baseUrl}{$endpoint}", $params);
-Log::info("{$this->baseUrl}{$endpoint}");
+
             if ($response->successful()) {
                 return $response->json();
             } else {

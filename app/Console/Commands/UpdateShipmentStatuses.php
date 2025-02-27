@@ -53,7 +53,9 @@ class UpdateShipmentStatuses extends Command
         Log::info('Starting shipment status updates.');
 
         // Fetch all orders that have been sent to the delivery system
-        $orders = Order::whereNotNull('delivery_tracking_no')->get();
+        $orders = Order::whereNotNull('delivery_shipment_id')
+                        ->whereNot('status','Delivered')
+                        ->get();
 
         if ($orders->count() > 0) {
             foreach ($orders as $order) {
@@ -61,7 +63,7 @@ class UpdateShipmentStatuses extends Command
                 try {
                     // Fetch the current shipment status using the delivery API
                     $response = Arr::last($this->deliveryService->getShipmentStatus($order->delivery_shipment_id) ?? []);//kant tracking_no
-Log::info('response',[$response]);
+
                     // Check if response is valid
                     if ($response && isset($response['NewStatusId'])) {
                         $deliveryStatus = $response['NewStatusId'];
@@ -104,7 +106,7 @@ Log::info('response',[$response]);
         $mapping = [
             '2'    => 'Submitted',
             '11'    => 'Cancelled',
-            'In Transit'   => 'Shipped',
+            '14'   => 'Shipped',
             '8'    => 'Delivered',
             'Returned'     => 'Returned',
             // Add more mappings as per delivery API documentation
