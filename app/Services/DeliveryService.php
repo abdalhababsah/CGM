@@ -144,7 +144,7 @@ Log::info("{$this->baseUrl}{$endpoint}");
      */
     public function getShipmentStatus(string $shipmentId): ?array
     {
-        $response = $this->get('/api/Business/GetShipmentNots',['shipmentId='.$shipmentId]);
+        $response = $this->get('/api/Business/GetShipmentNots',['shipmentId' => $shipmentId]);
         return $response;
     }
 
