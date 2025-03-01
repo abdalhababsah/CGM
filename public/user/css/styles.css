@@ -10447,4 +10447,14 @@ del {
     color: #c98a88;
     margin: 5px;
 }
+
+.fixed-bottom-right {
+    position: fixed;
+    bottom: 0px;
+    left: 0px;
+    z-index: 1000; /* ensures the element stays on top of other elements */
+    width: 30%;
+    max-width: 200px;
+}
+
 /* contact us */

@@ -67,6 +67,10 @@
 
     <div class="icon-load"></div>
 
+    <div class="fixed-bottom-right">
+        <img src="{{url('user\img\ramdan\ramadan-illustration-4877.png')}}" alt="">
+    </div>
+
     <!-- BODY EOF   -->
     <script src="{{ asset('user/js/jquery-3.5.1.min.js') }}"></script>
     <script src="{{ asset('user/js/ion.rangeSlider.min.js') }}"></script>

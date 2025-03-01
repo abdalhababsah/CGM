@@ -6,8 +6,6 @@ use Illuminate\Foundation\Http\FormRequest;
 
 class ApplyDiscountCodeRequest extends FormRequest
 {
-
-
     public function rules(): array
     {
         return [
