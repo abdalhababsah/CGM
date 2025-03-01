@@ -76,6 +76,20 @@
                                         field is required</span>
                                 </div>
                             </div>
+
+                            <!-- Product Colors Section -->
+                            <section class="mb-4">
+                                <h6 class="mb-3">Colors</h6>
+                                <button type="button" class="btn" onclick="addColor()">Add</button>
+                                <div class="row" id="addColor">
+                                    @foreach ($product->colors as $color)
+                                        <div class="col-md-4 mb-2 btn-group">
+                                            <input type="color" class="form-control" name="colors[][hex]" value="{{ $color->hex }}"/>
+                                            <button type="button" class="bg-danger btn-close" onclick="this.parentElement.remove()"></button>
+                                        </div>
+                                    @endforeach
+                                </div>
+                            </section>
                             <button type="button" id="updateGeneralInfo" class="btn btn-primary">Update General
                                 Info</button>
                         </form>
@@ -463,6 +477,14 @@
                         description_he: $('#description_he').val(),
                     };
 
+                    const colorInputs = document.querySelectorAll('input[type="color"]');
+
+                    colorInputs.forEach((input, index) => {
+                        formData[`colors[${index}][hex]`] = input.value;
+                    });
+                    console.log(formData);
+
+
                     $.ajax({
                         url: '{{ route('admin.products.updateGeneralInfo', $product->id) }}',
                         type: 'PUT',
@@ -562,6 +584,17 @@
                     });
                 });
             });
+
+        function addColor() {
+            const colorDiv = document.createElement('div');
+            colorDiv.classList.add('col-md-4', 'mb-2', 'btn-group');
+            colorDiv.innerHTML = `
+            <input type="color" class="form-control" name="colors[][hex]" />
+            <button type="button" class="bg-danger btn-close"
+            onclick="this.parentElement.remove()"></button>
+            `;
+            document.getElementById('addColor').appendChild(colorDiv);
+        }
         </script>
 
     @endsection

@@ -8,6 +8,7 @@ return [
     'out_of_stock' => 'نفذ المخزون',
     'sku' => 'رقم المنتج',
     'quantity' => 'الكمية',
+    'color' => 'اللون',
     'description' => 'الوصف',
     'add_to_cart' => 'أضف إلى السلة',
     'share' => 'تجدنا هنا',

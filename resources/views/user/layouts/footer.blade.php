@@ -33,10 +33,10 @@
         <div class="d-flex justify-content-center justify-content-md-end align-items-center">
             <!-- Social Media Icons -->
             <div style="padding: 4px !important;" class="d-flex gap-3">
-                <a href="https://www.facebook.com" class="text-white" target="_blank">
+                <a href="https://www.facebook.com/curlyhairproudectpalestine/" class="text-white" target="_blank">
                     <i class="icon-facebook"></i>
                 </a>
-                <a href="https://www.instagram.com" class="text-white" target="_blank">
+                <a href="https://www.instagram.com/cgm_products_palestine/" class="text-white" target="_blank">
                     <i class="icon-insta"></i>
                 </a>
             </div>

@@ -164,7 +164,7 @@
                         `<span style="color: green;">{{ __('cart.in_stock') }} (${item.available_quantity})</span>` :
                         `<span style="color: red;">{{ __('cart.out_of_stock') }}</span>`;
 
-                    let oldPrice = item.discount ?
+                    let oldPrice = item.discount > 0 ?
                     `<del>₪${item.price}</del>` : '';
 
                     cartHtml += `

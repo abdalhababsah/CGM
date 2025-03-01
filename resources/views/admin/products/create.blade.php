@@ -76,6 +76,14 @@
                                 </div>
                             </section>
 
+                            <!-- Product Colors Section -->
+                            <section class="mb-4">
+                                <h5 class="mb-3">Product Colors</h5>
+                                <button type="button" class="btn" onclick="addColor()">Add</button>
+                                <div class="row" id="addColor">
+                                </div>
+                            </section>
+
                             <!-- Product Images Section -->
                             <section class="mb-4">
                                 <h5 class="mb-3">Product Images</h5>
@@ -86,14 +94,6 @@
                                         <span id="imageError" class="text-danger small" style="display:none;">Please upload
                                             at least one image</span>
                                     </div>
-                                </div>
-                            </section>
-
-                            <!-- Product Images Section -->
-                            <section class="mb-4">
-                                <h5 class="mb-3">Product Colors</h5>
-                                <button type="button" class="btn" onclick="addColor()">Add</button>
-                                <div class="row" id="addColor">
                                 </div>
                             </section>
                         </form>
@@ -274,6 +274,12 @@
             formData.append('discount', document.getElementById('discount').value);
             formData.append('quantity', document.getElementById('quantity').value);
 
+            const colorInputs = document.querySelectorAll('input[type="color"]');
+
+            colorInputs.forEach((input, index) => {
+                formData.append(`colors[${index}][hex]`, input.value);
+            });
+
             // Append hair pores
             Array.from(document.getElementById('hair_pores').selectedOptions).forEach(option => {
                 formData.append('hair_pores[]', option.value);
@@ -358,7 +364,7 @@
         const colorDiv = document.createElement('div');
         colorDiv.classList.add('col-md-4', 'mb-2', 'btn-group');
         colorDiv.innerHTML = `
-        <input type="color" class="form-control" name="colors[]" />
+        <input type="color" class="form-control" name="colors[][hex]" />
         <button type="button" class="bg-danger btn-close"
         onclick="this.parentElement.remove()"></button>
         `;

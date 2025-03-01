@@ -8,6 +8,7 @@ return [
     'out_of_stock' => 'אזל מהמלאי',
     'sku' => 'מק״ט',
     'quantity' => 'כמות',
+    'color' => 'צֶבַע',
     'description' => 'תיאור',
     'add_to_cart' => 'הוסף לסל',
     'share' => 'מצא אותנו כאן',
