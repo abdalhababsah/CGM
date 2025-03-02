@@ -282,7 +282,7 @@
                     let inStock = product.in_stock ? '@lang('shop.available')' : '@lang('shop.soldOut')';
                     let backColor = product.in_stock ? 'products-item__sale' : 'products-item__soldout';
                     let newLabel = product.is_new ? `<div class="products-item__type1"><span class="products-item__new">@lang("shop.new")</span></div>` : '';
-                    let addToCartButton = product.in_stock ? `<button class="add-to-cart-btn" data-product-id="${product.id}" aria-label="{{ __('shop.add_to_cart') }}"><i style="color:white !important;" class="icon-cart"></i></button>` : '';
+                    let addToCartButton = (product.in_stock) ? `<button class="add-to-cart-btn" data-product-id="${product.id}" aria-label="{{ __('shop.add_to_cart') }}"><i style="color:white !important;" class="icon-cart"></i></button>` : '';
 
                     // Price display with discount
                     let priceDisplay = product.discount > 0 ?
@@ -436,6 +436,8 @@
                             updateCartCount(response.cart_count);
                             updateGlobalCartCount();
                             showToast(response.message, 'success');
+                            console.log(response.response);
+
                         } else {
                             showToast(response.message, 'error');
                         }

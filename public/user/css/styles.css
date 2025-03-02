@@ -5999,7 +5999,7 @@ blockquote:after,
 
 .product-info__color li:hover,
 .product-info__color li.active {
-	border: 2px solid color(srgb 0.5937 0.1135 0.1456);
+	border: 4px solid color(srgb 0.5937 0.1135 0.1456);
 }
 
 .product-info__quantity-title {

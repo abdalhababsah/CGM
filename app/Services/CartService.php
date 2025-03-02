@@ -33,7 +33,7 @@ class CartService
      * @param int $quantity
      * @return array
      */
-    public function addToCart($productId, $quantity = 1)
+    public function addToCart($productId, $quantity = 1, $colorId = null)
     {
         $product = Product::find($productId);
 
@@ -46,8 +46,11 @@ class CartService
         }
 
         if (Auth::check()) {
-            $cartItem = $this->cart->cartItems()->where('product_id', $productId)->first();
-            $existingQty = $cartItem ? $cartItem->quantity : 0;
+            $cartItem = $this->cart->cartItems()->firstOrNew(
+                ['product_id' => $productId, 'product_color_id' => $colorId],
+                ['quantity' => 0]  // Default value for new items
+            );
+            $existingQty = $cartItem->exists ? $cartItem->quantity : 0;
             $newQuantity = $existingQty + $quantity;
 
             // If requested quantity exceeds available stock, return error
@@ -55,15 +58,8 @@ class CartService
                 return ['status' => 'error', 'message' => __('cart.reached_max_quantity')];
             }
 
-            if ($cartItem) {
-                $cartItem->quantity = $newQuantity;
-                $cartItem->save();
-            } else {
-                $this->cart->cartItems()->create([
-                    'product_id' => $productId,
-                    'quantity' => $newQuantity,
-                ]);
-            }
+            $cartItem->quantity = $newQuantity;
+            $cartItem->save();
 
             return ['status' => 'success', 'message' => __('cart.product_added')];
         } else {
@@ -79,7 +75,7 @@ class CartService
             $cart[$productId] = $newQuantity;
             $this->saveGuestCart($cart);
 
-            return ['status' => 'success', 'message' => __('cart.product_added')];
+            return ['status' => 'success', 'message' => __('cart.product_added'), 'response' => $cart];
         }
     }
 
@@ -198,6 +194,7 @@ class CartService
                     'discounted_price' => $item->product->discounted_price,
                     'discount' => $item->product->discount,
                     'quantity' => $item->quantity,
+                    'color' => $item->productColor->hex ?? null,
                     'total' => $item->quantity * $item->product->discounted_price,
                     'image_url' => $item->product->primaryImage ? asset('storage/' . $item->product->primaryImage->image_url) : 'https://via.placeholder.com/262x370',
                     'available_quantity' => $item->product->quantity,

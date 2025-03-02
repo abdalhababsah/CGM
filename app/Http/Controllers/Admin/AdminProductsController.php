@@ -204,7 +204,6 @@ class AdminProductsController extends Controller
             'colors.*.hex' => 'hex_color',
         ]);
 
-        // Attach hair thicknesses
         $product->colors()->delete();
         if ($request->filled('colors')) {
             $colorData = [];

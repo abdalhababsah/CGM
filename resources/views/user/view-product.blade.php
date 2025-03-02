@@ -163,17 +163,15 @@
 
                             <!-- Add color options here -->
                             @if ($product->colors->count() > 0)
-                                <div class="product-colors">
-                                    <span class="product-info__quantity-title">{{ __('view_product.color') }}:</span>
-                                    <div class="shop-main__select">
-                                        <select id="colorSelect" class="form-control styled" required>
-                                            @foreach ($product->colors as $color)
-                                                <option value="{{ $color->hex }}" style="
-                                                    background-color : {{ $color->hex }};
-                                                ">{{$color->hex}}</option>
-                                            @endforeach
-                                        </select>
-                                    </div>
+                                <div class="product-info__color">
+                                    <span class="product-info__color-title">{{ __('view_product.color') }}:</span>
+                                    <ul id="colorSelect">
+                                        @foreach ($product->colors as $color)
+                                        <li value="{{ $color->id }}" style="
+                                        background-color : {{ $color->hex }};">
+                                        </li>
+                                        @endforeach
+                                    </ul>
                                 </div>
                             @endif
                         </div>
@@ -240,6 +238,7 @@
                 e.preventDefault();
                 let productId = $(this).data('product-id');
                 let quantity = $('.counter-input').val();
+                let color = $('#colorSelect .active').attr('value');
 
                 $.ajax({
                     url: "{{ route('cart.add') }}",
@@ -247,6 +246,7 @@
                     data: {
                         product_id: productId,
                         quantity: quantity,
+                        color_id: color,
                         _token: '{{ csrf_token() }}'
                     },
                     success: function(response) {

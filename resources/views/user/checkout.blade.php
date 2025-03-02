@@ -98,7 +98,7 @@
                                 <!-- Phone Number 2 -->
                                 <div class="box-field">
                                     <input style="margin-top: 0px !important;" type="tel" id="phone2" name="phone2" class="form-control"
-                                        placeholder="{{ __('checkout.enter_phone2') }}" maxlength="10">
+                                        placeholder="{{ __('checkout.enter_phone2') }}" maxlength="10" required>
                                     <span class="invalid-feedback" id="error_phone2"></span>
                                 </div>
 

@@ -73,7 +73,7 @@ class SendOrderToDeliveryService
             'ShipmentTotal'     => $order->finalPrice ??($order->total_amount - ($order->discount ?? 0)),
             'Remarks'           => $order->note ?? '',
             'IsReturn'          => false,
-            'ShipmentContains'  => $this->formatShipmentContents($order->orderItems),
+            'ShipmentContains'  => substr($this->formatShipmentContents($order->orderItems),0,240),
             'lang'              => $preferredLanguage,
             'ShipmentQuantity'  => $this->getShipmentQuantity($order->orderItems),
             'IsForeign'         => false,
@@ -132,8 +132,8 @@ class SendOrderToDeliveryService
     protected function formatShipmentContents($orderItems): string
     {
         return $orderItems->map(function ($item) {
-            return "{$item->product->name_en} x {$item->quantity}";
-        })->implode(', ');
+            return "{$item->product->name_en}x{$item->quantity}";
+        })->implode(',');
     }
 
     /**
