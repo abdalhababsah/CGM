@@ -21,8 +21,8 @@
                         <table class="table align-items-center table-striped mb-0">
                             <thead>
                                 <tr>
-                                    <th>@lang('dashboard.user_orders.order_id')</th>
-                                    <th>@lang('dashboard.user_orders.user')</th>
+                                    {{-- <th>@lang('dashboard.user_orders.order_id')</th>
+                                    <th>@lang('dashboard.user_orders.user')</th> --}}
                                     <th>@lang('dashboard.user_orders.ordered_at')</th>
                                     <th>@lang('dashboard.user_orders.total')</th>
                                     <th class="text-center">@lang('dashboard.user_orders.status')</th>
@@ -32,11 +32,11 @@
                             <tbody>
                                 @forelse ($orders as $order)
                                     <tr>
-                                        <td>{{ $order->id }}</td>
+                                        {{-- <td>{{ $order->id }}</td>
                                         <td>
                                             {{ $order->user->name }}<br>
                                             <small>{{ $order->user->email }}</small>
-                                        </td>
+                                        </td> --}}
                                         <td>{{ $order->created_at->format('d M Y, h:i A') }}</td>
                                         <td>₪{{ number_format($order->finalPrice, 2) }}</td>
                                         <td class="text-center">

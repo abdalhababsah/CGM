@@ -40,7 +40,8 @@
                                             @endif
                                             style="max-height: 150px"
                                             class="img-fluid rounded me-3" width="50">
-                                            <span>{{ $item->product->name }}</span>
+                                            <span>{{ $item->product->name }} </span>
+                                            <span style="background-color: {{ $item->hex }}; height :10px; width :10px;"></span>
                                         </td>
                                     </tr>
                                 @endforeach

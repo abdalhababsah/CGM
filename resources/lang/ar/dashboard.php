@@ -18,6 +18,10 @@ return [
         'actions'            => 'الإجراءات',
         'completed'          => 'مكتمل',
         'pending'            => 'قيد الانتظار',
+        'shipped'            => 'بالشحن',
+        'submitted'          => 'أُرسّل',
+        'cancelled'           => 'أُلغي',
+        'delivered'          => 'وصل',
         'secondary'          => 'قيد الانتظار', // Assuming 'secondary' represents 'On Hold'
         'view'               => 'عرض',
         'no_orders_found'    => 'لم يتم العثور على طلبات.',

@@ -2,8 +2,12 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\ProductColor;
+use Exception;
 use Illuminate\Http\Request;
 use App\Services\CartService;
+use Illuminate\Validation\Rule;
+use Log;
 
 class CartController extends Controller
 {
@@ -40,17 +44,24 @@ class CartController extends Controller
      */
     public function add(Request $request)
     {
+        try {
+
         $request->validate([
             'product_id' => 'required|integer|exists:products,id',
             'quantity' => 'integer|min:1',
+            'color_id' => [Rule::exists('product_colors', 'id')->where('product_id', $request->product_id),],
         ]);
 
         $productId = $request->input('product_id');
         $quantity = $request->input('quantity', 1);
+        $colorId = $request->input('color_id', null);
 
-        $result = $this->cartService->addToCart($productId, $quantity);
+        $result = $this->cartService->addToCart($productId, $quantity, $colorId);
 
         return response()->json($result);
+        } catch (Exception $th) {
+            Log::error($th->getMessage());
+        }
     }
 
     /**
@@ -64,17 +75,17 @@ class CartController extends Controller
         $request->validate([
             'product_id' => 'required|integer|exists:products,id',
         ]);
-    
+
         $productId = $request->input('product_id');
-    
+
         $result = $this->cartService->removeFromCart($productId);
-    
+
         if ($result['status'] === 'success') {
             $cartDetails = $this->cartService->getCartDetails();
             $result['cartItems'] = $cartDetails['items'];
             $result['totalPrice'] = $cartDetails['totalPrice'];
         }
-    
+
         return response()->json($result);
     }
 
@@ -91,19 +102,19 @@ class CartController extends Controller
              'product_id' => 'required|integer|exists:products,id',
              'quantity' => 'required|integer|min:1',
          ]);
-     
+
          $productId = $request->input('product_id');
          $quantity = $request->input('quantity');
-     
+
          $result = $this->cartService->updateQuantity($productId, $quantity);
-     
+
          if ($result['status'] === 'success') {
              // Fetch the entire cart details (items and total price)
              $cartDetails = $this->cartService->getCartDetails();
              $result['cartItems'] = $cartDetails['items'];
              $result['totalPrice'] = $cartDetails['totalPrice'];
          }
-     
+
          return response()->json($result);
      }
 

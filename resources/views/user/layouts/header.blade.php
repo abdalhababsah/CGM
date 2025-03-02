@@ -6,9 +6,9 @@
 
         </div>
 
-        <div class="header-logo">
+        <a class="header-logo" href="{{ url('/') }}">
             <img src="{{ asset('user/img/logo-white-01.svg') }}" alt="@lang('home.header_logo_alt')">
-        </div>
+        </a>
         <div class="header-box">
             <ul class="header-nav">
                 <li><a href="{{ route('home') }}"

@@ -18,9 +18,11 @@ use Maatwebsite\Excel\Concerns\WithValidation;
 use Illuminate\Support\Facades\Validator;
 use Maatwebsite\Excel\Concerns\SkipsOnError;
 use Maatwebsite\Excel\Concerns\WithBatchInserts;
+use Illuminate\Contracts\Queue\ShouldQueue;
+use Maatwebsite\Excel\Concerns\WithChunkReading;
 use Throwable;
 
-class ProductsImport implements ToModel, WithHeadingRow, SkipsOnError, WithValidation, SkipsOnFailure
+class ProductsImport implements ToModel, WithHeadingRow, SkipsOnError, WithValidation, SkipsOnFailure, WithChunkReading, ShouldQueue
 {
     use Importable;
     use SkipsFailures;
@@ -201,4 +203,9 @@ class ProductsImport implements ToModel, WithHeadingRow, SkipsOnError, WithValid
     {
         $this->addError($this->rowNumber, 'general', $e->getMessage());
     }
+    public function chunkSize(): int
+    {
+        return 30;
+    }
+
 }

@@ -93,7 +93,7 @@
 
                                             <!-- Status -->
                                             <td class="align-middle text-center">
-                                                @if ($discount->is_active)
+                                                @if ($discount->is_active && (!$discount->expiry_date || \Carbon\Carbon::now()->lt(\Carbon\Carbon::parse($discount->expiry_date))))
                                                     <span class="badge badge-sm bg-gradient-success">Active</span>
                                                 @else
                                                     <span class="badge badge-sm bg-gradient-secondary">Inactive</span>

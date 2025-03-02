@@ -99,12 +99,12 @@
                             <div class="product-slider__main-item">
                                 <div class="products-item__type">
                                     <span
-                                        class="products-item__sale {{ $product->quantity > 0 ? 'products-item__sale' : 'products-item__new' }} ">
-                                        {{ $product->quantity > 0 ? __('view_product.in_stock') : __('view_product.out_of_stock') }}
+                                        class="products-item__sale {{ $product->in_stock ? 'products-item__sale' : 'products-item__new' }} ">
+                                        {{ $product->in_stock ? __('view_product.in_stock') : __('view_product.out_of_stock') }}
                                     </span>
                                 </div>
                                 <img loading="lazy" src="{{ asset('storage/' . $image->image_url) }}"
-                                    alt="{{ $product->{'name_' . app()->getLocale()} }}">
+                                    alt="{{ $product->name }}">
                             </div>
                         @endforeach
                     </div>
@@ -112,7 +112,7 @@
                         @foreach ($product->images as $image)
                             <div class="product-slider__nav-item">
                                 <img loading="lazy" src="{{ asset('storage/' . $image->image_url) }}"
-                                    alt="{{ $product->{'name_' . app()->getLocale()} }}">
+                                    alt="{{ $product->name }}">
                             </div>
                         @endforeach
                     </div>
@@ -150,7 +150,7 @@
                         </ul>
                     </div>
 
-                    @if ($product->quantity > 0)
+                    @if ($product->in_stock)
                         <div class="product-options">
                             <div class="product-info__quantity" style="direction: ltr">
                                 <span class="product-info__quantity-title">{{ __('view_product.quantity') }}:</span>
@@ -160,6 +160,20 @@
                                     <span class="counter-link counter-link__next"><i class="icon-arrow"></i></span>
                                 </div>
                             </div>
+
+                            <!-- Add color options here -->
+                            @if ($product->colors->count() > 0)
+                                <div class="product-info__color">
+                                    <span class="product-info__color-title">{{ __('view_product.color') }}:</span>
+                                    <ul id="colorSelect">
+                                        @foreach ($product->colors as $color)
+                                        <li value="{{ $color->id }}" style="
+                                        background-color : {{ $color->hex }};">
+                                        </li>
+                                        @endforeach
+                                    </ul>
+                                </div>
+                            @endif
                         </div>
                     @else
                         <div class="out-of-stock-warning">
@@ -192,7 +206,7 @@
                     </ul>
                     <div class="box-tab-cont">
                         <div class="tab-cont" id="product-tab_1">
-                            {{ $product->{'description_' . app()->getLocale()} }}
+                            {{ $product->description }}
                         </div>
                     </div>
                 </div>
@@ -224,6 +238,7 @@
                 e.preventDefault();
                 let productId = $(this).data('product-id');
                 let quantity = $('.counter-input').val();
+                let color = $('#colorSelect .active').attr('value');
 
                 $.ajax({
                     url: "{{ route('cart.add') }}",
@@ -231,6 +246,7 @@
                     data: {
                         product_id: productId,
                         quantity: quantity,
+                        color_id: color,
                         _token: '{{ csrf_token() }}'
                     },
                     success: function(response) {

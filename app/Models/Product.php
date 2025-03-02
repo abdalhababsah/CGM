@@ -37,7 +37,8 @@ class Product extends Model
     ];
 
     protected $casts = [
-        'price'=> 'decimal:2',
+        'price' => 'decimal:2',
+        'discount' => 'decimal:2',
     ];
 
     // Relationships
@@ -64,6 +65,12 @@ class Product extends Model
     public function cartItems()
     {
         return $this->hasMany(CartItem::class);
+    }
+
+    // A product can have many colors
+    public function colors()
+    {
+        return $this->hasMany(ProductColor::class);
     }
 
     // A product can have many wish list items

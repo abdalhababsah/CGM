@@ -8,6 +8,7 @@ return [
     'out_of_stock' => 'Out of Stock',
     'sku' => 'SKU',
     'quantity' => 'Quantity',
+    'color' => 'Color',
     'description' => 'Description',
     'add_to_cart' => 'Add to Cart',
     'add_to_wishlist' => 'Add to Wishlist',

@@ -17,6 +17,10 @@ return [
         'actions'            => 'פעולות',
         'completed'          => 'הושלם',
         'pending'            => 'בהמתנה',
+        'shipped'            => 'נשלח',
+        'submitted'          => 'נשלח',
+        'cancelled'           => 'מבוטל',
+        'delivered'          => 'הגיע',
         'secondary'          => 'בהמתנה', // Assuming 'secondary' represents 'On Hold'
         'view'               => 'צפייה',
         'no_orders_found'    => 'לא נמצאו הזמנות.',

@@ -140,17 +140,22 @@ class CheckoutService
                 'address' => $data['address'],
                 'longitude' => $data['longitude'] ?? null,
             ]);
+
             // Create Order Items
+            $orderItems = [];
             foreach ($cartDetails['items'] as $item) {
-                OrderItem::create([
+                $orderItems[] =[
                     'order_id' => $order->id,
                     'product_id' => $item['product_id'],
                     'quantity' => $item['quantity'],
                     'unit_price' => $item['price'],
                     'total_price' => $item['total'],
-                ]);
+                    'hex' => $item['color'] ?? null,
+                ];
             }
-
+            OrderItem::insert($orderItems);
+Log::info('item order', $orderItems);
+Log::info('item order', $cartDetails);
             // Update product quantities
             foreach ($cartDetails['items'] as $item) {
                 $product = Product::find($item['product_id']);

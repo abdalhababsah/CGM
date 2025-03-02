@@ -158,14 +158,18 @@
                 <div class="cart-table__col">{{ __('cart.quantity') }}</div>
                 <div class="cart-table__col">{{ __('cart.total') }}</div>
             </div>`;
+console.log(cartItems);
 
                 cartItems.forEach(item => {
                     let stockStatus = item.in_stock ?
                         `<span style="color: green;">{{ __('cart.in_stock') }} (${item.available_quantity})</span>` :
                         `<span style="color: red;">{{ __('cart.out_of_stock') }}</span>`;
 
-                    let oldPrice = item.discount ?
+                    let oldPrice = item.discount > 0 ?
                     `<del>₪${item.price}</del>` : '';
+
+                    let color = item.color ?
+                    `<p style="background-color: ${item.color}; height :10px;"></p>` : ``;
 
                     cartHtml += `
         <div class="cart-table__row" data-product-id="${item.product_id}">
@@ -174,7 +178,7 @@
                     <img src="${item.image_url}" alt="${item.name}">
                 </a>
                 <div class="cart-table__info">
-                    <a href="#" class="title5">${item.name}</a>
+                    <a href="#" class="title5">${item.name} ${color}</a>
                     <span class="cart-table__info-stock">${stockStatus}</span>
                 </div>
             </div>

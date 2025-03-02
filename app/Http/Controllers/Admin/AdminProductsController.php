@@ -14,8 +14,7 @@ use App\Models\ProductImage;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
-use Illuminate\Validation\ValidationException;
-use Maatwebsite\Excel\Facades\Excel;
+use Log;
 
 class AdminProductsController extends Controller
 {
@@ -27,10 +26,10 @@ class AdminProductsController extends Controller
         // Retrieve categories and brands for filter options
         $categories = Category::all();
         $brands = Brand::all();
-    
+
         // Query for filtering
         $query = Product::with(['category', 'brand']);
-    
+
         // Search by name (in all supported languages)
         if ($request->filled('search')) {
             $search = $request->search;
@@ -40,25 +39,25 @@ class AdminProductsController extends Controller
                   ->orWhere('name_he', 'like', '%' . $search . '%');
             });
         }
-    
+
         // Filter by category
         if ($request->filled('category_id')) {
             $query->where('category_id', $request->category_id);
         }
-    
+
         // Filter by brand
         if ($request->filled('brand_id')) {
             $query->where('brand_id', $request->brand_id);
         }
-    
+
         // Filter by status (active/inactive)
         if ($request->filled('status')) {
             $query->where('is_active', $request->status === 'active');
         }
-    
+
         // Paginated results
         $products = $query->paginate(10)->appends($request->except('page'));
-    
+
         return view('admin.products.index', compact('products', 'categories', 'brands'));
     }
 
@@ -72,83 +71,97 @@ class AdminProductsController extends Controller
         $hairPores = HairPore::all();
         $hairTypes = HairType::all();
         $hairThicknesses = HairThickness::all();
-        
+
         return view('admin.products.create', compact('categories', 'brands', 'hairPores', 'hairTypes', 'hairThicknesses'));
     }
 
     /**
      * Store a newly created product in storage.
      */
-// App\Http\Controllers\Admin\AdminProductsController.php
 
-public function store(Request $request)
-{
-    // Validate the request
-    $validated = $request->validate([
-        'name_en' => 'required|string|max:255',
-        'name_ar' => 'required|string|max:255',
-        'name_he' => 'required|string|max:255',
-        'description_en' => 'nullable|string',
-        'description_ar' => 'nullable|string',
-        'description_he' => 'nullable|string',
-        'category_id' => 'required|exists:categories,id',
-        'brand_id' => 'nullable|exists:brands,id',
-        'is_active' => 'required|boolean',
-        'price' => 'required|numeric|min:0',
-        'quantity' => 'required|integer|min:0',
-        'is_primary' => 'nullable|image', 
-        'images.*' => 'nullable|image',
-        'hair_pores' => 'nullable|array',
-        'hair_pores.*' => 'exists:hair_pores,id',
-        'hair_types' => 'nullable|array',
-        'hair_types.*' => 'exists:hair_types,id',
-        'hair_thicknesses' => 'nullable|array',
-        'hair_thicknesses.*' => 'exists:hair_thicknesses,id',
-    ]);
+    public function store(Request $request)
+    {
+        // Validate the request
+        $validated = $request->validate([
+            'name_en' => 'required|string|max:255',
+            'name_ar' => 'required|string|max:255',
+            'name_he' => 'required|string|max:255',
+            'description_en' => 'nullable|string',
+            'description_ar' => 'nullable|string',
+            'description_he' => 'nullable|string',
+            'category_id' => 'required|exists:categories,id',
+            'brand_id' => 'nullable|exists:brands,id',
+            'is_active' => 'required|boolean',
+            'price' => 'required|numeric|min:0',
+            'quantity' => 'required|integer|min:0',
+            'is_primary' => 'nullable|image',
+            'images.*' => 'nullable|image',
+            'hair_pores' => 'nullable|array',
+            'hair_pores.*' => 'exists:hair_pores,id',
+            'hair_types' => 'nullable|array',
+            'hair_types.*' => 'exists:hair_types,id',
+            'hair_thicknesses' => 'nullable|array',
+            'hair_thicknesses.*' => 'exists:hair_thicknesses,id',
+            'colors' => 'nullable|array',
+            'colors.*.hex' => 'hex_color',
+        ]);
 
-    // Create the product
-    $product = new Product($validated);
-    $product->sku = $request->sku ?? strtoupper(Str::random(10)); // Generate SKU if not provided
-    $product->save();
+        // Create the product
+        $product = new Product($validated);
+        $product->sku = $request->sku ?? strtoupper(Str::random(10)); // Generate SKU if not provided
+        $product->save();
 
-    // Handle primary image upload
-    if ($request->hasFile('is_primary')) {
-        $this->handlePrimaryImageUpload($request->file('is_primary'), $product);
-    }
-
-    // Handle additional images upload
-    if ($request->hasFile('images')) {
-        foreach ($request->file('images') as $image) {
-            $this->handleAdditionalImageUpload($image, $product);
+        // Handle primary image upload
+        if ($request->hasFile('is_primary')) {
+            $this->handlePrimaryImageUpload($request->file('is_primary'), $product);
         }
-    }
 
-    // Attach hair pores
-    if ($request->filled('hair_pores')) {
-        $product->hairPores()->attach($validated['hair_pores']);
-    }
+        // Handle additional images upload
+        if ($request->hasFile('images')) {
+            foreach ($request->file('images') as $image) {
+                $this->handleAdditionalImageUpload($image, $product);
+            }
+        }
 
-    // Attach hair types
-    if ($request->filled('hair_types')) {
-        $product->hairTypes()->attach($validated['hair_types']);
-    }
+        // Attach hair pores
+        if ($request->filled('hair_pores')) {
+            $product->hairPores()->attach($validated['hair_pores']);
+        }
 
-    // Attach hair thicknesses
-    if ($request->filled('hair_thicknesses')) {
-        $product->hairThicknesses()->attach($validated['hair_thicknesses']);
-    }
+        // Attach hair types
+        if ($request->filled('hair_types')) {
+            $product->hairTypes()->attach($validated['hair_types']);
+        }
 
-    // Check if the request expects JSON
-    if ($request->expectsJson()) {
-        return response()->json([
-            'message' => 'Product created successfully.',
-            'product' => $product, // Return the created product
-        ], 201);
-    }
+        // Attach hair thicknesses
+        if ($request->filled('hair_thicknesses')) {
+            $product->hairThicknesses()->attach($validated['hair_thicknesses']);
+        }
 
-    // Default redirect for standard form submission
-    return redirect()->route('admin.products.index')->with('success', 'Product created successfully.');
-}
+        // Attach hair thicknesses
+        if ($request->filled('colors')) {
+            $colorData = [];
+            foreach ($validated['colors'] as $color) {
+                $colorData[] = [
+                    'hex'=> $color['hex'],
+                    'product_id'=> $product->id,
+                ];
+            }
+            $product->colors()->insert($colorData);
+        }
+
+
+        // Check if the request expects JSON
+        if ($request->expectsJson()) {
+            return response()->json([
+                'message' => 'Product created successfully.',
+                'product' => $product, // Return the created product
+            ], 201);
+        }
+
+        // Default redirect for standard form submission
+        return redirect()->route('admin.products.index')->with('success', 'Product created successfully.');
+    }
 
     /**
      * Show the form for editing the specified product.
@@ -160,8 +173,8 @@ public function store(Request $request)
         $hairPores = HairPore::all();
         $hairTypes = HairType::all();
         $hairThicknesses = HairThickness::all();
-        $product->load(['images', 'hairPores', 'hairTypes', 'hairThicknesses']);
-        
+        $product->load(['images', 'hairPores', 'hairTypes', 'hairThicknesses', 'colors']);
+
         return view('admin.products.edit', compact('product', 'categories', 'brands', 'hairPores', 'hairTypes', 'hairThicknesses'));
     }
 
@@ -187,8 +200,22 @@ public function store(Request $request)
             'description_en' => 'nullable|string',
             'description_ar' => 'nullable|string',
             'description_he' => 'nullable|string',
+            'colors' => 'nullable|array',
+            'colors.*.hex' => 'hex_color',
         ]);
 
+        $product->colors()->delete();
+        if ($request->filled('colors')) {
+            $colorData = [];
+            foreach ($validated['colors'] as $color) {
+                $colorData[] = [
+                    'hex'=> $color['hex'],
+                    'product_id'=> $product->id,
+                ];
+            }
+            $product->colors()->insert($colorData);
+        }
+        Log::info('colors'. $product->id .'data' , $validated['colors']);
         $product->update($validated);
 
         return response()->json(['message' => 'General information updated successfully.'], 200);
@@ -212,30 +239,30 @@ public function store(Request $request)
             'hair_thicknesses' => 'nullable|array',
             'hair_thicknesses.*' => 'exists:hair_thicknesses,id',
         ]);
-    
+
         $product->update($validated);
-    
+
         // Sync hair pores
         if ($request->has('hair_pores')) {
             $product->hairPores()->sync($validated['hair_pores']);
         } else {
             $product->hairPores()->detach();
         }
-    
+
         // Sync hair types
         if ($request->has('hair_types')) {
             $product->hairTypes()->sync($validated['hair_types']);
         } else {
             $product->hairTypes()->detach();
         }
-    
+
         // Sync hair thicknesses
         if ($request->has('hair_thicknesses')) {
             $product->hairThicknesses()->sync($validated['hair_thicknesses']);
         } else {
             $product->hairThicknesses()->detach();
         }
-    
+
         return response()->json(['message' => 'Options updated successfully.'], 200);
     }
 
@@ -244,8 +271,6 @@ public function store(Request $request)
      */
     public function uploadAdditionalImages(Request $request, Product $product)
     {
-        // dd($request);
-        // Validate additional images
         $validated = $request->validate([
             'images.*' => 'required|image', // Max 2MB per image
         ]);
@@ -268,20 +293,20 @@ public function store(Request $request)
         $validated = $request->validate([
             'is_primary' => 'required|file|image', // Validate file type and size
         ]);
-    
+
         if ($request->hasFile('is_primary')) {
             // Handle primary image upload
             $this->handlePrimaryImageUpload($request->file('is_primary'), $product);
-    
+
             // Fetch the new primary image
             $primaryImage = $product->images()->where('is_primary', true)->first();
-    
+
             return response()->json([
                 'message' => 'Primary image updated successfully.',
                 'primary_image_url' => asset('storage/' . $primaryImage->image_url),
             ], 200);
         }
-    
+
         return response()->json([
             'message' => 'No image file provided.',
         ], 422);
@@ -362,20 +387,24 @@ public function store(Request $request)
         $product->images()->create(['image_url' => $path, 'is_primary' => true]);
     }
     public function import(Request $request)
-{
-    $request->validate([
-        'file' => 'required|file|mimes:xls,xlsx,csv',
-    ]);
-    
-    // Import the Excel file
-    $productImport = new ProductsImport();
-    $productImport->import( $request->file('file'));
-    
-    foreach ($productImport->failures() as $failure) {
-        $failure->row();
-        $failure->errors();
-    }
+    {
+        $request->validate([
+            'file' => 'required|file|mimes:xls,xlsx,csv',
+        ]);
 
-    return redirect()->route('admin.products.index')->with('success', 'Products imported successfully.');
-}
+        // Import the Excel file
+        $productImport = new ProductsImport();
+        $productImport->import( $request->file('file'));
+
+        foreach ($productImport->failures() as $failure) {
+            $failure->row();
+            $failure->errors();
+        }
+
+        if($productImport->failures()) {
+            return redirect()->route('admin.products.index')->with('failures', $productImport->failures());
+        }
+
+        return redirect()->route('admin.products.index')->with('success', 'Products imported successfully.');
+    }
 }

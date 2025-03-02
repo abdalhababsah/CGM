@@ -18,6 +18,10 @@ return [
         'actions'            => 'Actions',
         'completed'          => 'Completed',
         'pending'            => 'Pending',
+        'shipped'            => 'Shipped',
+        'submitted'          => 'Submitted',
+        'cancelled'          => 'Canceled',
+        'delivered'          => 'Delivered',
         'secondary'          => 'On Hold', // Assuming 'secondary' represents 'On Hold'
         'view'               => 'View',
         'no_orders_found'    => 'No orders found.',
