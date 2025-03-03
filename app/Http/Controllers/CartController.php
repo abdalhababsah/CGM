@@ -96,34 +96,30 @@ class CartController extends Controller
      * @return \Illuminate\Http\JsonResponse
      */
 
-     public function updateQuantity(Request $request)
-     {
-         $request->validate([
-             'product_id' => 'required|integer|exists:products,id',
-             'quantity' => 'required|integer|min:1',
-         ]);
-
-         $productId = $request->input('product_id');
-         $quantity = $request->input('quantity');
-
-         $result = $this->cartService->updateQuantity($productId, $quantity);
-
-         if ($result['status'] === 'success') {
-             // Fetch the entire cart details (items and total price)
-             $cartDetails = $this->cartService->getCartDetails();
-             $result['cartItems'] = $cartDetails['items'];
-             $result['totalPrice'] = $cartDetails['totalPrice'];
-         }
-
-         return response()->json($result);
-     }
-
-             /**
-     * Get the current cart count.
-     *
-     * @return \Illuminate\Http\JsonResponse
-     */
-
+    public function updateQuantity(Request $request)
+    {
+        $request->validate([
+            'product_id' => 'required|integer|exists:products,id',
+            'color_id' => 'nullable|integer|exists:product_colors,id',
+            'quantity' => 'required|integer|min:1',
+        ]);
+        $productId = $request->input('product_id');
+        $colortId = $request->input('color_id');
+        $quantity = $request->input('quantity');
+        $result = $this->cartService->updateQuantity($productId, $quantity, $colortId);
+        if ($result['status'] === 'success') {
+            // Fetch the entire cart details (items and total price)
+            $cartDetails = $this->cartService->getCartDetails();
+            $result['cartItems'] = $cartDetails['items'];
+            $result['totalPrice'] = $cartDetails['totalPrice'];
+        }
+        return response()->json($result);
+    }
+    /**
+    * Get the current cart count.
+    *
+    * @return \Illuminate\Http\JsonResponse
+    */
     public function getCartCount()
     {
         $cartDetails = $this->cartService->getCartDetails();

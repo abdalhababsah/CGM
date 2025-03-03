@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
 use App\Models\User;
+use App\Services\CartService;
 use Exception;
 use Illuminate\Support\Facades\Auth;
 use Laravel\Socialite\Facades\Socialite;
@@ -51,6 +52,9 @@ class GoogleController extends Controller
                 ]);
                 Auth::login($createUser);
             }
+            $cartService = app(CartService::class);
+            $cartService->migrateGuestCartToUser();
+
             return redirect()->to('/');
         } catch (\Throwable $th) {
             throw $th;

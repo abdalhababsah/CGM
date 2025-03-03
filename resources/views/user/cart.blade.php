@@ -158,7 +158,6 @@
                 <div class="cart-table__col">{{ __('cart.quantity') }}</div>
                 <div class="cart-table__col">{{ __('cart.total') }}</div>
             </div>`;
-console.log(cartItems);
 
                 cartItems.forEach(item => {
                     let stockStatus = item.in_stock ?
@@ -169,7 +168,9 @@ console.log(cartItems);
                     `<del>₪${item.price}</del>` : '';
 
                     let color = item.color ?
-                    `<p style="background-color: ${item.color}; height :10px;"></p>` : ``;
+                    `<p style="background-color: ${item.color}; height :10px;">
+                    <input type="hidden" name="color_id" class="colorId" value="${item.color_id}">
+                    </p>` : ``;
 
                     cartHtml += `
         <div class="cart-table__row" data-product-id="${item.product_id}">
@@ -245,6 +246,7 @@ console.log(cartItems);
                 $('.counter-link').off('click').on('click', function(e) {
                     e.preventDefault();
                     let row = $(this).closest('.cart-table__row');
+                    let colorId = row.find('.colorId').val();
                     let input = row.find('.counter-input');
                     let oldQty = parseInt(input.val()) || 0;
                     let price = parseFloat(row.find('.cart-table__price').data('price')) || 0;
@@ -261,7 +263,7 @@ console.log(cartItems);
 
 
                     // Update the cart on the server first
-                    updateCart(row.data('product-id'), newQty, function(success, message, updatedData) {
+                    updateCart(row.data('product-id'), newQty, colorId, function(success, message, updatedData) {
                         if (success) {
                             input.val(newQty);
                             let newTotal = (price * newQty).toFixed(2);
@@ -312,13 +314,14 @@ console.log(cartItems);
                 });
             }
 
-            function updateCart(productId, quantity, callback) {
+            function updateCart(productId, quantity , colorId = null, callback) {
                 $.ajax({
                     url: "{{ route('cart.updateQuantity') }}",
                     method: "POST",
                     data: {
                         _token: "{{ csrf_token() }}",
                         product_id: productId,
+                        color_id: colorId,
                         quantity: quantity,
                     },
                     dataType: 'json',

@@ -88,7 +88,7 @@ class CartService
      * @param int $productId
      * @return array
      */
-    public function removeFromCart($productId)
+    public function removeFromCart($productId, $colorId = null)
     {
         if (Auth::check()) {
             $cartItem = $this->cart->cartItems()->where('product_id', $productId)->first();
@@ -102,8 +102,8 @@ class CartService
         } else {
             $cart = $this->getGuestCart();
 
-            if (isset($cart[$productId])) {
-                unset($cart[$productId]);
+            if (isset($cart[$productId]) || isset($cart[$productId . '-' . $colorId])) {
+                unset($cart[$productId], $cart[$productId . '-' . $colorId]);
                 $this->saveGuestCart($cart);
                 return ['status' => 'success', 'message' => __('cart.product_removed')];
             } else {
@@ -121,7 +121,7 @@ class CartService
      * @param int $quantity
      * @return array
      */
-    public function updateQuantity($productId, $quantity)
+    public function updateQuantity($productId, $quantity, $colorId = null)
     {
         if ($quantity < 1) {
             return ['status' => 'error', 'message' => __('cart.invalid_quantity')];
@@ -156,8 +156,8 @@ class CartService
         } else {
             $cart = $this->getGuestCart();
 
-            if (isset($cart[$productId])) {
-                $currentQuantity = $cart[$productId];
+            if (isset($cart[$productId. '-' . $colorId])|| isset($cart[$productId])) {
+                $currentQuantity = $cart[$productId. '-' . $colorId] || $cart[$productId];
 
                 // Check if the user is increasing or decreasing the quantity
                 if ($quantity > $currentQuantity) {
@@ -168,7 +168,7 @@ class CartService
                 }
 
                 // Update the quantity in the guest cart
-                $cart[$productId] = $quantity;
+                $cart[$productId. '-' . $colorId] = $quantity;
                 $this->saveGuestCart($cart);
             } else {
                 return ['status' => 'error', 'message' => __('cart.product_not_in_cart')];
@@ -198,6 +198,7 @@ class CartService
                         'discounted_price' => $item->product->discounted_price,
                         'discount' => $item->product->discount,
                         'quantity' => $item->quantity,
+                        'color_id' => $item->productColor->id ?? null,
                         'color' => $item->productColor->hex ?? null,
                         'total' => $item->quantity * $item->product->discounted_price,
                         'image_url' => $item->product->primaryImage ? asset('storage/' . $item->product->primaryImage->image_url) : 'https://via.placeholder.com/262x370',
@@ -216,7 +217,7 @@ class CartService
                     $keyParts = explode('-', $key);
                     $productId = $keyParts[0];
 
-                    $productColor = isset($keyParts[1]) ? ProductColor::find($keyParts[1])?->hex : null;
+                    $productColor = isset($keyParts[1]) ? ProductColor::find($keyParts[1]) : null;
                     $product = Product::find($productId);
 
                     if ($product && $product->is_active) {
@@ -228,7 +229,8 @@ class CartService
                             'price' => $product->price,
                             'discount' => $product->discount,
                             'quantity' => $quantity,
-                            'color' => $productColor,
+                            'color_id' => $productColor?->id,
+                            'color' => $productColor?->hex,
                             'total' => $quantity * $product->discounted_price,
                             'image_url' => $product->primaryImage ? asset('storage/' . $product->primaryImage->image_url) : 'https://via.placeholder.com/262x370',
                             'available_quantity' => $product->quantity,
@@ -304,11 +306,19 @@ class CartService
         }
 
         DB::transaction(function () use ($guestCart) {
-            foreach ($guestCart as $productId => $quantity) {
+            foreach ($guestCart as $key => $quantity) {
+                $keyParts = explode('-', $key);
+                $productId = $keyParts[0];
+                $colorId = empty($keyParts[1])? null : $keyParts[1];
+
                 $product = Product::find($productId);
 
                 if ($product && $product->is_active) {
-                    $cartItem = $this->cart->cartItems()->where('product_id', $productId)->first();
+                    $cartItemQuery = $this->cart->cartItems()->where('product_id', $productId);
+                    if ($colorId) {
+                        $cartItemQuery->where('product_color_id', $colorId);
+                    }
+                    $cartItem = $cartItemQuery->first();
 
                     if ($cartItem) {
                         $cartItem->quantity += $quantity;
@@ -316,6 +326,7 @@ class CartService
                     } else {
                         $this->cart->cartItems()->create([
                             'product_id' => $productId,
+                            'product_color_id' => $colorId,
                             'quantity' => $quantity,
                         ]);
                     }
