@@ -253,7 +253,7 @@
                         if (response.status === 'success') {
                             updateCartCount(response.cart_count);
                             showToast(response.message, 'success');
-                            updateGlobalCartCount()
+                            updateGlobalCartCount();
                         } else {
                             showToast(response.message, 'error');
                         }
