@@ -254,6 +254,8 @@
                             updateCartCount(response.cart_count);
                             showToast(response.message, 'success');
                             updateGlobalCartCount()
+                            console.log(response);
+
                         } else {
                             showToast(response.message, 'error');
                         }

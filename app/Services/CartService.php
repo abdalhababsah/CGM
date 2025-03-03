@@ -5,9 +5,12 @@ namespace App\Services;
 use App\Models\Cart;
 use App\Models\CartItem;
 use App\Models\Product;
+use App\Models\ProductColor;
+use Exception;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Cookie;
 use Illuminate\Support\Facades\DB;
+use Log;
 
 class CartService
 {
@@ -64,15 +67,15 @@ class CartService
             return ['status' => 'success', 'message' => __('cart.product_added')];
         } else {
             $cart = $this->getGuestCart();
-            $existingQty = isset($cart[$productId]) ? $cart[$productId] : 0;
+            $cartItemKey = $productId . '-' . $colorId;
+            $existingQty = isset($cart[$cartItemKey]) ? $cart[$cartItemKey] : 0;
             $newQuantity = $existingQty + $quantity;
 
-            // If requested quantity exceeds available stock, return error
             if ($newQuantity > $product->quantity) {
                 return ['status' => 'error', 'message' => __('cart.reached_max_quantity')];
             }
 
-            $cart[$productId] = $newQuantity;
+            $cart[$cartItemKey] = $newQuantity;
             $this->saveGuestCart($cart);
 
             return ['status' => 'success', 'message' => __('cart.product_added'), 'response' => $cart];
@@ -85,7 +88,7 @@ class CartService
      * @param int $productId
      * @return array
      */
-    public function removeFromCart($productId)
+    public function removeFromCart($productId, $colorId = null)
     {
         if (Auth::check()) {
             $cartItem = $this->cart->cartItems()->where('product_id', $productId)->first();
@@ -99,8 +102,8 @@ class CartService
         } else {
             $cart = $this->getGuestCart();
 
-            if (isset($cart[$productId])) {
-                unset($cart[$productId]);
+            if (isset($cart[$productId]) || isset($cart[$productId . '-' . $colorId])) {
+                unset($cart[$productId], $cart[$productId . '-' . $colorId]);
                 $this->saveGuestCart($cart);
                 return ['status' => 'success', 'message' => __('cart.product_removed')];
             } else {
@@ -118,7 +121,7 @@ class CartService
      * @param int $quantity
      * @return array
      */
-    public function updateQuantity($productId, $quantity)
+    public function updateQuantity($productId, $quantity, $colorId = null)
     {
         if ($quantity < 1) {
             return ['status' => 'error', 'message' => __('cart.invalid_quantity')];
@@ -153,8 +156,8 @@ class CartService
         } else {
             $cart = $this->getGuestCart();
 
-            if (isset($cart[$productId])) {
-                $currentQuantity = $cart[$productId];
+            if (isset($cart[$productId. '-' . $colorId])|| isset($cart[$productId])) {
+                $currentQuantity = $cart[$productId. '-' . $colorId] || $cart[$productId];
 
                 // Check if the user is increasing or decreasing the quantity
                 if ($quantity > $currentQuantity) {
@@ -165,7 +168,7 @@ class CartService
                 }
 
                 // Update the quantity in the guest cart
-                $cart[$productId] = $quantity;
+                $cart[$productId. '-' . $colorId] = $quantity;
                 $this->saveGuestCart($cart);
             } else {
                 return ['status' => 'error', 'message' => __('cart.product_not_in_cart')];
@@ -182,51 +185,65 @@ class CartService
      */
     public function getCartItems()
     {
-        if (Auth::check()) {
-            $cartItems = $this->cart->cartItems()->with('product')->get();
+        try {
+            if (Auth::check()) {
+                $cartItems = $this->cart->cartItems()->with('product')->get();
 
-            $items = $cartItems->map(function ($item) {
-                return [
-                    'product_id' => $item->product->id,
-                    'name' => $item->product->name,
-                    'description' => $item->product->description,
-                    'price' => $item->product->price,
-                    'discounted_price' => $item->product->discounted_price,
-                    'discount' => $item->product->discount,
-                    'quantity' => $item->quantity,
-                    'color' => $item->productColor->hex ?? null,
-                    'total' => $item->quantity * $item->product->discounted_price,
-                    'image_url' => $item->product->primaryImage ? asset('storage/' . $item->product->primaryImage->image_url) : 'https://via.placeholder.com/262x370',
-                    'available_quantity' => $item->product->quantity,
-                    'in_stock' => $item->product->in_stock
-                ];
-            });
-
-            return $items->toArray();
-        } else {
-            $cart = $this->getGuestCart();
-            $items = [];
-
-            foreach ($cart as $productId => $quantity) {
-                $product = Product::find($productId);
-                if ($product && $product->is_active) {
-                    $items[] = [
-                        'product_id' => $product->id,
-                        'name' => $product->name,
-                        'description' => $product->description,
-                        'discounted_price' => $product->discounted_price,
-                        'price' => $product->price,
-                        'discount' => $product->discount,
-                        'quantity' => $quantity,
-                        'total' => $quantity * $product->discounted_price,
-                        'image_url' => $product->primaryImage ? asset('storage/' . $product->primaryImage->image_url) : 'https://via.placeholder.com/262x370',
-                        'available_quantity' => $product->quantity,
-                        'in_stock' => $product->in_stock
+                $items = $cartItems->map(function ($item) {
+                    return [
+                        'product_id' => $item->product->id,
+                        'name' => $item->product->name,
+                        'description' => $item->product->description,
+                        'price' => $item->product->price,
+                        'discounted_price' => $item->product->discounted_price,
+                        'discount' => $item->product->discount,
+                        'quantity' => $item->quantity,
+                        'color_id' => $item->productColor->id ?? null,
+                        'color' => $item->productColor->hex ?? null,
+                        'total' => $item->quantity * $item->product->discounted_price,
+                        'image_url' => $item->product->primaryImage ? asset('storage/' . $item->product->primaryImage->image_url) : 'https://via.placeholder.com/262x370',
+                        'available_quantity' => $item->product->quantity,
+                        'in_stock' => $item->product->in_stock
                     ];
+                });
+
+                return $items->toArray();
+            } else {
+                $cart = $this->getGuestCart();
+                $items = [];
+
+                foreach ($cart as $key => $quantity) {
+
+                    $keyParts = explode('-', $key);
+                    $productId = $keyParts[0];
+
+                    $productColor = isset($keyParts[1]) ? ProductColor::find($keyParts[1]) : null;
+                    $product = Product::find($productId);
+
+                    if ($product && $product->is_active) {
+                        $items[] = [
+                            'product_id' => $product->id,
+                            'name' => $product->name,
+                            'description' => $product->description,
+                            'discounted_price' => $product->discounted_price,
+                            'price' => $product->price,
+                            'discount' => $product->discount,
+                            'quantity' => $quantity,
+                            'color_id' => $productColor?->id,
+                            'color' => $productColor?->hex,
+                            'total' => $quantity * $product->discounted_price,
+                            'image_url' => $product->primaryImage ? asset('storage/' . $product->primaryImage->image_url) : 'https://via.placeholder.com/262x370',
+                            'available_quantity' => $product->quantity,
+                            'in_stock' => $product->in_stock
+                        ];
+                    }
                 }
+
+                return $items;
             }
 
-            return $items;
+        } catch (Exception $th) {
+            Log::error($th->getMessage());
         }
     }
 
@@ -289,11 +306,19 @@ class CartService
         }
 
         DB::transaction(function () use ($guestCart) {
-            foreach ($guestCart as $productId => $quantity) {
+            foreach ($guestCart as $key => $quantity) {
+                $keyParts = explode('-', $key);
+                $productId = $keyParts[0];
+                $colorId = empty($keyParts[1])? null : $keyParts[1];
+
                 $product = Product::find($productId);
 
                 if ($product && $product->is_active) {
-                    $cartItem = $this->cart->cartItems()->where('product_id', $productId)->first();
+                    $cartItemQuery = $this->cart->cartItems()->where('product_id', $productId);
+                    if ($colorId) {
+                        $cartItemQuery->where('product_color_id', $colorId);
+                    }
+                    $cartItem = $cartItemQuery->first();
 
                     if ($cartItem) {
                         $cartItem->quantity += $quantity;
@@ -301,6 +326,7 @@ class CartService
                     } else {
                         $this->cart->cartItems()->create([
                             'product_id' => $productId,
+                            'product_color_id' => $colorId,
                             'quantity' => $quantity,
                         ]);
                     }
