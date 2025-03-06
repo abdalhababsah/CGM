@@ -535,11 +535,11 @@
                     skin: "round",
                     type: 'double',
                     min: 0,
-                    max: 999,
+                    max: 200,
                     from: 0,
                     hide_min_max: 'true',
                     prefix: "₪",
-                    to: 999
+                    to: 200
                 });
                 mobileInstance = $(".js-range-slider-price-mobile").data("ionRangeSlider");
             }

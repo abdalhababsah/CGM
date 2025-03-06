@@ -48,8 +48,5 @@
         <span style="color: white !important;">© {{ now()->year }} Copyright:</span>
         <a style="color: white !important;" class="text-white text-decoration-none" href="#">CGM</a>
     </div>
-    <div style="padding: 10px !important; background-color: #c98a88 !important;" class="text-center mt-4">
-        <span style="color: white !important;" class="text-white">Developed By </span>
-        <a style="color: white !important;" class="text-white text-decoration-none" href="https://www.thirtysix36.com/">ThirtySix36</a>
-    </div>
+
 </footer>

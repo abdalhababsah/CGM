@@ -16,6 +16,8 @@ class AdminDashboardService
     {
         return [
             'total_users' => User::count(),
+            'last_register' => User::where('created_at','>=', now()->subDays(1))->count(),
+            'last_orders' => Order::where('created_at','>=', now()->subDays(1))->count(),
             'total_orders' => Order::count(),
             'revenue' => Order::where('status', 'Shipped')->orWhere('status', 'Delivered')->sum('finalPrice'),
             'pending_orders' => Order::where('status', 'Pending')->count(),

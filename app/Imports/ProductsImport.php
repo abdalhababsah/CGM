@@ -10,6 +10,8 @@ use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 use Maatwebsite\Excel\Concerns\Importable;
+use Maatwebsite\Excel\Concerns\RemembersChunkOffset;
+use Maatwebsite\Excel\Concerns\RemembersRowNumber;
 use Maatwebsite\Excel\Concerns\SkipsFailures;
 use Maatwebsite\Excel\Concerns\SkipsOnFailure;
 use Maatwebsite\Excel\Concerns\ToModel;
@@ -22,13 +24,16 @@ use Illuminate\Contracts\Queue\ShouldQueue;
 use Maatwebsite\Excel\Concerns\WithChunkReading;
 use Throwable;
 
-class ProductsImport implements ToModel, WithHeadingRow, SkipsOnError, WithValidation, SkipsOnFailure, WithChunkReading, ShouldQueue
+class ProductsImport implements ToModel, WithHeadingRow, SkipsOnError, WithValidation, SkipsOnFailure, WithChunkReading, WithBatchInserts, ShouldQueue
 {
+    use RemembersRowNumber;
+    use RemembersChunkOffset;
     use Importable;
     use SkipsFailures;
 
     protected $errors = [];
-    protected $rowNumber = 1;
+
+        //$chunkOffset = $this->getChunkOffset(); // $currentRowNumber;
 
     /**
      * @return array
@@ -44,30 +49,33 @@ class ProductsImport implements ToModel, WithHeadingRow, SkipsOnError, WithValid
      */
     public function model(array $row)
     {
-        $this->rowNumber++;
+        $currentRowNumber = $this->getRowNumber();
+        $rowNumber = $currentRowNumber ?? 1;
+        // = $this->getRowNumber();
 
         try {
             // Generate SKU if not provided
             $sku = $row['sku'] ?? strtoupper(Str::random(10));
-
+            $sku = isset($row['sku']) && !empty($row['sku']) ? $row['sku'] : strtoupper(Str::random(10));
             // Validate required fields
             if (empty($row['name_en']) || empty($row['name_ar']) || empty($row['name_he'])) {
-                $this->addError($this->rowNumber, 'name', 'All name translations are required');
+                $this->addError(row: $currentRowNumber, field: 'name', message: 'All name translations are required');
+                $rowNumber++;
                 return null;
             }
 
             if (empty($row['category_id'])) {
-                $this->addError($this->rowNumber, 'category_id', 'Category ID is required');
+                $this->addError(row: $currentRowNumber, field: 'category_id', message: 'Category ID is required');
                 return null;
             }
 
             if (empty($row['brand_id'])) {
-                $this->addError($this->rowNumber, 'brand_id', 'Brand ID is required');
+                $this->addError(row: $currentRowNumber, field: 'brand_id', message: 'Brand ID is required');
                 return null;
             }
 
             if (!isset($row['price']) || !is_numeric($row['price'])) {
-                $this->addError($this->rowNumber, 'price', 'Valid price is required');
+                $this->addError(row: $currentRowNumber, field: 'price', message: 'Valid price is required');
                 return null;
             }
 
@@ -86,39 +94,51 @@ class ProductsImport implements ToModel, WithHeadingRow, SkipsOnError, WithValid
                     'description_en' => $row['description_en'] ?? null,
                     'description_ar' => $row['description_ar'] ?? null,
                     'description_he' => $row['description_he'] ?? null,
-                    'created_at' => ($row['old'] ?? 1) ? Carbon::now()->subMonth() : now(),
+                    'created_at' => isset($row['old']) && $row['old'] ? Carbon::now()->subMonth() : now(),
                 ]
             );
 
             // Handle primary image
             if (!empty($row['primary_image'])) {
                 try {
-                    $this->storeImage($row['primary_image'], $product, true);
+                    try {
+                        $this->storeImage($row['primary_image'], $product, true);
+                    } catch (\Exception $e) {
+                        $this->addError(row: $currentRowNumber, field: 'primary_image', message: 'Failed to store primary image: ' . $e->getMessage());
+                        Log::error('Failed to store primary image for product SKU ' . $product->sku . ': ' . $e->getMessage());
+                    }
                 } catch (\Exception $e) {
-                    $this->addError($this->rowNumber, 'primary_image', 'Failed to store primary image: ' . $e->getMessage());
+                    $this->addError(row: $currentRowNumber, field: 'primary_image', message: 'Failed to store primary image: ' . $e->getMessage());
+                    Log::error('Failed to store primary image for product SKU ' . $product->sku . ': ' . $e->getMessage());
                 }
             }
 
             // Handle additional images
-            foreach (['image_1', 'image_2', 'image_3'] as $imageColumn) {
-                if (!empty($row[$imageColumn])) {
-                    try {
-                        $this->storeImage($row[$imageColumn], $product, false);
-                    } catch (\Exception $e) {
-                        $this->addError($this->rowNumber, $imageColumn, 'Failed to store image: ' . $e->getMessage());
-                    }
+            $imageColumns = array_filter(['image_1', 'image_2', 'image_3'], function($imageColumn) use ($row) {
+                return !empty($row[$imageColumn]);
+            });
+
+            foreach ($imageColumns as $imageColumn) {
+                try {
+                    $this->storeImage($row[$imageColumn], $product, false);
+                } catch (\Exception $e) {
+                    $this->addError(row: $currentRowNumber, field: $imageColumn, message: 'Failed to store image: ' . $e->getMessage());
                 }
             }
 
+            // $currentRowNumber++;
             return $product;
+            } catch (\Exception $e) {
+                $this->addError(row: $currentRowNumber, field: 'general', message: 'Error processing row: ' . $e->getMessage());
+                return null;
+            }
 
-        } catch (\Exception $e) {
-            $this->addError($this->rowNumber, 'general', 'Error processing row: ' . $e->getMessage());
-            return null;
         }
-    }
-
     /**
+     * Define the validation rules for the imported product data.
+     *
+     * @return array
+     *
      * Validation rules
      */
     public function rules(): array
@@ -133,41 +153,33 @@ class ProductsImport implements ToModel, WithHeadingRow, SkipsOnError, WithValid
             'quantity' => 'nullable|integer|min:0',
         ];
     }
-
     /**
-     * Custom validation messages
+     * Custom validation messages for the import process.
+     * These messages will be used to provide more specific feedback
+     * for validation errors that occur during the import.
+     *
+     * @return array
      */
     public function customValidationMessages()
     {
         return [
             'brand_id.required' => 'Brand ID is required in row :row',
-            'brand_id.exists' => 'Brand ID does not exist in row :row',
         ];
     }
 
-    /**
-     * Add an error message for a specific row and field
-     */
-    protected function addError($row, $field, $message)
+    protected function addError(int $row, string $field, string $message)
     {
-        $this->errors[] = [
-            'row' => $row,
-            'field' => $field,
-            'message' => $message
-        ];
+        $this->errors[] = compact('row', 'field', 'message');
     }
-
-    /**
-     * Store the image locally and associate it with the product
-     */
     protected function storeImage(string $imageUrl, Product $product, bool $isPrimary)
     {
-        try {
-            // Validate URL
-            if (!filter_var($imageUrl, FILTER_VALIDATE_URL)) {
-                throw new \Exception("Invalid image URL");
-            }
+        // Validate URL
+        if (!filter_var($imageUrl, FILTER_VALIDATE_URL)) {
+            $this->addError($this->rowNumber, 'image_url', 'Invalid image URL');
+            return;
+        }
 
+        try {
             // Fetch the image from the URL
             $imageContents = @file_get_contents($imageUrl);
             if ($imageContents === false) {
@@ -189,13 +201,31 @@ class ProductsImport implements ToModel, WithHeadingRow, SkipsOnError, WithValid
                 'is_primary' => $isPrimary,
                 'sort_order' => $isPrimary ? 0 : $product->images()->count() + 1,
             ]);
-
         } catch (\Exception $e) {
+            $this->addError($this->rowNumber, 'general', $e->getMessage());
             Log::error('Failed to store image: ' . $e->getMessage());
             throw $e;
         }
     }
-
+    /*
+     * This determines how many rows are processed at a time.
+     *
+     * @return int
+     */
+    public function chunkSize(): int
+    {
+        return 10;
+    }
+    /**
+     * Define the batch size for the import process.
+     * This determines the number of rows to be processed in each batch.
+     *
+     * @return int
+     */
+    public function batchSize(): int
+    {
+        return 30;
+    }
     /**
      * Handle import errors
      */
@@ -203,9 +233,4 @@ class ProductsImport implements ToModel, WithHeadingRow, SkipsOnError, WithValid
     {
         $this->addError($this->rowNumber, 'general', $e->getMessage());
     }
-    public function chunkSize(): int
-    {
-        return 30;
-    }
-
 }

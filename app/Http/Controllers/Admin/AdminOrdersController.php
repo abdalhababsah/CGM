@@ -23,7 +23,7 @@ class AdminOrdersController extends Controller
      */
     public function index(Request $request)
     {
-        $orders = $this->orderService->getOrders($request->all());
+        $orders = $this->orderService->getOrders($request->all())->withQueryString();
         return view('admin.orders.index', compact('orders'));
     }
 
