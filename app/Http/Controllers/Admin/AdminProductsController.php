@@ -395,11 +395,12 @@ class AdminProductsController extends Controller
         // Import the Excel file
         $productImport = new ProductsImport();
         $productImport->import( $request->file('file'));
-
+        // ->queue('users.xlsx')->allOnQueue('imports')
         foreach ($productImport->failures() as $failure) {
             $failure->row();
             $failure->errors();
         }
+        // dd($productImport);
 
         if($productImport->failures()) {
             return redirect()->route('admin.products.index')->with('failures', $productImport->failures());

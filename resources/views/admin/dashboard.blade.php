@@ -198,6 +198,20 @@
                 </div>
             </div>
 
+            <!-- Users Card -->
+            <div class="col-12 col-md-6 col-lg-3">
+                <div class="stat-card">
+                    <div class="stat-icon" style="background: rgba(52, 152, 219, 0.1); color: #3498db;">
+                        <i class="fas fa-user-check fa-lg"></i>
+                    </div>
+                    <h6 class="stat-title">Register in 24Hrs</h6>
+                    <h3 class="stat-value">{{ number_format($metrics['last_register']) }}</h3>
+                    <div class="stat-trend text-success">
+
+                    </div>
+                </div>
+            </div>
+
             <!-- Orders Card -->
             <div class="col-12 col-md-6 col-lg-3">
                 <div class="stat-card">
@@ -234,6 +248,20 @@
                     </div>
                     <h6 class="stat-title">Pending Orders</h6>
                     <h3 class="stat-value">{{ number_format($metrics['pending_orders']) }}</h3>
+                    <div class="stat-trend text-danger">
+
+                    </div>
+                </div>
+            </div>
+
+            <!-- Last Orders Card -->
+            <div class="col-12 col-md-6 col-lg-3">
+                <div class="stat-card">
+                    <div class="stat-icon" style="background: rgba(231, 76, 60, 0.1); color: #e74c3c;">
+                        <i class="fas fa-boxes-packing fa-lg"></i>
+                    </div>
+                    <h6 class="stat-title">Orders In Last 24Hrs</h6>
+                    <h3 class="stat-value">{{ number_format($metrics['last_orders']) }}</h3>
                     <div class="stat-trend text-danger">
 
                     </div>
@@ -517,7 +545,7 @@
         document.addEventListener('DOMContentLoaded', function() {
             const statValues = document.querySelectorAll('.stat-value');
             statValues.forEach(element => {
-                const value = parseInt(element.textContent.replace(/[^0-9]/g, ''));
+                const value = parseFloat(element.textContent.replace(/,/g, '.').replace(/[^0-9.]/g, ''));
                 element.textContent = '0';
                 animateValue(element, 0, value, 2000);
             });
