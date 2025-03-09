@@ -10,7 +10,6 @@ use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 use Maatwebsite\Excel\Concerns\Importable;
-use Maatwebsite\Excel\Concerns\RemembersChunkOffset;
 use Maatwebsite\Excel\Concerns\RemembersRowNumber;
 use Maatwebsite\Excel\Concerns\SkipsFailures;
 use Maatwebsite\Excel\Concerns\SkipsOnFailure;
@@ -27,13 +26,10 @@ use Throwable;
 class ProductsImport implements ToModel, WithHeadingRow, SkipsOnError, WithValidation, SkipsOnFailure, WithChunkReading, WithBatchInserts, ShouldQueue
 {
     use RemembersRowNumber;
-    use RemembersChunkOffset;
     use Importable;
     use SkipsFailures;
 
     protected $errors = [];
-
-        //$chunkOffset = $this->getChunkOffset(); // $currentRowNumber;
 
     /**
      * @return array
@@ -50,17 +46,17 @@ class ProductsImport implements ToModel, WithHeadingRow, SkipsOnError, WithValid
     public function model(array $row)
     {
         $currentRowNumber = $this->getRowNumber();
-        $rowNumber = $currentRowNumber ?? 1;
+        $this->rowNumber = $currentRowNumber ?? 1;
         // = $this->getRowNumber();
 
-        try {
+        // try {
             // Generate SKU if not provided
             $sku = $row['sku'] ?? strtoupper(Str::random(10));
             $sku = isset($row['sku']) && !empty($row['sku']) ? $row['sku'] : strtoupper(Str::random(10));
             // Validate required fields
             if (empty($row['name_en']) || empty($row['name_ar']) || empty($row['name_he'])) {
                 $this->addError(row: $currentRowNumber, field: 'name', message: 'All name translations are required');
-                $rowNumber++;
+                $this->rowNumber++;
                 return null;
             }
 
@@ -126,14 +122,13 @@ class ProductsImport implements ToModel, WithHeadingRow, SkipsOnError, WithValid
                 }
             }
 
-            // $currentRowNumber++;
             return $product;
-            } catch (\Exception $e) {
-                $this->addError(row: $currentRowNumber, field: 'general', message: 'Error processing row: ' . $e->getMessage());
-                return null;
-            }
+            // } catch (\Exception $e) {
+            //     $this->addError(row: $currentRowNumber, field: 'general', message: 'Error processing row: ' . $e->getMessage());
+            //     return null;
+            // }
 
-        }
+    }
     /**
      * Define the validation rules for the imported product data.
      *
@@ -214,7 +209,7 @@ class ProductsImport implements ToModel, WithHeadingRow, SkipsOnError, WithValid
      */
     public function chunkSize(): int
     {
-        return 10;
+        return 30;
     }
     /**
      * Define the batch size for the import process.

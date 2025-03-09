@@ -388,6 +388,7 @@ class AdminProductsController extends Controller
     }
     public function import(Request $request)
     {
+        try {
         $request->validate([
             'file' => 'required|file|mimes:xls,xlsx,csv',
         ]);
@@ -396,16 +397,24 @@ class AdminProductsController extends Controller
         $productImport = new ProductsImport();
         $productImport->import( $request->file('file'));
         // ->queue('users.xlsx')->allOnQueue('imports')
-        foreach ($productImport->failures() as $failure) {
-            $failure->row();
-            $failure->errors();
-        }
-        // dd($productImport);
 
-        if($productImport->failures()) {
-            return redirect()->route('admin.products.index')->with('failures', $productImport->failures());
-        }
 
         return redirect()->route('admin.products.index')->with('success', 'Products imported successfully.');
+
+    } catch (\Maatwebsite\Excel\Validators\ValidationException $e) {
+
+        $failures = $e->failures();
+
+        foreach ($failures as $failure) {
+            $failure->row(); // row that went wrong
+            $failure->attribute(); // either heading key (if using heading row concern) or column index
+            $failure->errors(); // Actual error messages from Laravel validator
+            $failure->values(); // The values of the row that has failed.
+        }
+
+        if($productImport->failures()->isNotEmpty()) {
+            return redirect()->route('admin.products.index')->with('failures', $productImport->failures());
+        }
+    }
     }
 }
