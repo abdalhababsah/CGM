@@ -161,7 +161,7 @@
 
                 cartItems.forEach(item => {
                     let stockStatus = item.in_stock ?
-                        `<span style="color: green;">{{ __('cart.in_stock') }} (${item.available_quantity})</span>` :
+                        `<span style="color: green;">{{ __('cart.in_stock') }}</span>` :
                         `<span style="color: red;">{{ __('cart.out_of_stock') }}</span>`;
 
                     let oldPrice = item.discount > 0 ?
@@ -394,17 +394,17 @@
                     row.find('.stock-warning').remove();
 
                     // Handle stock conflict
-                    if (currentQty > availableQty) {
-                        hasStockIssue = true;
-                        input.css('border-color', 'red'); // Highlight input field
-                        row.find('.cart-table__info').append(`
-                <span class="stock-warning" style="color: red; display: block;">
-                    {{ __('cart.quantity_exceeds_stock') }} (${availableQty})
-                </span>
-            `);
-                    } else {
-                        input.css('border-color', '#ccc'); // Reset border color
-                    }
+            //         if (currentQty > availableQty) {
+            //             hasStockIssue = true;
+            //             input.css('border-color', 'red'); // Highlight input field
+            //             row.find('.cart-table__info').append(`
+            //     <span class="stock-warning" style="color: red; display: block;">
+            //         {{ __('cart.quantity_exceeds_stock') }} (${availableQty})
+            //     </span>
+            // `);
+            //         } else {
+            //             input.css('border-color', '#ccc'); // Reset border color
+            //         }
                 });
 
                 // Update the checkout button and general warning message

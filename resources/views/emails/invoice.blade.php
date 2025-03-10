@@ -2,7 +2,7 @@
 <html>
 <head>
     <meta charset="utf-8">
-    <title>Invoice for Order #{{ $order->id }}</title>
+    <title>Invoice for Order</title>
     <style>
         /* Reset styles */
         body, p, h1, h2, h3, h4, h5, h6 {
@@ -95,7 +95,6 @@
 
             <!-- Order Details -->
             <div class="details">
-                <p><strong>Order ID:</strong> {{ $order->id }}</p>
                 <p><strong>Date:</strong> {{ $order->created_at->format('F d, Y') }}</p>
                 <p><strong>Total Amount:</strong> ₪{{ number_format($order->total_amount, 2) }}</p>
                 @if ($order->has('discountCode'))

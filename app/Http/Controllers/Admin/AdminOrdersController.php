@@ -82,7 +82,6 @@ class AdminOrdersController extends Controller
     public function delete(Order $order)
     {
         try {
-            // dd($order);
             $this->orderService->deleteOrder($order);
             return redirect()->route('admin.orders.index')->with('success', 'Order deleted successfully.');
         } catch (\Exception $e) {

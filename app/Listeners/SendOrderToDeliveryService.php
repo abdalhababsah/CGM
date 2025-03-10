@@ -33,7 +33,7 @@ class SendOrderToDeliveryService
         $order = $event->order;
 
         // Eager load necessary relationships
-        $order->load(['deliveryLocation:id,company_city_id', 'user', 'areaLocation:id,company_area_id']);
+        $order->load(['deliveryLocation:id,company_city_id', 'user', 'areaLocation:id,company_area_id', 'orderItems:id,quantity,product_id', 'orderItems.product:id,name_en']);
 
         // Fetch the related city ID from deliveryLocation
         $companyCityId = $order->deliveryLocation->company_city_id ?? null;
@@ -68,12 +68,12 @@ class SendOrderToDeliveryService
             'ClientAreaID'      => $companyAreaId, // Use the company_area_id from the Area model
             'ClientPhone'       => $order->user->phone,
             'ClientPhone2'      => $order->phone2 ?? $order->user->phone,
-            'ClientAddress'     => $order->orderLocation->address ?? '',
+            'ClientAddress'     => $order->orderLocation?->address ?? 'NA',
             'Alert'             => $order->note ?? '',
             'ShipmentTotal'     => $order->finalPrice ??($order->total_amount - ($order->discount ?? 0)),
             'Remarks'           => $order->note ?? '',
             'IsReturn'          => false,
-            'ShipmentContains'  => substr($this->formatShipmentContents($order->orderItems),0,240),
+            'ShipmentContains'  => $this->formatShipmentContents($order->orderItems),//substr(0,240),
             'lang'              => 'en', //$preferredLanguage,
             'ShipmentQuantity'  => $this->getShipmentQuantity($order->orderItems),
             'IsForeign'         => false,
@@ -114,9 +114,17 @@ class SendOrderToDeliveryService
      */
     protected function formatShipmentContents($orderItems): string
     {
-        return $orderItems->map(function ($item) {
+        $contentsArray = array_map(function ($item) {
             return "{$item->product->name_en}x{$item->quantity}";
-        })->implode(',');
+        }, $orderItems->toArray());
+
+        $contents = implode(',', $contentsArray);
+
+        if (strlen($contents) > 240) {
+            $contents = substr($contents, 0, 240);
+        }
+
+        return $contents;
     }
 
     /**
