@@ -27,6 +27,7 @@ class Order extends Model
         'note',
         'delivery_tracking_no',
         'delivery_shipment_id',
+        'is_deleted',
     ];
 
     // Relationships

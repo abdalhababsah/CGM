@@ -126,6 +126,9 @@
                                             <a href="{{ route('admin.orders.show', $order->id) }}" class="btn btn-secondary btn-sm">
                                                 View
                                             </a>
+                                            <a href="{{ route('admin.orders.delete', $order->id) }}" class="btn btn-danger btn-sm" onclick="return confirm('Are you sure you want to delete this order?')">
+                                                Delete
+                                            </a>
                                         </td>
                                     </tr>
                                 @empty

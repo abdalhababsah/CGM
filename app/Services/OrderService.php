@@ -18,6 +18,7 @@ class OrderService
     public function getOrders($filters)
     {
         $query = Order::with(['user', 'orderItems', 'orderLocation', 'deliveryLocation', 'discountCode'])
+                      ->where('is_deleted', false)
                       ->orderBy('created_at', 'desc'); // Default ordering
 
         // Apply filters
@@ -189,5 +190,9 @@ class OrderService
         } catch (Exception $e) {
             Log::error('postCheckout error :'.$e->getMessage());
         }
+    }
+    public function deleteOrder($order)
+    {
+        $order->update(['is_deleted'=> true]);
     }
 }

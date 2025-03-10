@@ -33,14 +33,14 @@ class SendOrderToDeliveryService
         $order = $event->order;
 
         // Eager load necessary relationships
-        $order->load(['deliveryLocation', 'user', 'areaLocation']);
+        $order->load(['deliveryLocation:id,delivery_location_id', 'user', 'areaLocation:id,company_area_id']);
 
         // Fetch the related city ID from deliveryLocation
         $companyCityId = $order->deliveryLocation->company_city_id ?? null;
 
         // Fetch company_area_id from the Area model using area_id
-        $area = Area::find($order->area_id);
-        $companyAreaId = $area->company_area_id;
+        // $area = Area::find($order->area_id);
+        $companyAreaId = $order->areaLocation->company_area_id;
 
         // Log the fetched IDs for debugging
         Log::info("Order #{$order->id} - CompanyCityID: {$companyCityId}, CompanyAreaID: {$companyAreaId}");
@@ -85,7 +85,7 @@ class SendOrderToDeliveryService
         try {
             // Send the shipment data to the delivery system
             $response = $this->deliveryService->createShipment($shipmentData);
-            Log::info("response:", $response);
+            // Log::info("response:", $response);
             // Check if response contains necessary shipment details
             if (!isset($response['ID']) || !isset($response['ShipmentTrackingNo'])) {
                 Log::error("Delivery Service response missing required fields for Order #{$order->id}. Response: " . json_encode($response));
@@ -116,9 +116,9 @@ class SendOrderToDeliveryService
     {
         // Implement logic to map delivery company to ShipmentTypeID
         // Example: if delivery_company_id == 1, ShipmentTypeID = 1; else default to 2
-        if ($deliveryCompanyId === 1) {
-            return 1;
-        }
+        // if ($deliveryCompanyId === 1) {
+        //     return 1;
+        // }
 
         return 2; // Default ShipmentTypeID
     }

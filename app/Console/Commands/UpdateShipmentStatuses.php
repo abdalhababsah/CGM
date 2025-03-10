@@ -46,21 +46,19 @@ class UpdateShipmentStatuses extends Command
     /**
      * Execute the console command.
      *
-     * @return int
      */
     public function handle()
     {
-        Log::info('Starting shipment status updates.');
-
         // Fetch all orders that have been sent to the delivery system
         $orders = Order::whereNotNull('delivery_shipment_id')
                         ->where('status', '!=', 'Delivered')
                         ->where('status', '!=', 'Cancelled')
+                        ->where('is_deleted', false)
                         ->get();
 
         if ($orders->count() > 0) {
             foreach ($orders as $order) {
-                $this->deliveryService->authenticate();
+                // $this->deliveryService->authenticate();
                 try {
                     // Fetch the current shipment status using the delivery API
                     $response = Arr::last($this->deliveryService->getShipmentStatus($order->delivery_shipment_id) ?? []);//kant tracking_no
@@ -91,8 +89,6 @@ class UpdateShipmentStatuses extends Command
         }
 
         Log::info('Shipment status updates completed.');
-
-        return 0;
     }
 
     /**

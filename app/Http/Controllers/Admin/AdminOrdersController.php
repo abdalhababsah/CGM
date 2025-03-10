@@ -78,4 +78,15 @@ class AdminOrdersController extends Controller
             return response()->json(['error' => 'Failed to generate or download the invoice: ' . $e->getMessage()], 500);
         }
     }
+
+    public function delete(Order $order)
+    {
+        try {
+            // dd($order);
+            $this->orderService->deleteOrder($order);
+            return redirect()->route('admin.orders.index')->with('success', 'Order deleted successfully.');
+        } catch (\Exception $e) {
+            return redirect()->route('admin.orders.index')->with('error', 'Failed to delete the order: ' . $e->getMessage());
+        }
+    }
 }
