@@ -33,7 +33,7 @@ class SendOrderToDeliveryService
         $order = $event->order;
 
         // Eager load necessary relationships
-        $order->load(['deliveryLocation:id,delivery_location_id', 'user', 'areaLocation:id,company_area_id']);
+        $order->load(['deliveryLocation:id,company_city_id', 'user', 'areaLocation:id,company_area_id']);
 
         // Fetch the related city ID from deliveryLocation
         $companyCityId = $order->deliveryLocation->company_city_id ?? null;
