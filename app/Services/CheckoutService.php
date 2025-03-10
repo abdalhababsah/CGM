@@ -133,12 +133,11 @@ class CheckoutService
                 Log::info('Order information updated:', $order->toArray());
 
             // Create Order Location
-            $orderLocation = OrderLocation::create([
+            OrderLocation::create([
                 'order_id' => $order->id,
-                // 'country' => $data['country'],
                 'city' => $data['city'],
                 'address' => $data['address'],
-                'longitude' => $data['longitude'] ?? null,
+                // 'longitude' => $data['longitude'] ?? null,
             ]);
 
             // Create Order Items
@@ -154,8 +153,7 @@ class CheckoutService
                 ];
             }
             OrderItem::insert($orderItems);
-Log::info('item order', $orderItems);
-Log::info('item order', $cartDetails);
+            Log::info('item order', $orderItems);
             // Update product quantities
             foreach ($cartDetails['items'] as $item) {
                 $product = Product::find($item['product_id']);
@@ -166,7 +164,6 @@ Log::info('item order', $cartDetails);
 
             // Clear the cart
             $this->cartService->clearCart();
-            $this->orderService->postCheckout($order);
             DB::commit();
 
             // Dispatch the event after the transaction

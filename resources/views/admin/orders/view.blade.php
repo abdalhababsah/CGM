@@ -48,9 +48,9 @@
                     <hr>
 
                     <h6>Customer Information</h6>
-                    <p><strong>Name:</strong> {{ $order->user->name }}</p>
-                    <p><strong>Email:</strong> {{ $order->user->email }}</p>
-                    <p><strong>Phone:</strong> {{ $order->user->phone }}</p>
+                    <p><strong>Name:</strong> {{ $order->user?->name }}</p>
+                    <p><strong>Email:</strong> {{ $order->user?->email }}</p>
+                    <p><strong>Phone:</strong> {{ $order->user?->phone }}</p>
 
                     <hr>
 
@@ -58,6 +58,10 @@
                     <p><strong>City:</strong> {{ $order->deliveryLocation->city ?? 'N/A' }}</p>
                     <p><strong>Area:</strong> {{ $order->areaLocation->area ?? 'N/A' }}</p>
                     <p><strong>Address:</strong> {{ $order->orderLocation->address ?? 'N/A' }}</p>
+
+                    <hr>
+
+                    <p><strong>Note:</strong> {{ $order->note ?? 'N/A' }}</p>
                 </div>
             </div>
         </div>

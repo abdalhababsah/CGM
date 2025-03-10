@@ -112,8 +112,8 @@
                                             @endisset
                                         </td>
                                         <td>
-                                            {{ $order->user->name }}<br>
-                                            <small>{{ $order->user->email }}</small>
+                                            {{ $order->user?->name }}<br>
+                                            <small>{{ $order->user?->email }}</small>
                                         </td>
                                         <td>{{ $order->created_at->format('d M Y, h:i A') }}</td>
                                         <td>₪{{ number_format($order->finalPrice, 2) }}</td>

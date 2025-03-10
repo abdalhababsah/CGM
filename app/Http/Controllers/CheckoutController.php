@@ -11,6 +11,7 @@ use App\Models\DiscountCode;
 use App\Models\Order;
 use App\Services\CheckoutService;
 use App\Services\CartService;
+use App\Services\OrderService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -18,11 +19,13 @@ class CheckoutController extends Controller
 {
     protected $checkoutService;
     protected $cartService;
+    protected $orderService;
 
-    public function __construct(CheckoutService $checkoutService, CartService $cartService)
+    public function __construct(CheckoutService $checkoutService, CartService $cartService, OrderService $orderService)
     {
         $this->checkoutService = $checkoutService;
         $this->cartService = $cartService;
+        $this->orderService = $orderService;
 
     }
 
@@ -199,6 +202,8 @@ class CheckoutController extends Controller
         $order = $this->checkoutService->processCheckout($data);
 
         if ($order) {
+            $this->orderService->postCheckout($order);
+
             session()->forget('applied_discount_code');
             return response()->json(['status' => 'success', 'message' => 'Order placed successfully!', 'order_id' => $order->id]);
         } else {

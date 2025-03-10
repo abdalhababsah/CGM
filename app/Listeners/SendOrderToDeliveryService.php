@@ -51,12 +51,12 @@ class SendOrderToDeliveryService
         }
 
         // Validate preferred_language
-        $preferredLanguage = $order->preferred_language;
-        $validLanguages = ['en', 'ar', 'he']; // Define supported languages
-        if (!in_array($preferredLanguage, $validLanguages)) {
-            Log::warning("Order #{$order->id} has invalid preferred_language: {$preferredLanguage}. Defaulting to 'en'.");
-            $preferredLanguage = 'en'; // Default language
-        }
+        // $preferredLanguage = $order->preferred_language;
+        // $validLanguages = ['en', 'ar', 'he']; // Define supported languages
+        // if (!in_array($preferredLanguage, $validLanguages)) {
+        //     Log::warning("Order #{$order->id} has invalid preferred_language: {$preferredLanguage}. Defaulting to 'en'.");
+        //     $preferredLanguage = 'en'; // Default language
+        // }
 
         // Prepare shipment data based on the API documentation
         $shipmentData = [
@@ -74,7 +74,7 @@ class SendOrderToDeliveryService
             'Remarks'           => $order->note ?? '',
             'IsReturn'          => false,
             'ShipmentContains'  => substr($this->formatShipmentContents($order->orderItems),0,240),
-            'lang'              => $preferredLanguage,
+            'lang'              => 'en', //$preferredLanguage,
             'ShipmentQuantity'  => $this->getShipmentQuantity($order->orderItems),
             'IsForeign'         => false,
         ];
