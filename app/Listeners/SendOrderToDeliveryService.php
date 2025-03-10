@@ -62,7 +62,7 @@ class SendOrderToDeliveryService
         $shipmentData = [
             'ShipmentTrackingNo' => 'new', // Must be 'new' as per API documentation
             'qrAltId'           => '',    // Empty string as per API
-            'ShipmentTypeID'    => $this->getShipmentTypeId($order->delivery_company_id),
+            'ShipmentTypeID'    => 6,
             'ClientName'        => $order->user->first_name . ' ' . $order->user->last_name,
             'ClientCityID'      => $companyCityId, // Use the company_city_id from the delivery location
             'ClientAreaID'      => $companyAreaId, // Use the company_area_id from the Area model
@@ -104,23 +104,6 @@ class SendOrderToDeliveryService
             Log::error("Failed to send Order #{$order->id} to Delivery Service: " . $e->getMessage());
             return "Failed to send Order #{$order->id} to Delivery Service: " . $e->getMessage();
         }
-    }
-
-    /**
-     * Determine the ShipmentTypeID based on delivery company or other logic.
-     *
-     * @param int|null $deliveryCompanyId
-     * @return int
-     */
-    protected function getShipmentTypeId(?int $deliveryCompanyId): int
-    {
-        // Implement logic to map delivery company to ShipmentTypeID
-        // Example: if delivery_company_id == 1, ShipmentTypeID = 1; else default to 2
-        // if ($deliveryCompanyId === 1) {
-        //     return 1;
-        // }
-
-        return 2; // Default ShipmentTypeID
     }
 
     /**
