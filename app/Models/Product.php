@@ -79,7 +79,7 @@ class Product extends Model
         return $this->hasMany(WishListItem::class);
     }
 
-        /**
+    /**
      * A product can have many images.
      */
     public function images()

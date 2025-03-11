@@ -19,8 +19,6 @@ class OrderController extends Controller
      */
     public function __construct(OrderService $orderService)
     {
-
-
         $this->orderService = $orderService;
     }
 

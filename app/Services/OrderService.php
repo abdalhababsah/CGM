@@ -17,7 +17,7 @@ class OrderService
      */
     public function getOrders($filters)
     {
-        $query = Order::with(['user', 'orderItems', 'orderLocation', 'deliveryLocation', 'discountCode'])
+        $query = Order::with(['user'])
                       ->where('is_deleted', false)
                       ->orderBy('created_at', 'desc'); // Default ordering
 
@@ -46,10 +46,10 @@ class OrderService
         $orders = $query->paginate(10);
 
         // Transform orders
-        $orders->getCollection()->transform(function ($order) {
-            // $this->calculateFinalPrice($order);
-            return $order;
-        });
+        // $orders->getCollection()->transform(function ($order) {
+        //     // $this->calculateFinalPrice($order);
+        //     return $order;
+        // });
 
         return $orders;
     }

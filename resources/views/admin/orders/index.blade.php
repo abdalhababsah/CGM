@@ -120,7 +120,7 @@
                                         <td>{{ $order->created_at->format('d M Y, h:i A') }}</td>
                                         <td>₪{{ number_format($order->finalPrice, 2) }}</td>
                                         <td class="text-center">
-                                            <span class="badge bg-gradient-{{ $order->status == 'completed' ? 'success' : 'secondary' }}">
+                                            <span class="badge bg-gradient-{{ $order->status == 'delivered' ? 'success' : 'secondary' }}">
                                                 {{ ucfirst($order->status) }}
                                             </span>
                                         </td>

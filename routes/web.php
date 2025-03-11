@@ -20,7 +20,6 @@ use App\Http\Controllers\LocalizationController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\ShopController;
-use App\Http\Controllers\TestController;
 use App\Http\Controllers\OrderController;
 use App\Http\Controllers\UserDashboardController;
 use App\Http\Controllers\WishListController;
@@ -161,7 +160,7 @@ Route::middleware(['auth'])->prefix('checkout')->name('checkout.')->group(functi
 // Contact Us Route
 Route::get('/contact-us', [ContactUsController::class, 'index'])->name('contact');
 Route::post('/contact-us', [ContactUsController::class, 'submit'])->name('contact.submit');
-Route::get('/test-get-areas', [TestController::class, 'testGetAreas'])->name('test.getAreas');
+
 
 
 
