@@ -119,9 +119,9 @@ class SendOrderToDeliveryService
      */
     protected function formatShipmentContents($orderItems): string
     {
-        $contentsArray = array_map(function ($item) {
+        $contentsArray = $orderItems->map(function ($item) {
             return "{$item->product->name_en}x{$item->quantity}";
-        }, $orderItems->toArray());
+        })->toArray();
 
         $contents = implode(',', $contentsArray);
 

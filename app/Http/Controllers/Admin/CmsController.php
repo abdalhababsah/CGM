@@ -16,7 +16,6 @@ class CmsController extends Controller
      */
     public function index()
     {
-
         $sliders = cache()->remember('header_sliders', 60 * 60, function () {
             $sliders = HeaderSlider::all();
             if ($sliders->isEmpty()) {
