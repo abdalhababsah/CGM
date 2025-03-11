@@ -11,7 +11,7 @@
     <meta name='description' content="" />
     <meta name="keywords" content="cgm products, curly hair products, shampoo for curly hair, curl cream, curly hair, ملفلف, منتجات شعر, شعر مجعد, شامبو للشعر المجعد, كريم للشعر المجعد" />
     <meta name="csrf-token" content="{{ csrf_token() }}">
-    <link rel="icon" type="image/png" href="{{ asset('user\img\cards-images\card-2.png') }}">
+    <link rel="icon" type="image/png" href="{{ asset('user\img\logo-mini.png') }}">
 
     <!-- Load Default CSS -->
     <link rel="stylesheet" href="{{ asset('user/css/styles.css') }}">

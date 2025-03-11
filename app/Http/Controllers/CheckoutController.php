@@ -132,13 +132,6 @@ class CheckoutController extends Controller
                 ]
             ]);
 
-            // Merge additional data into the response
-            // $result['code'] = $discountCodeInput;
-            // $result['type'] = $discount->type;
-
-            // if ($discount->type === 'percentage') {
-            //     $result['percentage'] = $discount->value; // Add percentage to response
-            // }
         }
 
         return response()->json($result);

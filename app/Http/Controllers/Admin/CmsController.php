@@ -17,15 +17,18 @@ class CmsController extends Controller
     public function index()
     {
 
-        $sliders = HeaderSlider::all();
-        if ($sliders->isEmpty()) {
+        $sliders = cache()->remember('header_sliders', 60 * 60, function () {
+            $sliders = HeaderSlider::all();
+            if ($sliders->isEmpty()) {
             HeaderSlider::create([
                 'title_ar' => 'خصم 30٪ على جميع المنتجات',
                 'title_en' => '30% OFF ON ALL PRODUCTS ENTER CODE: BESHOP2020',
                 'title_he' => '30% הנחה על כל המוצרים קוד: BESHOP2020',
             ]);
             $sliders = HeaderSlider::all();
-        }
+            }
+            return $sliders;
+        });
 
 
 
@@ -149,7 +152,7 @@ public function updateHeader(Request $request, HeaderSlider $slider)
         return redirect()
             ->route('admin.cms-management.index')
             ->with('success', 'Header Slider updated successfully.');
-            
+
     } catch (\Exception $e) {
         return redirect()
             ->route('admin.cms-management.index')

@@ -106,7 +106,9 @@ class CartController extends Controller
         $productId = $request->input('product_id');
         $colortId = $request->input('color_id');
         $quantity = $request->input('quantity');
+
         $result = $this->cartService->updateQuantity($productId, $quantity, $colortId);
+
         if ($result['status'] === 'success') {
             // Fetch the entire cart details (items and total price)
             $cartDetails = $this->cartService->getCartDetails();

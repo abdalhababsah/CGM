@@ -5,11 +5,8 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
-    <!-- Apple Touch Icon -->
-    <link rel="apple-touch-icon" sizes="76x76" href="{{ asset('admin/assets/img/apple-icon.png') }}">
-
     <!-- Favicon -->
-    <link rel="icon" type="image/png" href="{{ asset('user\img\cards-images\card-2.png') }}">
+    <link rel="icon" type="image/png" sizes="50x50" href="{{ asset('user\img\logo-mini.png') }}">
 
     <!-- Dynamic Title -->
     <title>
@@ -27,8 +24,6 @@
     @if (Auth::check() && Auth::user()->role == 0 && in_array(app()->getLocale(), ['ar', 'he']))
         <link rel="stylesheet" href="{{ asset('admin/assets/css/rtlstyles.css') }}">
     @endif
-    <!-- Font Awesome Icons -->
-    <script src="https://kit.fontawesome.com/42d5adcbca.js" crossorigin="anonymous"></script>
 
     <!-- Soft UI Dashboard CSS -->
     <link rel="stylesheet" href="{{ asset('user/sweetalert/sweetalert2.min.css') }}">
