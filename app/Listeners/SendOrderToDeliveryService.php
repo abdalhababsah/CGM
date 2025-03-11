@@ -33,13 +33,12 @@ class SendOrderToDeliveryService
         $order = $event->order;
 
         // Eager load necessary relationships
-        $order->load(['deliveryLocation:id,company_city_id', 'user', 'areaLocation:id,company_area_id', 'orderItems:id,quantity,product_id', 'orderItems.product:id,name_en']);
+        $order->load(['deliveryLocation:id,company_city_id', 'user:id,first_name,last_name,phone', 'areaLocation:id,company_area_id', 'orderItems:id,quantity,product_id,order_id', 'orderItems.product:id,name_en']);
 
         // Fetch the related city ID from deliveryLocation
         $companyCityId = $order->deliveryLocation->company_city_id ?? null;
 
         // Fetch company_area_id from the Area model using area_id
-        // $area = Area::find($order->area_id);
         $companyAreaId = $order->areaLocation->company_area_id;
 
         // Log the fetched IDs for debugging
@@ -73,7 +72,7 @@ class SendOrderToDeliveryService
             'ShipmentTotal'     => $order->finalPrice ??($order->total_amount - ($order->discount ?? 0)),
             'Remarks'           => $order->note ?? '',
             'IsReturn'          => false,
-            'ShipmentContains'  => $this->formatShipmentContents($order->orderItems),//substr(0,240),
+            'ShipmentContains'  => $this->formatShipmentContents($order->orderItems),
             'lang'              => 'en', //$preferredLanguage,
             'ShipmentQuantity'  => $this->getShipmentQuantity($order->orderItems),
             'IsForeign'         => false,
