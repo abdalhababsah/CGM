@@ -125,7 +125,7 @@ class ShopController extends Controller
         }
 
         // Filter by Price range
-        if ($request->anyFilled('priceMin','priceMax')) {
+        if ($request->filled('priceMin') && $request->filled('priceMax')) {
             $query->whereBetween('price', [request('priceMin'), request('priceMax')]);
         }
 
