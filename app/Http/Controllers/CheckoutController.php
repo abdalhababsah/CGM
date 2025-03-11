@@ -55,7 +55,7 @@ class CheckoutController extends Controller
         // Fetch required data
         $user = Auth::user();
         $cartDetails = $this->cartService->getCartDetails();
-        $deliveryLocations = $this->fetchDeliveryLocations();
+        // $deliveryLocations = $this->fetchDeliveryLocations();
         $discountCode = session('applied_discount_code');
 
         return response()->json([
@@ -68,7 +68,7 @@ class CheckoutController extends Controller
             ],
             'cartItems' => $cartDetails['items'],
             'totalPrice' => $cartDetails['totalPrice'],
-            'deliveryLocations' => $deliveryLocations,
+            // 'deliveryLocations' => $deliveryLocations,
             'discountCode' => $discountCode,
         ]);
     }
@@ -203,11 +203,10 @@ class CheckoutController extends Controller
         $deliveryLocation = DeliveryLocationAndPrice::find($deliveryLocationId);
         return $deliveryLocation ? $deliveryLocation->price : 0;
     }
-    public function success($orderId)
+    public function success()
     {
-        $order = Order::findOrFail($orderId);
 
-        return view('user.checkout-success', ['order' => $order]);
+        return view('user.checkout-success');
     }
 
     public function fetchAreas(Request $request)

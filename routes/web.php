@@ -152,7 +152,7 @@ Route::middleware(['auth'])->prefix('checkout')->name('checkout.')->group(functi
     Route::post('/remove-discount-code', [CheckoutController::class, 'removeDiscountCode'])->name('removeDiscountCode');
     // Submit the checkout form via AJAX
     Route::post('/submit', [CheckoutController::class, 'submit'])->name('submit');
-    Route::get('/success/{order}', [CheckoutController::class, 'success'])->name('success');
+    Route::get('/success', [CheckoutController::class, 'success'])->name('success');
 });
 
 
