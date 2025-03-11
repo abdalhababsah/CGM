@@ -87,11 +87,6 @@ class ShopController extends Controller
             }
         }
 
-        // Filter by price range
-        if ($request->filled('price_min') && $request->filled('price_max')) {
-            $query->whereBetween('price', [$request->input('price_min'), $request->input('price_max')]);
-        }
-
         // **New Filters: Hair Pores, Hair Types, Hair Thicknesses**
 
         // Filter by Hair Pores
@@ -122,6 +117,11 @@ class ShopController extends Controller
                     $q->whereIn('hair_thicknesses.id', $hairThicknesses);
                 });
             }
+        }
+
+        // Filter by Price range
+        if ($request->anyFilled('priceMin','priceMax')) {
+            $query->whereBetween('price', [request('priceMin'), request('priceMax')]);
         }
 
         // Sorting
