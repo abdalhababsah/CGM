@@ -393,12 +393,7 @@
                             // If a discount is already applied, display it
                             if (response.discountCode) {
                                 discountAmount = parseFloat(response.discountCode.amount);
-                                let discountText = '';
-                                if (response.discountCode.type === 'fixed') {
-                                    discountText = `-₪${discountAmount.toFixed(2)}`;
-                                } else if (response.discountCode.type === 'percentage') {
-                                    discountText = `-${discountAmount.toFixed(2)}%`;
-                                }
+                                let discountText = `- ₪${discountAmount.toFixed(2)}`;
 
                                 $('#discount-info').text(discountText);
                                 $('#discount-code-input').prop('disabled', true);
@@ -472,12 +467,7 @@
                     success: function(response) {
                         if (response.status === 'success') {
                             discountAmount = parseFloat(response.discount_amount);
-                            let discountText = '';
-                            if (response.type === 'fixed') {
-                                discountText = `- ₪${discountAmount.toFixed(2)}`;
-                            } else if (response.type === 'percentage') {
-                                discountText = `- ₪${discountAmount.toFixed(2)}`;
-                            }
+                            let discountText = `- ₪${discountAmount.toFixed(2)}`;
 
                             $('#discount-info').text(discountText);
                             $('#discount-code-input').prop('disabled', true);
@@ -485,7 +475,7 @@
                             $('#remove-discount-btn').removeClass('d-none');
                             $('#discount-message').html(`
                                 <div class="alert alert-success">
-                                    {{ __('checkout.discount_applied_success') }}: <strong>${response.code}</strong> ${discountText}
+                                    {{ __('checkout.discount_applied_success') }}: <strong>${discountCode}</strong> ${discountText}
                                 </div>
                             `);
                             calculateGrandTotal();
@@ -530,7 +520,7 @@
                     success: function(response) {
                         if (response.status === 'success') {
                             discountAmount = 0.00;
-                            $('#discount-info').text(`$0.00`);
+                            $('#discount-info').text(`0.00`);
                             $('#discount-code-input').prop('disabled', false).val('');
                             $('#apply-discount-btn').show();
                             $('#remove-discount-btn').addClass('d-none');

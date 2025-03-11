@@ -49,25 +49,13 @@ class CheckoutService
             return ['status' => 'error', 'message' => 'This discount code has reached its usage limit.'];
         }
 
-        // Calculate discount amount based on type
-        if ($discount->type === 'fixed') {
-            $discountAmount = $discount->amount;
-        } elseif ($discount->type === 'percentage') {
-            $discountAmount = ($discount->amount / 100) * $grandTotal;
-        } else {
-            return ['status' => 'error', 'message' => 'Invalid discount type.'];
-        }
+        $discountAmount = $this->orderService->calculateDiscount($discount, $grandTotal);
 
-        // Ensure discount does not exceed grand total
-        $discountAmount = min($discountAmount, $grandTotal);
-        $discountAmount = round($discountAmount, 2);
-
-        // Increment discount usage
-        $discount->incrementUsage();
 
         return [
             'status' => 'success',
             'message' => 'Discount code applied successfully.',
+            'type' => $discount->type,
             'discount_amount' => $discountAmount,
             'grand_total' => round($grandTotal - $discountAmount, 2),
         ];
@@ -81,6 +69,7 @@ class CheckoutService
      */
     public function processCheckout(array $data)
     {
+        Log::info('Checkout Data:', $data);
         $cartDetails = $this->cartService->getCartDetails();
         $totalPrice = $cartDetails['totalPrice'];
         $deliveryLocation = $data['delivery_location_id'];
@@ -89,11 +78,11 @@ class CheckoutService
         $area_id = $data['area'];
         // Apply discount if any
         $discountData = $data['discount'] ?? null;
-        if ($discountData) {
-            $grandTotal -= $discountData['amount'];
-            // Ensure grand total is not negative
-            $grandTotal = max($grandTotal, 0);
-        }
+        // if ($discountData) {
+        //     $grandTotal -= $discountData['amount'];
+        //     // Ensure grand total is not negative
+        //     $grandTotal = max($grandTotal, 0);
+        // }
         DB::beginTransaction();
 
         try {
@@ -110,11 +99,14 @@ class CheckoutService
             // Fetch discount code if applicable
             $discountCode = null;
             if ($discountData) {
+                // $this->applyDiscountCode($discountData['code'], $totalPrice);
                 $discountCode = DiscountCode::where('code', $discountData['code'])->first();
                 if (!$discountCode) {
                     Log::warning('Discount Code Not Found:', ['code' => $discountData['code']]);
                     throw new \Exception('Discount code not found.');
                 }
+                // Increment discount usage
+                $discountCode?->incrementUsage();
             }
 
             // Create Order
@@ -124,6 +116,8 @@ class CheckoutService
                 'discount_code_id' => $discountCode ? $discountCode->id : null,
                 'area_id' => $area_id,
                 'total_amount' => $grandTotal,
+                'discount' => $discountData['amount']?? 0,
+                'finalPrice' => $grandTotal - ($discountData['amount']?? 0),
                 'payment_method' => 'Cash on Delivery',
                 'status' => 'Pending',
                 'phone2'=> $data['phone2'] ?? $user->phone,
@@ -153,7 +147,7 @@ class CheckoutService
                 ];
             }
             OrderItem::insert($orderItems);
-            Log::info('item order', $orderItems);
+        Log::info('item order', $orderItems);
             // Update product quantities
             foreach ($cartDetails['items'] as $item) {
                 $product = Product::find($item['product_id']);

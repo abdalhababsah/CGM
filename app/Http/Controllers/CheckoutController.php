@@ -122,35 +122,23 @@ class CheckoutController extends Controller
         $result = $this->checkoutService->applyDiscountCode($discountCodeInput, $grandTotal);
 
         if ($result['status'] === 'success') {
-            $discount = DiscountCode::where('code', $discountCodeInput)->first();
-
-            // Calculate discount amount based on type
-            if ($discount->type === 'percentage') {
-                $discountAmount = ($grandTotal * $discount->value) / 100;
-                $percentage = $discount->value;
-            } else { // 'fixed'
-                $discountAmount = $discount->value;
-                $percentage = null;
-            }
-
             // Store discount code in session
             session([
                 'applied_discount_code' => [
                     'code' => $discountCodeInput,
-                    'type' => $discount->type,
-                    'amount' => $discountAmount,
-                    'percentage' => $percentage, // Include percentage if applicable
+                    'type' => $result['type'],
+                    'amount' => $result['discount_amount'],
                     'grand_total' => $result['grand_total'] + $deliveryPrice,
                 ]
             ]);
 
             // Merge additional data into the response
-            $result['code'] = $discountCodeInput;
-            $result['type'] = $discount->type;
+            // $result['code'] = $discountCodeInput;
+            // $result['type'] = $discount->type;
 
-            if ($discount->type === 'percentage') {
-                $result['percentage'] = $discount->value; // Add percentage to response
-            }
+            // if ($discount->type === 'percentage') {
+            //     $result['percentage'] = $discount->value; // Add percentage to response
+            // }
         }
 
         return response()->json($result);

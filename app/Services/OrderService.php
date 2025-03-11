@@ -102,7 +102,7 @@ class OrderService
         $order->finalPrice = $originalPrice - $order->discount + $deliveryPrice;
     }
 
-    private function calculateDiscount($discountCode , $originalPrice)
+    public function calculateDiscount($discountCode , $originalPrice)
     {
         $discount = 0;
 
@@ -115,6 +115,7 @@ class OrderService
         }
 
         $discount = min($discount, $originalPrice);
+        $discount = round($discount, 2);
         return $discount;
     }
     /**
