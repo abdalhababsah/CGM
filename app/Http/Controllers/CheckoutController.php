@@ -39,7 +39,7 @@ class CheckoutController extends Controller
             return redirect()->route('cart.index')
                 ->with('error', 'Your cart is empty. Add items before proceeding to checkout.');
         }
-        session()->forget('applied_discount_code');
+        // session()->forget('applied_discount_code');
         // Return the view but add headers to prevent caching
         $view = view('user.checkout'); // This is your Blade view
 
@@ -57,6 +57,21 @@ class CheckoutController extends Controller
         $cartDetails = $this->cartService->getCartDetails();
         // $deliveryLocations = $this->fetchDeliveryLocations();
         $discountCode = session('applied_discount_code');
+
+        if ($discountCode) {
+            $grandTotal = $cartDetails['totalPrice'];
+            $result = $this->checkoutService->applyDiscountCode($discountCode['code'], $grandTotal);
+
+            if ($result['status'] === 'success') {
+            $discountCode['amount'] = $result['discount_amount'];
+            $discountCode['grand_total'] = $result['grand_total'];
+            $discountCode['message'] = $result['message'];
+            session(['applied_discount_code' => $discountCode]);
+            } else {
+            session()->forget('applied_discount_code');
+            $discountCode = null;
+            }
+        }
 
         return response()->json([
             'status' => 'success',
@@ -128,6 +143,7 @@ class CheckoutController extends Controller
                     'code' => $discountCodeInput,
                     'type' => $result['type'],
                     'amount' => $result['discount_amount'],
+                    'message' => $result['message'],
                     'grand_total' => $result['grand_total'] + $deliveryPrice,
                 ]
             ]);

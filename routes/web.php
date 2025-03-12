@@ -144,18 +144,18 @@ Route::middleware(['auth'])->prefix('checkout')->name('checkout.')->group(functi
     Route::get('/fetch-checkout', [CheckoutController::class, 'fetchCheckout'])->name('checkout.fetch');
     // Fetch delivery locations via AJAX
     Route::get('/fetch-delivery-locations', [CheckoutController::class, 'fetchDeliveryLocations'])->name('fetchDeliveryLocations');
-    Route::get('/checkout/fetch-areas', [CheckoutController::class, 'fetchAreas'])->name('checkout.fetchAreas');
+    Route::get('/fetch-areas', [CheckoutController::class, 'fetchAreas'])->name('checkout.fetchAreas');
 
-    // Apply a discount code via AJAX
-    Route::post('/apply-discount-code', [CheckoutController::class, 'applyDiscountCode'])->name('applyDiscountCode');
-    // Remove an applied discount code via AJAX
-    Route::post('/remove-discount-code', [CheckoutController::class, 'removeDiscountCode'])->name('removeDiscountCode');
     // Submit the checkout form via AJAX
     Route::post('/submit', [CheckoutController::class, 'submit'])->name('submit');
     Route::get('/success', [CheckoutController::class, 'success'])->name('success');
 });
 
 
+    // Apply a discount code via AJAX
+    Route::post('/apply-discount-code', [CheckoutController::class, 'applyDiscountCode'])->name('applyDiscountCode');
+    // Remove an applied discount code via AJAX
+    Route::post('/remove-discount-code', [CheckoutController::class, 'removeDiscountCode'])->name('removeDiscountCode');
 
 // Contact Us Route
 Route::get('/contact-us', [ContactUsController::class, 'index'])->name('contact');

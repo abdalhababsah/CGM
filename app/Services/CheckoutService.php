@@ -54,7 +54,7 @@ class CheckoutService
 
         return [
             'status' => 'success',
-            'message' => 'Discount code applied successfully.',
+            'message' => __('Discount code applied successfully.'),
             'type' => $discount->type,
             'discount_amount' => $discountAmount,
             'grand_total' => round($grandTotal - $discountAmount, 2),

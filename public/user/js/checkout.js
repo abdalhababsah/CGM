@@ -30,7 +30,7 @@ $(document).ready(function() {
 
         if (!/^\d{10}$/.test(phone)) {
             $(phoneSelector).addClass('is-invalid');
-            $(errorSelector).text('phone_must_be_10_digits');
+            $(errorSelector).text('phone must be 10 digits');
             return false;
         } else {
             $(phoneSelector).removeClass('is-invalid');
@@ -45,7 +45,7 @@ $(document).ready(function() {
             let phone = $(this).val().trim();
             if (!/^\d{10}$/.test(phone)) {
                 $(this).addClass('is-invalid');
-                $(errorSelector).text('phone_must_be_10_digits');
+                $(errorSelector).text('phone must be 10 digits');
             } else {
                 $(this).removeClass('is-invalid');
                 $(errorSelector).text('');
@@ -130,13 +130,14 @@ $(document).ready(function() {
                         $('#goods-total').text(`₪${goodsTotal.toFixed(2)}`);
                         calculateGrandTotal();
                     } else {
-                        $('#order-items').html('<p>no_items_in_cart</p>');
+                        $('#order-items').html('<p>no items in cart</p>');
                         $('#goods-total').text(`₪0.00`);
                         calculateGrandTotal();
                     }
 
                     // If a discount is already applied, display it
                     if (response.discountCode) {
+
                         discountAmount = parseFloat(response.discountCode.amount);
                         let discountText = `- ₪${discountAmount.toFixed(2)}`;
 
@@ -146,7 +147,7 @@ $(document).ready(function() {
                         $('#remove-discount-btn').removeClass('d-none');
                         $('#discount-message').html(`
                             <div class="alert alert-success">
-                                {{ __('checkout.discount_applied_success') }}: <strong>${response.discountCode.code}</strong> ${discountText}
+                                ${response.discountCode.message}: <strong>${response.discountCode.code}</strong> ${discountText}
                             </div>
                         `);
                         calculateGrandTotal();
@@ -190,13 +191,13 @@ $(document).ready(function() {
 
         if (!discountCode) {
             console.warn('checkout.enter_discount_code');
-            $('#discount-message').text('checkout.enter_discount_code').addClass(
+            $('#discount-message').text('enter discount code').addClass(
                 'warning');
             return;
         }
 
         $.ajax({
-            url: baseURL + '/checkout/apply-discount-code',
+            url: baseURL + '/apply-discount-code',
             type: 'POST',
             data: {
                 discount_code: discountCode,
@@ -213,15 +214,14 @@ $(document).ready(function() {
                     $('#remove-discount-btn').removeClass('d-none');
                     $('#discount-message').html(`
                         <div class="alert alert-success">
-                            discount_applied_success: <strong>${discountCode}</strong> ${discountText}
+                            ${discountCode.message}: <strong>${discountCode}</strong> ${discountText}
                         </div>
                     `);
                     calculateGrandTotal();
-                    console.log('discount_applied_success');
                 } else {
                     // Display 'not found' message in a span
                     $('#discount-message').html(`
-                        <span class="error">{{ __('checkout.discount_code_not_found') }}</span>
+                        <span class="error">code not found</span>
                     `);
                     console.error(response.message ||error_applying_discount);
 
@@ -236,7 +236,7 @@ $(document).ready(function() {
                 // If discount code is not found
                 if (xhr.status === 400) { // Assuming 400 status for not found
                     $('#discount-message').html(`
-                        <span class="error">{{ __('checkout.discount_code_not_found') }}</span>
+                        <span class="error">code not found</span>
                     `);
                     console.error('discount_code_not_found');
                 } else {
@@ -252,7 +252,7 @@ $(document).ready(function() {
     // Remove Discount Code
     $('#remove-discount-btn').click(function() {
         $.ajax({
-            url: baseURL + '/checkout/remove-discount-code',
+            url: baseURL + '/remove-discount-code',
             type: 'POST',
             data: {},
             success: function(response) {
@@ -264,7 +264,6 @@ $(document).ready(function() {
                     $('#remove-discount-btn').addClass('d-none');
                     $('#discount-message').html('');
                     calculateGrandTotal();
-                    console.log('remove_discount_success');
                 } else {
                     $('#discount-message').html(`
                         <span class="error">${response.message || 'error_removing_discount'}</span>
@@ -286,7 +285,7 @@ $(document).ready(function() {
         const cityId = $(this).val(); // This is the ID from your JSON
         if (cityId) {
             $.ajax({
-                url: baseURL + '/checkout/checkout/fetch-areas',
+                url: baseURL + '/checkout/fetch-areas',
                 type: 'GET',
                 data: {
                     city_id: cityId
@@ -350,7 +349,6 @@ $(document).ready(function() {
             data: formData,
             success: function(response) {
                 if (response.status === 'success') {
-                    console.log('order_placed_successfully');
                     // Optionally, redirect the user or display a success message
                     window.location.href = "/checkout/success/";
                 } else {

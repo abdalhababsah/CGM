@@ -110,6 +110,43 @@
 @section('scripts')
     <!-- SweetAlert2 JS -->
     <script>
+        function applyDiscount() {
+            let discountCode = $('#discount-code-input').val();
+            $.ajax({
+                url: "{{ url('/apply-discount-code') }}",
+                method: "POST",
+                data: {
+                    _token: "{{ csrf_token() }}",
+                    discount_code: discountCode,
+                },
+                dataType: 'json',
+                success: function(response) {
+                    if (response.status === 'success') {
+                        $('#discount-message').html(`
+                            <div class="alert alert-success">
+                                ${response.message} (${response.discount_amount})
+                            </div>
+                        `);
+                        loadCartItems();
+                    } else {
+                        $('#discount-message').html(`
+                            <div class="alert alert-danger">
+                                ${response.message}
+                            </div>
+                        `);
+                    }
+
+                },
+                error: function() {
+                    $('#discount-message').html(`
+                        <div class="alert alert-danger">
+                            {{ __('cart.error_applying_discount') }}
+                        </div>
+                    `);
+                },
+            });
+        }
+
         $(document).ready(function() {
 
             // Initialize SweetAlert2 Toast
@@ -213,6 +250,20 @@
         </div>
     </div>
     <div class="cart-bottom">
+
+                        <!-- Discount Code -->
+                        <div class="cart-bottom__promo">
+                            <h6>{{ __('checkout.apply_discount_code') }}</h6>
+                            <div class="box-field d-flex" style="display: flex">
+                                <input style="margin-top: 0px !important;" type="text" id="discount-code-input" class="form-control"
+                                    placeholder="{{ __('checkout.enter_discount_code') }}">
+                                <button type="button" id="apply-discount-btn"
+                                    class="btn btn-primary mx-2" onclick="applyDiscount()">{{ __('checkout.apply') }}</button>
+                            </div>
+                            <div id="discount-message" class="mt-2">
+                                <!-- Applied discount info will appear here -->
+                            </div>
+                        </div>
         <div class="cart-bottom__total">
             <div class="cart-bottom__total-goods">
                 {{ __('cart.total_goods') }}: <span id="cart-total-goods">₪${totalPrice.toFixed(2)}</span>
@@ -415,6 +466,44 @@
                     $('#checkout-warning').hide();
                     $('#checkout-btn').prop('disabled', false);
                 }
+            }
+
+            function applyDiscount() {
+                let discountCode = $('#discount-code-input').val();
+                $.ajax({
+                    url: "{{ url('/checkout/apply-discount-code') }}",
+                    method: "POST",
+                    data: {
+                        _token: "{{ csrf_token() }}",
+                        discount_code: discountCode,
+                    },
+                    dataType: 'json',
+                    success: function(response) {
+                        console.log(response);
+                        if (response.status === 'success') {
+                            $('#discount-message').html(`
+                                <div class="alert alert-success">
+                                    ${response.message}
+                                </div>
+                            `);
+                            loadCartItems();
+                        } else {
+                            $('#discount-message').html(`
+                                <div class="alert alert-danger">
+                                    ${response.message}
+                                </div>
+                            `);
+                        }
+
+                    },
+                    error: function() {
+                        $('#discount-message').html(`
+                            <div class="alert alert-danger">
+                                {{ __('cart.error_applying_discount') }}
+                            </div>
+                        `);
+                    },
+                });
             }
 
             loadCartItems();
