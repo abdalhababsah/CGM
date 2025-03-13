@@ -8,7 +8,7 @@ return [
     'enter_last_name' => 'أدخل اسمك الأخير',
     'enter_phone' => 'أدخل رقم هاتفك',
     'enter_phone2' => 'أدخل رقم هاتفك الثاني' ,
-    
+
     'enter_email' => 'أدخل عنوان بريدك الإلكتروني',
     'delivery_info' => 'معلومات التسليم',
     'select_delivery_location' => 'اختر موقع التسليم',
@@ -54,7 +54,7 @@ return [
     'email_max_length' => 'قد لا يتجاوز البريد الإلكتروني :max حرفًا.',
     'phone_required' => 'رقم الهاتف مطلوب.',
     'phone_must_be_string' => 'يجب أن يكون رقم الهاتف سلسلة نصية.',
-    'phone_max_length' => 'قد لا يتجاوز رقم الهاتف :max حرفًا.',
+    'phone_max_length' => 'رقم الهاتف يجب ان يكون فقط أرقاما و لا يتجاوز :digits أرقام.',
     'country_required' => 'الدولة مطلوبة.',
     'country_must_be_string' => 'يجب أن تكون الدولة سلسلة نصية.',
     'country_max_length' => 'قد لا تتجاوز الدولة :max حرفًا.',

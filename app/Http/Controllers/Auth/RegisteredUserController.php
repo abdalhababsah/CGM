@@ -32,7 +32,7 @@ class RegisteredUserController extends Controller
         $request->validate([
             'first_name' => ['required', 'string', 'max:255'],
             'last_name'  => ['required', 'string', 'max:255'],
-            'phone'      => ['required', 'string', 'max:20'],
+            'phone'      => ['required', 'numeric', 'digits:10'],
             'email'      => ['required', 'string', 'email', 'max:255', 'unique:users'],
             'password'   => ['required', 'confirmed', Rules\Password::defaults()],
             // 'terms'      => ['required', 'accepted'],
@@ -45,7 +45,7 @@ class RegisteredUserController extends Controller
             'email'      => $request->email,
             'password'   => Hash::make($request->password),
             'role'       => 0, // Assuming 'User' role by default
-            'preferred_language' => 0, // Default language (e.g., English)
+            'preferred_language' => 'en', // Default language (e.g., English)
         ]);
 
         event(new Registered($user));

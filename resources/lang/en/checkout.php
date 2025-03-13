@@ -52,7 +52,7 @@ return [
     'email_max_length' => 'Email may not be greater than :max characters.',
     'phone_required' => 'Phone number is required.',
     'phone_must_be_string' => 'Phone number must be a string.',
-    'phone_max_length' => 'Phone number may not be greater than :max characters.',
+    'phone_max_length' => 'Phone number must be only number and be exactly :digits numbers.',
     'country_required' => 'Country is required.',
     'country_must_be_string' => 'Country must be a string.',
     'country_max_length' => 'Country may not be greater than :max characters.',

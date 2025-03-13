@@ -125,7 +125,7 @@ class SendOrderToDeliveryService
 
         $contents = implode(',', $contentsArray);
 
-        if (strlen($contents) > 240) {
+        if (strlen($contents) > 245) {
             $contents = substr($contents, 0, 240);
         }
 

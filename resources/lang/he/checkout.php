@@ -52,7 +52,7 @@ return [
     'email_max_length' => 'האימייל לא יכול לעלות על :max תווים.',
     'phone_required' => 'מספר טלפון נדרש.',
     'phone_must_be_string' => 'מספר טלפון חייב להיות מחרוזת.',
-    'phone_max_length' => 'מספר טלפון לא יכול לעלות על :max תווים.',
+    'phone_max_length' => 'מספר טלפון לא יכול לעלות על :digits תווים.',
     'country_required' => 'ארץ נדרשת.',
     'country_must_be_string' => 'ארץ חייבת להיות מחרוזת.',
     'country_max_length' => 'ארץ לא יכולה לעלות על :max תווים.',
