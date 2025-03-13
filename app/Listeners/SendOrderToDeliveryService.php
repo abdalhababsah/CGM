@@ -129,7 +129,7 @@ class SendOrderToDeliveryService
             $contents = substr($contents, 0, 240);
         }
 
-        return $contents;
+        return mb_convert_encoding($contents, 'UTF-8');
     }
 
     /**
