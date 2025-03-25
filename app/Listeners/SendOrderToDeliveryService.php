@@ -80,7 +80,7 @@ class SendOrderToDeliveryService
             'IsReturn'          => false,
             'ShipmentContains'  => $this->formatShipmentContents($order->orderItems),
             'lang'              => 'en', //$preferredLanguage,
-            'ShipmentQuantity'  => $this->getShipmentQuantity($order->orderItems),
+            'ShipmentQuantity'  => 1, //$this->getShipmentQuantity($order->orderItems),
             'IsForeign'         => false,
         ];
 
