@@ -272,7 +272,7 @@
                 {{ __('cart.checkout_disabled_message') }}
             </span>
            <a href="{{ route('checkout.index') }}" class="btn" id="checkout-btn">
-            {{ __('cart.checkout') }}
+            {{ __('Continue') }}
             </a>
         </div>
     </div>`;
