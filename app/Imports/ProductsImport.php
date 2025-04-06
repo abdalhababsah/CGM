@@ -85,6 +85,7 @@ class ProductsImport implements ToModel, WithHeadingRow, SkipsOnError, WithValid
                     'category_id' => $row['category_id'],
                     'brand_id' => $row['brand_id'],
                     'price' => $row['price'],
+                    'discount' => $row['discount'] ?? 0,
                     'quantity' => $row['quantity'] ?? 0,
                     'is_active' => $row['is_active'] ?? 1,
                     'description_en' => $row['description_en'] ?? null,
