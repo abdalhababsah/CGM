@@ -21,7 +21,7 @@
         <p class="text-secondary">{{__('You will receive a confirmation email shortly with the details of your purchase')}}.</p>
 
         <div class="mt-4">
-            <a href="{{ route('shop.index') }}" class="btn btn-primary">Continue Shopping</a>
+            <a href="{{ route('shop.index') }}" class="btn btn-primary">{{__('Continue Shopping')}}</a>
         </div>
     </div>
 </div>

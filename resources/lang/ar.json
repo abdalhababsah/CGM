@@ -1,11 +1,12 @@
 {
     "Continue" : "الاستمرار",
+    "Continue Shopping" : "الاستمرار بالتسوق",
     "Discount code applied successfully.": "تم تطبيق كود الخصم بنجاح.",
     "Invalid discount code.": "كود الخصم غير صالح.",
     "The discount code has expired.": "انتهت صلاحية كود الخصم.",
     "The discount code has reached its usage limit.": "لقد وصل كود الخصم إلى الحد الأقصى لاستخدامه.",
     "Thank You for Your Order" : "شكرا لك على طلبك",
-    "You will receive your order within two or three days" : "سوف تتلقى طلبك في غضون يومين أو ثلاثة أيام",
+    "You will receive your order within two or three days" : "سوف تستلم طلبك خلال يومين أو ثلاثة أيام",
     "You will receive a confirmation email shortly with the details of your purchase" : "ستتلقى رسالة تأكيد بالبريد الإلكتروني قريبا تحتوي على تفاصيل عملية الشراء",
     "The discount code is not active.": "كود الخصم غير نشط."
 }
