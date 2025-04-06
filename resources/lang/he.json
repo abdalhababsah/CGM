@@ -4,5 +4,8 @@
     "Invalid discount code.": "קוד ההנחה אינו תקין.",
     "The discount code has expired.": "קוד ההנחה פג תוקפו.",
     "The discount code has reached its usage limit.": "קוד ההנחה הגיע למגבלת השימוש שלו.",
+    "Thank You for Your Order" : "תודה על ההזמנה",
+    "You will receive your order within two or three days" : "תקבל את ההזמנה תוך יומיים או שלושה",
+    "You will receive a confirmation email shortly with the details of your purchase" : "בקרוב תקבל אישור בדוא",
     "The discount code is not active.": "קוד ההנחה אינו פעיל."
 }
