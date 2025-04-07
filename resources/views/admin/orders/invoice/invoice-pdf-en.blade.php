@@ -132,7 +132,7 @@
             <div class="invoice-details">
                 <p><strong>Invoice #:</strong> {{ $order->id }}</p>
                 <p><strong>Date:</strong> {{ $order->created_at->format('d M Y') }}</p>
-                <p><strong>Due Date:</strong> {{ $order->created_at->addDays(30)->format('d M Y') }}</p>
+                <!-- <p><strong>Due Date:</strong> {{ $order->created_at->addDays(30)->format('d M Y') }}</p> -->
             </div>
         </div>
 
