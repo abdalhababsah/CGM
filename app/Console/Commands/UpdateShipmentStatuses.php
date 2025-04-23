@@ -2,10 +2,11 @@
 
 namespace App\Console\Commands;
 
+use App\Models\Order;
+use App\Services\OrderService;
+use App\Services\DeliveryService;
 use Arr;
 use Illuminate\Console\Command;
-use App\Services\DeliveryService;
-use App\Models\Order;
 use Illuminate\Support\Facades\Log;
 
 class UpdateShipmentStatuses extends Command
@@ -27,20 +28,29 @@ class UpdateShipmentStatuses extends Command
     /**
      * The DeliveryService instance.
      *
-     * @var \App\Services\DeliveryService
+     * @var DeliveryService
      */
     protected $deliveryService;
 
     /**
+     * The OrderService instance.
+     *
+     * @var OrderService
+     */
+    protected $orderService;
+
+    /**
      * Create a new command instance.
      *
-     * @param \App\Services\DeliveryService $deliveryService
+     * @param DeliveryService $deliveryService
+     * @param OrderService $orderService
      * @return void
      */
-    public function __construct(DeliveryService $deliveryService)
+    public function __construct(DeliveryService $deliveryService, OrderService $orderService)
     {
         parent::__construct();
         $this->deliveryService = $deliveryService;
+        $this->orderService = $orderService;
     }
 
     /**
@@ -58,10 +68,10 @@ class UpdateShipmentStatuses extends Command
 
         if ($orders->count() > 0) {
             foreach ($orders as $order) {
-                // $this->deliveryService->authenticate();
+                
                 try {
                     // Fetch the current shipment status using the delivery API
-                    $response = Arr::last($this->deliveryService->getShipmentStatus($order->delivery_shipment_id) ?? []);//kant tracking_no
+                    $response = Arr::last($this->deliveryService->getShipmentStatus($order->delivery_shipment_id) ?? []);
 
                     // Check if response is valid
                     if ($response && isset($response['NewStatusId'])) {
@@ -69,11 +79,18 @@ class UpdateShipmentStatuses extends Command
 
                         // Map the delivery system status to your application's status
                         $mappedStatus = $this->mapDeliveryStatusToOrderStatus($deliveryStatus);
-
+                        
                         // Update the order status if it has changed
                         if ($order->status !== $mappedStatus) {
                             $order->status = $mappedStatus;
                             $order->save();
+
+                            // If the status is 'Cancelled', call the returnOrder method in the OrderService
+                            if ($order->status == 'Cancelled') { 
+                                Log::info("Processing cancellation for Order #{$order->id}...");
+                                $this->orderService->returnOrder($order->load('orderItems.product'));
+                                Log::info("Order #{$order->id} is cancelled and processed for return.");
+                            }
 
                             Log::info("Order #{$order->id} status updated to '{$mappedStatus}'.");
                         }
@@ -82,7 +99,6 @@ class UpdateShipmentStatuses extends Command
                     }
                 } catch (\Exception $e) {
                     Log::error("Failed to update status for Order #{$order->id}: " . $e->getMessage());
-                    // Optionally, you can continue or stop the command based on the exception
                     continue;
                 }
             }

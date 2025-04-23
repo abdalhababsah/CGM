@@ -192,8 +192,35 @@ class OrderService
             Log::error('postCheckout error :'.$e->getMessage());
         }
     }
+    /**
+     * Delete an order by marking it as deleted (soft delete).
+     *
+     * @param Order $order
+     * @return void
+     */
     public function deleteOrder($order)
     {
         $order->update(['is_deleted'=> true]);
+    }
+
+    /**
+     * Return order to restore the quantity of item.
+     *
+     * @param Order $order
+     * @return void
+     */
+    public function returnOrder($order)
+    {
+        foreach ($order->orderItems as $item) {
+            $product = $item->product;
+            if ($product) {
+                Log::info("Order #{$order->id} is returned. the old Quantity of Product:{$product->quantity}");
+                $product->quantity += $item->quantity; 
+                $product->save();
+                Log::info("Order #{$order->id} is returned. Quantity {$item->quantity} re-added to Product #{$product->id} stock.");
+            } else {
+                Log::warning("Order #{$order->id} is returned, but the associated product was not found.");
+            }
+        }
     }
 }
