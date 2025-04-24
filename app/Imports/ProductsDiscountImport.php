@@ -8,7 +8,6 @@ use Maatwebsite\Excel\Concerns\RemembersRowNumber;
 use Maatwebsite\Excel\Concerns\SkipsOnError;
 use Maatwebsite\Excel\Concerns\ToModel;
 use Maatwebsite\Excel\Concerns\WithHeadingRow;
-use Maatwebsite\Excel\Concerns\WithValidation;
 
 class ProductsDiscountImport implements ToModel, WithHeadingRow, SkipsOnError
 {
@@ -56,7 +55,7 @@ class ProductsDiscountImport implements ToModel, WithHeadingRow, SkipsOnError
     {
         $product = Product::find($row['id']);
         if ($product) {
-            $product->update(['discount' => $row['discount']]);
+            $product->update(['discount' => $row['discount'] ?? 0]);
         }
         return $product;
     }
