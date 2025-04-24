@@ -91,6 +91,8 @@
                         <div>
                             <button class="btn btn-info btn-sm" data-bs-toggle="modal"
                                 data-bs-target="#importProductsModal">Import Products</button>
+                            <button class="btn btn-info btn-sm" data-bs-toggle="modal"
+                                data-bs-target="#updateDiscountModal">Update discount</button>
                             <a href="{{ route('admin.products.create') }}" class="btn btn-primary btn-sm">Add New
                                 Product</a>
                         </div>
@@ -287,6 +289,76 @@
 
                     <!-- Upload Form -->
                     <form action="{{ route('admin.products.import') }}" method="POST" enctype="multipart/form-data">
+                        @csrf
+                        <div class="upload-container border rounded-3 p-4 bg-light">
+                            <div class="mb-4">
+                                <label for="file" class="form-label fw-bold">
+                                    <i class="fas fa-file-excel me-2"></i>Upload Excel File
+                                </label>
+                                <input type="file" id="file" name="file" class="form-control" required
+                                    accept=".xlsx,.xls,.csv">
+                                <small class="text-muted">Accepted formats: .xlsx, .xls, .csv</small>
+                            </div>
+                            <button type="submit" class="btn btn-primary w-100">
+                                <i class="fas fa-upload me-2"></i>Import Products
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal fade" id="updateDiscountModal" tabindex="-1" aria-labelledby="updateDiscountModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog modal-lg"> <!-- Made modal larger -->
+            <div class="modal-content">
+                <div class="modal-header bg-primary text-white">
+                    <h5 class="modal-title text-white" id="importProductsModalLabel">
+                        <i class="fas fa-file-import me-2"></i>Update Discounts
+                    </h5>
+                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"
+                        aria-label="Close"></button>
+                </div>
+                <div class="modal-body p-4">
+                    <!-- Instructions Section -->
+                    <div class="alert alert-info mb-4" role="alert">
+                        <h6 class="alert-heading mb-2 text-white">
+                            <i class="fas fa-info-circle me-2"></i>Important Instructions
+                        </h6>
+                        <p class="mb-0 text-white">Please ensure your Excel file adheres to the following format:</p>
+                    </div>
+
+                    <!-- Requirements Table -->
+                    <div class="table-responsive mb-4">
+                        <table class="table table-hover border">
+                            <thead class="table-light">
+                                <tr>
+                                    <th scope="col" style="width: 40%">Field</th>
+                                    <th scope="col">Requirement</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+
+                                <tr>
+                                    <td>
+                                        <span class="fw-bold text-primary">ID</span>
+                                        <small class="d-block text-muted">Product ID exist one</small>
+                                    </td>
+                                    <td><span class="badge bg-primary">Required</span></td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <span class="fw-bold text-primary">discount</span>
+                                        <small class="d-block text-muted">the default will be 0%</small>
+                                    </td>
+                                    <td><span class="badge bg-secondary">Optional</span></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <!-- Upload Form -->
+                    <form action="{{ route('admin.products.importDiscount') }}" method="POST" enctype="multipart/form-data">
                         @csrf
                         <div class="upload-container border rounded-3 p-4 bg-light">
                             <div class="mb-4">

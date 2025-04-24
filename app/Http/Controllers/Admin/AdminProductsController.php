@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Imports\ProductsImport;
+use App\Imports\ProductsDiscountImport;
 use App\Models\HairPore;
 use App\Models\HairThickness;
 use App\Models\HairType;
@@ -386,35 +387,53 @@ class AdminProductsController extends Controller
         $path = $image->storeAs('products', $filename, 'public');
         $product->images()->create(['image_url' => $path, 'is_primary' => true]);
     }
+    /**
+     * Handle the import of products from an uploaded file.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\RedirectResponse
+     */
     public function import(Request $request)
     {
-        try {
-        $request->validate([
-            'file' => 'required|file|mimes:xls,xlsx,csv',
-        ]);
-
-        // Import the Excel file
         $productImport = new ProductsImport();
-        $productImport->import( $request->file('file'));
-        // ->queue('users.xlsx')->allOnQueue('imports')
 
+        try {
+            $request->validate([
+                'file' => 'required|file|mimes:xls,xlsx,csv',
+            ]);
 
-        return redirect()->route('admin.products.index')->with('success', 'Products imported successfully.');
+            // Import the Excel file using chunk reading
+            $productImport->import($request->file('file'));
 
-    } catch (\Maatwebsite\Excel\Validators\ValidationException $e) {
+            // Notify the user that the import has started
+            return redirect()->route('admin.products.index')->with('info', 'The import process has started...');
 
-        $failures = $e->failures();
+        } catch (\Maatwebsite\Excel\Validators\ValidationException $e) {
 
-        foreach ($failures as $failure) {
-            $failure->row(); // row that went wrong
-            $failure->attribute(); // either heading key (if using heading row concern) or column index
-            $failure->errors(); // Actual error messages from Laravel validator
-            $failure->values(); // The values of the row that has failed.
-        }
+            $failures = $e->failures();
 
-        if($productImport->failures()->isNotEmpty()) {
-            return redirect()->route('admin.products.index')->with('failures', $productImport->failures());
+            // Handle validation failures if needed, or log them for debugging
+
+            return redirect()->route('admin.products.index')->with('failures', $failures);
         }
     }
+
+    public function importDiscount(Request $request)
+    {
+        $productDiscountImport = new ProductsDiscountImport();
+        try {
+            $request->validate([
+                'file' => 'required|file|mimes:xls,xlsx,csv',
+            ]);
+            // Import the Excel file
+            $productDiscountImport->import($request->file('file'));
+            
+            return redirect()->route('admin.products.index')->with('success', 'Discounts imported successfully.');
+        } catch (\Maatwebsite\Excel\Validators\ValidationException $e) {   
+
+            $failures = $e->failures();
+
+            return redirect()->route('admin.products.index')->with('failures', $failures);
+        }
     }
 }

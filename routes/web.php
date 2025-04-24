@@ -57,7 +57,7 @@ Route::middleware(['auth', 'admin'])->prefix('admin')->name('admin.')->group(fun
 
 
     Route::resource('discount', DiscountCodeController::class);
-    // cms-management home section
+    // cms-management(coming soon) home section
     Route::resource('cms-management', CmsController::class);
     //header top slider update
     Route::put('cms-management/header-slider/{slider}', [CmsController::class, 'updateHeader'])->name('header-slider.update');
@@ -69,19 +69,23 @@ Route::middleware(['auth', 'admin'])->prefix('admin')->name('admin.')->group(fun
 
     // Hair Pore Routes
     Route::resource('hair-pore', HairPoreController::class)->except(['show']);
+
+    // Product Routes
     Route::get('products', [AdminProductsController::class, 'index'])->name('products.index');
     Route::get('products/create', [AdminProductsController::class, 'create'])->name('products.create');
     Route::post('products', [AdminProductsController::class, 'store'])->name('products.store');
     Route::get('products/{product}/edit', [AdminProductsController::class, 'edit'])->name('products.edit');
     Route::put('products/{product}', [AdminProductsController::class, 'update'])->name('products.update');
     Route::delete('products/{product}', [AdminProductsController::class, 'destroy'])->name('products.destroy');
+    
     // import products
     Route::post('/import', [AdminProductsController::class, 'import'])->name('products.import');
+    Route::post('/importDiscount', [AdminProductsController::class, 'importDiscount'])->name('products.importDiscount');
 
     // Partial Updates for Products
-
     Route::put('products/{product}/general-info', [AdminProductsController::class, 'updateGeneralInfo'])->name('products.updateGeneralInfo');
     Route::put('products/{product}/options', [AdminProductsController::class, 'updateOptions'])->name('products.updateOptions');
+
     // Image Management Routes
     Route::post('products/{product}/additional-images', [AdminProductsController::class, 'uploadAdditionalImages'])->name('products.uploadAdditionalImages');
     Route::put('products/{product}/primary-image', [AdminProductsController::class, 'updatePrimaryImage'])->name('products.updatePrimaryImage');
@@ -152,10 +156,10 @@ Route::middleware(['auth'])->prefix('checkout')->name('checkout.')->group(functi
 });
 
 
-    // Apply a discount code via AJAX
-    Route::post('/apply-discount-code', [CheckoutController::class, 'applyDiscountCode'])->name('applyDiscountCode');
-    // Remove an applied discount code via AJAX
-    Route::post('/remove-discount-code', [CheckoutController::class, 'removeDiscountCode'])->name('removeDiscountCode');
+// Apply a discount code via AJAX
+Route::post('/apply-discount-code', [CheckoutController::class, 'applyDiscountCode'])->name('applyDiscountCode');
+// Remove an applied discount code via AJAX
+Route::post('/remove-discount-code', [CheckoutController::class, 'removeDiscountCode'])->name('removeDiscountCode');
 
 // Contact Us Route
 Route::get('/contact-us', [ContactUsController::class, 'index'])->name('contact');
