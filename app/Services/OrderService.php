@@ -24,10 +24,9 @@ class OrderService
         // Apply filters
         if (!empty($filters['search'])) {
             $query->where('id', $filters['search'])
-                  ->orWhereHas('user', function ($query) use ($filters) {
-                      $query->where('first_name', 'like', '%' . $filters['search'] . '%')
-                            ->orWhere('last_name', 'like', '%' . $filters['search'] . '%');
-                  });
+              ->orWhereHas('user', function ($query) use ($filters) {
+                  $query->whereRaw("CONCAT(first_name, ' ', last_name) LIKE ?", ['%' . $filters['search'] . '%']);
+              });
         }
 
         if (!empty($filters['status'])) {
