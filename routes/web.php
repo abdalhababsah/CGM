@@ -134,7 +134,7 @@ Route::get('/view-product/{product}/{slug}', [ProductController::class, 'show'])
 
 // User Dashboard Routes
 Route::middleware(['auth', 'user'])->name('user.')->group(function () {
-    Route::get('/dashboard', [UserDashboardController::class, 'index'])->name('dashboard');
+    Route::get('/dashboard', [UserDashboardController::class, 'index'])->name('user.dashboard');
     Route::get('orders/', [OrderController::class, 'index'])->name('orders.index');
     Route::get('orders/{order}', [OrderController::class, 'show'])->name('orders.show');
 });
