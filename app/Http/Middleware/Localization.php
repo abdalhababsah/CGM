@@ -18,7 +18,7 @@ class Localization
     public function handle($request, Closure $next)
     {
         // Retrieve locale from session or default to app locale
-        $locale = Session::get('locale')?? 'en';
+        $locale = Session::get('locale')?? 'ar';
         Session::put('locale' , $locale);
         // Set the application locale
         App::setLocale($locale);
