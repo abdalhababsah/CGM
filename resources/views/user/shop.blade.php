@@ -17,124 +17,127 @@
 
     <!-- BEGIN SHOP -->
     <div class="shop shop-bg">
-        <div class="scale-1 wrapper">
-            <div class="shop-content">
-                <div class="shop-aside">
-                    <!-- Search Field -->
-                    <div class="box-field box-field__search">
-                        <input type="search" id="search" class="form-control" placeholder="@lang('shop.search')">
-                        <i class="icon-search"></i>
-                    </div>
-
-                    <!-- Categories -->
-                    <div class="shop-aside__item">
-                        <span class="shop-aside__item-title">@lang('shop.categories')</span>
-                        <div class="shop-aside__item-content">
-                            <ul id="categories-list">
-                                <!-- Categories loaded via AJAX -->
-                            </ul>
+            <div class="scale-1">
+            <div class="wrapper">
+                <div class="shop-content">
+                    <div class="shop-aside">
+                        <!-- Search Field -->
+                        <div class="box-field box-field__search">
+                            <input type="search" id="search" class="form-control" placeholder="@lang('shop.search')">
+                            <i class="icon-search"></i>
                         </div>
-                    </div>
 
-                    <!-- Brands -->
-                    <div class="shop-aside__item">
-                        <span class="shop-aside__item-title">@lang('shop.brands')</span>
-                        <div class="shop-aside__item-content">
-                            <ul id="brands-list">
-                                <!-- Brands loaded via AJAX -->
-                            </ul>
+                        <!-- Categories -->
+                        <div class="shop-aside__item">
+                            <span class="shop-aside__item-title">@lang('shop.categories')</span>
+                            <div class="shop-aside__item-content">
+                                <ul id="categories-list">
+                                    <!-- Categories loaded via AJAX -->
+                                </ul>
+                            </div>
                         </div>
-                    </div>
 
-                    <!-- Status -->
-                    {{-- <div class="shop-aside__item">
-                        <span class="shop-aside__item-title">@lang('shop.status')</span>
-                        <div class="shop-aside__item-content">
-                            <ul id="">
-                                <li>
-                                    <a href="#" class="status-filter" data-id="filter-sale">@lang('shop.sale')</a>
-                                </li>
-                                <li>
-                                    <a href="#" class="status-filter active-li" data-id="filter-new">@lang('shop.new')</a>
-                                </li>
-                            </ul>
+                        <!-- Brands -->
+                        <div class="shop-aside__item">
+                            <span class="shop-aside__item-title">@lang('shop.brands')</span>
+                            <div class="shop-aside__item-content">
+                                <ul id="brands-list">
+                                    <!-- Brands loaded via AJAX -->
+                                </ul>
+                            </div>
                         </div>
-                    </div> --}}
+
+                        <!-- Status -->
+                        {{-- <div class="shop-aside__item">
+                            <span class="shop-aside__item-title">@lang('shop.status')</span>
+                            <div class="shop-aside__item-content">
+                                <ul id="">
+                                    <li>
+                                        <a href="#" class="status-filter" data-id="filter-sale">@lang('shop.sale')</a>
+                                    </li>
+                                    <li>
+                                        <a href="#" class="status-filter active-li" data-id="filter-new">@lang('shop.new')</a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div> --}}
 
 
-                    <!-- Price Range -->
-                    <div class="shop-aside__item">
-                        <span class="shop-aside__item-title">@lang('shop.price')</span>
-                        <div class="shop-aside__item-content">
-                            <div class="range-slider-container">
-                                <div class="range-slider">
-                                    <input type="text" id="price-range" class="js-range-slider-price" value="" />
+                        <!-- Price Range -->
+                        <div class="shop-aside__item">
+                            <span class="shop-aside__item-title">@lang('shop.price')</span>
+                            <div class="shop-aside__item-content">
+                                <div class="range-slider-container">
+                                    <div class="range-slider">
+                                        <input type="text" id="price-range" class="js-range-slider-price" value="" />
+                                    </div>
+                                    <button id="apply-price-filter" class="btn-price-filter">
+                                        @lang('shop.filter_price')
+                                    </button>
                                 </div>
-                                <button id="apply-price-filter" class="btn-price-filter">
-                                    @lang('shop.filter_price')
-                                </button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="shop-main">
-                    <div class="shop-main__filter">
-                        <div class="shop-main__filter-container">
-                            <div class="shop-main__select">
-                                <select id="sort" class="styled">
-                                    <option value="default">@lang('shop.default_sort')</option>
-                                    <option value="price_asc">@lang('shop.from_cheap')</option>
-                                    <option value="price_desc">@lang('shop.from_expensive')</option>
-                                </select>
-                            </div>
-                            <div class="shop-main__select">
-                                <select id="hair-types-list" class="styled">
-                                    <option value="default">@lang('shop.hair_pores')</option>
-
-                                </select>
-                            </div>
-                            <div class="shop-main__select">
-                                <select id="hair-pores-list" class="styled">
-                                    <option value="default">@lang('shop.hair_types')</option>
-
-                                </select>
-                            </div>
-                            <div class="shop-main__select">
-                                <select id="hair-thicknesses-list" class="styled">
-                                    <option value="default">@lang('shop.hair_thicknesses')</option>
-
-                                </select>
                             </div>
                         </div>
                     </div>
 
-                    <div class="shop-main__items" id="products-list">
-                        <!-- Products loaded via AJAX -->
-                    </div>
+                    <div class="shop-main">
+                        <div class="shop-main__filter">
+                            <div class="shop-main__filter-container">
+                                <div class="shop-main__select">
+                                    <select id="sort" class="styled">
+                                        <option value="default">@lang('shop.default_sort')</option>
+                                        <option value="price_asc">@lang('shop.from_cheap')</option>
+                                        <option value="price_desc">@lang('shop.from_expensive')</option>
+                                    </select>
+                                </div>
+                                <div class="shop-main__select">
+                                    <select id="hair-types-list" class="styled">
+                                        <option value="default">@lang('shop.hair_pores')</option>
 
-                    <!-- Pagination -->
-                    <ul class="paging-list" id="pagination" style="margin-bottom: 30px;">
-                        <!-- Pagination links loaded via AJAX -->
-                    </ul>
+                                    </select>
+                                </div>
+                                <div class="shop-main__select">
+                                    <select id="hair-pores-list" class="styled">
+                                        <option value="default">@lang('shop.hair_types')</option>
+
+                                    </select>
+                                </div>
+                                <div class="shop-main__select">
+                                    <select id="hair-thicknesses-list" class="styled">
+                                        <option value="default">@lang('shop.hair_thicknesses')</option>
+
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="shop-main__items" id="products-list">
+                            <!-- Products loaded via AJAX -->
+                        </div>
+
+                        <!-- Pagination -->
+                        <ul class="paging-list" id="pagination" style="margin-bottom: 30px;">
+                            <!-- Pagination links loaded via AJAX -->
+                        </ul>
+                    </div>
                 </div>
             </div>
-        </div>
 
-        <!-- Floating Price Filter for Mobile -->
-        <div class="floating-price-filter">
-            <button class="price-filter-button">
-                <img src="{{asset('user/img/filter-price.png')}}" alt="">
-            </button>
-            <div class="price-filter-panel">
-                <h4>@lang('shop.price')</h4>
-                <div class="range-slider">
-                    <input type="text" id="mobile-price-range" class="js-range-slider-price-mobile" value="" />
-                </div>
-                <button id="apply-mobile-price-filter">
-                    @lang('shop.filter_price')
+            <!-- Floating Price Filter for Mobile -->
+            <div class="floating-price-filter">
+                <button class="price-filter-button">
+                    <img src="{{asset('user/img/filter-price.png')}}" alt="">
                 </button>
+                <div class="price-filter-panel">
+                    <h4>@lang('shop.price')</h4>
+                    <div class="range-slider">
+                        <input type="text" id="mobile-price-range" class="js-range-slider-price-mobile" value="" />
+                    </div>
+                    <button id="apply-mobile-price-filter">
+                        @lang('shop.filter_price')
+                    </button>
+                </div>
             </div>
+
         </div>
     </div>
     <!-- SHOP EOF -->
