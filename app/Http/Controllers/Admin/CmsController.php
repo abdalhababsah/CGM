@@ -29,18 +29,8 @@ class CmsController extends Controller
             return $sliders;
         });
 
-
-
         $commingSoons = Comming_soon::orderBy("created_at", "desc")->paginate(10);
         return view("admin.commingSoon.index", compact("commingSoons", 'sliders'));
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
-    {
-
     }
 
     /**
@@ -69,25 +59,9 @@ class CmsController extends Controller
     }
 
     /**
-     * Display the specified resource.
-     */
-    public function show(string $id)
-    {
-        //
-    }
-
-    /**CRUD
-     * Show the form for editing the specified resource.
-     */
-    public function edit(string $id)
-    {
-
-    }
-
-    /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Comming_soon $commingSoon)
+    public function update(Request $request, Comming_soon $cms_management)
     {
         // Validate the input data
         $data = $request->validate([
@@ -99,8 +73,8 @@ class CmsController extends Controller
 
         // Handle the image upload if present
         if ($request->hasFile('image')) {
-            if ($commingSoon->image && Storage::disk('public')->exists($commingSoon->image)) {
-                Storage::disk('public')->delete($commingSoon->image);
+            if ($cms_management->image && Storage::disk('public')->exists($cms_management->image)) {
+                Storage::disk('public')->delete($cms_management->image);
             }
 
             // Store the new image
@@ -110,7 +84,7 @@ class CmsController extends Controller
         }
 
         // Update the record
-        $commingSoon->update($data);
+        $cms_management->update($data);
 
         // Redirect with a success message
         return redirect()->route('admin.cms-management.index')->with('success', 'Section Updated Successfully');
@@ -132,30 +106,30 @@ class CmsController extends Controller
 
 
     }
-/**
- * Update the Header Slider.
- */
-public function updateHeader(Request $request, HeaderSlider $slider)
-{
-    try {
-        // Validate the request data
-        $data = $request->validate([
-            'title_ar' => 'required|string|max:255',
-            'title_en' => 'required|string|max:255',
-            'title_he' => 'required|string|max:255',
-        ]);
+    /**
+     * Update the Header Slider.
+     */
+    public function updateHeader(Request $request, HeaderSlider $slider)
+    {
+        try {
+            // Validate the request data
+            $data = $request->validate([
+                'title_ar' => 'required|string|max:255',
+                'title_en' => 'required|string|max:255',
+                'title_he' => 'required|string|max:255',
+            ]);
 
-        // Update the Header Slider
-        $slider->update($data);
+            // Update the Header Slider
+            $slider->update($data);
 
-        return redirect()
-            ->route('admin.cms-management.index')
-            ->with('success', 'Header Slider updated successfully.');
+            return redirect()
+                ->route('admin.cms-management.index')
+                ->with('success', 'Header Slider updated successfully.');
 
-    } catch (\Exception $e) {
-        return redirect()
-            ->route('admin.cms-management.index')
-            ->with('error', 'Error updating Header Slider: ' . $e->getMessage());
+        } catch (\Exception $e) {
+            return redirect()
+                ->route('admin.cms-management.index')
+                ->with('error', 'Error updating Header Slider: ' . $e->getMessage());
+        }
     }
-}
 }

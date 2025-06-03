@@ -309,8 +309,7 @@
                 $('#editHeaderSliderForm')[0].reset();
             });
 
-
-
+            // Handle the edit coming soon button click
             $('.edit-coming-soon-btn').on('click', function() {
                 const data = $(this).data();
                 $('#edit_section_id').val(data.id);
