@@ -16,7 +16,7 @@ return [
     // Main Block
     'professional' => 'محترف',
     'beauty_and_care' => 'الجمال والعناية',
-    'nourish_description' => 'غذِّ بشرتك بمنتجات تجميل خالية من السموم. مع العروض التي لا يمكنك رفضها.',
+    'nourish_description' => 'غذِّ شعرك بمنتجات تجميل خالية من السموم. مع عروض لا يمكنك رفضها.',
     'shop_now' => 'تسوق الآن',
 
     // Trending Section

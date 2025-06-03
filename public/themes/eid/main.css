@@ -1,0 +1,25 @@
+.main-slide {
+    background-image: url('adha-bg.png');
+    width: 100%;
+    aspect-ratio: 3/2;
+    background-size: cover;
+    background-position: center;
+    margin-top: 130px;
+}
+
+.main-slide .btn {
+    position: relative;
+    top: 65%;
+    right: 70%;
+}
+
+@media screen and (max-width: 767px) {
+    .main-slide .btn {
+        right: 65%;
+        line-height: 50px;
+        padding: 0 10px;
+        font-size: smaller;
+        text-align: center;
+        width: 20%;
+    }
+}

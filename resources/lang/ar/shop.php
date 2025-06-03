@@ -18,7 +18,7 @@ return [
     'price' => 'السعر',
     'no_products_found' => 'لم يتم العثور على منتجات.',
     'available' => 'متاح',
-    'soldOut' => 'نفدت الكمية',
+    'soldOut' => 'نفذت الكمية',
     'filter_price' => 'تصفية السعر',
     'hair_pores' => 'مسام الشعر',
     'hair_types' => 'أنواع الشعر',
