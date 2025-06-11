@@ -50,7 +50,73 @@
                     <h6>Customer Information</h6>
                     <p><strong>Name:</strong> {{ $order->user?->name }}</p>
                     <p><strong>Email:</strong> {{ $order->user?->email }}</p>
-                    <p><strong>Phone:</strong> {{ $order->user?->phone }}</p>
+                    <p><strong>Phone:</strong> 
+                        {{ $order->user?->phone }}
+                        <br>
+                        @if ($order->user?->phone)
+                            <button 
+                                type="button" 
+                                class="btn btn-success btn-sm ms-2"
+                                onclick="openWhatsApp('{{ $order->user?->phone }}')"
+                            >
+                                WhatsApp
+                            </button>
+                        @endif
+                    </p>
+
+                    <!-- Modal for country code selection -->
+                    <div class="modal fade" id="countryCodeModal" tabindex="-1" aria-labelledby="countryCodeModalLabel" aria-hidden="true">
+                      <div class="modal-dialog">
+                        <div class="modal-content">
+                          <div class="modal-header">
+                            <h5 class="modal-title" id="countryCodeModalLabel">Enter Country Code</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                          </div>
+                          <div class="modal-body">
+                            <input type="text" id="countryCodeInput" class="form-control" placeholder="e.g. 972 or 970">
+                          </div>
+                          <div class="modal-footer">
+                            <button type="button" class="btn btn-primary" id="goToWhatsAppBtn">Go to WhatsApp</button>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+
+                    @push('scripts')
+                    <script>
+                    function openWhatsApp(phone) {
+                        // Remove spaces, dashes, parentheses
+                        let cleanPhone = phone.replace(/[\s\-()]/g, '');
+                        // Check if phone starts with '+'
+                        if (cleanPhone.startsWith('+')) {
+                            cleanPhone = cleanPhone.substring(1);
+                        }
+                        // Check if phone starts with country code (assume at least 10 digits for local)
+                        if (/^\d{11,15}$/.test(cleanPhone)) {
+                            window.open('https://wa.me/' + cleanPhone, '_blank');
+                        } else {
+                            // Show modal to ask for country code
+                            window.selectedPhone = cleanPhone;
+                            var modal = new bootstrap.Modal(document.getElementById('countryCodeModal'));
+                            modal.show();
+                        }
+                    }
+
+                    document.addEventListener('DOMContentLoaded', function () {
+                        document.getElementById('goToWhatsAppBtn').onclick = function () {
+                            var code = document.getElementById('countryCodeInput').value.replace(/\D/g, '');
+                            if (!code) {
+                                alert('Please enter a valid country code.');
+                                return;
+                            }
+                            var fullPhone = code + window.selectedPhone.replace(/^0+/, '');
+                            window.open('https://wa.me/' + fullPhone, '_blank');
+                            var modal = bootstrap.Modal.getInstance(document.getElementById('countryCodeModal'));
+                            modal.hide();
+                        };
+                    });
+                    </script>
+                    @endpush
 
                     <hr>
 
