@@ -16,7 +16,7 @@
     <!-- DETAIL MAIN BLOCK EOF -->
 
     <!-- BEGIN SHOP -->
-    <div class="shop arabian-bg">
+    <div class="shop shop1-bg">
         <div class="wrapper">
             <div class="shop-content">
                 <div class="shop-aside">

@@ -3,7 +3,7 @@
 
 @section('styles')
     <style>
-        <style>.product-info__social ul {
+        .product-info__social ul {
             display: flex;
             gap: 10px;
         }
@@ -59,12 +59,6 @@
         .toggle-wishlist-btn i {
             transition: color 0.3s ease;
         }
-
-        /* General Body Direction */
-        body[dir="rtl"] {
-            direction: rtl;
-            text-align: right;
-        }
     </style>
 @endsection
 
@@ -74,16 +68,6 @@
         <div class="overlay"></div>
         <div class="wrapper">
             <div class="detail-block__content">
-                {{-- <h1>{{ __('view_product.product_details') }}</h1>
-                <ul class="bread-crumbs">
-                    <li class="bread-crumbs__item">
-                        <a href="{{ route('home') }}" class="bread-crumbs__link">{{ __('view_product.home') }}</a>
-                    </li>
-                    <li class="bread-crumbs__item">
-                        <a href="{{ route('shop.index') }}" class="bread-crumbs__link">{{ __('view_product.shop') }}</a>
-                    </li>
-                    <li class="bread-crumbs__item">{{ $product->{'name_' . app()->getLocale()} }}</li>
-                </ul> --}}
             </div>
         </div>
     </div>
@@ -152,7 +136,7 @@
 
                     @if ($product->in_stock)
                         <div class="product-options">
-                            <div class="product-info__quantity" style="direction: ltr">
+                            <div class="product-info__quantity">
                                 <span class="product-info__quantity-title">{{ __('view_product.quantity') }}:</span>
                                 <div class="counter-box">
                                     <span class="counter-link counter-link__prev"><i class="icon-arrow"></i></span>

@@ -10435,13 +10435,6 @@ input[type="search"]::-webkit-search-results-decoration {
 	}
 }
 
-.shop-bg {
-    background-image: url(../img/cream-20.png);
-    background-repeat: no-repeat;
-    background-position-y: -100px;
-    background-size: 400px;
-}
-
 del {
     font-size: 70%;
     color: #c98a88;
@@ -10457,4 +10450,9 @@ del {
     max-width: 200px;
 }
 
+.product-slider__main,
+.product-info__quantity
+{
+	direction: ltr;
+}
 /* contact us */

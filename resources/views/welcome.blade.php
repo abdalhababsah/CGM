@@ -1,7 +1,6 @@
 @extends('user.layouts.app')
 
 @section('styles')
-    {{-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" /> --}}
     <style>
         .header-content {
             background-color: rgb(151 29 37) !important;
@@ -214,12 +213,28 @@
 
         }
     </style>
-    <link rel="stylesheet" href="{{ url('themes/eid/main.css') }}">
 @endsection
 @section('content')
 
-    <div class="main-slide">
-        <a id="shop_now" href="{{ route('shop.index') }}" class="btn">@lang('home.shop_now')</a>
+    <div class="main-block load-bg">
+        <div id="hero-section" class="wrapper d-flex">
+            <div id="block__content" class="main-block__content">
+                <span id="professional" class="saint-text">@lang('home.professional')</span>
+                <h1 id="beauty_and_care" class="main-text">@lang('home.beauty_and_care')</h1>
+                <p id="nourish_description">@lang('home.nourish_description')</p>
+                <a id="shop_now" href="{{ route('shop.index') }}" class="btn">@lang('home.shop_now')</a>
+            </div>
+
+            <!-- Image Carousel -->
+            <div class="image-carousel">
+                <div class="carousel-images">
+                    <img src="{{ asset('user/img/home.png') }}" alt="Image 1">
+                    <img src="{{ asset('user/img/home-2.png') }}" alt="Image 2">
+                    <img src="{{ asset('user/img/girl4.png') }}" alt="Image 3">
+
+                </div>
+            </div>
+        </div>
     </div>
 
     <!-- BEGIN TRENDING -->

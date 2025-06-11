@@ -2,8 +2,6 @@
 
 namespace App\Services;
 
-use App\Models\WishList;
-use App\Models\WishListItem;
 use App\Models\Product;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Cookie;
@@ -20,7 +18,7 @@ class WishListService
             // Retrieve or create a wishlist for the authenticated user
             $this->wishList = Auth::user()->wishLists()->firstOrCreate([]);
         } else {
-            $this->wishList = null;
+            $this->wishList = [];
         }
     }
 

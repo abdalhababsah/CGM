@@ -108,7 +108,6 @@
 @endsection
 
 @section('scripts')
-    <!-- SweetAlert2 JS -->
     <script>
         function applyDiscount() {
             let discountCode = $('#discount-code-input').val();
@@ -443,19 +442,6 @@
 
                     // Remove any existing warnings before checking
                     row.find('.stock-warning').remove();
-
-                    // Handle stock conflict
-            //         if (currentQty > availableQty) {
-            //             hasStockIssue = true;
-            //             input.css('border-color', 'red'); // Highlight input field
-            //             row.find('.cart-table__info').append(`
-            //     <span class="stock-warning" style="color: red; display: block;">
-            //         {{ __('cart.quantity_exceeds_stock') }} (${availableQty})
-            //     </span>
-            // `);
-            //         } else {
-            //             input.css('border-color', '#ccc'); // Reset border color
-            //         }
                 });
 
                 // Update the checkout button and general warning message

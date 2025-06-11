@@ -21,10 +21,12 @@ body {
 .main-block,
 #hero-section,
 .shop-bg,
+.shop1-bg::before,
 .scale-1{
     -webkit-transform: scaleX(-1) !important;
     transform: scaleX(-1) !important;
 }
+
 /* Header Section */
 .invoice-header {
     text-align: center;
@@ -319,4 +321,9 @@ contacct us
         top: 20px;
         /* Adjust position for smaller screens */
     }
+}
+
+/* Remove float override to allow slick's RTL handling */
+.slick-slide {
+    /* float: right !important; */
 }
