@@ -1,218 +1,7 @@
 @extends('user.layouts.app')
 
 @section('styles')
-    <style>
-        .header-content {
-            background-color: rgb(151 29 37) !important;
-        }
-
-        /* Keyframes for fade-in animations */
-        @keyframes fadeInUp {
-            from {
-                opacity: 0;
-                transform: translateY(50px);
-            }
-
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-
-        @keyframes fadeInLeft {
-            from {
-                opacity: 0;
-                transform: translateX(-50px);
-            }
-
-            to {
-                opacity: 1;
-                transform: translateX(0);
-            }
-        }
-
-        @keyframes fadeInRight {
-            from {
-                opacity: 0;
-                transform: translateX(50px);
-            }
-
-            to {
-                opacity: 1;
-                transform: translateX(0);
-            }
-        }
-
-        @keyframes zoomIn {
-            from {
-                opacity: 0;
-                transform: scale(0.8);
-            }
-
-            to {
-                opacity: 1;
-                transform: scale(1);
-            }
-        }
-
-        /* Default hidden state */
-        #block__content,
-        #professional,
-        #beauty_and_care,
-        #nourish_description,
-        #shop_now {
-            opacity: 0;
-        }
-
-        /* Animation triggers */
-        #block__content {
-            animation: fadeInUp 3s ease-out forwards;
-            width: 50%;
-        }
-
-        #professional {
-            animation: fadeInLeft 3s ease-out 0.3s forwards;
-            /* Delayed by 0.3s */
-        }
-
-        #beauty_and_care {
-            animation: fadeInUp 3s ease-out 0.6s forwards;
-            /* Delayed by 0.6s */
-            font-size: xx-large;
-        }
-
-        #nourish_description {
-            animation: fadeInRight 3s ease-out 0.9s forwards;
-            /* Delayed by 0.9s */
-        }
-
-        #shop_now {
-            animation: zoomIn 3s ease-out 1.2s forwards;
-            /* Delayed by 1.2s */
-        }
-
-        .top-categories__item {
-            animation-delay: 0.3s;
-            /* Default delay */
-        }
-
-        .top-categories__item:nth-child(2) {
-            animation-delay: 0.6s;
-            /* Delay for the second item */
-        }
-
-        .top-categories__item:nth-child(3) {
-            animation-delay: 0.9s;
-            /* Delay for the third item */
-        }
-
-        .image-carousel {
-            width: 40%;
-            /* Allocate space for carousel */
-            position: relative;
-            height: 500px;
-            margin: 0;
-            /* Reset margins for cleaner alignment */
-
-        }
-
-        .carousel-images {
-            position: relative;
-            width: 90%;
-            height: 100%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            margin: auto;
-        }
-
-
-        /* Header Content */
-        .main-block__content {
-            flex: 1 1 400px;
-            /* Allow content to shrink or grow and set a minimum width */
-            padding-right: 20px;
-        }
-
-        /* Image Carousel */
-        .image-carousel {
-            flex: 1 1 400px;
-            /* Allow carousel to shrink or grow and set a minimum width */
-            position: relative;
-            height: 500px;
-            /* Match the height of images */
-            margin: 0;
-        }
-
-        .carousel-images img {
-            border: 8px solid white;
-            position: absolute;
-            background-color: #971d25;
-            width: 90%;
-            height: 100%;
-            object-fit: contain;
-            border-radius: 100px;
-            /* border-radius: 50% 50% 0 0; */
-            opacity: 0;
-            transition: opacity 1s ease-in-out;
-            box-shadow: 0px 3px 17px rgba(0, 0, 0, 1.2);
-            /* Adds a subtle shadow effect */
-        }
-
-        .carousel-images img.active {
-            opacity: 1;
-        }
-
-        /* Responsive Adjustments */
-        @media (max-width: 768px) {
-            #hero-section {
-                gap: 45px;
-                /* padding: 0px 0px 0px 0px !important; */
-                /* Stack items vertically on smaller screens */
-            }
-
-            #block__content {
-                width: 100%;
-                margin-top: 39px;
-            }
-
-            .main-block__content,
-            .image-carousel {
-                /* width: 100%; */
-
-                /* Make both sections take full width */
-            }
-
-            .image-carousel {
-                height: 300px;
-                /* Adjust height for smaller screens */
-            }
-        }
-
-        /* Hero Section Flex Container */
-        #hero-section {
-            margin-top: 60px;
-            display: flex;
-            flex-wrap: wrap;
-            /* Enable wrapping for child elements */
-            align-items: center;
-            /* Center items vertically */
-            justify-content: space-between;
-            /* Maintain space between items */
-            gap: 20px;
-            max-width: 1600px;
-            /* Add gap between items */
-        }
-
-        @media (max-width: 468px) {
-            .image-carousel {
-                /* width: 100%; */
-                max-width: 443px;
-                /* Make both sections take full width */
-            }
-
-        }
-    </style>
+    <link rel="stylesheet" href="{{url('user/css/home.css')}}">
 @endsection
 @section('content')
 
@@ -238,7 +27,7 @@
     </div>
 
     <!-- BEGIN TRENDING -->
-    <section class="trending" style="direction: ltr;">
+    <section class="trending">
         <div class="trending-content">
             <div class="trending-top">
                 <span class="saint-text">@lang('home.cosmetics')</span>
@@ -253,7 +42,7 @@
                         </div>
                         <div class="products-item__img">
                             @if ($commingSoon->image)
-                            <img style="object-fit: contain;" src="{{ asset('storage/' . $commingSoon->image) }}"
+                            <img src="{{ asset('storage/' . $commingSoon->image) }}"
                                 alt="{{ $commingSoon->name }}">
                                 @endif
                         </div>
@@ -344,7 +133,7 @@
             </div>
         </div>
         <div class="info-blocks__item info-blocks__item-reverse js-img" data-src="">
-            <div class="wrapper" style="direction: ltr;">
+            <div class="wrapper">
                 <div class="info-blocks__item-img">
                     <img data-src="{{ asset('user/img/image-5.png') }}" src="data:image/gif;base64,R0lGODlhAQABAAAAACw="
                         class="js-img">
@@ -392,8 +181,6 @@
             });
 
             items.forEach(item => observer.observe(item));
-
-
 
         });
 

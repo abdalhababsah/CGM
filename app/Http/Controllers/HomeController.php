@@ -30,6 +30,6 @@ class HomeController extends Controller
         $commingSoons = $this->homeService->getComingSoonItems();
 
         // Render the home page with Coming Soon items
-        return view('welcome', compact('commingSoons'));
+        return view('home', compact('commingSoons'));
     }
 }

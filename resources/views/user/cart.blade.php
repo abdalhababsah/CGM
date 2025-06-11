@@ -1,88 +1,7 @@
 @extends('user.layouts.app')
 
 @section('styles')
-    <!-- SweetAlert2 CSS -->
-    <style>
-        /* Existing styles */
-
-        /* Empty Cart Styles */
-        .empty-cart-container {
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            height: 50vh;
-            text-align: center;
-        }
-
-        .empty-cart-image {
-            width: 150px;
-            height: auto;
-            margin-bottom: 20px;
-        }
-
-        .empty-cart-message {
-            font-size: 20px;
-            margin-bottom: 20px;
-            color: #333;
-        }
-
-        .continue-shopping {
-            display: inline-block;
-            padding: 0px 20px;
-            background-color: #971d25;
-            color: #fff;
-            text-decoration: none;
-            border-radius: 4px;
-        }
-
-        .continue-shopping:hover {
-            background-color: #7b1620;
-            color: #fff;
-        }
-
-        .text-remove {
-            background: none;
-            border: none;
-            padding: 0;
-            cursor: pointer;
-            font-size: 14px;
-            color: #971d25;
-            text-decoration: underline;
-            position: absolute;
-            bottom: 10px;
-            right: 10px;
-        }
-
-        .text-remove:hover {
-            opacity: 0.8;
-        }
-
-        .cart-table__row {
-            position: relative;
-        }
-
-        .counter-box {
-            display: flex;
-            align-items: center;
-        }
-
-        .counter-link {
-            background: none;
-            border: none;
-            color: #333;
-            font-size: 20px;
-            cursor: pointer;
-            margin: 0 5px;
-        }
-
-        .counter-input {
-            width: 50px;
-            text-align: center;
-            border: 1px solid #ccc;
-            border-radius: 4px;
-        }
-    </style>
+<link rel="stylesheet" href="{{url('user/css/cart.css')}}">
 @endsection
 
 @section('content')
@@ -109,108 +28,66 @@
 
 @section('scripts')
     <script>
-        function applyDiscount() {
-            let discountCode = $('#discount-code-input').val();
-            $.ajax({
-                url: "{{ url('/apply-discount-code') }}",
-                method: "POST",
-                data: {
-                    _token: "{{ csrf_token() }}",
-                    discount_code: discountCode,
-                },
-                dataType: 'json',
-                success: function(response) {
-                    if (response.status === 'success') {
-                        $('#discount-message').html(`
-                            <div class="alert alert-success">
-                                ${response.message} (${response.discount_amount})
-                            </div>
-                        `);
-                        loadCartItems();
-                    } else {
-                        $('#discount-message').html(`
-                            <div class="alert alert-danger">
-                                ${response.message}
-                            </div>
-                        `);
-                    }
+        // Utility: SweetAlert2 Toast
+        const Toast = Swal.mixin({
+            toast: true,
+            position: 'top-end',
+            showConfirmButton: false,
+            timer: 3000,
+            timerProgressBar: true,
+            didOpen: (toast) => {
+            toast.addEventListener('mouseenter', Swal.stopTimer)
+            toast.addEventListener('mouseleave', Swal.resumeTimer)
+            }
+        });
 
-                },
-                error: function() {
-                    $('#discount-message').html(`
-                        <div class="alert alert-danger">
-                            {{ __('cart.error_applying_discount') }}
-                        </div>
-                    `);
-                },
+        // Load cart items from server and render
+        function loadCartItems() {
+            $.get("{{ route('fetchCart') }}")
+            .done(function(response) {
+                renderCartItems(response.cartItems, response.totalPrice);
+            })
+            .fail(function() {
+                $('#cart-container').html('<p>{{ __('cart.error_loading') }}</p>');
+                Toast.fire({ icon: 'error', title: '{{ __('cart.error_loading') }}' });
             });
         }
 
-        $(document).ready(function() {
+        // Render cart items or empty cart
+        function renderCartItems(cartItems, totalPrice) {
+            if (!cartItems.length) return renderEmptyCart();
 
-            // Initialize SweetAlert2 Toast
-            const Toast = Swal.mixin({
-                toast: true,
-                position: 'top-end',
-                showConfirmButton: false,
-                timer: 3000,
-                timerProgressBar: true,
-                didOpen: (toast) => {
-                    toast.addEventListener('mouseenter', Swal.stopTimer)
-                    toast.addEventListener('mouseleave', Swal.resumeTimer)
-                }
-            });
+            let cartHtml = `
+            <div class="cart-table">
+                <div class="cart-table__box">
+                <div class="cart-table__row cart-table__row-head">
+                    <div class="cart-table__col">{{ __('cart.product') }}</div>
+                    <div class="cart-table__col">{{ __('cart.price') }}</div>
+                    <div class="cart-table__col">{{ __('cart.quantity') }}</div>
+                    <div class="cart-table__col">{{ __('cart.total') }}</div>
+                </div>
+                ${cartItems.map(item => renderCartRow(item)).join('')}
+                </div>
+            </div>
+            ${renderCartBottom(totalPrice)}
+            `;
+            $('#cart-container').html(cartHtml);
+            attachCartEventHandlers();
+            checkStockConflicts();
+        }
 
-            function loadCartItems() {
-                $.ajax({
-                    url: "{{ route('fetchCart') }}",
-                    method: "GET",
-                    dataType: "json",
-                    success: function(response) {
-                        renderCartItems(response.cartItems, response.totalPrice);
-                    },
-                    error: function() {
-                        $('#cart-container').html('<p>{{ __('cart.error_loading') }}</p>');
-                        Toast.fire({
-                            icon: 'error',
-                            title: '{{ __('cart.error_loading') }}'
-                        });
-                    }
-                });
-            }
-
-            function renderCartItems(cartItems, totalPrice) {
-                if (cartItems.length === 0) {
-                    renderEmptyCart();
-                    return;
-                }
-
-                let cartHtml = `
-    <div class="cart-table">
-        <div class="cart-table__box">
-            <div class="cart-table__row cart-table__row-head">
-                <div class="cart-table__col">{{ __('cart.product') }}</div>
-                <div class="cart-table__col">{{ __('cart.price') }}</div>
-                <div class="cart-table__col">{{ __('cart.quantity') }}</div>
-                <div class="cart-table__col">{{ __('cart.total') }}</div>
-            </div>`;
-
-                cartItems.forEach(item => {
-                    let stockStatus = item.in_stock ?
-                        `<span style="color: green;">{{ __('cart.in_stock') }}</span>` :
-                        `<span style="color: red;">{{ __('cart.out_of_stock') }}</span>`;
-
-                    let oldPrice = item.discount > 0 ?
-                    `<del>₪${item.price}</del>` : '';
-
-                    let color = item.color ?
-                    `<p style="background-color: ${item.color}; height :10px;">
-                    <input type="hidden" name="color_id" class="colorId" value="${item.color_id}">
-                    </p>` : ``;
-
-                    cartHtml += `
-        <div class="cart-table__row" data-product-id="${item.product_id}">
-            <div class="cart-table__col">
+        function renderCartRow(item) {
+            const stockStatus = item.in_stock
+            ? `<span class="in">{{ __('cart.in_stock') }}</span>`
+            : `<span class="out">{{ __('cart.out_of_stock') }}</span>`;
+            const oldPrice = item.discount > 0 ? `<del>₪${item.price}</del>` : '';
+            const color = item.color
+            ? `<p style="background-color: ${item.color}; height:10px;">
+                <input type="hidden" name="color_id" class="colorId" value="${item.color_id}">
+               </p>` : '';
+            return `
+            <div class="cart-table__row" data-product-id="${item.product_id}">
+                <div class="cart-table__col">
                 <a href="#" class="cart-table__img">
                     <img src="${item.image_url}" alt="${item.name}">
                 </a>
@@ -218,283 +95,220 @@
                     <a href="#" class="title5">${item.name} ${color}</a>
                     <span class="cart-table__info-stock">${stockStatus}</span>
                 </div>
-            </div>
-            <div class="cart-table__col">
+                </div>
+                <div class="cart-table__col">
                 <span class="cart-table__price" data-price="${item.discounted_price}">
-                    ${oldPrice}
-                    ₪${item.discounted_price}
+                    ${oldPrice} ₪${item.discounted_price}
                 </span>
-            </div>
-            <div class="cart-table__col">
+                </div>
+                <div class="cart-table__col">
                 <div class="cart-table__quantity">
                     <div class="counter-box">
-                        <button class="counter-link counter-link__prev" data-action="decrease">-</button>
-                        <input type="text" class="counter-input" value="${item.quantity}" disabled>
-                        <button class="counter-link counter-link__next" data-action="increase">+</button>
+                    <button class="counter-link counter-link__prev" data-action="decrease">-</button>
+                    <input type="text" class="counter-input" value="${item.quantity}" disabled>
+                    <button class="counter-link counter-link__next" data-action="increase">+</button>
                     </div>
                 </div>
-            </div>
-            <div class="cart-table__col">
-                <span class="cart-table__total">
-                    ₪${item.discounted_price * item.quantity}
-                </span>
+                </div>
+                <div class="cart-table__col">
+                <span class="cart-table__total">₪${(item.discounted_price * item.quantity).toFixed(2)}</span>
                 <button class="remove-btn text-remove" data-product-id="${item.product_id}">
                     {{ __('cart.remove') }}
                 </button>
-            </div>
-        </div>`;
-                });
-
-                cartHtml += `
-        </div>
-    </div>
-    <div class="cart-bottom">
-
-                        <!-- Discount Code -->
-                        <div class="cart-bottom__promo">
-                            <h6>{{ __('checkout.apply_discount_code') }}</h6>
-                            <div class="box-field d-flex" style="display: flex">
-                                <input style="margin-top: 0px !important;" type="text" id="discount-code-input" class="form-control"
-                                    placeholder="{{ __('checkout.enter_discount_code') }}">
-                                <button type="button" id="apply-discount-btn"
-                                    class="btn btn-primary mx-2" onclick="applyDiscount()">{{ __('checkout.apply') }}</button>
-                            </div>
-                            <div id="discount-message" class="mt-2">
-                                <!-- Applied discount info will appear here -->
-                            </div>
-                        </div>
-        <div class="cart-bottom__total">
-            <div class="cart-bottom__total-goods">
-                {{ __('cart.total_goods') }}: <span id="cart-total-goods">₪${totalPrice.toFixed(2)}</span>
-            </div>
-            <span id="checkout-warning" style="color: red; display: none;">
-                {{ __('cart.checkout_disabled_message') }}
-            </span>
-           <a href="{{ route('checkout.index') }}" class="btn" id="checkout-btn">
-            {{ __('Continue') }}
-            </a>
-        </div>
-    </div>`;
-
-                $('#cart-container').html(cartHtml);
-                attachCartEventHandlers(); // Reattach event handlers
-                checkStockConflicts(); // Call conflict checker after rendering
-            }
-
-            function renderEmptyCart() {
-                const emptyCartHtml = `
-                <div class="empty-cart-container">
-                    <img src="{{ asset('admin/assets/img/emptycart.png') }}" alt="Empty Cart" class="empty-cart-image">
-                    <p class="empty-cart-message">{{ __('cart.empty') }}</p>
-                    <a href="{{ route('home') }}" class="btn continue-shopping">{{ __('cart.continue_shopping') }}</a>
                 </div>
-                `;
-                $('#cart-container').html(emptyCartHtml);
-            }
+            </div>
+            `;
+        }
 
-            function attachCartEventHandlers() {
-                $('.counter-link').off('click').on('click', function(e) {
-                    e.preventDefault();
-                    let row = $(this).closest('.cart-table__row');
-                    let colorId = row.find('.colorId').val();
-                    let input = row.find('.counter-input');
-                    let oldQty = parseInt(input.val()) || 0;
-                    let price = parseFloat(row.find('.cart-table__price').data('price')) || 0;
-                    let action = $(this).data('action');
+        function renderCartBottom(totalPrice) {
+            return `
+            <div class="cart-bottom">
+                <div class="cart-bottom__promo">
+                <h6>{{ __('checkout.apply_discount_code') }}</h6>
+                <div class="box-field d-flex">
+                    <input type="text" id="discount-code-input" class="form-control"
+                    placeholder="{{ __('checkout.enter_discount_code') }}">
+                    <button type="button" id="apply-discount-btn"
+                    class="btn btn-primary mx-2">{{ __('checkout.apply') }}</button>
+                </div>
+                <div id="discount-message" class="mt-2"></div>
+                </div>
+                <div class="cart-bottom__total">
+                <div class="cart-bottom__total-goods">
+                    {{ __('cart.total_goods') }}: <span id="cart-total-goods">₪${totalPrice.toFixed(2)}</span>
+                </div>
+                <span id="checkout-warning" style="display:none;">
+                    {{ __('cart.checkout_disabled_message') }}
+                </span>
+                <a href="{{ route('checkout.index') }}" class="btn" id="checkout-btn">
+                    {{ __('Continue') }}
+                </a>
+                </div>
+            </div>
+            `;
+        }
 
-                    let newQty = oldQty;
-                    if (action === 'increase') {
-                        newQty += 1;
-                    } else if (action === 'decrease') {
-                        newQty -= 1;
-                    }
+        function renderEmptyCart() {
+            $('#cart-container').html(`
+            <div class="empty-cart-container">
+                <img src="{{ asset('admin/assets/img/emptycart.png') }}" alt="Empty Cart" class="empty-cart-image">
+                <p class="empty-cart-message">{{ __('cart.empty') }}</p>
+                <a href="{{ route('home') }}" class="btn continue-shopping">{{ __('cart.continue_shopping') }}</a>
+            </div>
+            `);
+        }
 
-                    if (newQty < 1) return;
+        // Attach all cart event handlers
+        function attachCartEventHandlers() {
+            // Quantity change
+            $('.counter-link').off('click').on('click', function(e) {
+            e.preventDefault();
+            let row = $(this).closest('.cart-table__row');
+            let colorId = row.find('.colorId').val();
+            let input = row.find('.counter-input');
+            let oldQty = parseInt(input.val()) || 0;
+            let price = parseFloat(row.find('.cart-table__price').data('price')) || 0;
+            let action = $(this).data('action');
+            let newQty = action === 'increase' ? oldQty + 1 : oldQty - 1;
+            if (newQty < 1) return;
 
-
-                    // Update the cart on the server first
-                    updateCart(row.data('product-id'), newQty, colorId, function(success, message, updatedData) {
-                        if (success) {
-                            input.val(newQty);
-                            let newTotal = (price * newQty).toFixed(2);
-                            row.find('.cart-table__total').text(`₪${newTotal}`);
-                            updateTotalPrice();
-                            checkStockConflicts(updatedData);
-
-                        } else {
-                            // Show error and reset input value to old quantity
-                            Toast.fire({
-                                icon: 'error',
-                                title: message
-                            });
-                            input.val(oldQty);
-                        }
-                    });
-                });
-
-                $('.remove-btn').off('click').on('click', function() {
-                    let row = $(this).closest('.cart-table__row');
-                    let productId = $(this).data('product-id');
-
-                    Swal.fire({
-                        title: '{{ __('cart.confirm_remove_title') }}',
-                        text: '{{ __('cart.confirm_remove_text') }}',
-                        icon: 'warning',
-                        showCancelButton: true,
-                        confirmButtonColor: '#d33',
-                        cancelButtonColor: '#3085d6',
-                        confirmButtonText: '{{ __('cart.remove') }}',
-                        cancelButtonText: '{{ __('cart.cancel') }}'
-                    }).then((result) => {
-                        if (result.isConfirmed) {
-                            removeFromCart(productId, function(success) {
-                                if (success) {
-                                    row.remove();
-                                    updateTotalPrice();
-                                    checkEmptyCart();
-                                    checkStockConflicts();
-                                    Toast.fire({
-                                        icon: 'success',
-                                        title: '{{ __('cart.product_removed_success') }}'
-                                    });
-                                }
-                            });
-                        }
-                    });
-                });
-            }
-
-            function updateCart(productId, quantity , colorId = null, callback) {
-                $.ajax({
-                    url: "{{ route('cart.updateQuantity') }}",
-                    method: "POST",
-                    data: {
-                        _token: "{{ csrf_token() }}",
-                        product_id: productId,
-                        color_id: colorId,
-                        quantity: quantity,
-                    },
-                    dataType: 'json',
-                    success: function(response) {
-                        if (response.status === 'success') {
-                            callback(true, null);
-                        } else {
-                            callback(false, response.message);
-                        }
-                    },
-                    error: function() {
-                        console.error('Error updating cart.');
-                        callback(false, '{{ __('cart.error_updating_cart') }}');
-                    },
-                });
-            }
-
-            function removeFromCart(productId, callback) {
-                $.ajax({
-                    url: "{{ route('cart.remove') }}",
-                    method: "POST",
-                    data: {
-                        _token: "{{ csrf_token() }}",
-                        product_id: productId,
-                    },
-                    dataType: 'json',
-                    success: function(response) {
-                        if (response.status === 'success') {
-                            callback(true, null);
-                            updateGlobalCartCount();
-                            loadCartItems();
-                        } else {
-                            callback(false, response.message);
-                        }
-                    },
-                    error: function() {
-                        console.error('Error removing product.');
-                        callback(false, '{{ __('cart.error_removing_product') }}');
-                    },
-                });
-            }
-
-            function updateTotalPrice() {
-                let totalPrice = 0;
-                $('.cart-table__row').each(function() {
-                    let rowTotalText = $(this).find('.cart-table__total').text().replace('₪', '').trim();
-                    let rowTotal = parseFloat(rowTotalText) || 0;
-                    totalPrice += rowTotal;
-                });
-                $('#cart-total-goods').text(`₪${totalPrice.toFixed(2)}`);
-            }
-
-            function checkEmptyCart() {
-                if ($('.cart-table__row').length === 0) {
-                    renderEmptyCart();
-                }
-            }
-
-            function checkStockConflicts() {
-                let hasStockIssue = false;
-
-                $('.cart-table__row').each(function() {
-                    let row = $(this);
-                    let input = row.find('.counter-input');
-                    let currentQty = parseInt(input.val()) || 0;
-                    let stockInfo = row.find('.cart-table__info-stock').text();
-                    let availableQty = parseInt(stockInfo.match(/\d+/)) || 0;
-
-                    // Remove any existing warnings before checking
-                    row.find('.stock-warning').remove();
-                });
-
-                // Update the checkout button and general warning message
-                if (hasStockIssue) {
-                    $('#checkout-warning').show();
-                    $('#checkout-btn').prop('disabled', true);
+            updateCart(row.data('product-id'), newQty, colorId, function(success, message) {
+                if (success) {
+                input.val(newQty);
+                row.find('.cart-table__total').text(`₪${(price * newQty).toFixed(2)}`);
+                updateTotalPrice();
+                checkStockConflicts();
                 } else {
-                    $('#checkout-warning').hide();
-                    $('#checkout-btn').prop('disabled', false);
+                Toast.fire({ icon: 'error', title: message });
+                input.val(oldQty);
                 }
-            }
+            });
+            });
 
-            function applyDiscount() {
-                let discountCode = $('#discount-code-input').val();
-                $.ajax({
-                    url: "{{ url('/checkout/apply-discount-code') }}",
-                    method: "POST",
-                    data: {
-                        _token: "{{ csrf_token() }}",
-                        discount_code: discountCode,
-                    },
-                    dataType: 'json',
-                    success: function(response) {
-                        console.log(response);
-                        if (response.status === 'success') {
-                            $('#discount-message').html(`
-                                <div class="alert alert-success">
-                                    ${response.message}
-                                </div>
-                            `);
-                            loadCartItems();
-                        } else {
-                            $('#discount-message').html(`
-                                <div class="alert alert-danger">
-                                    ${response.message}
-                                </div>
-                            `);
-                        }
-
-                    },
-                    error: function() {
-                        $('#discount-message').html(`
-                            <div class="alert alert-danger">
-                                {{ __('cart.error_applying_discount') }}
-                            </div>
-                        `);
-                    },
+            // Remove product
+            $('.remove-btn').off('click').on('click', function() {
+            let row = $(this).closest('.cart-table__row');
+            let productId = $(this).data('product-id');
+            Swal.fire({
+                title: '{{ __('cart.confirm_remove_title') }}',
+                text: '{{ __('cart.confirm_remove_text') }}',
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#d33',
+                cancelButtonColor: '#3085d6',
+                confirmButtonText: '{{ __('cart.remove') }}',
+                cancelButtonText: '{{ __('cart.cancel') }}'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                removeFromCart(productId, function(success) {
+                    if (success) {
+                    row.remove();
+                    updateTotalPrice();
+                    checkEmptyCart();
+                    checkStockConflicts();
+                    Toast.fire({ icon: 'success', title: '{{ __('cart.product_removed_success') }}' });
+                    }
                 });
+                }
+            });
+            });
+
+            // Discount code
+            $('#apply-discount-btn').off('click').on('click', function() {
+            applyDiscount();
+            });
+        }
+
+        // Update cart quantity
+        function updateCart(productId, quantity, colorId = null, callback) {
+            $.post("{{ route('cart.updateQuantity') }}", {
+            _token: "{{ csrf_token() }}",
+            product_id: productId,
+            color_id: colorId,
+            quantity: quantity,
+            })
+            .done(function(response) {
+            callback(response.status === 'success', response.message);
+            })
+            .fail(function() {
+            callback(false, '{{ __('cart.error_updating_cart') }}');
+            });
+        }
+
+        // Remove product from cart
+        function removeFromCart(productId, callback) {
+            $.post("{{ route('cart.remove') }}", {
+            _token: "{{ csrf_token() }}",
+            product_id: productId,
+            })
+            .done(function(response) {
+            if (response.status === 'success') {
+                updateGlobalCartCount();
+                loadCartItems();
+                callback(true);
+            } else {
+                callback(false, response.message);
             }
+            })
+            .fail(function() {
+            callback(false, '{{ __('cart.error_removing_product') }}');
+            });
+        }
 
+        // Update total price in UI
+        function updateTotalPrice() {
+            let totalPrice = 0;
+            $('.cart-table__row').each(function() {
+            let rowTotalText = $(this).find('.cart-table__total').text().replace('₪', '').trim();
+            let rowTotal = parseFloat(rowTotalText) || 0;
+            totalPrice += rowTotal;
+            });
+            $('#cart-total-goods').text(`₪${totalPrice.toFixed(2)}`);
+        }
+
+        // Show empty cart if no items
+        function checkEmptyCart() {
+            if (!$('.cart-table__row').length) renderEmptyCart();
+        }
+
+        // Check for stock conflicts and update checkout button
+        function checkStockConflicts() {
+            let hasStockIssue = false;
+            $('.cart-table__row').each(function() {
+            // Implement stock check logic if needed
+            });
+            $('#checkout-warning').toggle(hasStockIssue);
+            $('#checkout-btn').prop('disabled', hasStockIssue);
+        }
+
+        // Apply discount code
+        function applyDiscount() {
+            let discountCode = $('#discount-code-input').val();
+            $.post("{{ url('/apply-discount-code') }}", {
+            _token: "{{ csrf_token() }}",
+            discount_code: discountCode,
+            })
+            .done(function(response) {
+            let alertType = response.status === 'success' ? 'success' : 'danger';
+            $('#discount-message').html(`
+                <div class="alert alert-${alertType}">
+                ${response.message}  (${response.discount_amount})
+                </div>
+            `);
+            if (response.status === 'success') loadCartItems();
+            })
+            .fail(function() {
+            $('#discount-message').html(`
+                <div class="alert alert-danger">
+                ${response.message}
+                </div>
+            `);
+            });
+        }
+
+        // On page ready
+        $(function() {
             loadCartItems();
-
         });
-
-    </script>
+</script>
 @endsection
