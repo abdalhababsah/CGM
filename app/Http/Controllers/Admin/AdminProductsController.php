@@ -216,7 +216,7 @@ class AdminProductsController extends Controller
             }
             $product->colors()->insert($colorData);
         }
-        Log::info('colors'. $product->id .'data' , $validated['colors']);
+        
         $product->update($validated);
 
         return response()->json(['message' => 'General information updated successfully.'], 200);

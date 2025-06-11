@@ -1,65 +1,9 @@
 {{-- resources/views/user/view-product.blade.php --}}
 @extends('user.layouts.app')
-
-@section('styles')
-    <style>
-        .product-info__social ul {
-            display: flex;
-            gap: 10px;
-        }
-
-        .product-detail-info {
-            margin-top: 20px;
-        }
-
-        .product-detail-info p {
-            margin-bottom: 10px;
-        }
-
-        .out-of-stock-warning {
-            background-color: #fff3cd;
-            color: #856404;
-            padding: 12px 20px;
-            border-radius: 4px;
-            margin: 15px 0;
-            border: 1px solid #ffeeba;
-            text-align: center;
-            width: 100%;
-            font-size: 14px;
-        }
-
-        .product-stock.out-of-stock {
-            color: #dc3545;
-        }
-
-        .product-stock.in-stock {
-            color: #28a745;
-        }
-
-        .product-buttons {
-            display: flex;
-            gap: 20px;
-            margin-top: 15px;
-        }
-
-        .btn {
-            flex: 1;
-        }
-
-        .toggle-wishlist-btn.active {
-            background-color: #dc3545 !important;
-            border-color: #dc3545 !important;
-            color: white !important;
-        }
-
-        .toggle-wishlist-btn.active i {
-            color: white !important;
-        }
-
-        .toggle-wishlist-btn i {
-            transition: color 0.3s ease;
-        }
-    </style>
+@section('title', $product->name)
+@section('meta')
+    <meta name="keywords" content="{{ $product->name }}, {{ $product->category->name }}, {{ $product->brand->name }}">
+    <meta name="description" content="{{ $product->description }}">
 @endsection
 
 @section('content')
