@@ -62,7 +62,7 @@
 
 
                     <!-- Submit Button and Links -->
-                    <div class="d-flex flex-column">
+                    <div class="">
                         <button class="btn" type="submit">@lang('login.log_in')</button>
                         <div class="login-form__bottom">
                             @if (Route::has('register'))

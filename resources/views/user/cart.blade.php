@@ -45,16 +45,16 @@
         function loadCartItems() {
             $.get("{{ route('fetchCart') }}")
             .done(function(response) {
-                renderCartItems(response.cartItems, response.totalPrice);
+                // Pass discount info if available
+                renderCartItems(response.cartItems, response.totalPrice, response.discount, response.discountAmount);
             })
             .fail(function() {
                 $('#cart-container').html('<p>{{ __('cart.error_loading') }}</p>');
                 Toast.fire({ icon: 'error', title: '{{ __('cart.error_loading') }}' });
             });
         }
-
         // Render cart items or empty cart
-        function renderCartItems(cartItems, totalPrice) {
+        function renderCartItems(cartItems, totalPrice, discount = null, discountAmount = 0) {
             if (!cartItems.length) return renderEmptyCart();
 
             let cartHtml = `
@@ -69,7 +69,7 @@
                 ${cartItems.map(item => renderCartRow(item)).join('')}
                 </div>
             </div>
-            ${renderCartBottom(totalPrice)}
+            ${renderCartBottom(totalPrice, discount, discountAmount)}
             `;
             $('#cart-container').html(cartHtml);
             attachCartEventHandlers();
@@ -119,8 +119,7 @@
             </div>
             `;
         }
-
-        function renderCartBottom(totalPrice) {
+        function renderCartBottom(totalPrice, discount = null, discountAmount = 0) {
             return `
             <div class="cart-bottom">
                 <div class="cart-bottom__promo">
@@ -131,11 +130,17 @@
                     <button type="button" id="apply-discount-btn"
                     class="btn btn-primary mx-2">{{ __('checkout.apply') }}</button>
                 </div>
-                <div id="discount-message" class="mt-2"></div>
+                <div id="discount-message" class="mt-2">
+                    ${discount ? `<div class="alert alert-success">${discount.message}: ${discount.code} (-₪${discountAmount})</div>` : ''}
+                </div>
                 </div>
                 <div class="cart-bottom__total">
                 <div class="cart-bottom__total-goods">
-                    {{ __('cart.total_goods') }}: <span id="cart-total-goods">₪${totalPrice.toFixed(2)}</span>
+                    {{ __('cart.total_goods') }}: <span id="cart-total-goods">
+                    ${discount ? `<div class="alert alert-success"><del>₪${totalPrice.toFixed(2)}</del> (₪${(totalPrice-discountAmount).toFixed(2)})</div>` 
+                    : `₪${totalPrice.toFixed(2)}`}
+                    
+                    </span>
                 </div>
                 <span id="checkout-warning" style="display:none;">
                     {{ __('cart.checkout_disabled_message') }}
@@ -174,10 +179,8 @@
 
             updateCart(row.data('product-id'), newQty, colorId, function(success, message) {
                 if (success) {
-                input.val(newQty);
-                row.find('.cart-table__total').text(`₪${(price * newQty).toFixed(2)}`);
-                updateTotalPrice();
-                checkStockConflicts();
+                // Reload cart to update discount and totals
+                loadCartItems();
                 } else {
                 Toast.fire({ icon: 'error', title: message });
                 input.val(oldQty);
@@ -289,20 +292,11 @@
             discount_code: discountCode,
             })
             .done(function(response) {
-            let alertType = response.status === 'success' ? 'success' : 'danger';
-            $('#discount-message').html(`
-                <div class="alert alert-${alertType}">
-                ${response.message}  (${response.discount_amount})
-                </div>
-            `);
-            if (response.status === 'success') loadCartItems();
-            })
-            .fail(function() {
-            $('#discount-message').html(`
-                <div class="alert alert-danger">
-                ${response.message}
-                </div>
-            `);
+            let alertType = response.status === 'success' ? 'success' : 'erorr';
+            $('#discount-message').html('');
+            Toast.fire({ icon: alertType, title: response.message });
+            
+            loadCartItems();
             });
         }
 
@@ -310,5 +304,5 @@
         $(function() {
             loadCartItems();
         });
-</script>
+    </script>
 @endsection

@@ -6,6 +6,11 @@
     <link rel="stylesheet" href="{{ asset('user/css/shop.css') }}">
 @endsection
 
+@section('meta')
+<meta name="keywords" content="تسوق منتجات للشعر الكيرلي في فلسطين, منتجات للشعر الكيرلي, تسوق منتجات الشعر, منتجات الشعر الكيرلي, تسوق منتجات الشعر الكيرلي في فلسطين, منتجات الشعر الكيرلي في فلسطين, تسوق منتجات الشعر الكيرلي عبر الإنترنت, أفضل منتجات للشعر الكيرلي, منتجات للشعر الكيرلي في فلسطين">
+<meta name="description" content="تسوق منتجات الشعر الكيرلي في فلسطين. اكتشف مجموعة متنوعة من المنتجات المصممة خصيصًا للعناية بالشعر الكيرلي.">
+@endsection
+
 @section('content')
     <!-- BEGIN DETAIL MAIN BLOCK -->
     <div class="detail-block detail-block_margin">

@@ -2,136 +2,7 @@
 @extends('user.layouts.app')
 
 @section('styles')
-    <!-- SweetAlert2 CSS -->
-    <style>
-        /* Existing Styles */
-
-        /* Empty Wishlist Styles (Same as Empty Cart Styles for Consistency) */
-        .empty-wishlist-container,
-        .empty-cart-container {
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            height: 50vh;
-            text-align: center;
-        }
-
-        .empty-wishlist-image,
-        .empty-cart-image {
-            width: 150px;
-            height: auto;
-            margin-bottom: 20px;
-        }
-
-        .empty-wishlist-message,
-        .empty-cart-message {
-            font-size: 20px;
-            margin-bottom: 20px;
-            color: #333;
-        }
-
-        .continue-shopping,
-        .btn.continue-shopping {
-            display: inline-block;
-            padding: 0px 20px;
-            background-color: #971d25;
-            color: #fff;
-            text-decoration: none;
-            border-radius: 4px;
-        }
-
-        .continue-shopping:hover,
-        .btn.continue-shopping:hover {
-            background-color: #7b1620;
-            color: #fff;
-        }
-
-        /* Additional Styles from Wishlist */
-        .cart-table__row {
-            position: relative;
-        }
-
-        .wishlist-stock {
-            color: green;
-        }
-
-        .wishlist-available {
-            color: #971d25;
-        }
-
-        #wishlist-container {
-            min-height: 65vh !important;
-        }
-
-        /* Add to Cart button styling (from wishlist) */
-        .add-to-cart-btn-wishlist {
-            display: inline-block;
-            background-color: #971d25;
-            color: #fff;
-            text-decoration: none;
-            border-radius: 4px;
-            cursor: pointer;
-            border: none;
-            padding: 0 15px;
-            height: 34px;
-            line-height: 34px;
-            vertical-align: middle;
-            margin-right: 10px;
-        }
-
-        .add-to-cart-btn-wishlist:hover {
-            background-color: #7b1620;
-            color: #fff;
-        }
-
-        .add-to-cart-btn-wishlist i.icon-cart {
-            vertical-align: middle;
-            font-size: 16px;
-        }
-
-        /* Remove button styling */
-        .text-remove {
-            background: none;
-            border: none;
-            padding: 0;
-            cursor: pointer;
-            font-size: 14px;
-            color: #971d25;
-            text-decoration: underline;
-            position: absolute;
-            bottom: 10px;
-            right: 10px;
-        }
-
-        .text-remove:hover {
-            opacity: 0.8;
-        }
-
-        /* Additional Styles for Wishlist Items */
-        .wishlist-buttons {
-            display: flex;
-            justify-content: flex-start;
-            align-items: center;
-        }
-
-        .wishlist-buttons .btn {
-            /* Reuse styles from continue-shopping */
-            display: inline-block;
-            padding: 0px 20px;
-            background-color: #971d25;
-            color: #fff;
-            text-decoration: none;
-            border-radius: 4px;
-            transition: background-color 0.3s ease;
-        }
-
-        .wishlist-buttons .btn:hover {
-            background-color: #7b1620;
-            color: #fff;
-        }
-
-    </style>
+<link rel="stylesheet" href="{{ asset('user/css/wishlist.css') }}">
 @endsection
 
 @section('content')
@@ -229,11 +100,11 @@
                                 </a>
                                 <div class="cart-table__info">
                                     <a href="#" class="title5">${item.name}</a>
-                                    <span class="cart-table__info-num">SKU: ${item.product_id}</span>
+                                    <span class="cart-table__info-num">SKU: ${item.sku}</span>
                                 </div>
                             </div>
                             <div class="cart-table__col">
-                                <span class="cart-table__price">$${parseFloat(item.price).toFixed(2)}</span>
+                                <span class="cart-table__price">₪${parseFloat(item.price).toFixed(2)}</span>
                             </div>
                             <div class="cart-table__col">
                                 ${statusText}
