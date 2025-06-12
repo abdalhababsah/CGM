@@ -8,6 +8,7 @@ return [
     'quantity' => 'الكمية',
     'total' => 'الإجمالي',
     'in_stock' => 'متوفر في المخزن',
+    'out_of_stock' => 'نفذ المخزون',
     'remove' => 'إزالة',
     'total_goods' => 'إجمالي السلع',
     'checkout' => 'الدفع',

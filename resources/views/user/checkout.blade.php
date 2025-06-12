@@ -223,7 +223,7 @@
         </div>
     </div>
 @endsection
-@section('scripts')
 
+@section('scripts')
     <script src="{{ asset('user/js/checkout.js') }}"></script>
 @endsection

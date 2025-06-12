@@ -8,7 +8,7 @@
     <meta name="cmsmagazine" content="3f86e43372e678604d35804a67860df7">
     <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no, maximum-scale=1">
     <title>@yield('title')</title>
-    <meta name="keywords" content="cgm products, curly hair products, shampoo for curly hair, curl cream, curly hair, ملفلف, منتجات شعر, شعر مجعد, شامبو للشعر المجعد, كريم للشعر المجعد" />
+    <meta name="keywords" content="cgm products, curly hair products, shampoo for curly hair, skala products, curl cream, curly hair, cgm in palestine, ملفلف, منتجات شعر, شعر مجعد, شامبو للشعر المجعد, كريم للشعر المجعد" />
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <meta name="url" content="{{ url('/') }}">
     @yield('meta')

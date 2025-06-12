@@ -247,10 +247,9 @@ border-radius: 50%; /* Maintain the circular shape */
 
 .shop1-bg {    
     max-width: 3000px;
-    margin: 0 auto;
 }
 
-.shop1-bg::before {    
+.shop1-bg::before {
 	content: "";
     position: absolute;
     top: -100px;

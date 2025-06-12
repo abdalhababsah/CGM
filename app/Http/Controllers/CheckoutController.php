@@ -7,8 +7,6 @@ use App\Http\Requests\CheckoutSubmitRequest;
 use App\Http\Requests\UpdateUserInfoRequest;
 use App\Models\Area;
 use App\Models\DeliveryLocationAndPrice;
-use App\Models\DiscountCode;
-use App\Models\Order;
 use App\Services\CheckoutService;
 use App\Services\CartService;
 use App\Services\OrderService;
@@ -39,7 +37,7 @@ class CheckoutController extends Controller
             return redirect()->route('cart.index')
                 ->with('error', 'Your cart is empty. Add items before proceeding to checkout.');
         }
-        // session()->forget('applied_discount_code');
+        
         // Return the view but add headers to prevent caching
         $view = view('user.checkout'); // This is your Blade view
 
@@ -55,7 +53,7 @@ class CheckoutController extends Controller
         // Fetch required data
         $user = Auth::user();
         $cartDetails = $this->cartService->getCartDetails();
-        // $deliveryLocations = $this->fetchDeliveryLocations();
+        
         $discountCode = session('applied_discount_code');
 
         if ($discountCode) {
@@ -64,6 +62,7 @@ class CheckoutController extends Controller
 
             if ($result['status'] === 'success') {
             $discountCode['amount'] = $result['discount_amount'];
+            $discountCode['discount'] = $result['discount'];
             $discountCode['grand_total'] = $result['grand_total'];
             $discountCode['message'] = $result['message'];
             session(['applied_discount_code' => $discountCode]);
@@ -142,6 +141,7 @@ class CheckoutController extends Controller
                 'applied_discount_code' => [
                     'code' => $discountCodeInput,
                     'type' => $result['type'],
+                    'discount' => $result['discount'],
                     'amount' => $result['discount_amount'],
                     'message' => $result['message'],
                     'grand_total' => $result['grand_total'] + $deliveryPrice,

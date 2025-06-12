@@ -137,6 +137,7 @@ class WishListService
             $items = $wishListItems->map(function ($item) {
                 return [
                     'product_id' => $item->product->id,
+                    'sku' => $item->product->sku,
                     'name' => $this->getLocalizedName($item->product),
                     'price' => $item->product->price,
                     'in_stock' => $item->product->quantity > 0,

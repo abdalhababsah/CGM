@@ -3,19 +3,25 @@
 namespace App\Http\Controllers;
 
 use App\Models\ProductColor;
+use App\Services\CheckoutService;
 use Exception;
 use Illuminate\Http\Request;
 use App\Services\CartService;
 use Illuminate\Validation\Rule;
-use Log;
+use Illuminate\Support\Facades\Log;
 
 class CartController extends Controller
 {
     protected $cartService;
+    protected $checkoutService;
 
-    public function __construct(CartService $cartService)
+    public function __construct(
+        CartService $cartService,
+        CheckoutService $checkoutService
+        )
     {
         $this->cartService = $cartService;
+        $this->checkoutService = $checkoutService;
     }
 
     /**
@@ -27,15 +33,42 @@ class CartController extends Controller
     {
         return view('user.cart');
     }
-
-     public function fetchCart()
-     {
+    public function fetchCart()
+    {
         $cartDetails = $this->cartService->getCartDetails();
+
+        $discountData = session('applied_discount_code');
+        $discountCode = null;
+        $discountAmount = 0;
+
+        if ($discountData) {
+            $discountCode = $discountData['code'] ?? null;
+
+            // Recalculate discount amount based on current total
+            $type = $discountData['type'] ?? null;
+            $discountValue = $discountData['discount'] ?? 0;
+            $total = $cartDetails['totalPrice'];
+
+            if ($type === 'percentage') {
+                $discountAmount = round($total * ($discountValue / 100), 2);
+            } elseif ($type === 'fixed') {
+                $discountAmount = min($discountValue, $total);
+            } else {
+                $discountAmount = 0;
+            }
+        }
+
+        Log::info('Cart Details:', ['cartDetails' => $cartDetails, 'discountCode' => $discountCode, 'discountAmount' => $discountAmount]);
+        Log::info('Discount Data:', ['discountData' => $discountData, 'discountAmount' => $discountAmount]);
+
         return response()->json([
             'cartItems' => $cartDetails['items'],
             'totalPrice' => $cartDetails['totalPrice'],
+            'discount' => $discountData,
+            'discountAmount' => $discountAmount,
         ]);
-     }
+    }
+
     /**
      * Add a product to the cart.
      *

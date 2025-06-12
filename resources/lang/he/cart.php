@@ -8,6 +8,7 @@ return [
     'quantity' => 'כמות',
     'total' => 'סך הכל',
     'in_stock' => 'במלאי',
+    'out_of_stock' => 'אזל מהמלאי',
     'remove' => 'הסר',
     'total_goods' => 'סך הכל מוצרים',
     'checkout' => 'תשלום',

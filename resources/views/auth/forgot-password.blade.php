@@ -46,7 +46,7 @@
                         <x-input-error :messages="$errors->get('email')" class="mt-2" />
                     </div>
 
-                    <div class="d-flex flex-column">
+                    <div class="">
                         <!-- Submit Button and Links -->
                         <button class="btn" type="submit">@lang('login.send_reset_link')</button>
                         <div class="login-form__bottom">

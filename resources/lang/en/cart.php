@@ -8,6 +8,7 @@ return [
     'quantity' => 'Quantity',
     'total' => 'Total',
     'in_stock' => 'In stock',
+    'out_of_stock' => 'Out of Stock',
     'remove' => 'Remove',
     'total_goods' => 'Total Goods',
     'checkout' => 'Checkout',

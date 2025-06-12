@@ -33,20 +33,10 @@ class CheckoutService
     public function applyDiscountCode($code, $grandTotal)
     {
         $code = strtoupper(trim($code));
-        $discount = DiscountCode::where('code', $code)->where('is_active', true)->first();
+        $discount = DiscountCode::active()->where('code', $code)->first();
 
         if (!$discount) {
             return ['status' => 'error', 'message' => 'Invalid or inactive discount code.'];
-        }
-
-        // Check expiry date
-        if ($discount->expiry_date && Carbon::now()->isAfter(Carbon::parse($discount->expiry_date))) {
-            return ['status' => 'error', 'message' => 'This discount code has expired.'];
-        }
-
-        // Check usage limit
-        if ($discount->usage_limit && $discount->times_used >= $discount->usage_limit) {
-            return ['status' => 'error', 'message' => 'This discount code has reached its usage limit.'];
         }
 
         $discountAmount = $this->orderService->calculateDiscount($discount, $grandTotal);
@@ -56,6 +46,8 @@ class CheckoutService
             'status' => 'success',
             'message' => __('Discount code applied successfully.'),
             'type' => $discount->type,
+            'discount' => $discount->amount,
+            'code' => $discount->code,
             'discount_amount' => $discountAmount,
             'grand_total' => round($grandTotal - $discountAmount, 2),
         ];
