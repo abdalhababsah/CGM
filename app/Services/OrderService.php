@@ -18,15 +18,17 @@ class OrderService
     public function getOrders($filters)
     {
         $query = Order::with(['user'])
-                      ->where('is_deleted', false)
-                      ->orderBy('created_at', 'desc'); // Default ordering
+                  ->where('is_deleted', false)
+                  ->orderBy('created_at', 'desc'); // Default ordering
 
         // Apply filters
         if (!empty($filters['search'])) {
-            $query->where('id', $filters['search'])
-              ->orWhereHas('user', function ($query) use ($filters) {
-                  $query->whereRaw("CONCAT(first_name, ' ', last_name) LIKE ?", ['%' . $filters['search'] . '%']);
+            $query->where(function ($q) use ($filters) {
+            $q->where('id', $filters['search'])
+              ->orWhereHas('user', function ($q2) use ($filters) {
+                  $q2->whereRaw("CONCAT(first_name, ' ', last_name) LIKE ?", ['%' . $filters['search'] . '%']);
               });
+            });
         }
 
         if (!empty($filters['status'])) {
