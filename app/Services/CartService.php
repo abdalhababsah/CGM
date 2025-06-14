@@ -201,7 +201,7 @@ class CartService
                         'color_id' => $item->productColor->id ?? null,
                         'color' => $item->productColor->hex ?? null,
                         'total' => $item->quantity * $item->product->discounted_price,
-                        'image_url' => $item->product->primaryImage ? asset('storage/' . $item->product->primaryImage->image_url) : 'https://via.placeholder.com/262x370',
+                        'image_url' => $item->product->primaryImage ? asset('storage/' . $item->product->primaryImage->image_url) : 'user/img/image-placeholder.webp',
                         'available_quantity' => $item->product->quantity,
                         'in_stock' => $item->product->in_stock
                     ];
@@ -232,7 +232,7 @@ class CartService
                             'color_id' => $productColor?->id,
                             'color' => $productColor?->hex,
                             'total' => $quantity * $product->discounted_price,
-                            'image_url' => $product->primaryImage ? asset('storage/' . $product->primaryImage->image_url) : 'https://via.placeholder.com/262x370',
+                            'image_url' => $product->primaryImage ? asset('storage/' . $product->primaryImage->image_url) : 'user/img/image-placeholder.webp',
                             'available_quantity' => $product->quantity,
                             'in_stock' => $product->in_stock
                         ];

@@ -1,6 +1,9 @@
 <?php
 
 return [
+    // Page Title
+    'title' => 'Home | CGM',
+    'description' => 'Welcome to CGM, your premier destination for curly hair care. Explore our extensive range of natural and organic products designed specifically for curly and textured hair. Join us on your journey to healthy, beautiful curls.',
     // Header
     'header_offer' => '30% OFF ON ALL PRODUCTS ENTER CODE: beshop2020',
     'header_logo_alt' => 'Store Logo',

@@ -3,6 +3,16 @@
 @section('styles')
     <link rel="stylesheet" href="{{url('user/css/home.css')}}">
 @endsection
+
+@section('title')
+    @lang('home.title')
+@endsection
+
+@section('meta')
+    <meta name="description" content="@lang('home.description')">
+    <meta name="keywords" content="@lang('home.keywords')">
+@endsection
+
 @section('content')
 
     <div class="main-block load-bg">
@@ -17,9 +27,9 @@
             <!-- Image Carousel -->
             <div class="image-carousel">
                 <div class="carousel-images">
-                    <img src="{{ asset('user/img/home.png') }}" alt="Image 1">
-                    <img src="{{ asset('user/img/home-2.png') }}" alt="Image 2">
-                    <img src="{{ asset('user/img/girl4.png') }}" alt="Image 3">
+                    <img src="{{ asset('user/img/home.png') }}" alt="Image 1" loading="lazy">
+                    <img src="{{ asset('user/img/home-2.png') }}" alt="Image 2" loading="lazy">
+                    <img src="{{ asset('user/img/girl4.png') }}" alt="Image 3" loading="lazy">
 
                 </div>
             </div>
@@ -43,7 +53,7 @@
                         <div class="products-item__img">
                             @if ($commingSoon->image)
                             <img src="{{ asset('storage/' . $commingSoon->image) }}"
-                                alt="{{ $commingSoon->name }}">
+                                alt="{{ $commingSoon->name }}" loading="lazy">
                                 @endif
                         </div>
                         <div class="products-item__info">
@@ -71,14 +81,12 @@
                         <i class="icon-quality"></i>
                     </div>
                     <h4>@lang('home.quality')</h4>
-                    {{-- <p>@lang('home.quality_description')</p> --}}
                 </div>
                 <div class="advantages-item">
                     <div class="advantages-item__icon">
                         <i class="icon-organic"></i>
                     </div>
                     <h4>@lang('home.organic')</h4>
-                    {{-- <p>@lang('home.organic_description')</p> --}}
                 </div>
             </div>
         </div>
@@ -89,7 +97,6 @@
         <div class="top-categories__text text-center">
             <span class="saint-text">@lang('home.popular_collections')</span>
             <h2 class="animate__animated animate__fadeIn">@lang('home.top_categories')</h2>
-            {{-- <p class="animate__animated animate__fadeIn">@lang('home.nourish_description')</p> --}}
         </div>
         <div class="top-categories__items d-flex justify-content-around">
             <a href="{{ route('shop.index') }}" class="top-categories__item animate__animated animate__fadeInRight">
@@ -167,7 +174,10 @@
         </div>
     </section>
 
+@endsection
 
+@section('scripts')
+    <script src="{{ asset('user/js/products-slider.js') }}" defer></script>
     <script>
         document.addEventListener('DOMContentLoaded', () => {
             const items = document.querySelectorAll('.top-categories__item');
@@ -206,4 +216,5 @@
             setInterval(swapImages, 3000);
         });
     </script>
+
 @endsection

@@ -12,7 +12,7 @@
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <meta name="url" content="{{ url('/') }}">
     @yield('meta')
-    <link rel="icon" type="image/png" href="{{ asset('user\img\logo-mini.png') }}">
+    <link rel="icon" type="image/png" href="{{ asset('user/img/logo-icon.png') }}">
 
     <!-- Load Default CSS -->
     <link rel="stylesheet" href="{{ asset('user/css/styles.css') }}">
@@ -70,17 +70,16 @@
 
     <!-- BODY EOF   -->
     <script src="{{ asset('user/js/jquery-3.5.1.min.js') }}"></script>
-    <script src="{{ asset('user/js/ion.rangeSlider.min.js') }}"></script>
-    <script src="{{ asset('user/js/jquery.maskedinput.js') }}"></script>
-    <script src="{{ asset('user/js/jquery.formstyler.js') }}"></script>
-    <script src="{{ asset('user/sweetalert/sweetalert2.min.js') }}"></script>
-    <script src="{{ asset('user/js/lazyload.min.js') }}"></script>
-    <script src="{{ asset('user/js/slick.min.js') }}"></script>
-    <script src="{{ asset('user/js/customs.js') }}"></script>
-    <script src="{{ asset('user/js/products-slider.js') }}"></script>
+    <script src="{{ asset('user/js/ion.rangeSlider.min.js') }}" defer></script>
+    <script src="{{ asset('user/js/jquery.maskedinput.js') }}" defer></script>
+    <script src="{{ asset('user/js/jquery.formstyler.js') }}" defer></script>
+    <script src="{{ asset('user/sweetalert/sweetalert2.min.js') }}" defer></script>
+    <script src="{{ asset('user/js/lazyload.min.js') }}" defer></script>
+    <script src="{{ asset('user/js/slick.min.js') }}" defer></script>
+    <script src="{{ asset('user/js/customs.js') }}" defer></script>
 
 
-    <script>
+    <script defer>
         $(document).ready(function() {
             // Setup CSRF token for all AJAX requests
             $.ajaxSetup({
@@ -102,7 +101,6 @@
                     },
                     error: function(xhr, status, error) {
                         console.error('Error fetching cart count:', error);
-                        // Optionally, handle the error (e.g., display a notification)
                     }
                 });
             }

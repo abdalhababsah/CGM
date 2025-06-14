@@ -250,25 +250,13 @@ border-radius: 50%; /* Maintain the circular shape */
 }
 
 .shop1-bg::before {
-	content: "";
+    content: "";
     position: absolute;
     top: -100px;
     width: 100%;
     height: 100%;
-    background-image: url(../img/Cream-rotate.png);
+    background-image:url(../img/Cream-rotate.webp);
     background-repeat: no-repeat;
     opacity: 0.3;
     background-position-y: -100px;
-    background-size: 400px;
-}
-
-.arabian-bg::before {    
-	content: "";
-    position: absolute;
-    top: 0;
-    width: 100%;
-    height: 100%;
-    background-image: url(../../themes/eid/arabic-decoration-pattern-background-wallpaper.png);
-    background-repeat: repeat;
-    opacity: 0.1;
 }

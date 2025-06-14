@@ -1,6 +1,10 @@
 <?php
 
 return [
+    // Page Title
+    'title' => 'חנות | CGM',
+    'description' => 'קנו מוצרים לשיער מתולתל ב-CGM. גלו מגוון מוצרים המיועדים במיוחד לטיפול בשיער מתולתל.',
+    // Navigation
     'shop' => 'חנות',
     'home' => 'בית',
     'categories' => 'קטגוריות',

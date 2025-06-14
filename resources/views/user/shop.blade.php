@@ -6,6 +6,10 @@
     <link rel="stylesheet" href="{{ asset('user/css/shop.css') }}">
 @endsection
 
+@section('title')
+    @lang('shop.title')
+@endsection
+
 @section('meta')
 <meta name="keywords" content="تسوق منتجات للشعر الكيرلي في فلسطين, منتجات للشعر الكيرلي, تسوق منتجات الشعر, منتجات الشعر الكيرلي, تسوق منتجات الشعر الكيرلي في فلسطين, منتجات الشعر الكيرلي في فلسطين, تسوق منتجات الشعر الكيرلي عبر الإنترنت, أفضل منتجات للشعر الكيرلي, منتجات للشعر الكيرلي في فلسطين">
 <meta name="description" content="تسوق منتجات الشعر الكيرلي في فلسطين. اكتشف مجموعة متنوعة من المنتجات المصممة خصيصًا للعناية بالشعر الكيرلي.">
@@ -59,7 +63,7 @@
                                 <div class="range-slider">
                                     <input type="text" id="price-range" class="js-range-slider-price" value="" />
                                 </div>
-                                <button id="apply-price-filter" class="btn-price-filter">
+                                <button id="apply-price-filter" class="btn-price-filter" area-label="@lang('shop.filter_price')">
                                     @lang('shop.filter_price')
                                 </button>
                             </div>
@@ -113,7 +117,7 @@
         <!-- Floating Price Filter for Mobile -->
         <div class="floating-price-filter">
             <button class="price-filter-button">
-                <img src="{{asset('user/img/filter-price.png')}}" alt="">
+                <img src="{{asset('user/img/filter-price.png')}}" alt="" width="33" height="43">
             </button>
             <div class="price-filter-panel">
                 <h4>@lang('shop.price')</h4>
@@ -267,7 +271,7 @@
                     return;
                 }
                 productsData.forEach(product => {
-                    let imageUrl = product.primary_image && product.primary_image.image_url ? `/storage/${product.primary_image.image_url}` : 'https://via.placeholder.com/262x370';
+                    let imageUrl = product.primary_image && product.primary_image.image_url ? `/storage/${product.primary_image.image_url}` : 'user/img/image-placeholder.webp';
                     let productUrl = `{{ url('/view-product') }}/${product.id}/${product.name_en.toLowerCase().replace(/[^a-z0-9]+/g, '-')}`;
                     let inStock = product.in_stock ? '@lang('shop.available')' : '@lang('shop.soldOut')';
                     let backColor = product.in_stock ? 'products-item__sale' : 'products-item__soldout';
@@ -287,7 +291,7 @@
                                         <span class="${backColor}">${inStock}</span>
                                     </div>
                                     ${newLabel}
-                                    <img style="object-fit:contain;" data-src="${imageUrl ?? ''}" src="data:image/gif;base64,R0lGODlhAQABAAAAACw=" class="js-img" alt="${product.name}">
+                                    <img data-src="${imageUrl ?? ''}" src="data:image/gif;base64,R0lGODlhAQABAAAAACw=" class="js-img" alt="${product.name}" width="262" height="370">
                                     <div class="products-item__hover">
                                         <i class="icon-search"></i>
                                         <div class="products-item__hover-options">

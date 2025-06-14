@@ -4,7 +4,7 @@
         <div id="footer-header" style="display: flex !important; flex-direction: row !important; justify-content: space-around !important;" class="d-flex flex-row flex-md-row justify-content-between align-items-center">
             <!-- Footer Logo -->
             <div class="d-flex align-items-center mb-3 mb-md-0">
-                <img src="{{ asset('user/img/logo-white-01.svg') }}" alt="@lang('home.header_logo_alt')" width="60">
+                <img src="{{ asset('user/img/logo-white-01.svg') }}" alt="@lang('home.header_logo_alt')" width="60" height="60">
             </div>
 
             <!-- Navigation Links -->

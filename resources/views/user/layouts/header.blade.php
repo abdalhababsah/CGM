@@ -7,7 +7,7 @@
         </div>
 
         <a class="header-logo" href="{{ url('/') }}">
-            <img src="{{ asset('user/img/logo-white-01.svg') }}" alt="@lang('home.header_logo_alt')">
+            <img src="{{ asset('user/img/logo-white-01.svg') }}" alt="@lang('home.header_logo_alt')" width="85" height="85">
         </a>
         <div class="header-box">
             <ul class="header-nav">

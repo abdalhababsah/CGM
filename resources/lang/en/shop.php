@@ -1,6 +1,10 @@
 <?php
 
 return [
+    // Page Title
+    'title' => 'Shop | CGM',
+    'description' => 'Shop curly hair products in cgm-product. Discover a variety of products designed specifically for curly hair care.',
+    // Navigation
     'shop' => 'Shop',
     'home' => 'Home',
     'categories' => 'Categories',

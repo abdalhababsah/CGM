@@ -48,7 +48,7 @@
 
 .cart-table__col:first-of-type {
 	width: 50%;
-	padding-left: 30px;
+	padding: 0 30px;
 	display: -webkit-box;
 	display: -webkit-flex;
 	display: -ms-flexbox;
@@ -276,4 +276,33 @@
     font-weight: bold;
     margin-top: 10px;
     text-align: center;
+}
+
+@media screen and (max-width: 991px) {
+
+	.cart-bottom {
+		-webkit-box-orient: vertical;
+		-webkit-box-direction: normal;
+		-webkit-flex-direction: column;
+		-ms-flex-direction: column;
+		flex-direction: column;
+		margin-bottom: 0;
+	}
+
+	.cart-bottom__promo,
+	.cart-bottom__total {
+		width: 100%;
+	}
+
+	.cart-bottom__total {
+		margin-top: 40px;
+	}
+
+	.cart-bottom__promo p {
+		max-width: 100%;
+	}
+
+	.cart-bottom__promo .contacts-info__social span {
+		width: 100%;
+	}
 }

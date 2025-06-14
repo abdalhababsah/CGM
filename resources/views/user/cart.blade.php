@@ -29,17 +29,28 @@
 @section('scripts')
     <script>
         // Utility: SweetAlert2 Toast
-        const Toast = Swal.mixin({
-            toast: true,
-            position: 'top-end',
-            showConfirmButton: false,
-            timer: 3000,
-            timerProgressBar: true,
-            didOpen: (toast) => {
-            toast.addEventListener('mouseenter', Swal.stopTimer)
-            toast.addEventListener('mouseleave', Swal.resumeTimer)
+        // Wait for Swal to be available if loaded with defer
+        function getToastInstance(callback) {
+            if (typeof Swal !== 'undefined') {
+            callback(Swal.mixin({
+                toast: true,
+                position: 'top-end',
+                showConfirmButton: false,
+                timer: 3000,
+                timerProgressBar: true,
+                didOpen: (toast) => {
+                toast.addEventListener('mouseenter', Swal.stopTimer)
+                toast.addEventListener('mouseleave', Swal.resumeTimer)
+                }
+            }));
+            } else {
+            setTimeout(() => getToastInstance(callback), 50);
             }
-        });
+        }
+        // Usage: getToastInstance(function(Toast){ Toast.fire({...}) });
+        // For backward compatibility, you can define a global Toast variable:
+        let Toast;
+        getToastInstance(function(instance) { Toast = instance; });
 
         // Load cart items from server and render
         function loadCartItems() {
