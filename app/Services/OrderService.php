@@ -46,12 +46,6 @@ class OrderService
         // Fetch paginated orders
         $orders = $query->paginate(10);
 
-        // Transform orders
-        // $orders->getCollection()->transform(function ($order) {
-        //     // $this->calculateFinalPrice($order);
-        //     return $order;
-        // });
-
         return $orders;
     }
 
