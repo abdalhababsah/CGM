@@ -6,9 +6,6 @@
 .box-field .form-control {
     margin-top: 0px !important;
 }
-.d-none {
-    display: none !important;
-}
 /* Styling for the select elements */
 .styled-select {
     position: relative;

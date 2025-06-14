@@ -1,3 +1,55 @@
+const lang = document.documentElement.lang || 'en'; 
+
+let msg = {
+    ar: {
+        invalid_phone_number: 'رقم الهاتف غير صالح, يجب أن يكون مكونًا من 10 أرقام',
+        enter_discount_code: 'ادخل رمز الخصم',
+        code_not_found: 'الرمز غير موجود',
+        error_applying_discount: 'حدث خطأ أثناء تطبيق الخصم',
+        error_removing_discount: 'حدث خطأ أثناء إزالة الخصم',
+        error_fetching_data: 'خطأ في جلب البيانات',
+        unexpected_error: 'خطأ غير متوقع',
+        select_delivery_location: 'اختر موقع التسليم',
+        no_items_in_cart: 'لا توجد عناصر في السلة',
+        discount_applied_successfully: 'تم تطبيق الخصم بنجاح',
+        correct_errors_text: 'الرجاء تصحيح الأخطاء في النموذج قبل المتابعة',
+        select: 'اختر',
+        placing_order: 'جاري إتمام الطلب',
+    },
+    en: {
+        invalid_phone_number: 'Invalid phone numbers, phone must be 10 digits',
+        enter_discount_code: 'Enter discount code',
+        code_not_found: 'Code not found',
+        error_applying_discount: 'Error applying discount',
+        error_removing_discount: 'Error removing discount',
+        unexpected_error: 'Unexpected error',  
+        select_delivery_location: 'Select delivery location',
+        no_items_in_cart: 'No items in cart',
+        discount_applied_successfully: 'Discount applied successfully',
+        error_fetching_data: 'Error fetching data',
+        correct_errors_text: 'Please correct the errors in the form before proceeding',
+        select: 'Select',
+        placing_order: 'Placing order',
+    },
+    he: {
+        invalid_phone_number: 'מספר טלפון לא תקין, מספר הטלפון חייב להיות בן 10 ספרות',
+        enter_discount_code: 'הכנס קוד הנחה',
+        code_not_found: 'קוד לא נמצא',
+        error_applying_discount: 'שגיאה בהחלת ההנחה',
+        error_removing_discount: 'שגיאה בהסרת ההנחה',
+        unexpected_error: 'שגיאה בלתי צפויה',
+        select_delivery_location: 'בחר מיקום משלוח',
+        no_items_in_cart: 'אין פריטים בעגלת הקניות',
+        discount_applied_successfully: 'ההנחה הוחלה בהצלחה',
+        error_fetching_data: 'שגיאה בטעינת הנתונים',
+        correct_errors_text: 'נא לתקן את השגיאות בטופס לפני ההמשך',
+        select: 'בחר',
+        placing_order: 'מבצע הזמנה',
+    }
+}
+
+let localMsg = msg[lang]; // Fallback to English if language not found
+
 $(document).ready(function() {
 
     let baseURL = $('meta[name="url"]').attr('content');
@@ -30,7 +82,7 @@ $(document).ready(function() {
 
         if (!/^\d{10}$/.test(phone)) {
             $(phoneSelector).addClass('is-invalid');
-            $(errorSelector).text('phone must be 10 digits');
+            $(errorSelector).text(localMsg['invalid_phone_number']);
             return false;
         } else {
             $(phoneSelector).removeClass('is-invalid');
@@ -45,7 +97,7 @@ $(document).ready(function() {
             let phone = $(this).val().trim();
             if (!/^\d{10}$/.test(phone)) {
                 $(this).addClass('is-invalid');
-                $(errorSelector).text('phone must be 10 digits');
+                $(errorSelector).text(localMsg['invalid_phone_number']);
             } else {
                 $(this).removeClass('is-invalid');
                 $(errorSelector).text('');
@@ -57,60 +109,30 @@ $(document).ready(function() {
     handlePhoneBlur('#phone', '#error_phone');
     handlePhoneBlur('#phone2', '#error_phone2');
 
-    // Function to fetch and populate delivery locations
-    function loadDeliveryLocations() {
-        $.ajax({
-            url: baseURL + '/checkout/fetch-delivery-locations',
-            type: 'GET',
-            dataType: 'json',
-            success: function(response) {
-                if (response.status === 'success') {
-                    let options =
-                        '<option value="" disabled selected> select delivery location </option>';
-                    response.deliveryLocations.forEach(function(location) {
-                        options +=
-                            `<option value="${location.id}" data-price="${parseFloat(location.price).toFixed(2)}">${location.city}, - ₪${parseFloat(location.price).toFixed(2)}</option>`;
-                    });
-                    $('#delivery-location').html(options);
-
-                } else {
-                    console.error(response.message ||
-                        'error_fetching_delivery_locations');
-                    $('#delivery-message').text(response.message ||
-                        'checkout.error_fetching_delivery_locations').addClass(
-                        'error');
-                }
-            },
-            error: function(xhr) {
-                console.error('.error_fetching_delivery_locations');
-                $('#delivery-message').text(
-                    '.error_fetching_delivery_locations').addClass(
-                    'error');
-            }
-        });
-    }
-
-    // Function to fetch and populate user data and cart items
-    function loadUserAndCartData() {
+    function loadCheckout() {
         $.ajax({
             url: baseURL + '/checkout/fetch-checkout',
             type: 'GET',
             dataType: 'json',
             success: function(response) {
                 if (response.status === 'success') {
-                    // Populate User Information
+                    // -------------------
+                    // 1. Populate User Info
+                    // -------------------
                     if (response.user) {
                         $('#first_name').val(response.user.first_name);
                         $('#last_name').val(response.user.last_name);
                         $('#email').val(response.user.email);
                         $('#phone').val(response.user.phone);
-                        $('#phone').trigger('blur'); // Trigger validation
+                        $('#phone').trigger('blur');
                     }
 
-                    // Populate Cart Items
+                    // -------------------
+                    // 2. Populate Cart Items
+                    // -------------------
                     if (response.cartItems && response.cartItems.length > 0) {
                         let orderItemsHtml = '';
-                        goodsTotal = 0.00; // Reset to avoid accumulation
+                        goodsTotal = 0.00;
 
                         response.cartItems.forEach(function(item) {
                             orderItemsHtml += `
@@ -130,14 +152,15 @@ $(document).ready(function() {
                         $('#goods-total').text(`₪${goodsTotal.toFixed(2)}`);
                         calculateGrandTotal();
                     } else {
-                        $('#order-items').html('<p>no items in cart</p>');
+                        $('#order-items').html(`<p>localMsg['no_items_in_cart']</p>`);
                         $('#goods-total').text(`₪0.00`);
                         calculateGrandTotal();
                     }
 
-                    // If a discount is already applied, display it
+                    // -------------------
+                    // 3. Populate Discount Info
+                    // -------------------
                     if (response.discountCode) {
-
                         discountAmount = parseFloat(response.discountCode.amount);
                         let discountText = `- ₪${discountAmount.toFixed(2)}`;
 
@@ -152,20 +175,28 @@ $(document).ready(function() {
                         `);
                         calculateGrandTotal();
                     }
+
+                    // -------------------
+                    // 4. Populate Delivery Locations
+                    // -------------------
+                    if (response.deliveryLocations) {
+                        let options = `<option value="" disabled selected>${localMsg['select_delivery_location']}</option>`;
+                        response.deliveryLocations.forEach(function(location) {
+                            options += `<option value="${location.id}" data-price="${parseFloat(location.price).toFixed(2)}">${location.city}, - ₪${parseFloat(location.price).toFixed(2)}</option>`;
+                        });
+                        $('#delivery-location').html(options);
+                    }
+
                 } else {
-                    console.error(response.message ||
-                        'checkout.error_fetching_cart_items');
-                    $('#cart-message').text(response.message ||
-                        'checkout.error_fetching_cart_items').addClass('error');
+                    $('#cart-message').text(response.message || localMsg['error_fetching_data']).addClass('error');
                 }
             },
-            error: function(xhr) {
-                console.error('checkout.error_fetching_cart_items');
-                $('#cart-message').text('checkout.error_fetching_cart_items')
-                    .addClass('error');
+            error: function() {
+                $('#cart-message').text(localMsg['error_fetching_data']).addClass('error');
             }
         });
     }
+
 
     // Function to calculate and update the grand total
     function calculateGrandTotal() {
@@ -177,7 +208,7 @@ $(document).ready(function() {
     // Event listener for delivery location change
     $('#delivery-location').change(function() {
         let selectedOption = $(this).find('option:selected');
-        let deliveryLocationId = $(this).val();
+    
         deliveryPrice = parseFloat(selectedOption.data('price')) || 0.00;
         $('#delivery-price-display').text(deliveryPrice.toFixed(2));
         $('.cart-bottom__total-delivery-date').text('');
@@ -187,11 +218,9 @@ $(document).ready(function() {
     // Apply Discount Code
     $('#apply-discount-btn').click(function() {
         let discountCode = $('#discount-code-input').val().trim();
-        let deliveryLocationId = $('#delivery-location').val();
 
         if (!discountCode) {
-            console.warn('checkout.enter_discount_code');
-            $('#discount-message').text('enter discount code').addClass(
+            $('#discount-message').text(localMsg['enter_discount_code']).addClass(
                 'warning');
             return;
         }
@@ -207,6 +236,7 @@ $(document).ready(function() {
                 if (response.status === 'success') {
                     discountAmount = parseFloat(response.discount_amount);
                     let discountText = `- ₪${discountAmount.toFixed(2)}`;
+                    let discountMessage = response.message || localMsg['discount_applied_successfully'];
 
                     $('#discount-info').text(discountText);
                     $('#discount-code-input').prop('disabled', true);
@@ -214,21 +244,19 @@ $(document).ready(function() {
                     $('#remove-discount-btn').removeClass('d-none');
                     $('#discount-message').html(`
                         <div class="alert alert-success">
-                            ${discountCode.message}: <strong>${discountCode}</strong> ${discountText}
+                            ${discountMessage}: <strong>${discountCode}</strong> ${discountText}
                         </div>
                     `);
                     calculateGrandTotal();
                 } else {
                     // Display 'not found' message in a span
                     $('#discount-message').html(`
-                        <span class="error">code not found</span>
+                        <span class="error">${localMsg['code_not_found']}</span>
                     `);
-                    console.error(response.message ||error_applying_discount);
-
                 }
             },
             error: function(xhr) {
-                let errorMessage = 'error_applying_discount';
+                let errorMessage = localMsg['error_applying_discount'];
                 if (xhr.responseJSON && xhr.responseJSON.message) {
                     errorMessage = xhr.responseJSON.message;
                 }
@@ -236,14 +264,12 @@ $(document).ready(function() {
                 // If discount code is not found
                 if (xhr.status === 400) { // Assuming 400 status for not found
                     $('#discount-message').html(`
-                        <span class="error">code not found</span>
+                        <span class="error">${localMsg['code_not_found']}</span>
                     `);
-                    console.error('discount_code_not_found');
                 } else {
                     $('#discount-message').html(`
                         <span class="error">${errorMessage}</span>
                     `);
-                    console.error(errorMessage);
                 }
             }
         });
@@ -266,17 +292,14 @@ $(document).ready(function() {
                     calculateGrandTotal();
                 } else {
                     $('#discount-message').html(`
-                        <span class="error">${response.message || 'error_removing_discount'}</span>
+                        <span class="error">${response.message || localMsg['error_removing_discount']}</span>
                     `);
-                    console.error(response.message ||
-                        'error_removing_discount');
                 }
             },
             error: function(xhr) {
                 $('#discount-message').html(`
-                    <span class="error">error_removing_discount</span>
+                    <span class="error">${localMsg['error_removing_discount']}</span>
                 `);
-                console.error('error_removing_discount');
             }
         });
     });
@@ -293,7 +316,7 @@ $(document).ready(function() {
                 success: function(response) {
                     if (response.status === 'success') {
                         let areaOptions =
-                            '<option value="" disabled selected> -- select -- </option>';
+                            `<option value="" disabled selected>-- ${localMsg['select']} --</option>`;
                         response.areas.forEach(area => {
                             areaOptions +=
                                 `<option value="${area.id}">${area.name}</option>`;
@@ -315,7 +338,7 @@ $(document).ready(function() {
 
         // Validate phone numbers before submission
         if (!validatePhoneNumbers()) {
-            console.error('invalid_phone_numbers');
+            console.error(localMsg['invalid_phone_number']);
             return;
         }
 
@@ -326,7 +349,7 @@ $(document).ready(function() {
         $placeOrderBtn.prop('disabled', true);
         // You could also change the button text to indicate a loading state:
         $placeOrderBtn.html(
-            '<i class="fa fa-spinner fa-spin"></i> order placing...');
+            `<i class="fa fa-spinner fa-spin"></i> ${localMsg['placing_order']}...`);
 
         // Gather form data
         let formData = {
@@ -354,9 +377,8 @@ $(document).ready(function() {
                 } else {
                     // Show error
                     $('#checkout-message').html(
-                        `<span class="error">${response.message || 'unexpected_error'}</span>`
+                        `<span class="error">${response.message || localMsg['unexpected_error']}</span>`
                     );
-                    console.error(response.message || 'unexpected_error');
                 }
             },
             error: function(xhr) {
@@ -370,28 +392,24 @@ $(document).ready(function() {
                         $(`#error_${field}`).text(errors[field][0]);
                         $(`#${field}`).addClass('is-invalid');
                     }
-                    console.error(
-                        'checkout.correct_errors'
-                        );
                     $('#checkout-message').html(
-                        `<span class="error">checkout.correct_errors_text</span>`
+                        `<span class="error">${localMsg['correct_errors_text']}</span>`
                     );
                 } else {
                     $('#checkout-message').html(
-                        `<span class="error">unexpected_error</span>`
+                        `<span class="error">${localMsg['unexpected_error']}</span>`
                     );
-                    console.error('unexpected_error');
                 }
             },
             complete: function() {
                 $placeOrderBtn.prop('disabled', false);
                 $placeOrderBtn.html(
-                    'place_order <i class="icon-arrow"></i>');
+                    '<i class="icon-arrow"></i>');
             }
         });
     });
+
     // Initial load
-    loadDeliveryLocations();
-    loadUserAndCartData();
+    loadCheckout();
 });
 

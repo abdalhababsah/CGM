@@ -19,41 +19,36 @@ class CheckoutController extends Controller
     protected $cartService;
     protected $orderService;
 
-    public function __construct(CheckoutService $checkoutService, CartService $cartService, OrderService $orderService)
-    {
+    public function __construct(
+        CheckoutService $checkoutService,
+        CartService $cartService,
+        OrderService $orderService
+    ) {
         $this->checkoutService = $checkoutService;
         $this->cartService = $cartService;
         $this->orderService = $orderService;
-
     }
 
-    public function index(Request $request)
+    public function index()
     {
-        // Fetch cart details
         $cartDetails = $this->cartService->getCartDetails();
 
         if (empty($cartDetails['items'])) {
-            // If cart is empty, redirect back with an error message
             return redirect()->route('cart.index')
                 ->with('error', 'Your cart is empty. Add items before proceeding to checkout.');
         }
-        
-        // Return the view but add headers to prevent caching
-        $view = view('user.checkout'); // This is your Blade view
 
-        return response($view)
-            ->header('Cache-Control', 'no-cache, no-store, must-revalidate') // HTTP 1.1
-            ->header('Pragma', 'no-cache') // HTTP 1.0
-            ->header('Expires', '0');      // Proxies
+        return response()
+            ->view('user.checkout')
+            ->header('Cache-Control', 'no-cache, no-store, must-revalidate')
+            ->header('Pragma', 'no-cache')
+            ->header('Expires', '0');
     }
 
-    // fetchCheckout: Fetch cart details and user information
-    public function fetchCheckout(Request $request)
+    public function fetchCheckout()
     {
-        // Fetch required data
         $user = Auth::user();
         $cartDetails = $this->cartService->getCartDetails();
-        
         $discountCode = session('applied_discount_code');
 
         if ($discountCode) {
@@ -61,16 +56,18 @@ class CheckoutController extends Controller
             $result = $this->checkoutService->applyDiscountCode($discountCode['code'], $grandTotal);
 
             if ($result['status'] === 'success') {
-            $discountCode['amount'] = $result['discount_amount'];
-            $discountCode['discount'] = $result['discount'];
-            $discountCode['grand_total'] = $result['grand_total'];
-            $discountCode['message'] = $result['message'];
-            session(['applied_discount_code' => $discountCode]);
+                $discountCode['amount'] = $result['discount_amount'];
+                $discountCode['discount'] = $result['discount'];
+                $discountCode['grand_total'] = $result['grand_total'];
+                $discountCode['message'] = $result['message'];
+                session(['applied_discount_code' => $discountCode]);
             } else {
-            session()->forget('applied_discount_code');
-            $discountCode = null;
+                session()->forget('applied_discount_code');
+                $discountCode = null;
             }
         }
+        
+        $deliveryLocations = DeliveryLocationAndPrice::active()->get();
 
         return response()->json([
             'status' => 'success',
@@ -82,18 +79,13 @@ class CheckoutController extends Controller
             ],
             'cartItems' => $cartDetails['items'],
             'totalPrice' => $cartDetails['totalPrice'],
-            // 'deliveryLocations' => $deliveryLocations,
             'discountCode' => $discountCode,
+            'deliveryLocations' => $deliveryLocations,
         ]);
     }
-    /**
-     * Fetch delivery locations based on locale.
-     *
-     * @return array
-     */
+
     public function fetchDeliveryLocations()
     {
-        $deliveryLocations = DeliveryLocationAndPrice::active()->get();
 
         return response()->json([
             'status' => 'success',
@@ -101,29 +93,17 @@ class CheckoutController extends Controller
         ]);
     }
 
-    /**
-     * Handle AJAX request to update user information.
-     *
-     * @param \App\Http\Requests\UpdateUserInfoRequest $request
-     * @return \Illuminate\Http\JsonResponse
-     */
     public function updateUserInfo(UpdateUserInfoRequest $request)
     {
         $user = Auth::user();
         $data = $request->only(['first_name', 'last_name', 'email', 'phone']);
-
         $user->update($data);
 
-        return response()->json(['status' => 'success', 'message' => 'User information updated successfully.']);
+        return response()->json([
+            'status' => 'success',
+            'message' => 'User information updated successfully.'
+        ]);
     }
-
-    /**
-     * Handle AJAX request to apply a discount code.
-     *
-     * @param \App\Http\Requests\ApplyDiscountCodeRequest $request
-     * @return \Illuminate\Http\JsonResponse
-     */
-    // app/Http/Controllers/CheckoutController.php
 
     public function applyDiscountCode(ApplyDiscountCodeRequest $request)
     {
@@ -136,7 +116,6 @@ class CheckoutController extends Controller
         $result = $this->checkoutService->applyDiscountCode($discountCodeInput, $grandTotal);
 
         if ($result['status'] === 'success') {
-            // Store discount code in session
             session([
                 'applied_discount_code' => [
                     'code' => $discountCodeInput,
@@ -147,16 +126,11 @@ class CheckoutController extends Controller
                     'grand_total' => $result['grand_total'] + $deliveryPrice,
                 ]
             ]);
-
         }
 
         return response()->json($result);
     }
-    /**
-     * Handle AJAX request to remove a discount code.
-     *
-     * @return \Illuminate\Http\JsonResponse
-     */
+
     public function removeDiscountCode()
     {
         session()->forget('applied_discount_code');
@@ -167,26 +141,17 @@ class CheckoutController extends Controller
         ]);
     }
 
-    /**
-     * Handle AJAX request to submit the checkout.
-     *
-     * @param \App\Http\Requests\CheckoutSubmitRequest $request
-     * @return \Illuminate\Http\JsonResponse
-     */
     public function submit(CheckoutSubmitRequest $request)
     {
-        $validated = $request->all();
+        $validated = $request->validated();
 
-        // Prepare data for the service
         $data = [
             'first_name' => $validated['first_name'],
             'last_name' => $validated['last_name'],
             'email' => $validated['email'],
             'phone' => $validated['phone'],
-            'phone2' => $validated['phone2'],
-
-            // 'country' => $validated['country'],
-            'delivery_location_id' => $validated['delivery_location_id'],//this city from delivery location
+            'phone2' => $validated['phone2'] ?? null,
+            'delivery_location_id' => $validated['delivery_location_id'],
             'area' => $validated['area'] ?? null,
             'city' => $validated['city'],
             'address' => $validated['address'],
@@ -195,33 +160,31 @@ class CheckoutController extends Controller
             'delivery_price' => $this->calculateDeliveryPrice($validated['delivery_location_id']),
         ];
 
-        // Process checkout
         $order = $this->checkoutService->processCheckout($data);
 
         if ($order) {
             $this->orderService->postCheckout($order);
-
             session()->forget('applied_discount_code');
-            return response()->json(['status' => 'success', 'message' => 'Order placed successfully!', 'order_id' => $order->id]);
-        } else {
-            return response()->json(['status' => 'error', 'message' => 'There was an issue processing your order. Please try again.'], 500);
+            return response()->json([
+                'status' => 'success',
+                'message' => 'Order placed successfully!',
+            ]);
         }
+
+        return response()->json([
+            'status' => 'error',
+            'message' => 'There was an issue processing your order. Please try again.'
+        ], 500);
     }
 
-    /**
-     * Calculate delivery price based on location ID.
-     *
-     * @param int $deliveryLocationId
-     * @return float
-     */
     protected function calculateDeliveryPrice($deliveryLocationId)
     {
         $deliveryLocation = DeliveryLocationAndPrice::find($deliveryLocationId);
         return $deliveryLocation ? $deliveryLocation->price : 0;
     }
+
     public function success()
     {
-
         return view('user.checkout-success');
     }
 
@@ -229,8 +192,9 @@ class CheckoutController extends Controller
     {
         $cityId = $request->city_id;
 
-        // Fetch all areas linked to this city/delivery_location
-        $areas = Area::where('delivery_location_id', $cityId)->get();
+        $areas = Area::where('delivery_location_id', $cityId)
+            ->select(['id', 'area_' . app()->getLocale() . ' as name'])
+            ->get();
 
         if ($areas->isEmpty()) {
             return response()->json([
@@ -239,17 +203,9 @@ class CheckoutController extends Controller
             ]);
         }
 
-        $mappedAreas = $areas->map(function ($area) {
-
-            return [
-                'id' => $area->id,
-                'name' => $area->area,
-            ];
-        });
-
         return response()->json([
             'status' => 'success',
-            'areas' => $mappedAreas,
+            'areas' => $areas,
         ]);
     }
 }
