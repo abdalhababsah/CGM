@@ -151,8 +151,8 @@
                         <!-- Discount Code -->
                         <div class="checkout-form__item">
                             <h6>{{ __('checkout.apply_discount_code') }}</h6>
-                            <div class="box-field d-flex" style="display: flex">
-                                <input style="margin-top: 0px !important;" type="text" id="discount-code-input" class="form-control"
+                            <div class="box-field d-flex">
+                                <input type="text" id="discount-code-input" class="form-control"
                                     placeholder="{{ __('checkout.enter_discount_code') }}">
                                 <button type="button" id="apply-discount-btn"
                                     class="btn btn-primary mx-2">{{ __('checkout.apply') }}</button>

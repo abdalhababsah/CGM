@@ -9338,3 +9338,12 @@ del {
 	direction: ltr;
 }
 
+.is-invalid {
+    border-color: #dc3545;
+}
+
+.invalid-feedback {
+    display: block;
+    color: #dc3545;
+}
+
