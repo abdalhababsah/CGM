@@ -13,7 +13,7 @@ class CheckoutSubmitRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return true; // Adjust authorization logic if necessary
+        return true;
     }
 
     /**
@@ -33,7 +33,7 @@ class CheckoutSubmitRequest extends FormRequest
             'city' => 'required|string|max:255',
             'address' => 'required|string|max:255',
             'delivery_location_id' => 'required|integer|exists:delivery_location_and_prices,id',
-            'area' => 'required|integer',
+            'area' => 'required|integer|exists:areas,id',
             'note' => 'nullable|string|max:1000',
         ];
     }

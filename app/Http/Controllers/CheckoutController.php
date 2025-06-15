@@ -84,17 +84,17 @@ class CheckoutController extends Controller
         ]);
     }
 
-    public function updateUserInfo(UpdateUserInfoRequest $request)
-    {
-        $user = Auth::user();
-        $data = $request->only(['first_name', 'last_name', 'email', 'phone']);
-        $user->update($data);
+    // public function updateUserInfo(UpdateUserInfoRequest $request)
+    // {
+    //     $user = Auth::user();
+    //     $data = $request->only(['first_name', 'last_name', 'email', 'phone']);
+    //     $user->update($data);
 
-        return response()->json([
-            'status' => 'success',
-            'message' => 'User information updated successfully.'
-        ]);
-    }
+    //     return response()->json([
+    //         'status' => 'success',
+    //         'message' => 'User information updated successfully.'
+    //     ]);
+    // }
 
     public function applyDiscountCode(ApplyDiscountCodeRequest $request)
     {
