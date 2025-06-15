@@ -3,7 +3,7 @@
 @section('title', __('checkout.title'))
 
 <style>
-.box-field .form-control {
+.form-control {
     margin-top: 0px !important;
 }
 /* Styling for the select elements */
@@ -77,40 +77,37 @@
             <div class="checkout-content">
                 <div class="checkout-form">
                     <!-- Checkout Form -->
-                    <form id="checkout-form" method="POST" action="{{ route('checkout.submit') }}">
+                    <form id="checkout-form" method="POST" action="{{ route('checkout.submit') }}" novalidate>
                         @csrf
 
                         <!-- User Information -->
                         <div class="checkout-form__item">
                             <h6>{{ __('checkout.info_about_you') }}</h6>
                             <div class="box-field">
-                                <input style="margin-top: 0px !important;" type="text" id="first_name" name="first_name" class="form-control"
+                                <input type="text" id="first_name" name="first_name" class="form-control"
                                     placeholder="{{ __('checkout.enter_first_name') }}" required>
                                 <span class="invalid-feedback" id="error_first_name"></span>
                             </div>
                             <div class="box-field">
-                                <input style="margin-top: 0px !important;" type="text" id="last_name" name="last_name" class="form-control"
+                                <input type="text" id="last_name" name="last_name" class="form-control"
                                     placeholder="{{ __('checkout.enter_last_name') }}" required>
                                 <span class="invalid-feedback" id="error_last_name"></span>
                             </div>
-                            <div class="box-field__row">
-                                <!-- Phone Number 1 -->
-                                <div class="box-field">
-                                    <input style="margin-top: 0px !important;" type="tel" id="phone" name="phone" class="form-control"
-                                        placeholder="{{ __('checkout.enter_phone') }}" maxlength="10" required>
-                                    <span class="invalid-feedback" id="error_phone"></span>
-                                </div>
+                            <!-- Phone Number 1 -->
+                            <div class="box-field">
+                                <input type="tel" id="phone" name="phone" class="form-control"
+                                    placeholder="{{ __('checkout.enter_phone') }}" pattern="05\d{8}" maxlength="10" required>
+                                <span class="invalid-feedback" id="error_phone"></span>
+                            </div>
 
-                                <!-- Phone Number 2 -->
-                                <div class="box-field">
-                                    <input style="margin-top: 0px !important;" type="tel" id="phone2" name="phone2" class="form-control"
-                                        placeholder="{{ __('checkout.enter_phone2') }}" maxlength="10" required>
-                                    <span class="invalid-feedback" id="error_phone2"></span>
-                                </div>
-
+                            <!-- Phone Number 2 -->
+                            <div class="box-field">
+                                <input type="tel" id="phone2" name="phone2" class="form-control"
+                                    placeholder="{{ __('checkout.enter_phone2') }}" maxlength="10" required>
+                                <span class="invalid-feedback" id="error_phone2"></span>
                             </div>
                             <div class="box-field">
-                                <input style="margin-top: 0px !important;" disabled type="email" id="email" name="email" class="form-control"
+                                <input disabled type="email" id="email" name="email" class="form-control"
                                     placeholder="{{ __('checkout.enter_email') }}" required>
                                 <span class="invalid-feedback" id="error_email"></span>
                             </div>
@@ -138,14 +135,14 @@
                             </div>
                             <!-- City -->
                             <div class="box-field">
-                                <input style="margin-top: 0px !important;" type="text" id="city" name="city" class="form-control"
+                                <input type="text" id="city" name="city" class="form-control"
                                     placeholder="{{ __('checkout.enter_city') }}" required>
                                 <span class="invalid-feedback" id="error_city"></span>
                             </div>
 
                             <!-- Address -->
                             <div class="box-field">
-                                <input style="margin-top: 0px !important;" type="text" id="address" name="address" class="form-control"
+                                <input type="text" id="address" name="address" class="form-control"
                                     placeholder="{{ __('checkout.enter_address') }}" required>
                                 <span class="invalid-feedback" id="error_address"></span>
                             </div>
@@ -177,6 +174,7 @@
                         </div>
 
                         <!-- Submit Buttons -->
+                        <div id="checkout-message" class="invalid-feedback d-none"></div>
                         <div class="checkout-buttons" style="margin-bottom: 30px;">
                             <a href="{{ route('cart.index') }}" class="btn btn-grey btn-icon">
                                 <i class="icon-arrow"></i> {{ __('checkout.back') }}

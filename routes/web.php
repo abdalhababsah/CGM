@@ -145,10 +145,10 @@ Route::middleware(['auth', 'user'])->name('user.')->group(function () {
 Route::middleware(['auth'])->prefix('checkout')->name('checkout.')->group(function () {
     // Display the checkout page
     Route::get('/', [CheckoutController::class, 'index'])->name('index');
-    Route::get('/fetch-checkout', [CheckoutController::class, 'fetchCheckout'])->name('checkout.fetch');
-    // Fetch delivery locations via AJAX
-    Route::get('/fetch-delivery-locations', [CheckoutController::class, 'fetchDeliveryLocations'])->name('fetchDeliveryLocations');
-    Route::get('/fetch-areas', [CheckoutController::class, 'fetchAreas'])->name('checkout.fetchAreas');
+    Route::get('/fetch-checkout', [CheckoutController::class, 'fetchCheckout'])->name('fetch');
+
+    // Fetch areas for delivery locations
+    Route::get('/fetch-areas', [CheckoutController::class, 'fetchAreas'])->name('fetchAreas');
 
     // Submit the checkout form via AJAX
     Route::post('/submit', [CheckoutController::class, 'submit'])->name('submit');

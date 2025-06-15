@@ -6,7 +6,7 @@ return [
     'info_about_you' => 'מידע עליך',
     'enter_first_name' => 'הזן את שמך הפרטי',
     'enter_last_name' => 'הזן את שמך המשפחתי',
-    'enter_phone' => 'הזן את מספר הטלפון שלך',
+    'enter_phone' => 'הזן את מספר הטלפון שלך (מתחיל ב-05, לדוגמה: 0591234567)',
     'enter_email' => 'הזן את כתובת האימייל שלך',
     'delivery_info' => 'מידע למשלוח',
     'select_delivery_location' => 'בחר מיקום למשלוח',

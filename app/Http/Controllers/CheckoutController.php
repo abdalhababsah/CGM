@@ -35,7 +35,7 @@ class CheckoutController extends Controller
 
         if (empty($cartDetails['items'])) {
             return redirect()->route('cart.index')
-                ->with('error', 'Your cart is empty. Add items before proceeding to checkout.');
+                ->with('error', __('Your cart is empty. Add items before proceeding to checkout.'));
         }
 
         return response()
@@ -80,15 +80,6 @@ class CheckoutController extends Controller
             'cartItems' => $cartDetails['items'],
             'totalPrice' => $cartDetails['totalPrice'],
             'discountCode' => $discountCode,
-            'deliveryLocations' => $deliveryLocations,
-        ]);
-    }
-
-    public function fetchDeliveryLocations()
-    {
-
-        return response()->json([
-            'status' => 'success',
             'deliveryLocations' => $deliveryLocations,
         ]);
     }

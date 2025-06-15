@@ -2,7 +2,7 @@ const lang = document.documentElement.lang || 'en';
 
 let msg = {
     ar: {
-        invalid_phone_number: 'رقم الهاتف غير صالح, يجب أن يكون مكونًا من 10 أرقام',
+        invalid_phone_number: 'رقم الهاتف غير صالح, يجب أن يكون مكونًا من 10 أرقام ويبدأ بـ 05',
         enter_discount_code: 'ادخل رمز الخصم',
         code_not_found: 'الرمز غير موجود',
         error_applying_discount: 'حدث خطأ أثناء تطبيق الخصم',
@@ -15,9 +15,10 @@ let msg = {
         correct_errors_text: 'الرجاء تصحيح الأخطاء في النموذج قبل المتابعة',
         select: 'اختر',
         placing_order: 'جاري إتمام الطلب',
+        required_field: 'هذا الحقل اجباري',
     },
     en: {
-        invalid_phone_number: 'Invalid phone numbers, phone must be 10 digits',
+        invalid_phone_number: 'Invalid phone numbers, phone must be 10 digits and start with 05',
         enter_discount_code: 'Enter discount code',
         code_not_found: 'Code not found',
         error_applying_discount: 'Error applying discount',
@@ -30,9 +31,10 @@ let msg = {
         correct_errors_text: 'Please correct the errors in the form before proceeding',
         select: 'Select',
         placing_order: 'Placing order',
+        required_field: 'This field is required',
     },
     he: {
-        invalid_phone_number: 'מספר טלפון לא תקין, מספר הטלפון חייב להיות בן 10 ספרות',
+        invalid_phone_number: 'מספר טלפון לא תקין, מספר הטלפון חייב להיות בן 10 ספרות ולהתחיל ב-05',
         enter_discount_code: 'הכנס קוד הנחה',
         code_not_found: 'קוד לא נמצא',
         error_applying_discount: 'שגיאה בהחלת ההנחה',
@@ -45,11 +47,11 @@ let msg = {
         correct_errors_text: 'נא לתקן את השגיאות בטופס לפני ההמשך',
         select: 'בחר',
         placing_order: 'מבצע הזמנה',
+        required_field: 'שדה זה חובה',
     }
 }
 
-let localMsg = msg[lang]; // Fallback to English if language not found
-
+let localMsg = msg[lang];
 $(document).ready(function() {
 
     let baseURL = $('meta[name="url"]').attr('content');
@@ -71,8 +73,8 @@ $(document).ready(function() {
     function validatePhoneNumbers() {
         let isValid = true;
 
-        isValid = validatePhone('#phone', '#error_phone');
-        isValid = validatePhone('#phone2', '#error_phone2');
+        isValid = validatePhone('#phone', '#error_phone') && isValid;
+        isValid = validatePhone('#phone2', '#error_phone2') && isValid;
 
         return isValid;
     }
@@ -80,7 +82,7 @@ $(document).ready(function() {
     function validatePhone(phoneSelector, errorSelector) {
         let phone = $(phoneSelector).val().trim();
 
-        if (!/^\d{10}$/.test(phone)) {
+        if (!/^05\d{8}$/.test(phone)) {
             $(phoneSelector).addClass('is-invalid');
             $(errorSelector).text(localMsg['invalid_phone_number']);
             return false;
@@ -89,6 +91,27 @@ $(document).ready(function() {
             $(errorSelector).text('');
             return true;
         }
+    }
+
+    // Function to validate required fields
+    function validateRequiredFields() {
+        let isValid = true;
+        $('#checkout-form [required]').each(function() {
+            let value = $(this).val();
+            // Only trim if value is a string, otherwise just check for null/empty
+            let isEmpty = (typeof value === 'string') ? value.trim() === '' : (value === null || value === '');
+            if (isEmpty) {
+                $(this).addClass('is-invalid');
+                let errorId = '#error_' + $(this).attr('id');
+                $(errorId).text(localMsg['required_field']);
+                isValid = false;
+            } else {
+                $(this).removeClass('is-invalid');
+                let errorId = '#error_' + $(this).attr('id');
+                $(errorId).text('');
+            }
+        });
+        return isValid;
     }
 
     // Function to handle phone validation on blur
@@ -152,7 +175,7 @@ $(document).ready(function() {
                         $('#goods-total').text(`₪${goodsTotal.toFixed(2)}`);
                         calculateGrandTotal();
                     } else {
-                        $('#order-items').html(`<p>localMsg['no_items_in_cart']</p>`);
+                        $('#order-items').html(`<p>${localMsg['no_items_in_cart']}</p>`);
                         $('#goods-total').text(`₪0.00`);
                         calculateGrandTotal();
                     }
@@ -336,9 +359,16 @@ $(document).ready(function() {
     $('#checkout-form').submit(function(e) {
         e.preventDefault(); // We'll handle the AJAX submission manually
 
+        // Validate required fields
+        let requiredValid = validateRequiredFields();
+
         // Validate phone numbers before submission
-        if (!validatePhoneNumbers()) {
-            console.error(localMsg['invalid_phone_number']);
+        let phonesValid = validatePhoneNumbers();
+
+        if (!requiredValid || !phonesValid) {
+            $('#checkout-message').removeClass('d-none').html(
+                `<span class="error">${localMsg['correct_errors_text']}</span>`
+            );
             return;
         }
 
@@ -376,7 +406,7 @@ $(document).ready(function() {
                     window.location.href = "/checkout/success/";
                 } else {
                     // Show error
-                    $('#checkout-message').html(
+                    $('#checkout-message').removeClass('d-none').html(
                         `<span class="error">${response.message || localMsg['unexpected_error']}</span>`
                     );
                 }
@@ -392,11 +422,11 @@ $(document).ready(function() {
                         $(`#error_${field}`).text(errors[field][0]);
                         $(`#${field}`).addClass('is-invalid');
                     }
-                    $('#checkout-message').html(
+                    $('#checkout-message').removeClass('d-none').html(
                         `<span class="error">${localMsg['correct_errors_text']}</span>`
                     );
                 } else {
-                    $('#checkout-message').html(
+                    $('#checkout-message').removeClass('d-none').html(
                         `<span class="error">${localMsg['unexpected_error']}</span>`
                     );
                 }
@@ -412,4 +442,3 @@ $(document).ready(function() {
     // Initial load
     loadCheckout();
 });
-

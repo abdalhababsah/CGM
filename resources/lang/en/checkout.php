@@ -6,7 +6,7 @@ return [
     'info_about_you' => 'Information About You',
     'enter_first_name' => 'Enter your first name',
     'enter_last_name' => 'Enter your last name',
-    'enter_phone' => 'Enter your phone number',
+    'enter_phone' => 'Enter your phone number starting with 05 (e.g., 0591234567)',
     'enter_email' => 'Enter your email address',
     'delivery_info' => 'Delivery Information',
     'select_delivery_location' => 'Select Delivery Location',
