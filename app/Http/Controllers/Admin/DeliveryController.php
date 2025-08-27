@@ -4,10 +4,15 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Models\DeliveryLocationAndPrice;
+use App\Services\DeliveryService;
 use Illuminate\Http\Request;
 
 class DeliveryController extends Controller
 {
+    protected $deliveryService;
+    public function __construct(DeliveryService $deliveryService) {
+        $this->deliveryService = $deliveryService;
+    }
     /**
      * Display a listing of the delivery locations.
      *
@@ -27,7 +32,7 @@ class DeliveryController extends Controller
      * @param  \App\Models\DeliveryLocationAndPrice|null  $delivery
      * @return \Illuminate\View\View
      */
-    public function create(DeliveryLocationAndPrice $delivery = null)
+    public function create(DeliveryLocationAndPrice $delivery)
     {
         // If a delivery is provided, we're editing; otherwise, creating
         $isEdit = $delivery ? true : false;
@@ -109,5 +114,11 @@ class DeliveryController extends Controller
 
         // Redirect back to the deliveries index with a success message
         return redirect()->route('admin.deliveries.index')->with('success', 'Delivery location deleted successfully.');
+    }
+
+    public function auth()
+    {
+        ;
+        return response()->json($this->deliveryService->getShipmentStatus('2988073'));
     }
 }
