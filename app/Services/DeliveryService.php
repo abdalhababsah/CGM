@@ -32,11 +32,7 @@ class DeliveryService
         }
 
         try {
-            $response = Http::asJson()->acceptJson()
-            // optional: ->withHeaders(['User-Agent' => 'Laravel-HTTP'])
-            ->timeout(20)
-            ->withOptions(['debug' => fopen(storage_path('logs/guzzle-debug.log'), 'w')])
-            ->post("{$this->baseUrl}/api/Login", [
+            $response = Http::post("{$this->baseUrl}/api/Login", [
                 'UserName' => config('services.delivery.username'),
                 'Password' => config('services.delivery.password'),
                 'DeviceToken' => config('services.delivery.device_token'),
