@@ -15,6 +15,7 @@ return [
     'nav_contact' => 'Contact',
     'nav_login' => 'Log In',
     'nav_dashboard' => 'Dashboard',
+    'nav_account' => 'My account',
 
     // Main Block
     'professional' => 'Professional',

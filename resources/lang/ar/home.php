@@ -15,6 +15,7 @@ return [
     'nav_contact' => 'اتصل بنا',
     'nav_login' => 'تسجيل الدخول',
     'nav_dashboard' => 'لوحة التحكم',
+    'nav_account' => 'حسابي',
 
     // Main Block
     'professional' => 'محترف',

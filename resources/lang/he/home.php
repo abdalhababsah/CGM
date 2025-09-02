@@ -15,6 +15,7 @@ return [
     'nav_contact' => 'צור קשר',
     'nav_login' => 'התחבר',
     'nav_dashboard' => 'לוח בקרה',
+    'nav_account' => 'החשבון שלי',
 
     // Main Block
     'professional' => 'מקצועי',

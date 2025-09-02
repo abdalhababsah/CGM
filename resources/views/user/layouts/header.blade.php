@@ -20,7 +20,7 @@
                 @elseif(Auth::user()->role == 1)
                     <li><a href="{{ route('admin.dashboard') }}">{{ __('home.nav_dashboard') }}</a></li>
                 @elseif(Auth::user()->role == 0)
-                    <li><a href="{{ route('user.dashboard') }}">{{ __('home.nav_dashboard') }}</a></li>
+                    <li><a href="{{ route('user.dashboard') }}">{{ __('home.nav_account') }}</a></li>
                 @endif
                 @if (Auth::check())
                     <li>
